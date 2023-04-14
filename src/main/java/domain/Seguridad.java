@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Setter
@@ -14,20 +17,46 @@ public class Seguridad {
   private String linea;
   private Usuario usuario;
   private boolean noSegura = false;
+  private List<String> simbolos;
   FileReader fr = null;
   BufferedReader br = null;
 
 
   public Seguridad() throws FileNotFoundException { //porque esta excepcion??
+    simbolos = new ArrayList<>();
+    simbolos.add("_");
+    simbolos.add("-");
+    simbolos.add("!");
+    simbolos.add("@");
+    simbolos.add("#");
+    simbolos.add("$");
+    simbolos.add("%");
+    simbolos.add("^");
+    simbolos.add("&");
+    simbolos.add("*");
   }
-
 
 
   public boolean validarContrasenia(String contrasenia) throws IOException { //extends RuntimeException?
-      return this.longitudMinima(contrasenia) && !this.esFacil(contrasenia) && !this.contieneSecuenciasRepetidas(contrasenia) && !this.perteneceADiccionario(contrasenia);
-
+      return this.longitudMinima(contrasenia) &&                //minimo 8 caracteres
+             !this.esFacil(contrasenia) &&                      //no pertenece a las 10000 contrasenias mas faciles
+             !this.contieneSecuenciasRepetidas(contrasenia) &&  //no contiene secuencias repetidas
+             !this.perteneceADiccionario(contrasenia) &&       //no pertenece al diccionario
+             this.alMenos1Mayuscula(contrasenia) &&             //tiene al menos 1 mayuscula
+             this.contieneSimbolos(contrasenia);                //contiene al menos 1 de los simbolos definidos
   }
 
+  public boolean alMenos1Mayuscula(String contrasenia){
+    for(int i = 1; i <= contrasenia.length()-1; i++){
+      if(Character.isUpperCase(contrasenia.charAt(i))){
+        return true;
+      }
+    }
+    return false;
+  }
+  public boolean contieneSimbolos(String contrasenia){
+    return simbolos.stream().anyMatch(s->contrasenia.contains(s));
+  }
   public boolean contieneSecuenciasRepetidas(String contrasenia) {
     for (int i = 1; i <= contrasenia.length()-1; i++) {
       if (contrasenia.charAt(i) == contrasenia.charAt(i-1)) {
