@@ -42,11 +42,11 @@ public class Seguridad {
              !this.esFacil(contrasenia) &&                      //no pertenece a las 10000 contrasenias mas faciles
              !this.contieneSecuenciasRepetidas(contrasenia) &&  //no contiene secuencias repetidas
              !this.perteneceADiccionario(contrasenia) &&       //no pertenece al diccionario
-             this.alMenos1Mayuscula(contrasenia) &&             //tiene al menos 1 mayuscula
+             this.alMenosUnaMayuscula(contrasenia) &&             //tiene al menos 1 mayuscula
              this.contieneSimbolos(contrasenia);                //contiene al menos 1 de los simbolos definidos
   }
 
-  public boolean alMenos1Mayuscula(String contrasenia){
+  public boolean alMenosUnaMayuscula(String contrasenia){
     for(int i = 1; i <= contrasenia.length()-1; i++){
       if(Character.isUpperCase(contrasenia.charAt(i))){
         return true;
@@ -81,7 +81,7 @@ public class Seguridad {
     return estaEnArchivo(contrasenia, "0_palabras_todas.txt");
   }
 
-  private boolean estaEnArchivo(String contrasenia, String ruta) {
+  public boolean estaEnArchivo(String contrasenia, String ruta) {
     try {
       File contraseniasArchivo = null;
       contraseniasArchivo = new File(ruta);
