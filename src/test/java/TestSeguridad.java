@@ -1,4 +1,5 @@
 import domain.Seguridad;
+import domain.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,9 @@ public class TestSeguridad {
   @Test
   public void contraseniaFacil() throws IOException {
     Seguridad seguridad = new Seguridad();
-    seguridad.setContrasenia("ksksksdsdsdsd");
-    Assertions.assertTrue(seguridad.validarContrasenia(seguridad.getContrasenia()));
+    Usuario usuario = new Usuario("juan", "contraseña");
+
+    Assertions.assertTrue(seguridad.validarContrasenia(usuario.getContrasenia()));
   }
 
 
