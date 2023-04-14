@@ -38,7 +38,11 @@ public class TestsDeSeguridad {
     Usuario usuario = new Usuario("juan", "aL@Ha12");
     Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()));
   }
-  //TODO test de contraseniaConSecuenciaRepetida
+  @Test
+  public void contraseniaConSecuenciaRepetida() throws IOException {
+    Usuario usuario = new Usuario("juan", "@Baaaaaaaaaaaa");
+    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()));
+  }
   @Test
   public void contraseniaValida() throws IOException {
     Usuario usuario = new Usuario("juan", "CasaEnElLag@");
