@@ -70,6 +70,25 @@ public class Seguridad {
     }
     return false;
   }
+
+  public boolean contieneSecuenciasRepetidas2(String contrasenia){
+
+    int largo= contrasenia.length();
+    for (int i=1; i<=Math.floor(largo/2);i++){
+      for (int j=0; j<=largo-2*i;j++) {
+        String subcad1=contrasenia.substring(j,j+i);
+        String subcad2=contrasenia.substring(j+i,2*i+j);
+        System.out.println (subcad1+ " " +subcad2 + "\n");// PARA PROBAR ERRORES
+        if ((subcad1).equals(subcad2)){
+          //System.out.println (subcad1+ " " +subcad2 + "\n");
+          return true;
+        }
+      }
+      System.out.println ("----------------------------------------\n");
+    }
+    return false;
+  }
+
   public boolean longitudMinima(String contrasenia) {
     return contrasenia.length() >= 8;
   }

@@ -48,8 +48,12 @@ public class TestsDeSeguridad {
     Usuario usuario = new Usuario("juan", "CasaEnElLag@");
     Assertions.assertTrue(seguridad.validarContrasenia(usuario.getContrasenia()));
   }
+  @Test
+  public void contraseniaConSecuenciaRepetida2() throws IOException {
+    String str = "HOLASAHOLASA";
 
-
+    Assertions.assertTrue(seguridad.contieneSecuenciasRepetidas2(str));
+  }
 
 
 }
