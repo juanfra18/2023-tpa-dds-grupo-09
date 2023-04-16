@@ -1,6 +1,8 @@
+import domain.InicioDeSesionException;
 import domain.Seguridad;
 import domain.Usuario;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,59 +10,67 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TestsDeSeguridad {
-  Seguridad seguridad;
+  Seguridad seguridad = new Seguridad();
 
-  @BeforeEach
-  public void init() throws FileNotFoundException {
-    seguridad = new Seguridad();
+  public TestsDeSeguridad() throws FileNotFoundException {
   }
+
   @Test
-  public void contraseniaFacil() throws IOException {
-    Usuario usuario = new Usuario("juan", "1234");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()));
+  public void inicioDeSecionFallido() throws IOException {
+    Assertions.assertThrows(InicioDeSesionException.class, () -> {
+      Usuario usuario = new Usuario("juan", "LaCasaEnElLago");
+    });
   }
+
+  @Test
+  public void inicioDeSecionExcitoso() throws IOException {
+    Assertions.assertDoesNotThrow(() -> {
+      Usuario usuario = new Usuario("juan", "LaCasaEnElLag@");
+    });
+  }
+
+  @Test
+  public void contraseniaFacil() throws IOException{
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "1234"));
+  }
+
   @Test
   public void contraseniaSinMayuscula() throws IOException {
-    Usuario usuario = new Usuario("juan", "aloha1212");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()));
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "al@ha12345"));
   }
+
   @Test
   public void contraseniaSinSimbolos() throws IOException {
-    Usuario usuario = new Usuario("juan", "aLoHa1212");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()), "La contraseña no tiene símbolos");
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "aLoHa1212"));
   }
+
   @Test
   public void contraseniaDeDiccionario() throws IOException {
-    Usuario usuario = new Usuario("juan", "elefante");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()),"La contraseña no puede ser una palabra de diccionario");
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "elefante"));
   }
+
   @Test
   public void contraseniaCorta() throws IOException {
-    Usuario usuario = new Usuario("juan", "aL@Ha12");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()), "La contraseña es muy corta (debe ser mayo a 8 caracteres)");
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "aL@Ha12"));
   }
+
   @Test
   public void contraseniaConSecuenciaRepetida() throws IOException {
-    Usuario usuario = new Usuario("juan", "@Baaaaaaaaaaaa");
-    Assertions.assertFalse(seguridad.validarContrasenia(usuario.getContrasenia()),"La contraseña posee secuencia repetida");
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "@Baaaaaaaaaaaaa"));
   }
+
   @Test
   public void contraseniaValida() throws IOException {
-    Usuario usuario = new Usuario("juan", "CasaEnElLag@");
-    Assertions.assertTrue(seguridad.validarContrasenia(usuario.getContrasenia()));
-
+    Assertions.assertEquals(null, seguridad.validarContrasenia("juan", "CasaEnElLag@"));
   }
+
   @Test
   public void contraseniaConSecuenciaRepetida2() throws IOException {
-    String str = "HOLASAHOLASA";
-    Assertions.assertTrue(seguridad.contieneSecuenciasRepetidas2(str));
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("juan", "HOLASAHOLASA"));
   }
 
   @Test
   public void contraseniaIgualANombreUsuario() throws IOException {
-    Usuario usuario = new Usuario("PedroPic@piedra11", "PedroPic@piedra11");
-    Assertions.assertFalse(seguridad.difiereNombreUsuario(usuario.getContrasenia()), "La contraseña es igual al nombre de usuario");
+    Assertions.assertNotEquals(null, seguridad.validarContrasenia("l10N3lMess!", "l10N3lMess!"));
   }
-
-
 }

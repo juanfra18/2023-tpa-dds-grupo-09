@@ -13,8 +13,8 @@ import java.util.List;
 @Getter
 public class Seguridad {
   private Integer longMin = 8;
+  private String mensajeDeError;
   private String linea;
-  private Usuario usuario;
   private boolean noSegura = false;
   private List<String> simbolos;
   FileReader fr = null;
@@ -35,15 +35,21 @@ public class Seguridad {
     simbolos.add("*");
   }
 
+  public void registrarse(String usuario, String contrasenia) throws InicioDeSesionException, IOException {
+    this.validarContrasenia(usuario, contrasenia);
+    if (mensajeDeError != null) throw new InicioDeSesionException("\ncontrasenia invalida: " + mensajeDeError);
+    //TODO no entiendo porque imprime un NULL despues de contrasenia invalida
+  }
 
-  public boolean validarContrasenia(String contrasenia) throws IOException { //extends RuntimeException?
-    return this.longitudMinima(contrasenia) &&                //minimo 8 caracteres
-            !this.esFacil(contrasenia) &&                      //no pertenece a las 10000 contrasenias mas faciles
-            !this.contieneSecuenciasRepetidas(contrasenia) &&  //no contiene secuencias repetidas
-            !this.perteneceADiccionario(contrasenia) &&        //no pertenece al diccionario
-            this.alMenosUnaMayuscula(contrasenia) &&           //tiene al menos 1 mayuscula
-            this.contieneSimbolos(contrasenia) &&              //contiene al menos 1 de los simbolos definidos
-            this.difiereNombreUsuario(contrasenia);            //la contraseña no es igual al nombre de usuario
+  public String validarContrasenia(String usuario, String contrasenia) throws IOException { //extends RuntimeException?
+    if (!this.longitudMinima(contrasenia)) mensajeDeError += "\nDebe contener al menos 8 caracteres";
+    if (this.esFacil(contrasenia)) mensajeDeError += "\nDemasiado facil";
+    if (this.contieneSecuenciasRepetidas(contrasenia)) mensajeDeError += "\nNo debe contener secuencia repetidas";
+    if (this.perteneceADiccionario(contrasenia)) mensajeDeError += "\nNo debe pertenecer al diccionario";
+    if (!this.alMenosUnaMayuscula(contrasenia)) mensajeDeError += "\nDebe contener al menos 1 mayuscula";
+    if (!this.contieneSimbolos(contrasenia)) mensajeDeError += "\nDebe contener al menos 1 simbolo";
+    if (!this.difiereNombreUsuario(usuario, contrasenia)) mensajeDeError += "\nDebe ser distinta al usuario";
+    return mensajeDeError;
   }
 
   public boolean alMenosUnaMayuscula(String contrasenia) {
@@ -130,7 +136,7 @@ public class Seguridad {
     return noSegura;
   }
 
-  public boolean difiereNombreUsuario(String contrasenia) {
-    return contrasenia != usuario.getContrasenia();
+  public boolean difiereNombreUsuario(String usuario, String contrasenia) {
+    return contrasenia != usuario;
   }
 }
