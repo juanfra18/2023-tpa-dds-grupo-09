@@ -1,8 +1,9 @@
-package domain;
+package domain.Usuario;
 
 import java.io.IOException;
-import java.util.Scanner;
 
+import domain.Seguridad.InicioDeSesionException;
+import domain.Seguridad.Seguridad;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,19 +18,14 @@ public class Usuario {
         this.username = username;
         this.contrasenia = contrasenia;
         seguridad = new Seguridad();
-        seguridad.registrarse(username,contrasenia);
+        seguridad.registrarUsuario(username,contrasenia);
     }
-    public void cambiarContrasenia(String nuevaContrasenia) throws IOException {
+    public void cambiarContrasenia(String nuevaContrasenia) throws IOException, InicioDeSesionException {
       if(nuevaContrasenia != contrasenia)
       {
-        seguridad.validarContrasenia(this.getUsername(),nuevaContrasenia);
+        seguridad.registrarUsuario(this.getUsername(),nuevaContrasenia);
         this.contrasenia = nuevaContrasenia;
       }
     }
-
-  public static void main(String[] args) throws InicioDeSesionException, IOException { //para probar codigo
-    Usuario juan = new Usuario("l10N3lMess!","l10N3lMess!");
-    Usuario tomas = new Usuario("tomas","1234");
-  }
 }
 

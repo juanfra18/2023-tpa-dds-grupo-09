@@ -1,27 +1,21 @@
-package domain;
+package domain.Seguridad;
 
-import lombok.Getter;
-import lombok.Setter;
+import Config.Config;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+public class ValidadorDeContrasenias {
 
-
-@Setter
-@Getter
-public class Seguridad {
   private Integer longMin = 8;
-  private String mensajeDeError;
-  private String linea;
-  private boolean noSegura = false;
   private List<String> simbolos;
-  FileReader fr = null;
-  BufferedReader br = null;
+  private String mensajeDeError = "";
+  private VerificadorDeArchivos verificadorDeArchivos;
 
-
-  public Seguridad() throws FileNotFoundException { //porque esta excepcion??
+  public ValidadorDeContrasenias() throws FileNotFoundException { //porque esta excepcion??
+    verificadorDeArchivos = new VerificadorDeArchivos();
     simbolos = new ArrayList<>();
     simbolos.add("_");
     simbolos.add("-");
@@ -34,13 +28,6 @@ public class Seguridad {
     simbolos.add("&");
     simbolos.add("*");
   }
-
-  public void registrarse(String usuario, String contrasenia) throws InicioDeSesionException, IOException {
-    this.validarContrasenia(usuario, contrasenia);
-    if (mensajeDeError != null) throw new InicioDeSesionException("\ncontrasenia invalida: " + mensajeDeError);
-    //TODO no entiendo porque imprime un NULL despues de contrasenia invalida
-  }
-
   public String validarContrasenia(String usuario, String contrasenia) throws IOException { //extends RuntimeException?
     if (!this.longitudMinima(contrasenia)) mensajeDeError += "\nDebe contener al menos 8 caracteres";
     if (this.esFacil(contrasenia)) mensajeDeError += "\nDemasiado facil";
@@ -51,7 +38,6 @@ public class Seguridad {
     if (!this.difiereNombreUsuario(usuario, contrasenia)) mensajeDeError += "\nDebe ser distinta al usuario";
     return mensajeDeError;
   }
-
   public boolean alMenosUnaMayuscula(String contrasenia) {
     for (int i = 1; i <= contrasenia.length() - 1; i++) {
       if (Character.isUpperCase(contrasenia.charAt(i))) {
@@ -60,11 +46,9 @@ public class Seguridad {
     }
     return false;
   }
-
   public boolean contieneSimbolos(String contrasenia) {
     return simbolos.stream().anyMatch(s -> contrasenia.contains(s));
   }
-
   public boolean contieneSecuenciasRepetidas(String contrasenia) {
     for (int i = 1; i <= contrasenia.length() - 1; i++) {
       if (contrasenia.charAt(i) == contrasenia.charAt(i - 1)) {
@@ -78,8 +62,7 @@ public class Seguridad {
     }
     return false;
   }
-
-  public boolean contieneSecuenciasRepetidas2(String contrasenia) {
+  public boolean contieneSubSecuenciasRepetidas(String contrasenia) {
 
     int largo = contrasenia.length();
     for (int i = 1; i <= Math.floor(largo / 2); i++) {
@@ -92,50 +75,18 @@ public class Seguridad {
           return true;
         }
       }
-      System.out.println("----------------------------------------\n");
     }
     return false;
   }
-
   public boolean longitudMinima(String contrasenia) {
     return contrasenia.length() >= 8;
   }
-
   public boolean esFacil(String contrasenia) throws IOException {
-    return estaEnArchivo(contrasenia, "10k-worst-passwords.txt");
+    return verificadorDeArchivos.estaEnArchivo(contrasenia,Config.archivoContraseniasFacilesRuta );
   }
-
   public boolean perteneceADiccionario(String contrasenia) throws IOException {
-    return estaEnArchivo(contrasenia, "0_palabras_todas.txt");
+    return verificadorDeArchivos.estaEnArchivo(contrasenia, Config.archivoDiccionarioRuta);
   }
-
-  public boolean estaEnArchivo(String contrasenia, String ruta) {
-    try {
-      File contraseniasArchivo = null;
-      contraseniasArchivo = new File(ruta);
-      ;
-      fr = new FileReader(contraseniasArchivo);
-      ;
-      br = new BufferedReader(fr);
-      ;
-      while ((linea = br.readLine()) != null) {
-        if (contrasenia.equals(linea)) noSegura = true;
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      try {
-        if (null != fr) {
-          fr.close();
-        }
-      } catch (Exception e2) {
-        e2.printStackTrace();
-      }
-
-    }
-    return noSegura;
-  }
-
   public boolean difiereNombreUsuario(String usuario, String contrasenia) {
     return contrasenia != usuario;
   }
