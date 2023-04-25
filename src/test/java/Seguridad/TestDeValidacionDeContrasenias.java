@@ -23,7 +23,7 @@ public class TestDeValidacionDeContrasenias {
     });
   }
   @Test
-  public void inicioDeSesionExcitoso() throws IOException {
+  public void inicioDeSesionExitoso() throws IOException {
     Assertions.assertDoesNotThrow(() -> {
       Usuario usuario = new Usuario(seguridad, "juan", "LaCasaEnElLag@");
     });

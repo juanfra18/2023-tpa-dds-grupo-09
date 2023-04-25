@@ -18,6 +18,9 @@ public class GestorDeUsuarios {
     }
 
     public void crearUsuario(String username, String contrasenia) throws IOException, InicioDeSesionException {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getUsername() == username) { throw new InicioDeSesionException("El usuario ya existe"); }
+        }
         usuarios.add(new Usuario(seguridad, username, contrasenia));
     }
 

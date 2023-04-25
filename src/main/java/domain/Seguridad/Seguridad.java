@@ -9,7 +9,7 @@ import java.io.*;
 public class Seguridad {
   private String mensajeDeError;
   private ValidadorDeContrasenias validador;
-  public Seguridad() throws FileNotFoundException { //porque esta excepcion??
+  public Seguridad() throws FileNotFoundException {
     validador = new ValidadorDeContrasenias();
   }
   public void registrarUsuario(String usuario, String contrasenia) throws InicioDeSesionException, IOException {
