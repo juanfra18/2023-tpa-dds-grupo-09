@@ -14,10 +14,10 @@ public class VerificadorDeArchivos
     boolean noSegura = false;
 
     try {
-      File contraseniasArchivo = null;
-      contraseniasArchivo = new File(ruta);
+      File archivo = null;
+      archivo = new File(ruta);
       ;
-      fr = new FileReader(contraseniasArchivo);
+      fr = new FileReader(archivo);
       ;
       br = new BufferedReader(fr);
       ;

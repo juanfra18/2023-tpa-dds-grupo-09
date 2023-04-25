@@ -1,6 +1,7 @@
 package Seguridad;
 
 import domain.Seguridad.InicioDeSesionException;
+import domain.Seguridad.Seguridad;
 import domain.Seguridad.ValidadorDeContrasenias;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
@@ -11,19 +12,20 @@ import java.io.IOException;
 
 public class TestDeValidacionDeContrasenias {
   ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
+  Seguridad seguridad = new Seguridad();
 
   public TestDeValidacionDeContrasenias() throws FileNotFoundException {
   }
   @Test
-  public void inicioDeSecionFallido() throws IOException {
+  public void inicioDeSesionFallido() throws IOException {
     Assertions.assertThrows(InicioDeSesionException.class, () -> {
-      Usuario usuario = new Usuario("juan", "LaCasaEnElLago");
+      Usuario usuario = new Usuario(seguridad, "juan", "LaCasaEnElLago");
     });
   }
   @Test
-  public void inicioDeSecionExcitoso() throws IOException {
+  public void inicioDeSesionExcitoso() throws IOException {
     Assertions.assertDoesNotThrow(() -> {
-      Usuario usuario = new Usuario("juan", "LaCasaEnElLag@");
+      Usuario usuario = new Usuario(seguridad, "juan", "LaCasaEnElLag@");
     });
   }
   @Test
@@ -62,7 +64,7 @@ public class TestDeValidacionDeContrasenias {
   }
 
   @Test
-  public void contraseniaConSecuenciaRepetida2() throws IOException {
+  public void contraseniaConSubSecuenciaRepetida() throws IOException {
     Assertions.assertNotEquals("", validador.validarContrasenia("juan", "HOLASAHOLASA"));
   }
 

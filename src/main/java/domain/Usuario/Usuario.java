@@ -4,26 +4,28 @@ import java.io.IOException;
 
 import domain.Seguridad.InicioDeSesionException;
 import domain.Seguridad.Seguridad;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
+
 public class Usuario {
+    public String getUsername() {
+        return username;
+    }
+
     private String username;
     private String contrasenia;
-    private Seguridad seguridad ;
+    private String mail;
+    private String apellido;
+    private String nombre;
 
-  public Usuario(String username, String contrasenia) throws IOException, InicioDeSesionException {
+  public Usuario(Seguridad seguridad, String username, String contrasenia) throws IOException, InicioDeSesionException {
         this.username = username;
         this.contrasenia = contrasenia;
-        seguridad = new Seguridad();
         seguridad.registrarUsuario(username,contrasenia);
     }
-    public void cambiarContrasenia(String nuevaContrasenia) throws IOException, InicioDeSesionException {
+    public void cambiarContrasenia(Seguridad seguridad, String nuevaContrasenia) throws IOException, InicioDeSesionException {
       if(nuevaContrasenia != contrasenia)
       {
-        seguridad.registrarUsuario(this.getUsername(),nuevaContrasenia);
+        seguridad.registrarUsuario(this.username,nuevaContrasenia);
         this.contrasenia = nuevaContrasenia;
       }
     }

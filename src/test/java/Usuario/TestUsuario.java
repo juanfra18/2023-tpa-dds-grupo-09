@@ -15,10 +15,11 @@ public class TestUsuario {
 
     @Test
     public void cambiarContrasenia() throws InicioDeSesionException, IOException {
-        Usuario usuario = new Usuario("juan", "HolaMundo@3");
+        seguridad = new Seguridad();
+        Usuario usuario = new Usuario(seguridad,"juan", "HolaMundo@3");
         String nuevaContrasenia = "MicAsa!*#";
         Assertions.assertDoesNotThrow(() -> {
-            usuario.cambiarContrasenia(nuevaContrasenia);
+            usuario.cambiarContrasenia(seguridad, nuevaContrasenia);
         });
     }
 }
