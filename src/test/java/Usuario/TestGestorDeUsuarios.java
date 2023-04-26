@@ -11,7 +11,7 @@ public class TestGestorDeUsuarios {
   GestorDeUsuarios gestor;
 
   @Test
-  public void testGestorContraseniaDebil() throws FileNotFoundException, InicioDeSesionException {
+  public void testGestorContraseniaDebil(){
     gestor = new GestorDeUsuarios();
     Assertions.assertThrows(InicioDeSesionException.class, () -> {
       gestor.crearUsuario("juan", "hola1234");
@@ -19,7 +19,7 @@ public class TestGestorDeUsuarios {
   }
 
   @Test
-  public void testGestorContraseniaFuerte() throws InicioDeSesionException, FileNotFoundException {
+  public void testGestorContraseniaFuerte(){
     gestor = new GestorDeUsuarios();
     Assertions.assertDoesNotThrow(() -> {
       gestor.crearUsuario("juan", "M@1kaolv39#");

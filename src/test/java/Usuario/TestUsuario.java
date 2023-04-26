@@ -6,17 +6,15 @@ import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 public class TestUsuario {
 
     Usuario usuario;
     Seguridad seguridad;
 
     @Test
-    public void cambiarContrasenia() throws InicioDeSesionException, IOException {
+    public void cambiarContrasenia() throws InicioDeSesionException{
         seguridad = new Seguridad();
-        Usuario usuario = new Usuario(seguridad,"juan", "HolaMundo@3");
+        usuario = new Usuario(seguridad,"juan", "HolaMundo@3");
         String nuevaContrasenia = "MicAsa!*#";
         Assertions.assertDoesNotThrow(() -> {
             usuario.cambiarContrasenia(seguridad, nuevaContrasenia);

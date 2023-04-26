@@ -1,9 +1,6 @@
 package domain.Seguridad;
 
 import Config.Config;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 
 public class ValidadorDeContrasenias {
 
@@ -11,10 +8,10 @@ public class ValidadorDeContrasenias {
   private String mensajeDeError = "";
   private VerificadorDeArchivos verificadorDeArchivos;
 
-  public ValidadorDeContrasenias() throws FileNotFoundException { //porque esta excepcion??
+  public ValidadorDeContrasenias(){ //porque esta excepcion??
     verificadorDeArchivos = new VerificadorDeArchivos();
   }
-  public String validarContrasenia(String usuario, String contrasenia) throws IOException { //extends RuntimeException?
+  public String validarContrasenia(String usuario, String contrasenia){
     if (!this.longitudMinima(contrasenia)) mensajeDeError += "\nDebe contener al menos 8 caracteres";
     if (this.esFacil(contrasenia)) mensajeDeError += "\nDemasiado facil";
     if (this.contieneSecuenciasRepetidas(contrasenia) || this.contieneSubSecuenciasRepetidas(contrasenia)) mensajeDeError += "\nNo debe contener secuencia repetidas";
@@ -74,10 +71,10 @@ public class ValidadorDeContrasenias {
   public boolean longitudMinima(String contrasenia) {
     return contrasenia.length() >= 8;
   }
-  public boolean esFacil(String contrasenia) throws IOException {
+  public boolean esFacil(String contrasenia)  {
     return verificadorDeArchivos.estaEnArchivo(contrasenia,Config.archivoContraseniasFacilesRuta );
   }
-  public boolean perteneceADiccionario(String contrasenia) throws IOException {
+  public boolean perteneceADiccionario(String contrasenia)  {
     return verificadorDeArchivos.estaEnArchivo(contrasenia, Config.archivoDiccionarioRuta);
   }
   public boolean difiereNombreUsuario(String usuario, String contrasenia) {

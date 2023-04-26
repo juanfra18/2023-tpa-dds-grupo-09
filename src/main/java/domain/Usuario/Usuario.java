@@ -1,7 +1,5 @@
 package domain.Usuario;
 
-import java.io.IOException;
-
 import domain.Seguridad.InicioDeSesionException;
 import domain.Seguridad.Seguridad;
 
@@ -17,12 +15,12 @@ public class Usuario {
     private String apellido;
     private String nombre;
 
-  public Usuario(Seguridad seguridad, String username, String contrasenia) throws IOException, InicioDeSesionException {
+  public Usuario(Seguridad seguridad, String username, String contrasenia) throws InicioDeSesionException {
         this.username = username;
         this.contrasenia = contrasenia;
         seguridad.registrarUsuario(username,contrasenia);
     }
-    public void cambiarContrasenia(Seguridad seguridad, String nuevaContrasenia) throws IOException, InicioDeSesionException {
+    public void cambiarContrasenia(Seguridad seguridad, String nuevaContrasenia) throws InicioDeSesionException {
       if(nuevaContrasenia != contrasenia)
       {
         seguridad.registrarUsuario(this.username,nuevaContrasenia);
