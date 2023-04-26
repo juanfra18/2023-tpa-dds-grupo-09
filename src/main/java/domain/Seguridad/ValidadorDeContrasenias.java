@@ -11,14 +11,14 @@ public class ValidadorDeContrasenias {
   public ValidadorDeContrasenias(){ //porque esta excepcion??
     verificadorDeArchivos = new VerificadorDeArchivos();
   }
-  public String validarContrasenia(String usuario, String contrasenia){
+  public String validarContrasenia(String username, String contrasenia){
     if (!this.longitudMinima(contrasenia)) mensajeDeError += "\nDebe contener al menos 8 caracteres";
     if (this.esFacil(contrasenia)) mensajeDeError += "\nDemasiado facil";
     if (this.contieneSecuenciasRepetidas(contrasenia) || this.contieneSubSecuenciasRepetidas(contrasenia)) mensajeDeError += "\nNo debe contener secuencia repetidas";
     if (this.perteneceADiccionario(contrasenia)) mensajeDeError += "\nNo debe pertenecer al diccionario";
     if (!this.alMenosUnaMayuscula(contrasenia)) mensajeDeError += "\nDebe contener al menos 1 mayuscula";
     if (!this.contieneSimbolos(contrasenia)) mensajeDeError += "\nDebe contener al menos 1 simbolo";
-    if (!this.difiereNombreUsuario(usuario, contrasenia)) mensajeDeError += "\nDebe ser distinta al usuario";
+    if (!this.difiereNombreUsuario(username, contrasenia)) mensajeDeError += "\nDebe ser distinta al usuario";
     return mensajeDeError;
   }
   public boolean alMenosUnaMayuscula(String contrasenia) {
@@ -77,7 +77,7 @@ public class ValidadorDeContrasenias {
   public boolean perteneceADiccionario(String contrasenia)  {
     return verificadorDeArchivos.estaEnArchivo(contrasenia, Config.archivoDiccionarioRuta);
   }
-  public boolean difiereNombreUsuario(String usuario, String contrasenia) {
-    return contrasenia != usuario;
+  public boolean difiereNombreUsuario(String username, String contrasenia) {
+    return contrasenia != username;
   }
 }

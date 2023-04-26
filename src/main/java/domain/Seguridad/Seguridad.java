@@ -11,8 +11,8 @@ public class Seguridad {
   public Seguridad(){
     validador = new ValidadorDeContrasenias();
   }
-  public void registrarUsuario(String usuario, String contrasenia) throws InicioDeSesionException{
-    mensajeDeError = validador.validarContrasenia(usuario, contrasenia);
+  public void registrarUsuario(String username, String contrasenia) throws InicioDeSesionException{
+    mensajeDeError = validador.validarContrasenia(username, contrasenia);
     if (mensajeDeError != "") throw new InicioDeSesionException("\ncontrasenia invalida: " + mensajeDeError);
   }
 }
