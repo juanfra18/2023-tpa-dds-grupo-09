@@ -1,30 +1,25 @@
 package domain.Usuario;
 
-import domain.Seguridad.InicioDeSesionException;
-import domain.Seguridad.Seguridad;
+import domain.Seguridad.RegistroDeUsuarioException;
+import domain.Seguridad.ValidadorDeContrasenias;
+import lombok.Getter;
 
 
 public class Usuario {
-    public String getUsername() {
-        return username;
-    }
-
+    @Getter
     private String username;
     private String contrasenia;
-    private String mail;
-    private String apellido;
-    private String nombre;
+    private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
 
-  public Usuario(Seguridad seguridad, String username, String contrasenia) throws InicioDeSesionException {
-        this.username = username;
-        this.contrasenia = contrasenia;
-        seguridad.registrarUsuario(username,contrasenia);
+  public Usuario(String username, String contrasenia) throws RegistroDeUsuarioException {
+      validador.validarContrasenia(contrasenia);
+      this.username = username;
+      this.contrasenia = contrasenia;
     }
-    public void cambiarContrasenia(Seguridad seguridad, String nuevaContrasenia) throws InicioDeSesionException {
-      if(nuevaContrasenia != contrasenia)
-      {
-        seguridad.registrarUsuario(this.username,nuevaContrasenia);
-        this.contrasenia = nuevaContrasenia;
+    public void cambiarContrasenia(String nuevaContrasenia) throws RegistroDeUsuarioException {
+      if(nuevaContrasenia != contrasenia) {
+          validador.validarContrasenia(nuevaContrasenia);
+          this.contrasenia = nuevaContrasenia;
       }
     }
 }
