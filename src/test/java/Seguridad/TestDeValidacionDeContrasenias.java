@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 public class TestDeValidacionDeContrasenias {
   ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
 
-  //@Test
-  //public void inicioDeSesionFallido() {
-  //  Assertions.assertThrows(RegistroDeUsuarioException.class, () -> {
-  //    Usuario usuario = new Usuario("juan", "LaCasaEnElLago");
-  //  });
-  //}
+  @Test
+  public void inicioDeSesionFallido() {
+    Assertions.assertThrows(RegistroDeUsuarioException.class, () -> {
+      Usuario usuario = new Usuario("juan", "LaCasaEnElLago");
+    });
+  }
 
   @Test
   public void inicioDeSesionExitoso() {

@@ -2,6 +2,8 @@ package domain.Seguridad.Reglas;
 
 import domain.Seguridad.SistemaDeArchivos;
 
+import java.io.IOException;
+
 public class NoEstaEnArchivo implements ReglaContrasenia{
     private String ruta;
 
@@ -9,9 +11,12 @@ public class NoEstaEnArchivo implements ReglaContrasenia{
         this.ruta = ruta;
     }
 
-    public boolean cumpleRegla(String contrasenia){
+    public boolean cumpleRegla(String contrasenia)  {
         SistemaDeArchivos verificador = new SistemaDeArchivos();
-        //return !verificador.estaEnArchivo(contrasenia, ruta);
-        return true;
+        try {
+            return !verificador.estaEnArchivo(contrasenia, ruta);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
