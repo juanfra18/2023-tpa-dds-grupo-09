@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioDeUsuarios {
-    private List<String> usernames;
+    private List<Usuario> usuarios;
 
     public RepositorioDeUsuarios(){
-        usernames = new ArrayList<>();
+        usuarios = new ArrayList<>();
     }
 
-    public void validarUsername(String username) throws RegistroDeUsuarioException {
-        if (usernames.contains(username)) {
+    public void validarUsername(Usuario usuario) throws RegistroDeUsuarioException {
+        if (usuarios.stream().anyMatch(u -> (usuario.getUsername() == u.getUsername()))) {
             throw new RegistroDeUsuarioException("El nombre de usuario ya ha sido utilizado");
         }
         else {
-            usernames.add(username);
+            usuarios.add(usuario);
         }
     }
 

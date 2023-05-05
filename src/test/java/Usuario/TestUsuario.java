@@ -20,11 +20,19 @@ public class TestUsuario {
     }
 
     @Test
-    public void testRepositorio() throws RegistroDeUsuarioException {
+    public void testRepositorioExito() throws RegistroDeUsuarioException {
         RepositorioDeUsuarios repo = new RepositorioDeUsuarios();
         Usuario usuario1 = new Usuario("pedrito", "HolaMundo@3");
-        repo.validarUsername(usuario1.getUsername());
+        repo.validarUsername(usuario1);
+        Usuario usuario2 = new Usuario("jorge", "HolaMundo@3");
+        Assertions.assertDoesNotThrow(() -> repo.validarUsername(usuario2));
+    }
+    @Test
+    public void testRepositorioFalla() throws RegistroDeUsuarioException {
+        RepositorioDeUsuarios repo = new RepositorioDeUsuarios();
+        Usuario usuario1 = new Usuario("pedrito", "HolaMundo@3");
+        repo.validarUsername(usuario1);
         Usuario usuario2 = new Usuario("pedrito", "HolaMundo@3");
-        Assertions.assertThrows(RegistroDeUsuarioException.class, () -> repo.validarUsername(usuario2.getUsername()));
+        Assertions.assertThrows(RegistroDeUsuarioException.class, () -> repo.validarUsername(usuario2));
     }
 }
