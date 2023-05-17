@@ -25,112 +25,33 @@
       <version>5.9.2</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.26</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>com.aerse</groupId>
-          <artifactId>mockfs</artifactId>
-          <version>1.4</version>
-      </dependency>
     <dependency>
-      <groupId>com.aerse</groupId>
-      <artifactId>mockfs</artifactId>
-      <version>1.4</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.26</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>net.incongru</groupId>
-      <artifactId>wiseio</artifactId>
-      <version>1.0-rc1</version>
+        <groupId>com.aerse</groupId>
+        <artifactId>mockfs</artifactId>
+        <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>io.github.novacrypto</groupId>
-      <artifactId>ToRuntime</artifactId>
-      <version>2022.01.17</version>
+      <groupId>com.opencsv</groupId>
+      <artifactId>opencsv</artifactId>
+      <version>5.7.1</version>
     </dependency>
     <dependency>
-      <groupId>com.machinezoo.noexception</groupId>
-      <artifactId>noexception-slf4j</artifactId>
-      <version>1.0.1</version>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>retrofit</artifactId>
+      <version>2.9.0</version>
     </dependency>
     <dependency>
-      <groupId>com.github.brunotl</groupId>
-      <artifactId>boost_exception</artifactId>
-      <version>1.81.0</version>
+      <groupId>com.squareup.retrofit2</groupId>
+      <artifactId>converter-gson</artifactId>
+      <version>2.9.0</version>
     </dependency>
-    <dependency>
-      <groupId>su.piskun.exlib</groupId>
-      <artifactId>spring</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>su.piskun.exlib</groupId>
-      <artifactId>core</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>io.github.adj5672</groupId>
-      <artifactId>enumerate-exception</artifactId>
-      <version>0.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>com.aerse</groupId>
-      <artifactId>mockfs</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>com.aerse</groupId>
-      <artifactId>mockfs</artifactId>
-      <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>net.incongru</groupId>
-      <artifactId>wiseio</artifactId>
-      <version>1.0-rc1</version>
-    </dependency>
-    <dependency>
-      <groupId>net.incongru</groupId>
-      <artifactId>wiseio</artifactId>
-      <version>1.0-rc1</version>
-    </dependency>
-    <dependency>
-      <groupId>io.github.novacrypto</groupId>
-      <artifactId>ToRuntime</artifactId>
-      <version>2022.01.17</version>
-    </dependency>
-    <dependency>
-      <groupId>com.machinezoo.noexception</groupId>
-      <artifactId>noexception-slf4j</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.brunotl</groupId>
-      <artifactId>boost_exception</artifactId>
-      <version>1.81.0</version>
-    </dependency>
-    <dependency>
-      <groupId>su.piskun.exlib</groupId>
-      <artifactId>spring</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>su.piskun.exlib</groupId>
-      <artifactId>core</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>su.piskun.exlib</groupId>
-      <artifactId>exlib</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>io.github.adj5672</groupId>
-      <artifactId>enumerate-exception</artifactId>
-      <version>0.0.2</version>
-    </dependency>
+
   </dependencies>
 
   <build>

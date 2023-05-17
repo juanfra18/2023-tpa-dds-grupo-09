@@ -1,7 +1,7 @@
 package domain.Seguridad.Reglas;
 
 import Config.Config;
-import domain.Seguridad.SistemaDeArchivos;
+import Servicios.Archivos.SistemaDeArchivos;
 
 import java.io.IOException;
 

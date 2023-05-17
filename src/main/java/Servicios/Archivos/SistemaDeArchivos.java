@@ -1,9 +1,12 @@
-package domain.Seguridad;
+package Servicios.Archivos;
+
+import com.opencsv.exceptions.CsvException;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class SistemaDeArchivos
 {
@@ -29,6 +32,11 @@ public class SistemaDeArchivos
     }
 
     return encontrado;
+  }
+
+  public List<String[]> csvALista(String ruta) throws IOException, CsvException {
+    AdapterLectorCSV adapter = new AdapterOpenCSV();
+    return adapter.leer(ruta);
   }
 
 }
