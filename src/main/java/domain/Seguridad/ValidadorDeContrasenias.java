@@ -1,6 +1,7 @@
 package domain.Seguridad;
 
 import Config.Config;
+import Servicios.Archivos.SistemaDeArchivos;
 import domain.Seguridad.Reglas.*;
 
 import java.util.ArrayList;
@@ -8,14 +9,32 @@ import java.util.List;
 
 public class ValidadorDeContrasenias {
   private List<ReglaContrasenia> reglas;
+  private List<Character> simbolos;
   public ValidadorDeContrasenias(){
     reglas = new ArrayList<>();
+    simbolos = new ArrayList<>();
+    SistemaDeArchivos verificador = new SistemaDeArchivos();
+
+    simbolos.add('-');
+    simbolos.add('_');
+    simbolos.add('!');
+    simbolos.add('@');
+    simbolos.add('#');
+    simbolos.add('$');
+    simbolos.add('%');
+    simbolos.add('^');
+    simbolos.add('&');
+    simbolos.add('*');
+    simbolos.add('/');
+    simbolos.add('=');
+    simbolos.add('+');
+
     reglas.add(new AlMenosUnaMayuscula());
-    reglas.add(new ContieneSimbolos());
+    reglas.add(new ContieneSimbolos(simbolos));
     reglas.add(new NoContieneSecuenciasRepetidas());
     reglas.add(new LongitudMinima());
-    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_CONTRASENIAS_COMUNES_RUTA));
-    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_DICCIONARIO_RUTA));
+    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_CONTRASENIAS_COMUNES_RUTA,verificador));
+    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_DICCIONARIO_RUTA,verificador));
   }
   public void validarContrasenia(String contrasenia){
     if (!verificaReglas(contrasenia)) {

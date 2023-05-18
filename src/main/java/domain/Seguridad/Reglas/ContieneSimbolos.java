@@ -1,19 +1,15 @@
 package domain.Seguridad.Reglas;
 
-import Config.Config;
-import Servicios.Archivos.SistemaDeArchivos;
-
-import java.io.IOException;
+import java.util.List;
 
 public class ContieneSimbolos implements ReglaContrasenia{
+    private List<Character> simbolos;
+
+    public ContieneSimbolos(List<Character> simbolos) {
+        this.simbolos = simbolos;
+    }
+
     public boolean cumpleRegla(String contrasenia){
-        SistemaDeArchivos verificador = new SistemaDeArchivos();
-        return contrasenia.chars().anyMatch(car -> {
-            try {
-                return verificador.estaEnArchivo(Character.toString(car), Config.ARCHIVO_SIMBOLOS_RUTA);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        return simbolos.stream().anyMatch(s->contrasenia.contains(s.toString()));
     }
 }

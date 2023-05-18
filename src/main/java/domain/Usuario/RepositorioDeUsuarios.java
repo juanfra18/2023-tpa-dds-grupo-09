@@ -12,7 +12,7 @@ public class RepositorioDeUsuarios {
         usuarios = new ArrayList<>();
     }
 
-    public void validarUsername(Usuario usuario) throws RegistroDeUsuarioException {
+    public void agregarUsername(Usuario usuario) throws RegistroDeUsuarioException {
         if (usuarios.stream().anyMatch(u -> (usuario.getUsername() == u.getUsername()))) {
             throw new RegistroDeUsuarioException("El nombre de usuario ya ha sido utilizado");
         }
