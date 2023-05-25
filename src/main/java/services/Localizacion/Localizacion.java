@@ -1,4 +1,4 @@
-package Servicios.Localizacion;
+package services.Localizacion;
 
 public interface Localizacion {
 }

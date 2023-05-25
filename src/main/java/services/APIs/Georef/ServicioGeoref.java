@@ -1,9 +1,9 @@
-package Servicios.APIs.Georef;
+package services.APIs.Georef;
 
-import Servicios.Localizacion.ListadoDeDepartamentos;
-import Servicios.Localizacion.ListadoDeMunicipios;
-import Servicios.Localizacion.ListadoDeProvincias;
-import Servicios.Localizacion.Provincia;
+import services.Localizacion.ListadoDeDepartamentos;
+import services.Localizacion.ListadoDeMunicipios;
+import services.Localizacion.ListadoDeProvincias;
+import services.Localizacion.Provincia;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class ServicioGeoref {
     private static ServicioGeoref instancia = null;
-    private static int maximaCantidadRegistrosDefault = 200;
+    private static int maximaCantidadRegistrosDefault = 500;
     private static final String urlApi = "https://apis.datos.gob.ar/georef/api/";
     private Retrofit retrofit;
 

@@ -1,4 +1,4 @@
-package Servicios.Localizacion;
+package services.Localizacion;
 
 import java.util.List;
 import java.util.Optional;

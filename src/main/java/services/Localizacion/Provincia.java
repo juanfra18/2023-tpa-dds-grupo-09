@@ -1,6 +1,4 @@
-package Servicios.Localizacion;
-
-import java.util.List;
+package services.Localizacion;
 
 public class Provincia {
     public int id;

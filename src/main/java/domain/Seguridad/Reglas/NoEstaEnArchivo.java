@@ -1,6 +1,6 @@
 package domain.Seguridad.Reglas;
 
-import Servicios.Archivos.SistemaDeArchivos;
+import services.Archivos.SistemaDeArchivos;
 import domain.Seguridad.NoSeEncontroElArchivo;
 
 import java.io.IOException;

@@ -1,9 +1,8 @@
-package Servicios.APIs.Georef;
+package services.APIs.Georef;
 
-import Servicios.Localizacion.ListadoDeDepartamentos;
-import Servicios.Localizacion.ListadoDeMunicipios;
-import Servicios.Localizacion.ListadoDeProvincias;
-import Servicios.Localizacion.Provincia;
+import services.Localizacion.ListadoDeDepartamentos;
+import services.Localizacion.ListadoDeMunicipios;
+import services.Localizacion.ListadoDeProvincias;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

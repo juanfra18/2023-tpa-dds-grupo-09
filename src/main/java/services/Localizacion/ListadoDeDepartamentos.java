@@ -1,13 +1,12 @@
-package Servicios.Localizacion;
+package services.Localizacion;
 
 import java.util.List;
 
-public class ListadoDeMunicipios {
+public class ListadoDeDepartamentos {
     public int cantidad;
     public int total;
-    public int inicio;
     public Parametro parametros;
-    public List<Municipio> municipios;
+    public List<Departamento> departamentos;
 
     private class Parametro {
         public List<String> campos;

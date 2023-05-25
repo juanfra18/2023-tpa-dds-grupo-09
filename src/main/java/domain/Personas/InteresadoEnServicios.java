@@ -1,9 +1,8 @@
 package domain.Personas;
 
-import Servicios.APIs.Georef.ServicioGeoref;
-import Servicios.Localizacion.Localizacion;
-import domain.Entidad;
-import domain.Servicio;
+import domain.Servicios.Servicio;
+import services.Localizacion.Localizacion;
+import domain.Servicios.Entidad;
 import domain.Usuario.Usuario;
 
 import java.util.List;
@@ -17,5 +16,6 @@ public class InteresadoEnServicios {
     private List<Localizacion> localizaciones;
     private Usuario usuario;
     public void agregarLocalizacion(int id){
+        //TODO
     }
 }
