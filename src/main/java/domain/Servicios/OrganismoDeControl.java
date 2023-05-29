@@ -1,5 +1,9 @@
-package domain.Personas;
+package domain.Servicios;
 
+import domain.Personas.InteresadoEnServicios;
+import lombok.Getter;
+
+@Getter
 public class OrganismoDeControl {
   private String nombre;
   private InteresadoEnServicios persona;
