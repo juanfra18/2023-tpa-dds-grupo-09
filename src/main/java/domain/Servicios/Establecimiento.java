@@ -1,6 +1,7 @@
 package domain.Servicios;
 
 import lombok.Getter;
+import services.Localizacion.Localizacion;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ public class Establecimiento {
   private String direccion;
   private TipoEstablecimiento tipoEstablecimiento;
   private List<Servicio> servicios;
-  public Establecimiento(String nombre, String direccion, String tipoEstablecimiento){
+  private Localizacion localizacion;
+  public Establecimiento(String nombre, String tipoEstablecimiento){
     this.nombre = nombre;
-    this.direccion = direccion;
     this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
   }
 }

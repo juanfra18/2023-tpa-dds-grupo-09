@@ -1,7 +1,7 @@
 package domain.Personas;
 
 import domain.Servicios.Servicio;
-import domain.Servicios.Entidad;
+import domain.Servicios.EntidadPrestadora;
 import domain.Usuario.Usuario;
 import services.Localizacion.*;
 
@@ -13,7 +13,7 @@ public class InteresadoEnServicios {
     private String apellido;
     private String nombre;
     private String mail;
-    private List<Entidad> entidadesDeInteres;
+    private List<EntidadPrestadora> entidadesDeInteres;
     private List<Servicio> serviciosDeInteres;
     private List<Localizacion> localizaciones;
     private Usuario usuario;
@@ -24,6 +24,7 @@ public class InteresadoEnServicios {
             Departamento departamentoSeleccionado = new Departamento(idDepartamentoSeleccionado);
             departamentoSeleccionado.setIdMunicipio(idMunicipioSeleccionado);
             departamentoSeleccionado.setIdProvincia(idProvinciaSeleccionado);
+
             localizaciones.add(departamentoSeleccionado);
         }
         else if(idProvinciaSeleccionado != 0 && idMunicipioSeleccionado != 0)
@@ -38,7 +39,7 @@ public class InteresadoEnServicios {
             localizaciones.add(provinciaSeleccionada);
         }
     }
-    public void agregarEntidadDeInteres(Entidad entidad){
+    public void agregarEntidadDeInteres(EntidadPrestadora entidad){
         entidadesDeInteres.add(entidad);
     }
     public void agregarServiciosDeInteres(Servicio servicio)

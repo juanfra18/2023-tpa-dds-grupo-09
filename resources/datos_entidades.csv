@@ -1,2 +1,2 @@
-Subte,ESTABLECIMIENTO,"nombre_a,direccion_a,ESTACION","nombre_b,direccion_b,SUCURSAL"
-Tren,ESTABLECIMIENTO
+OrganismoDeControl,EntidadPrestadora,entidad,tipoEntidad,establecimiento,tipoEstablecimiento
+OrganismoDeControl,EntidadPrestadora1,entidad1,tipoEntidad,establecimiento1,tipoEstablecimiento
