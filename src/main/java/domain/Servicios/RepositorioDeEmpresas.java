@@ -47,39 +47,38 @@ public class RepositorioDeEmpresas {
                         refOrganismo = indice;
                     }
                 }
-
                 if(!empresas.get(refOrganismo).getEntidadesPrestadoras().stream().anyMatch(entidadPrestadora1 -> entidadPrestadora1.getNombre() == elemento[1])) {
                     entidad.agregarEstablecimiento(establecimiento);
                     entidadPrestadora.agregarEntidad(entidad);
                     empresas.get(refOrganismo).agregarEntidadPrestadora(entidadPrestadora);
                 }
+                else {
 
-                int refEntidadPrestadora = -1;
-                for(int indice = 0;indice<empresas.get(refOrganismo).getEntidadesPrestadoras().size();indice++)
-                {
-                    if(empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getNombre() == elemento[0])
-                    {
-                        refEntidadPrestadora = indice;
+                    int refEntidadPrestadora = -1;
+                    for (int indice = 0; indice < empresas.get(refOrganismo).getEntidadesPrestadoras().size(); indice++) {
+                        if (empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getNombre() == elemento[0]) {
+                            refEntidadPrestadora = indice;
+                        }
                     }
-                }
 
-                if(!empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).
+                    if (!empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).
                         getEntidades().stream().anyMatch(entidad1 -> entidad1.getNombre() == elemento[2])) {
-                    entidad.agregarEstablecimiento(establecimiento);
-                    entidadPrestadora.agregarEntidad(entidad);
-                }
-
-                int refEntidad = -1;
-                for(int indice = 0;indice<empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().size();indice++)
-                {
-                    if(empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().get(refEntidad).getNombre() == elemento[0])
-                    {
-                        refEntidadPrestadora = indice;
-                    }
-                }
-                if(!empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().get(refEntidad).
-                        getEstablecimientos().stream().anyMatch(establecimiento1 -> establecimiento1.getNombre() == elemento[4])){
                         entidad.agregarEstablecimiento(establecimiento);
+                        entidadPrestadora.agregarEntidad(entidad);
+                    }
+                    else {
+
+                        int refEntidad = -1;
+                        for (int indice = 0; indice < empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().size(); indice++) {
+                            if (empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().get(refEntidad).getNombre() == elemento[0]) {
+                                refEntidadPrestadora = indice;
+                            }
+                        }
+                        if (!empresas.get(refOrganismo).getEntidadesPrestadoras().get(refEntidadPrestadora).getEntidades().get(refEntidad).
+                            getEstablecimientos().stream().anyMatch(establecimiento1 -> establecimiento1.getNombre() == elemento[4])) {
+                            entidad.agregarEstablecimiento(establecimiento);
+                        }
+                    }
                 }
             }
         }
