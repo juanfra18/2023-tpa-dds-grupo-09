@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Entidad {
+public class Entidad extends Empresa{
   private String nombre;
   private TipoEntidad tipoEntidad;
   private List<Establecimiento> establecimientos;
@@ -21,11 +21,5 @@ public class Entidad {
   }
   public void agregarEstablecimiento(Establecimiento establecimiento){
     establecimientos.add(establecimiento);
-  }
-  public void asignarPersona(InteresadoEnServicios persona){
-    this.persona = persona;
-  }
-  public void enviarInformacionAPersona(Informacion informacion){
-    //TODO
   }
 }

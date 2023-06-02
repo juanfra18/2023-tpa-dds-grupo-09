@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 public class TestCargaMasivaCSV {
-  static RepositorioDeEntidadesYOrganismos repo;
+  static RepositorioDeEmpresas repo;
 
   @BeforeAll
   public static void init1() throws IOException, CsvException {
-    repo = new RepositorioDeEntidadesYOrganismos();
+    repo = new RepositorioDeEmpresas();
   }
 
   @Test

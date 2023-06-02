@@ -1,7 +1,9 @@
 package services.Localizacion;
 
-import java.util.List;
+import lombok.Getter;
 
+import java.util.List;
+@Getter
 public class ListadoDeDepartamentos {
     public int cantidad;
     public int total;

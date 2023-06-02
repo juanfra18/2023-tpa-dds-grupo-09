@@ -1,8 +1,10 @@
 package services.Localizacion;
 
+import lombok.Getter;
+
 import java.util.List;
 import java.util.Optional;
-
+@Getter
 public class ListadoDeProvincias {
     public int cantidad;
     public int total;

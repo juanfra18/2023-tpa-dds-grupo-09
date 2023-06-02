@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class RepositorioDeEntidadesYOrganismos {
+public class RepositorioDeEmpresas {
     private List<Entidad> entidades;
     private List<OrganismoDeControl> organismos;
-    public RepositorioDeEntidadesYOrganismos() throws IOException, CsvException {
+    public RepositorioDeEmpresas() throws IOException, CsvException {
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         this.entidades = this.cargarDatosEntidades(sistemaDeArchivos);
         this.organismos = this.cargarDatosOrganismos(sistemaDeArchivos);
@@ -25,7 +25,6 @@ public class RepositorioDeEntidadesYOrganismos {
         for(String[] elemento: lista){
             organismos.add(new OrganismoDeControl(elemento[0]));
         }
-
         return organismos;
     }
     public List<Entidad> cargarDatosEntidades(SistemaDeArchivos sistemaDeArchivos) throws IOException, CsvException {
@@ -41,7 +40,7 @@ public class RepositorioDeEntidadesYOrganismos {
                 }
             }
             entidades.add(entidad);
-        }
+           }
 
         return entidades;
     }

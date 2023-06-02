@@ -1,4 +1,5 @@
 package services.Localizacion;
 
-public interface Localizacion {
+public abstract class Localizacion {
+
 }
