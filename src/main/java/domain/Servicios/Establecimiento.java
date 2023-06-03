@@ -3,6 +3,7 @@ package domain.Servicios;
 import lombok.Getter;
 import services.Localizacion.Localizacion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,5 +16,6 @@ public class Establecimiento {
   public Establecimiento(String nombre, String tipoEstablecimiento){
     this.nombre = nombre;
     this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
+    this.servicios = new ArrayList<>();
   }
 }

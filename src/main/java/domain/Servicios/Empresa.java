@@ -1,10 +1,12 @@
 package domain.Servicios;
 
 import domain.Personas.InteresadoEnServicios;
+import lombok.Getter;
 
+@Getter
 public abstract class Empresa {
-  private String nombre;
-  private InteresadoEnServicios persona;
+  protected String nombre;
+  protected InteresadoEnServicios persona;
 
   public void asignarPersona(InteresadoEnServicios persona){
     this.persona = persona;

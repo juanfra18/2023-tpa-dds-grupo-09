@@ -6,19 +6,24 @@ import lombok.Getter;
 import services.Archivos.SistemaDeArchivos;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public class RepositorioDeEmpresas {
-    private List<OrganismoDeControl> empresas; //nombre provisirio
+    private List<OrganismoDeControl> empresas; //nombre provisorio
     //private List<EntidadPrestadora> entidades;
     //private List<OrganismoDeControl> organismos;
     public RepositorioDeEmpresas() throws IOException, CsvException {
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+        CargadorDeDatos cargador = new CargadorDeDatos();
+        this.empresas = cargador.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV_ENTIDADES));
         //this.entidades = this.cargarDatosEntidades(sistemaDeArchivos);
         //this.organismos = this.cargarDatosOrganismos(sistemaDeArchivos);
     }
-    public void cargaDeDatosMASIVA(SistemaDeArchivos sistemaDeArchivos) throws IOException, CsvException
+
+    /*public void cargaDeDatosMASIVA(SistemaDeArchivos sistemaDeArchivos) throws IOException, CsvException
     {
         OrganismoDeControl organismoDeControl;
         EntidadPrestadora entidadPrestadora;
@@ -82,7 +87,7 @@ public class RepositorioDeEmpresas {
                 }
             }
         }
-    }
+    }*/
 
     /*public List<OrganismoDeControl> cargarDatosOrganismos(SistemaDeArchivos sistemaDeArchivos) throws IOException, CsvException {
         List<OrganismoDeControl> organismos = new ArrayList<>();
