@@ -7,12 +7,11 @@ public class Municipio extends Localizacion{
     public int id;
     public String nombre;
     private int idProvincia;
+    private int idDepartamento;
 
-    public Municipio(int id) {
-        this.id = id;
-    }
-
-    public void setIdProvincia(int idProvincia) {
+    public Municipio(int idProvincia, int idDepartamento,int id) {
         this.idProvincia = idProvincia;
+        this.idDepartamento = idDepartamento;
+        this.id = id;
     }
 }

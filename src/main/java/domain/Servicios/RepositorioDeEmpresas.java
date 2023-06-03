@@ -29,6 +29,7 @@ public class RepositorioDeEmpresas {
         EntidadPrestadora entidadPrestadora;
         Entidad entidad;
         Establecimiento establecimiento;
+        Servicio servicio;
 
         List<String[]> lista = sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV_ORGANISMOS);
         for(String[] elemento: lista) {

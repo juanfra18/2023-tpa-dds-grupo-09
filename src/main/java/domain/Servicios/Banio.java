@@ -1,8 +1,9 @@
 package domain.Servicios;
 
-public class Banio implements Servicio{
+public class Banio extends Servicio{
     private boolean activo;
-    @Override
+    public Banio() {
+    }
     public boolean estaActivo() {
         return activo;
     }

@@ -7,16 +7,9 @@ public class Departamento extends Localizacion{
     public int id;
     public String nombre;
     private int idProvincia;
-    private int idMunicipio;
 
-    public Departamento(int id) {
-        this.id = id;
-    }
-
-    public void setIdProvincia(int idProvincia) {
+    public Departamento(int idProvincia,int id) {
         this.idProvincia = idProvincia;
-    }
-    public void setIdMunicipio(int idMunicipio) {
-        this.idMunicipio = idMunicipio;
+        this.id = id;
     }
 }
