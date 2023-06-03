@@ -1,9 +1,12 @@
 package domain.Servicios;
 
-public class Elevacion implements Servicio{
+public class Elevacion extends Servicio{
     private TipoElevacion tipoElevacion;
     private boolean activo;
-    @Override
+
+    public Elevacion() {
+    }
+
     public boolean estaActivo(){
         return activo;
     }
