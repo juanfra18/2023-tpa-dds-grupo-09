@@ -4,8 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class Municipio extends Localizacion{
-    public int id;
-    public String nombre;
+
     private int idProvincia;
     private int idDepartamento;
 

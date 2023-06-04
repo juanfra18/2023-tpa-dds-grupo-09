@@ -1,11 +1,13 @@
 package domain.Personas;
 
+import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Servicios.Servicio;
 import domain.Servicios.EntidadPrestadora;
 import domain.Usuario.Usuario;
 import services.Localizacion.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +21,14 @@ public class InteresadoEnServicios {
     private Usuario usuario;
     private GeneradorDeLocalizaciones generadorDeLocalizaciones = new GeneradorDeLocalizaciones();
 
+
+    public InteresadoEnServicios(String apellido, String nombre,String mail)  {
+
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.mail=mail;
+        localizaciones=new ArrayList<>();
+    }
     public void agregarLocalizacion(int idProvinciaSeleccionado, int idMunicipioSeleccionado, int idDepartamentoSeleccionado){
         localizaciones.add(generadorDeLocalizaciones.devolverLocalizacion(idProvinciaSeleccionado,idMunicipioSeleccionado,idDepartamentoSeleccionado));
     }
@@ -28,5 +38,8 @@ public class InteresadoEnServicios {
     public void agregarServiciosDeInteres(Servicio servicio)
     {
         serviciosDeInteres.add(servicio);
+    }
+    public List<Localizacion> getLocalizaciones() {
+        return localizaciones;
     }
 }
