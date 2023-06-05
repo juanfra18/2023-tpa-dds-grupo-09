@@ -7,16 +7,14 @@ import java.io.IOException;
 
 public class NoEstaEnArchivo implements ReglaContrasenia{
     private String ruta;
-    private  SistemaDeArchivos verificador;
 
-    public NoEstaEnArchivo(String ruta, SistemaDeArchivos verificador) {
+    public NoEstaEnArchivo(String ruta) {
         this.ruta = ruta;
-        this.verificador = verificador;
     }
 
     public boolean cumpleRegla(String contrasenia)  {
         try {
-            return !verificador.estaEnArchivo(contrasenia, ruta);
+            return !SistemaDeArchivos.estaEnArchivo(contrasenia, ruta);
         } catch (IOException e) {
             throw new NoSeEncontroElArchivo("No se encontro el archivo");
         }

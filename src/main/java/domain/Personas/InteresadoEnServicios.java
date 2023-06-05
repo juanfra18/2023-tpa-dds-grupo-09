@@ -1,12 +1,12 @@
 package domain.Personas;
 
-import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Servicios.Servicio;
-import domain.Servicios.EntidadPrestadora;
+import domain.Entidades.EntidadPrestadora;
 import domain.Usuario.Usuario;
 import services.Localizacion.*;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +19,22 @@ public class InteresadoEnServicios {
     private List<Servicio> serviciosDeInteres;
     private List<Localizacion> localizaciones;
     private Usuario usuario;
-    private GeneradorDeLocalizaciones generadorDeLocalizaciones = new GeneradorDeLocalizaciones();
+    private Localizador localizador = new Localizador();
 
 
     public InteresadoEnServicios(String apellido, String nombre,String mail)  {
-
         this.apellido = apellido;
         this.nombre = nombre;
-        this.mail=mail;
-        localizaciones=new ArrayList<>();
+        this.mail = mail;
+        localizaciones = new ArrayList<>();
     }
-    public void agregarLocalizacion(int idProvinciaSeleccionado, int idMunicipioSeleccionado, int idDepartamentoSeleccionado){
-        localizaciones.add(generadorDeLocalizaciones.devolverLocalizacion(idProvinciaSeleccionado,idMunicipioSeleccionado,idDepartamentoSeleccionado));
+    public void agregarLocalizacion(int id) throws IOException {
+        localizaciones.add(localizador.devolverLocalizacion(id));
     }
-    public void agregarEntidadDeInteres(EntidadPrestadora entidad){
+    public void agregarEntidadDeInteres(EntidadPrestadora entidad) {
         entidadesDeInteres.add(entidad);
     }
-    public void agregarServiciosDeInteres(Servicio servicio)
-    {
+    public void agregarServiciosDeInteres(Servicio servicio) {
         serviciosDeInteres.add(servicio);
     }
     public List<Localizacion> getLocalizaciones() {

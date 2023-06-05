@@ -2,15 +2,11 @@ package services.Localizacion;
 
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
-public class Municipio extends Localizacion{
-
-    private int idProvincia;
-    private int idDepartamento;
-
-    public Municipio(int idProvincia, int idDepartamento,int id) {
-        this.idProvincia = idProvincia;
-        this.idDepartamento = idDepartamento;
-        this.id = id;
-    }
+public class Municipio implements Localizacion{
+    public int id;
+    public String nombre;
+    private int provincia;
 }

@@ -3,10 +3,8 @@ package services.Localizacion;
 import lombok.Getter;
 
 @Getter
-public class Provincia extends  Localizacion{
+public class Provincia implements Localizacion{
 
-
-    public Provincia(int id) {
-        this.id = id;
-    }
+    public int id;
+    public String nombre;
 }

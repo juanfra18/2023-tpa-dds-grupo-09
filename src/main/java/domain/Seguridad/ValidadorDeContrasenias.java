@@ -13,7 +13,6 @@ public class ValidadorDeContrasenias {
   public ValidadorDeContrasenias(){
     reglas = new ArrayList<>();
     simbolos = new ArrayList<>();
-    SistemaDeArchivos verificador = new SistemaDeArchivos();
 
     simbolos.add('-');
     simbolos.add('_');
@@ -33,8 +32,8 @@ public class ValidadorDeContrasenias {
     reglas.add(new ContieneSimbolos(simbolos));
     reglas.add(new NoContieneSecuenciasRepetidas());
     reglas.add(new LongitudMinima());
-    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_CONTRASENIAS_COMUNES_RUTA,verificador));
-    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_DICCIONARIO_RUTA,verificador));
+    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_CONTRASENIAS_COMUNES_RUTA));
+    reglas.add(new NoEstaEnArchivo(Config.ARCHIVO_DICCIONARIO_RUTA));
   }
   public void validarContrasenia(String contrasenia){
     if (!verificaReglas(contrasenia)) {

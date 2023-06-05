@@ -1,4 +1,4 @@
-package domain.Servicios;
+package domain.Personas;
 
 public class Informacion {
   //TODO

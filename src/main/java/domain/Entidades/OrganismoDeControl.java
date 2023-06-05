@@ -1,6 +1,7 @@
-package domain.Servicios;
+package domain.Entidades;
 
 import domain.Personas.InteresadoEnServicios;
+import domain.Personas.Informacion;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -13,16 +14,5 @@ public class OrganismoDeControl extends Empresa {
     this.nombre = nombre;
     this.entidadesPrestadoras = new ArrayList<>();
   }
-
   public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){entidadesPrestadoras.add(entidadPrestadora);}
-
-  @Override
-  public void asignarPersona(InteresadoEnServicios persona) {
-    super.asignarPersona(persona);
-  }
-
-  @Override
-  public void enviarInformacionAPersona(Informacion informacion) {
-    super.enviarInformacionAPersona(informacion);
-  }
 }

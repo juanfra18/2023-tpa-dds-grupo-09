@@ -1,4 +1,4 @@
-package domain.Servicios;
+package domain.Entidades;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CargadorDeDatos {
-  public List<OrganismoDeControl> cargaDeDatosMASIVA(List<String[]> listaCSV) {
+  public static List<OrganismoDeControl> cargaDeDatosMASIVA(List<String[]> listaCSV) {
     Map<String, OrganismoDeControl> organismosMap = new HashMap<>();
 
     for (String[] elemento : listaCSV) {
@@ -30,7 +30,7 @@ public class CargadorDeDatos {
     return new ArrayList<>(organismosMap.values());
   }
 
-  private EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, String nombre) {
+  private static EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, String nombre) {
     //Devuelve una ya existente o la crea
     List<EntidadPrestadora> repetidos = prestadoras.stream().filter(prestadora -> prestadora.getNombre() == nombre).toList();
 
@@ -42,7 +42,7 @@ public class CargadorDeDatos {
     return nuevaPrestadora;
   }
 
-  private Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad) {
+  private static Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad) {
     //Devuelve una ya existente o la crea
     List<Entidad> repetidos = entidades.stream().filter(entidad -> entidad.getNombre() == nombre).toList();
 

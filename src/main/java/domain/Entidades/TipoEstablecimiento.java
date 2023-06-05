@@ -1,4 +1,4 @@
-package domain.Servicios;
+package domain.Entidades;
 
 public enum TipoEstablecimiento {
   ESTACION,
