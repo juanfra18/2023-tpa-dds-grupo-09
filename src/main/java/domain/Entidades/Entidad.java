@@ -21,4 +21,6 @@ public abstract class Entidad {
         establecimientos.add(establecimiento);
         this.localizacion = Localizador.devolverLocalizacion(id);
     }
+
+
 }

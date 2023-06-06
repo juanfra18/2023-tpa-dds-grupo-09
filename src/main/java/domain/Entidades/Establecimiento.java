@@ -1,5 +1,6 @@
 package domain.Entidades;
 
+import domain.Personas.InteresadoEnServicios;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.APIs.Georef.ServicioGeoref;
@@ -29,10 +30,39 @@ public class Establecimiento {
     ListadoDeProvincias listadoDeProvincias = servicioGeoref.listadoDeProvincias();
     this.localizacion = listadoDeProvincias.provinciaDeId(id).get();
   }
-  public boolean servicioEnFuncionamiento(Servicio servicio) {
+  public boolean estaEnFuncionamiento(Servicio servicio) { // X CANTIDAD DE TIEMPO
     if (servicios.contains(servicio)) {
       return servicio.estaActivo();
     }
     return false;
   }
+  public boolean establecimientoContieneServicios(Establecimiento establecimiento, List<Servicio> servicios) {
+    return servicios.stream().anyMatch(servicio -> establecimiento.getServicios().contains(servicio));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+public void revisionTemporalDeServicios() {
+    if (!estaEnFuncionamiento(Servicio servicio))
+      if(estaInteresado (InteresadoEnServicios persona, Servicio servicio)){
+      enviarNotificacion(InteresadoEnServicios);
+    }
+  }
+
+  public void enviarNotificaciones(InteresadoEnServicios persona) {
+    mensaje = "Flaco no funciona el servicio"
+    persona.recibirMensaje(mensaje);
+ */
 }
