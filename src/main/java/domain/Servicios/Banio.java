@@ -1,10 +1,12 @@
 package domain.Servicios;
 
-public class Banio extends Servicio{
-    private boolean activo;
-    public Banio() {
-    }
+public class Banio implements Servicio{
+    private TipoBanio tipoBanio;
     public boolean estaActivo() {
-        return activo;
+        //TODO
+        return true;
+    }
+    public Banio(String tipoBanio) {
+        this.tipoBanio = TipoBanio.valueOf(tipoBanio);
     }
 }

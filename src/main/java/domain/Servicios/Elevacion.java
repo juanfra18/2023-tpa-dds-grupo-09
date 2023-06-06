@@ -1,13 +1,15 @@
 package domain.Servicios;
 
-public class Elevacion extends Servicio{
+import domain.Entidades.TipoTransporte;
+
+public class Elevacion implements Servicio{
     private TipoElevacion tipoElevacion;
-    private boolean activo;
 
-    public Elevacion() {
+    public boolean estaActivo() {
+        //TODO
+        return true;
     }
-
-    public boolean estaActivo(){
-        return activo;
+    public Elevacion(String tipoElevacion) {
+        this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
     }
 }

@@ -2,9 +2,8 @@ package domain.Entidades;
 
 import domain.Servicios.Servicio;
 import lombok.Getter;
-import services.APIs.Georef.ServicioGeoref;
-import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Localizacion;
+import services.Localizacion.Localizador;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,21 +17,19 @@ public class Establecimiento {
   private List<Servicio> servicios;
   private Localizacion localizacion;
 
-  public Establecimiento(String nombre, String tipoEstablecimiento) {
+  public Establecimiento(String nombre, String tipoEstablecimiento, int idLocalizacion) throws IOException {
     this.nombre = nombre;
     this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
     this.servicios = new ArrayList<>();
-  }
-
-  public void asignarLocalizacion(int id) throws IOException {
-    ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
-    ListadoDeProvincias listadoDeProvincias = servicioGeoref.listadoDeProvincias();
-    this.localizacion = listadoDeProvincias.provinciaDeId(id).get();
+    this.localizacion = Localizador.devolverLocalizacion(idLocalizacion);
   }
   public boolean servicioEnFuncionamiento(Servicio servicio) {
     if (servicios.contains(servicio)) {
       return servicio.estaActivo();
     }
     return false;
+  }
+  public void agregarServicio(Servicio servicio) {
+    this.servicios.add(servicio);
   }
 }

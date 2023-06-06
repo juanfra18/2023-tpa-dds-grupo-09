@@ -1,7 +1,5 @@
 package domain.Entidades;
 
-import domain.Personas.InteresadoEnServicios;
-import domain.Personas.Informacion;
 import lombok.Getter;
 
 import java.util.ArrayList;
