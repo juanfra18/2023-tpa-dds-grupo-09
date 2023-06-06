@@ -27,7 +27,7 @@ public class TestGeoref {
     public void testMunicipios() throws IOException {
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
 
-        ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(34).get());
+        ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(2).get());
         for(Municipio unMunicipio: municipiosDeLaProvincia.municipios){
             System.out.println(unMunicipio.nombre + " " + unMunicipio.id);
         }
@@ -37,7 +37,7 @@ public class TestGeoref {
     public void testDepartamentos() throws IOException {
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
 
-        ListadoDeDepartamentos departamentosDeLaProvincia = servicioGeoref.listadoDeDepartamentosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(34).get());
+        ListadoDeDepartamentos departamentosDeLaProvincia = servicioGeoref.listadoDeDepartamentosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(2).get());
         for(Departamento unDepto: departamentosDeLaProvincia.departamentos){
             System.out.println(unDepto.nombre + " " + unDepto.id);
         }

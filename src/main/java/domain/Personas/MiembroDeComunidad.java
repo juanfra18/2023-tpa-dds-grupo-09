@@ -4,12 +4,13 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
+import lombok.Getter;
 import services.Localizacion.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Getter
 public class MiembroDeComunidad {
     private String apellido;
     private String nombre;
@@ -28,6 +29,8 @@ public class MiembroDeComunidad {
         this.mail = mail;
         localizaciones = new ArrayList<>();
         intereses = new ArrayList<>();
+        entidadesDeInteres = new ArrayList<>();
+        serviciosDeInteres = new ArrayList<>();
     }
 
     public void agregarLocalizacion(int id) throws IOException {
@@ -60,6 +63,7 @@ public class MiembroDeComunidad {
             for (Establecimiento establecimiento : entidad.getEstablecimientos()) {
                 if (meInteresa(localizaciones, serviciosDeInteres, establecimiento)) {
                     Interes interes = new Interes();
+                    interes.agregarEntidad(entidad);
                     interes.agregarEstablecimiento(establecimiento);
                     interes.agregarServicios(serviciosDeInteres);
                     interes.agregarLocalizacion((establecimiento.getLocalizacion()));
