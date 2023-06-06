@@ -1,3 +1,10 @@
-organismoDeControl,entidadPrestadora,entidad,idLocalizacionEntidad,DeEstablecimiento,establecimiento,idLocalizacionEstablecimiento,tipoEstablecimiento,servicio1,tipoServicio
-organismoDeControl,entidadPrestadora1,entidad1,idLocalizacionEntidad,Ferrocarril,establecimiento1,idLocalizacionEstablecimiento,tipoEstablecimiento,servicio2,tipoServicio
-organismoDeControl,entidadPrestadora1,entidad2,idLocalizacionEntidad,tipoEntidad,establecimiento1,idLocalizacionEstablecimiento,tipoEstablecimiento,servicio3,tipoServicio
+organismoDeControl,entidadPrestadora,entidad,idLocalizacionEntidad,tipoEntidad,establecimiento,idLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,UNISEX
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,DAMAS
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,CABALLEROS
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Elevacion,ASCENSOR
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Vicente López,2,ESTACION,Elevacion,ESCALERAS_MECANICAS
+CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Rivadavia,2,ESTACION,Banio,DAMAS
+BCRA,Santander Río,Santander Río Capital Federal,2,DeEstablecimiento,Almagro,2,SUCURSAL,Elevacion,ASCENSOR
+BCRA,Santander Río,Santander Río Buenos Aires,6,DeEstablecimiento,General Alvear,2,SUCURSAL,Elevacion,ASCENSOR
+BCRA,BCBA,BCBA,2,DeEstablecimiento,9 de Julio,2,SUCURSAL,Elevacion,ASCENSOR

@@ -2,10 +2,10 @@ package domain.Personas;
 
 import domain.Servicios.Servicio;
 import lombok.Getter;
-
 import java.util.List;
 @Getter
 public class Comunidad {
+    private String nombre;
     private List<MiembroDeComunidad> miembros;
     private List<Servicio> servicios;
     private Interes interes;

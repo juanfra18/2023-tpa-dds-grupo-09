@@ -41,14 +41,14 @@ public class ServicioGeoref {
 
     public ListadoDeDepartamentos listadoDeDepartamentos() throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoDeDepartamentos> requestDepartamentosArgentinos = georefService.departamentos("id, nombre", maximaCantidadRegistrosDefault);
+        Call<ListadoDeDepartamentos> requestDepartamentosArgentinos = georefService.departamentos("id, nombre, provincia", maximaCantidadRegistrosDefault);
         Response<ListadoDeDepartamentos> responseDepartamentosArgentinos = requestDepartamentosArgentinos.execute();
         return responseDepartamentosArgentinos.body();
     }
 
     public ListadoDeMunicipios listadoDeMunicipios() throws IOException {
         GeorefService georefService = this.retrofit.create(GeorefService.class);
-        Call<ListadoDeMunicipios> requestMunicipiosArgentinos = georefService.municipios("id, nombre", maximaCantidadRegistrosDefault);
+        Call<ListadoDeMunicipios> requestMunicipiosArgentinos = georefService.municipios("id, nombre, provincia", maximaCantidadRegistrosDefault);
         Response<ListadoDeMunicipios> responseMunicipiosArgentinos = requestMunicipiosArgentinos.execute();
         return responseMunicipiosArgentinos.body();
     }

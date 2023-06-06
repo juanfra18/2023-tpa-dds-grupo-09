@@ -15,16 +15,7 @@ public class EntidadPrestadora extends Empresa{
     this.entidades = new ArrayList<>();
   }
   public void agregarEntidad(Entidad entidad){
+    entidades.removeIf(entidad1 -> entidad1.getNombre().equals(entidad.getNombre()));
     entidades.add(entidad);
-  }
-
-  @Override
-  public void asignarPersona(MiembroDeComunidad persona) {
-    super.asignarPersona(persona);
-  }
-
-  @Override
-  public void enviarInformacionAPersona(Informacion informacion) {
-    super.enviarInformacionAPersona(informacion);
   }
 }

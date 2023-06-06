@@ -9,6 +9,9 @@ public class Elevacion implements Servicio{
         //TODO
         return true;
     }
+    public String getTipo(){
+        return String.valueOf(tipoElevacion);
+    }
     public Elevacion(String tipoElevacion) {
         this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
     }

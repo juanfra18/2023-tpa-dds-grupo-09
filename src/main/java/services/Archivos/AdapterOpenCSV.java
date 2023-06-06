@@ -14,6 +14,8 @@ public class AdapterOpenCSV implements AdapterLectorCSV {
         CSVReader reader = new CSVReaderBuilder(new FileReader(ruta)).build();
         List<String[]> lista = reader.readAll();
 
+        lista.remove(0);
+
         return lista;
     }
 }

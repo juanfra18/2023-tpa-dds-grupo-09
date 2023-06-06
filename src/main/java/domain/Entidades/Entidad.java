@@ -1,10 +1,8 @@
 package domain.Entidades;
 
-import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.Localizacion.Localizacion;
 import services.Localizacion.Localizador;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,7 @@ public abstract class Entidad {
         this.localizacion = Localizador.devolverLocalizacion(idLocalizacion);
     }
     public void agregarEstablecimiento(Establecimiento establecimiento) throws IOException {
+        establecimientos.removeIf(establecimiento1 -> establecimiento1.getNombre().equals(establecimiento.getNombre()));
         establecimientos.add(establecimiento);
     }
     public void asignarLocalizacion(int id) throws IOException {

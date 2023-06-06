@@ -1,5 +1,6 @@
-package domain.Entidades;
+package services.Archivos;
 
+import domain.Entidades.*;
 import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
 
@@ -30,7 +31,7 @@ public class CargadorDeDatos {
       Entidad entidad = obtenerEntidad(prestadora.getEntidades(), entidadNombre, entidadTipo, entidadLocalizacion);
       Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), establecimientoNombre, establecimientoTipo, establecimientoLocalizacion);
 
-      if (servicioNombre == "Banio") {
+      if (servicioNombre.equals("Banio")) {
         establecimiento.agregarServicio(new Banio(servicioTipo));
       }
       else {
@@ -48,7 +49,7 @@ public class CargadorDeDatos {
 
   private static EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, String nombre) {
     //Devuelve una ya existente o la crea
-    List<EntidadPrestadora> repetidos = prestadoras.stream().filter(prestadora -> prestadora.getNombre() == nombre).toList();
+    List<EntidadPrestadora> repetidos = prestadoras.stream().filter(prestadora -> prestadora.getNombre().equals(nombre)).toList();
 
     if(repetidos.size() != 0){
       return repetidos.get(0);
@@ -60,13 +61,13 @@ public class CargadorDeDatos {
 
   private static Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad, String entidadLocalizacion) throws IOException {
     //Devuelve una ya existente o la crea
-    List<Entidad> repetidos = entidades.stream().filter(entidad -> entidad.getNombre() == nombre).toList();
+    List<Entidad> repetidos = entidades.stream().filter(entidad -> entidad.getNombre().equals(nombre)).toList();
 
     if(repetidos.size() != 0){
       return repetidos.get(0);
     }
 
-    if (tipoEntidad == "DeEstablecimiento"){
+    if (tipoEntidad.equals("DeEstablecimiento")){
       return new EntidadDeEstablecimiento(nombre, Integer.valueOf(entidadLocalizacion));
     }
     else{
@@ -75,7 +76,7 @@ public class CargadorDeDatos {
   }
 
   private static Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoTipo, String establecimientoLocalizacion) throws IOException {
-    List<Establecimiento> repetidos = establecimientos.stream().filter(establecimiento -> establecimiento.getNombre() == establecimientoNombre).toList();
+    List<Establecimiento> repetidos = establecimientos.stream().filter(establecimiento -> establecimiento.getNombre().equals(establecimientoNombre)).toList();
 
     if(repetidos.size() != 0){
       return repetidos.get(0);

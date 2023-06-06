@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 public class Establecimiento {
   private String nombre;
-  private String direccion;
   private TipoEstablecimiento tipoEstablecimiento;
   private List<Servicio> servicios;
   private Localizacion localizacion;
@@ -32,8 +31,12 @@ public class Establecimiento {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
-  public boolean establecimientoContieneServicios(Establecimiento establecimiento, List<Servicio> servicios) {
-    return servicios.stream().anyMatch(servicio -> establecimiento.getServicios().contains(servicio));
+  public boolean establecimientoContieneServicios(List<Servicio> servicios) {
+    return servicios.stream().anyMatch(servicio -> this.getServicios().contains(servicio));
+  }
+
+  public boolean establecimientoContieneServicio(Servicio servicio) {
+    return servicios.contains(servicio);
   }
 
 

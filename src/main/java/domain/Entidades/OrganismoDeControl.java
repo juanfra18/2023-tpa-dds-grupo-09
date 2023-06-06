@@ -12,5 +12,8 @@ public class OrganismoDeControl extends Empresa {
     this.nombre = nombre;
     this.entidadesPrestadoras = new ArrayList<>();
   }
-  public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){entidadesPrestadoras.add(entidadPrestadora);}
+  public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){
+    entidadesPrestadoras.removeIf(entidadPrestadora1 -> entidadPrestadora1.getNombre().equals(entidadPrestadora.getNombre()));
+    entidadesPrestadoras.add(entidadPrestadora);
+  }
 }
