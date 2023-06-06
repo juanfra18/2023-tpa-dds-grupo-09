@@ -1,6 +1,5 @@
-package services.Georef;
+package services.APIs.Georef;
 
-import services.APIs.Georef.ServicioGeoref;
 import services.Localizacion.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

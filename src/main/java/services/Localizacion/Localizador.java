@@ -4,6 +4,7 @@ import services.APIs.Georef.ServicioGeoref;
 
 import java.io.IOException;
 
+
 public class Localizador {
   public static Localizacion devolverLocalizacion(int id) throws IOException {
     ServicioGeoref servicioGeoref = ServicioGeoref.instancia();

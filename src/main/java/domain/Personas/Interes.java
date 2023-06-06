@@ -4,33 +4,22 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Servicios.Servicio;
 import lombok.Getter;
+import lombok.Setter;
 import services.Localizacion.Localizacion;
 
-import java.util.ArrayList;
-import java.util.List;
 @Getter
+@Setter
 public class Interes {
-    private List<Entidad> entidades;
-    private List<Establecimiento> establecimientos;
-    private List<Localizacion> localizaciones;
-    private List<Servicio> servicios;
-    public Interes() {
-        entidades = new ArrayList<>();
-        establecimientos = new ArrayList<>();
-        servicios = new ArrayList<>();
-        localizaciones = new ArrayList<>();
-    }
+    private Entidad entidad;
+    private Establecimiento establecimiento;
+    private Localizacion localizacion;
+    private Servicio servicio;
 
-    public void agregarEntidad(Entidad entidad) {entidades.add(entidad);}
-    public void agregarEstablecimiento(Establecimiento establecimiento) {
-        establecimientos.add(establecimiento);
-    }
-
-    public void agregarServicios(List<Servicio> servicios) {
-        servicios.addAll(servicios);
-    }
-    public  void agregarLocalizacion(Localizacion UnaLocalizacion) {
-        localizaciones.add(UnaLocalizacion);
+    public boolean equals(Interes interes){
+        return entidad.getNombre().equals(interes.getEntidad().getNombre()) &&
+            establecimiento.getNombre().equals(interes.getEstablecimiento().getNombre()) &&
+            localizacion.getId() == interes.getLocalizacion().getId() &&
+            servicio.getTipo().equals(interes.getServicio().getTipo());
     }
 
 }

@@ -36,7 +36,7 @@ public class Establecimiento {
   }
 
   public boolean establecimientoContieneServicio(Servicio servicio) {
-    return servicios.contains(servicio);
+    return servicios.stream().anyMatch(servicio1 -> servicio1.getTipo().equals(servicio.getTipo()));
   }
 
 

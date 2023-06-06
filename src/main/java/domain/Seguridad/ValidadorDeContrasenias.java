@@ -1,7 +1,6 @@
 package domain.Seguridad;
 
 import Config.Config;
-import services.Archivos.SistemaDeArchivos;
 import domain.Seguridad.Reglas.*;
 
 import java.util.ArrayList;

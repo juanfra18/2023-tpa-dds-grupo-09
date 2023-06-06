@@ -6,5 +6,5 @@ import lombok.Getter;
 public class Municipio implements Localizacion{
     public int id;
     public String nombre;
-    private Provincia provincia;
+    public Provincia provincia;
 }
