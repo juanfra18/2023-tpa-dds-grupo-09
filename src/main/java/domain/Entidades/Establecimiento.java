@@ -23,7 +23,7 @@ public class Establecimiento {
     this.servicios = new ArrayList<>();
     this.localizacion = Localizador.devolverLocalizacion(idLocalizacion);
   }
-  public boolean servicioEnFuncionamiento(Servicio servicio) {
+  public boolean estaEnFuncionamiento(Servicio servicio) { // X CANTIDAD DE TIEMPO
     if (servicios.contains(servicio)) {
       return servicio.estaActivo();
     }
@@ -32,4 +32,33 @@ public class Establecimiento {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
+  public boolean establecimientoContieneServicios(Establecimiento establecimiento, List<Servicio> servicios) {
+    return servicios.stream().anyMatch(servicio -> establecimiento.getServicios().contains(servicio));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+public void revisionTemporalDeServicios() {
+    if (!estaEnFuncionamiento(Servicio servicio))
+      if(estaInteresado (InteresadoEnServicios persona, Servicio servicio)){
+      enviarNotificacion(InteresadoEnServicios);
+    }
+  }
+
+  public void enviarNotificaciones(InteresadoEnServicios persona) {
+    mensaje = "Flaco no funciona el servicio"
+    persona.recibirMensaje(mensaje);
+ */
 }

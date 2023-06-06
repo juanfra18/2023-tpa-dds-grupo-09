@@ -1,6 +1,6 @@
 package domain.Entidades;
 
-import domain.Personas.InteresadoEnServicios;
+import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Informacion;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ public class EntidadPrestadora extends Empresa{
   }
 
   @Override
-  public void asignarPersona(InteresadoEnServicios persona) {
+  public void asignarPersona(MiembroDeComunidad persona) {
     super.asignarPersona(persona);
   }
 

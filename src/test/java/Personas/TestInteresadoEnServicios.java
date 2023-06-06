@@ -1,25 +1,14 @@
 package Personas;
 
-import domain.Personas.InteresadoEnServicios;
-import domain.Seguridad.RegistroDeUsuarioException;
-import domain.Usuario.RepositorioDeUsuarios;
-import domain.Usuario.Usuario;
-import org.junit.jupiter.api.Assertions;
+import domain.Personas.MiembroDeComunidad;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import services.Localizacion.Departamento;
 import services.Localizacion.Localizacion;
-import services.Localizacion.Municipio;
-import services.Localizacion.Provincia;
-
-import java.util.List;
 
 public class TestInteresadoEnServicios {
 
-    static InteresadoEnServicios interesado1;
+    static MiembroDeComunidad interesado1;
 
-    public void testearAgregarLocalizacion(InteresadoEnServicios persona, Localizacion localizacion) {
+    public void testearAgregarLocalizacion(MiembroDeComunidad persona, Localizacion localizacion) {
 
         //Assertions.assertEquals(localizacion,persona.getLocalizaciones().get(0).id);
 
@@ -29,7 +18,7 @@ public class TestInteresadoEnServicios {
     }
     @BeforeAll
     public static void init1(){
-        interesado1 = new InteresadoEnServicios("perez","jose","perezjose@gmail.com");
+        interesado1 = new MiembroDeComunidad("perez","jose","perezjose@gmail.com");
     }
 
 

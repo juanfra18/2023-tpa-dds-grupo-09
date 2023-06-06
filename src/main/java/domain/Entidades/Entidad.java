@@ -25,4 +25,6 @@ public abstract class Entidad {
     public void asignarLocalizacion(int id) throws IOException {
         this.localizacion = Localizador.devolverLocalizacion(id);
     }
+
+
 }
