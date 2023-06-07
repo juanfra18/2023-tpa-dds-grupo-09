@@ -18,6 +18,7 @@ public class ServicioGeoref {
     private static final String urlApi = Config.URL_API;
     private Retrofit retrofit;
 
+
     private ServicioGeoref() {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(urlApi)

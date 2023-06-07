@@ -31,6 +31,7 @@ public class MiembroDeComunidad {
         this.intereses = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
+        this.comunidades= new ArrayList<>();
     }
 
     public void agregarLocalizacion(int id) throws IOException {

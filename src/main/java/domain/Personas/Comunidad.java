@@ -9,7 +9,21 @@ public class Comunidad {
     private List<MiembroDeComunidad> miembros;
     private List<Servicio> servicios;
     private Interes interes;
+
+    public  Comunidad(String nombre, Interes interes) {
+        this.nombre = nombre;
+        this.interes = interes;
+    }
     public void agregarServicio(Servicio servicio) {
         servicios.add(servicio);
+    }
+
+    public void unirseAComunidad(MiembroDeComunidad unMiembro) {
+        if (comparteInteres(unMiembro)) {
+            this.miembros.add(unMiembro);
+        }
+    }
+    public boolean comparteInteres(MiembroDeComunidad unMiembro) {
+        return interes.equals(unMiembro.getIntereses());
     }
 }

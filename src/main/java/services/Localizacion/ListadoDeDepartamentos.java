@@ -23,5 +23,4 @@ public class ListadoDeDepartamentos {
                 .filter(p -> p.id == id)
                 .findFirst();
     }
-
 }

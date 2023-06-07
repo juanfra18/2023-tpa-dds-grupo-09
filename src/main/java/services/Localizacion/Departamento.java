@@ -7,5 +7,4 @@ public class Departamento implements Localizacion{
     public int id;
     public String nombre;
     public Provincia provincia;
-
 }
