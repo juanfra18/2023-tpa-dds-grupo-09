@@ -8,7 +8,7 @@ import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -20,13 +20,13 @@ import java.util.List;
 
 public class TestMiembroDeComunidad {
 
-    private MiembroDeComunidad miembro;
-    private Localizacion almagro;
+    static MiembroDeComunidad miembro;
+    static Localizacion almagro;
 
-    @BeforeEach
-    public void setup() throws IOException {
+    @BeforeAll
+    public static void setup() throws IOException {
         miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
-        Localizacion almagro = Localizador.devolverLocalizacion(2035);
+        almagro = Localizador.devolverLocalizacion(2035);
         miembro.agregarLocalizacion(almagro.getId());
     }
 
@@ -57,5 +57,4 @@ public class TestMiembroDeComunidad {
     public void testearAgregarLocalizacion() {
         Assertions.assertEquals(almagro.getId(), miembro.getLocalizaciones().get(0).getId());
     }
-
 }
