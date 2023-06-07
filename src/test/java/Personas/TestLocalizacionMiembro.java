@@ -15,7 +15,7 @@ public class TestLocalizacionMiembro {
   static Localizacion almagro;
 
   @BeforeAll
-  private static void init() throws IOException {
+  public static void init() throws IOException {
     miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
     almagro = Localizador.devolverLocalizacion(2035);
     miembro.agregarLocalizacion(almagro.getId());
