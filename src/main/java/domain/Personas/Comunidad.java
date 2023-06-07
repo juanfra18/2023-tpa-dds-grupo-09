@@ -21,12 +21,7 @@ public class Comunidad {
         servicios.add(servicio);
     }
 
-    public void unirseAComunidad(MiembroDeComunidad unMiembro) {
-        if (comparteInteres(unMiembro)) {
-            this.miembros.add(unMiembro);
-        }
-    }
-    public boolean comparteInteres(MiembroDeComunidad unMiembro) {
-        return interes.equals(unMiembro.getIntereses());
+    public void agregarPersona(MiembroDeComunidad unMiembro) {
+        this.miembros.add(unMiembro);
     }
 }

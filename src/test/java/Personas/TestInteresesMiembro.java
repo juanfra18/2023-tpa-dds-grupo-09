@@ -8,8 +8,7 @@ import domain.Personas.Interes;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -21,19 +20,17 @@ import services.Localizacion.Localizador;
 import java.io.IOException;
 import java.util.List;
 
-public class TestMiembroDeComunidad {
+public class TestInteresesMiembro {
 
-    static MiembroDeComunidad miembro;
+    private MiembroDeComunidad miembro;
     static Localizacion almagro;
 
-    @BeforeAll
-    public static void setup() throws IOException {
+    @BeforeEach
+    private void setupInteres() throws IOException {
         miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
         almagro = Localizador.devolverLocalizacion(2035);
         miembro.agregarLocalizacion(almagro.getId());
-    }
 
-    private void setupInteres() throws IOException {
         Entidad santander = new EntidadDeEstablecimiento("Santander Rio Argentina", 2);
         Establecimiento sucursalAlmagro = new Establecimiento("Sucursal Almagro", "SUCURSAL", 2035);
         santander.agregarEstablecimiento(sucursalAlmagro);
@@ -57,14 +54,7 @@ public class TestMiembroDeComunidad {
         assertThat("ERROR EN entidad", interes.getEntidad(), is(equalTo(miembro.getEntidadesDeInteres().get(0))));
         assertThat("ERROR EN establecimiento", interes.getEstablecimiento(), is(equalTo(miembro.getEntidadesDeInteres().get(0).getEstablecimientos().get(0))));
         assertThat("ERROR EN servicio", interes.getServicio(), is(equalTo(miembro.getServiciosDeInteres().get(0))));
-        assertThat("ERROR EN localizacion", interes.getLocalizacion().getId(), is(equalTo(almagro.getId())));
     }
-
-    @Test
-    public void testearAgregarLocalizacion() {
-        Assertions.assertEquals(almagro.getId(), miembro.getLocalizaciones().get(0).getId());
-    }
-
 
     @Test
     public void testearUnirseAcomunidad() throws IOException {

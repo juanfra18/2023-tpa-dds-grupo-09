@@ -31,10 +31,6 @@ public class Establecimiento {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
-  public boolean establecimientoContieneServicios(List<Servicio> servicios) {
-    return servicios.stream().anyMatch(servicio -> this.getServicios().contains(servicio));
-  }
-
   public boolean establecimientoContieneServicio(Servicio servicio) {
     return servicios.stream().anyMatch(servicio1 -> servicio1.getTipo().equals(servicio.getTipo()));
   }

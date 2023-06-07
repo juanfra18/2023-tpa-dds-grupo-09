@@ -12,14 +12,6 @@ import services.Localizacion.Localizacion;
 public class Interes {
     private Entidad entidad;
     private Establecimiento establecimiento;
-    private Localizacion localizacion;
     private Servicio servicio;
-
-    public boolean equals(Interes interes){
-        return entidad.getNombre().equals(interes.getEntidad().getNombre()) &&
-            establecimiento.getNombre().equals(interes.getEstablecimiento().getNombre()) &&
-            localizacion.getId() == interes.getLocalizacion().getId() &&
-            servicio.getTipo().equals(interes.getServicio().getTipo());
-    }
 
 }

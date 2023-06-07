@@ -31,7 +31,7 @@ public class MiembroDeComunidad {
         this.intereses = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
-        this.comunidades= new ArrayList<>();
+        this.comunidades = new ArrayList<>();
     }
 
     public void agregarLocalizacion(int id) throws IOException {
@@ -49,30 +49,35 @@ public class MiembroDeComunidad {
     public void unirseAComunidad(Comunidad unaComunidad) {
         if (comparteInteres(unaComunidad)) {
             this.comunidades.add(unaComunidad);
+            unaComunidad.agregarPersona(this);
         }
     }
     public boolean comparteInteres(Comunidad unaComunidad) {
-        return intereses.stream().anyMatch(interes -> interes.equals(unaComunidad.getInteres()));
+        return intereses.contains(unaComunidad.getInteres());
     }
+
     public void agregarInteres() {
         for (Entidad entidad : this.entidadesDeInteres) {
             for (Establecimiento establecimiento : entidad.getEstablecimientos()) {
-                for (Servicio servicio : establecimiento.getServicios()){
+                for (Servicio servicio : establecimiento.getServicios()) {
                     if (meInteresa(this.localizaciones, servicio, establecimiento)) {
                         Interes interes = new Interes();
                         interes.setEntidad(entidad);
                         interes.setEstablecimiento(establecimiento);
                         interes.setServicio(servicio);
-                        interes.setLocalizacion((establecimiento.getLocalizacion()));
                         this.intereses.add(interes);
-                }
+                    }
                 }
             }
         }
     }
 
     private boolean meInteresa(List<Localizacion> localizaciones, Servicio servicio, Establecimiento establecimiento) {
-        return (establecimiento.establecimientoContieneServicio(servicio) && localizaciones.
+        return (serviciosDeInteres.contains(servicio) && localizaciones.
             stream().anyMatch(localizacion -> localizacion.getId() == establecimiento.getLocalizacion().getId()));
+    }
+
+    private void crearUsuario(String username, String contrasenia) {
+        this.usuario = new Usuario(username, contrasenia);
     }
 }
