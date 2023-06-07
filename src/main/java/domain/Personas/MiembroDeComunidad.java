@@ -76,8 +76,4 @@ public class MiembroDeComunidad {
         return (serviciosDeInteres.contains(servicio) && localizaciones.
             stream().anyMatch(localizacion -> localizacion.getId() == establecimiento.getLocalizacion().getId()));
     }
-
-    private void crearUsuario(String username, String contrasenia) {
-        this.usuario = new Usuario(username, contrasenia);
-    }
 }
