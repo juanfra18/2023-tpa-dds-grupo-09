@@ -1,5 +1,6 @@
 package services.APIs.Georef;
 
+import org.junit.jupiter.api.BeforeAll;
 import services.Localizacion.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,10 +9,13 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class TestGeoref {
+    static ServicioGeoref servicioGeoref;
+    @BeforeAll
+    public static void init(){
+        servicioGeoref = ServicioGeoref.instancia();
+    }
     @Test
     public void testProvincias() throws IOException {
-        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
-
         ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
         for(Provincia unaProvincia: listadoDeProvinciasArgentinas.provincias){
@@ -24,18 +28,13 @@ public class TestGeoref {
     }
     @Test
     public void testMunicipios() throws IOException {
-        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
-
-        ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(2).get());
+        ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(6).get());
         for(Municipio unMunicipio: municipiosDeLaProvincia.municipios){
             System.out.println(unMunicipio.nombre + " " + unMunicipio.id);
         }
     }
-
     @Test
     public void testDepartamentos() throws IOException {
-        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
-
         ListadoDeDepartamentos departamentosDeLaProvincia = servicioGeoref.listadoDeDepartamentosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(2).get());
         for(Departamento unDepto: departamentosDeLaProvincia.departamentos){
             System.out.println(unDepto.nombre + " " + unDepto.id);
