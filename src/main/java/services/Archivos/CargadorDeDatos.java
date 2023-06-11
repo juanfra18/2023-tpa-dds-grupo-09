@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CargadorDeDatos {
-  public static List<OrganismoDeControl> cargaDeDatosMASIVA(List<String[]> listaCSV) throws IOException {
+  public List<OrganismoDeControl> cargaDeDatosMASIVA(List<String[]> listaCSV) throws IOException {
     Map<String, OrganismoDeControl> organismosMap = new HashMap<>();
 
     for (String[] elemento : listaCSV) {
@@ -47,7 +47,7 @@ public class CargadorDeDatos {
     return new ArrayList<>(organismosMap.values());
   }
 
-  private static EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, String nombre) {
+  private EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, String nombre) {
     //Devuelve una ya existente o la crea
     List<EntidadPrestadora> repetidos = prestadoras.stream().filter(prestadora -> prestadora.getNombre().equals(nombre)).toList();
 
@@ -55,11 +55,10 @@ public class CargadorDeDatos {
       return repetidos.get(0);
     }
 
-    EntidadPrestadora nuevaPrestadora = new EntidadPrestadora(nombre);
-    return nuevaPrestadora;
+    return new EntidadPrestadora(nombre);
   }
 
-  private static Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad, String entidadLocalizacion) throws IOException {
+  private Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad, String entidadLocalizacion) throws IOException {
     //Devuelve una ya existente o la crea
     List<Entidad> repetidos = entidades.stream().filter(entidad -> entidad.getNombre().equals(nombre)).toList();
 
@@ -75,7 +74,7 @@ public class CargadorDeDatos {
     }
   }
 
-  private static Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoTipo, String establecimientoLocalizacion) throws IOException {
+  private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoTipo, String establecimientoLocalizacion) throws IOException {
     List<Establecimiento> repetidos = establecimientos.stream().filter(establecimiento -> establecimiento.getNombre().equals(establecimientoNombre)).toList();
 
     if(repetidos.size() != 0){

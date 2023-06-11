@@ -12,7 +12,8 @@ import java.util.List;
 @Getter
 public class RepositorioDeEmpresas {
     private List<OrganismoDeControl> empresas;
-    public RepositorioDeEmpresas() throws IOException, CsvException {
-        this.empresas = CargadorDeDatos.cargaDeDatosMASIVA(SistemaDeArchivos.csvALista(Config.ARCHIVO_CSV));
+    public RepositorioDeEmpresas(CargadorDeDatos cargadorDeDatos) throws IOException, CsvException {
+        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+        this.empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV));
     }
 }

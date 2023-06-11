@@ -1,6 +1,5 @@
 package services.APIs.Georef;
 
-import services.Localizacion.ListadoDeDepartamentos;
 import services.Localizacion.ListadoDeMunicipios;
 import services.Localizacion.ListadoDeProvincias;
 import retrofit2.Call;
@@ -16,11 +15,5 @@ public interface GeorefService {
 
     @GET("municipios")
     Call<ListadoDeMunicipios> municipios(@Query("campos") String campos, @Query("max") int max);
-
-    @GET("departamentos")
-    Call<ListadoDeDepartamentos> departamentos(@Query("provincia") int idProvincia, @Query("campos") String campos, @Query("max") int max);
-
-    @GET("departamentos")
-    Call<ListadoDeDepartamentos> departamentos(@Query("campos") String campos, @Query("max") int max);
 }
 

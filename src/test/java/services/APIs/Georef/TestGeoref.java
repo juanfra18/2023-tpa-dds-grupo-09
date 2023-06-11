@@ -33,11 +33,4 @@ public class TestGeoref {
             System.out.println(unMunicipio.nombre + " " + unMunicipio.id);
         }
     }
-    @Test
-    public void testDepartamentos() throws IOException {
-        ListadoDeDepartamentos departamentosDeLaProvincia = servicioGeoref.listadoDeDepartamentosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(2).get());
-        for(Departamento unDepto: departamentosDeLaProvincia.departamentos){
-            System.out.println(unDepto.nombre + " " + unDepto.id);
-        }
-    }
 }

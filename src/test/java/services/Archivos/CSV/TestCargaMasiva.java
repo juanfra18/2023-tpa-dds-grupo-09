@@ -6,6 +6,7 @@ import domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import services.Archivos.CargadorDeDatos;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +16,8 @@ public class TestCargaMasiva {
 
   @BeforeEach
   public void init() throws IOException, CsvException {
-    repo = new RepositorioDeEmpresas();
+    CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+    repo = new RepositorioDeEmpresas(cargadorDeDatos);
   }
 
   @Test

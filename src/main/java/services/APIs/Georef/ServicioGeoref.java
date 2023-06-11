@@ -1,7 +1,6 @@
 package services.APIs.Georef;
 
 import Config.Config;
-import services.Localizacion.ListadoDeDepartamentos;
 import services.Localizacion.ListadoDeMunicipios;
 import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Provincia;
@@ -41,12 +40,6 @@ public class ServicioGeoref {
         return responseProvinciasArgentinas.body();
     }
 
-    public ListadoDeDepartamentos listadoDeDepartamentos() throws IOException {
-        Call<ListadoDeDepartamentos> requestDepartamentosArgentinos = georefService.departamentos("id, nombre, provincia", maximaCantidadRegistrosDefault);
-        Response<ListadoDeDepartamentos> responseDepartamentosArgentinos = requestDepartamentosArgentinos.execute();
-        return responseDepartamentosArgentinos.body();
-    }
-
     public ListadoDeMunicipios listadoDeMunicipios() throws IOException {
         Call<ListadoDeMunicipios> requestMunicipiosArgentinos = georefService.municipios("id, nombre, provincia", maximaCantidadRegistrosDefault);
         Response<ListadoDeMunicipios> responseMunicipiosArgentinos = requestMunicipiosArgentinos.execute();
@@ -57,11 +50,5 @@ public class ServicioGeoref {
         Call<ListadoDeMunicipios> requestListadoDeMunicipios = georefService.municipios(provincia.id, "id, nombre, provincia", maximaCantidadRegistrosDefault);
         Response<ListadoDeMunicipios> responseListadoDeMunicipios = requestListadoDeMunicipios.execute();
         return responseListadoDeMunicipios.body();
-    }
-
-    public ListadoDeDepartamentos listadoDeDepartamentosDeProvincia(Provincia provincia) throws IOException {
-        Call<ListadoDeDepartamentos> requestListadoDeDepartamentos = georefService.departamentos(provincia.id, "id, nombre, provincia", maximaCantidadRegistrosDefault);
-        Response<ListadoDeDepartamentos> responseListadoDeDepartamentos = requestListadoDeDepartamentos.execute();
-        return responseListadoDeDepartamentos.body();
     }
 }

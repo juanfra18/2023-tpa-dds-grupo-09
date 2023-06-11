@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class SistemaDeArchivos {
-  public static boolean estaEnArchivo(String texto, String ruta) throws IOException {
+  public boolean estaEnArchivo(String texto, String ruta) throws IOException {
     String linea = null;
     FileReader fr = null;
     BufferedReader br = null;
@@ -32,7 +32,7 @@ public class SistemaDeArchivos {
     return encontrado;
   }
 
-  public static List<String[]> csvALista(String ruta) throws IOException, CsvException {
+  public List<String[]> csvALista(String ruta) throws IOException, CsvException {
     AdapterLectorCSV adapter = new AdapterOpenCSV();
     return adapter.leer(ruta);
   }

@@ -14,7 +14,8 @@ public class NoEstaEnArchivo implements ReglaContrasenia{
 
     public boolean cumpleRegla(String contrasenia)  {
         try {
-            return !SistemaDeArchivos.estaEnArchivo(contrasenia, ruta);
+            SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+            return !sistemaDeArchivos.estaEnArchivo(contrasenia, ruta);
         } catch (IOException e) {
             throw new NoSeEncontroElArchivo("No se encontro el archivo");
         }

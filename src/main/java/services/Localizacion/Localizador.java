@@ -16,12 +16,6 @@ public class Localizador {
       return provinciaDeID.get();
     }
 
-    ListadoDeDepartamentos listadoDeDepartamentos = servicioGeoref.listadoDeDepartamentos();
-    Optional<Departamento> departamentoDeID = listadoDeDepartamentos.departamentoDeId(id);
-    if (departamentoDeID.isPresent()) {
-      return departamentoDeID.get();
-    }
-
     ListadoDeMunicipios listadoDeMunicipios = servicioGeoref.listadoDeMunicipios();
     Optional<Municipio> municipioDeID = listadoDeMunicipios.municipioDeId(id);
     if (municipioDeID.isPresent()) {
