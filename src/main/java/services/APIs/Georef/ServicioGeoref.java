@@ -3,6 +3,7 @@ package services.APIs.Georef;
 import Config.Config;
 import services.Localizacion.ListadoDeMunicipios;
 import services.Localizacion.ListadoDeProvincias;
+import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -10,8 +11,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.List;
 
-public class ServicioGeoref {
+public class ServicioGeoref implements AdapterServicioGeo{
     private static ServicioGeoref instancia = null;
     private static int maximaCantidadRegistrosDefault = 2500;
     private static final String urlApi = Config.URL_API;
@@ -50,5 +52,15 @@ public class ServicioGeoref {
         Call<ListadoDeMunicipios> requestListadoDeMunicipios = georefService.municipios(provincia.id, "id, nombre, provincia", maximaCantidadRegistrosDefault);
         Response<ListadoDeMunicipios> responseListadoDeMunicipios = requestListadoDeMunicipios.execute();
         return responseListadoDeMunicipios.body();
+    }
+
+    @Override
+    public Municipio obtenerMunicipio(String nombre) throws IOException {
+        return this.listadoDeMunicipios().municipios.stream().filter(municipio -> municipio.getNombre().equals(nombre)).toList().get(0);
+    }
+
+    @Override
+    public Provincia obtenerProvincia(String nombre) throws IOException {
+        return this.listadoDeProvincias().provincias.stream().filter(provincia -> provincia.getNombre().equals(nombre)).toList().get(0);
     }
 }

@@ -33,7 +33,7 @@ public class SistemaDeArchivos {
   }
 
   public List<String[]> csvALista(String ruta) throws IOException, CsvException {
-    AdapterLectorCSV adapter = new AdapterOpenCSV();
+    AdapterLectorCSV adapter = new AdapterOpenCSV(); //punto de acoplamiento con librería externa
     return adapter.leer(ruta);
   }
 }

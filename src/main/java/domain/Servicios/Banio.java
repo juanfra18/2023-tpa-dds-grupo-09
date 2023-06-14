@@ -15,4 +15,13 @@ public class Banio implements Servicio{
     public Banio(String tipoBanio) {
         this.tipoBanio = TipoBanio.valueOf(tipoBanio);
     }
+
+    public boolean equals(Object otroServicio) {
+        if (otroServicio instanceof Banio) {
+            return ((Banio) otroServicio).tipoBanio == this.tipoBanio;
+        }
+        else {
+            return false;
+        }
+    }
 }

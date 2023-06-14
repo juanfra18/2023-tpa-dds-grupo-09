@@ -3,6 +3,8 @@ package services.Archivos;
 import domain.Entidades.*;
 import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
+import services.APIs.Georef.AdapterServicioGeo;
+import services.APIs.Georef.ServicioGeoref;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,17 +20,16 @@ public class CargadorDeDatos {
       String organismoNombre = elemento[0];
       String prestadoraNombre = elemento[1];
       String entidadNombre = elemento[2];
-      String entidadLocalizacion = elemento[3];
-      String entidadTipo = elemento[4];
-      String establecimientoNombre = elemento[5];
-      String establecimientoLocalizacion = elemento[6];
-      String establecimientoTipo = elemento[7];
-      String servicioNombre = elemento[8];
-      String servicioTipo = elemento[9];
+      String entidadTipo = elemento[3];
+      String establecimientoNombre = elemento[4];
+      String establecimientoLocalizacion = elemento[5];
+      String establecimientoTipo = elemento[6];
+      String servicioNombre = elemento[7];
+      String servicioTipo = elemento[8];
 
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl(organismoNombre));
       EntidadPrestadora prestadora = obtenerPrestadora(organismo.getEntidadesPrestadoras(), prestadoraNombre);
-      Entidad entidad = obtenerEntidad(prestadora.getEntidades(), entidadNombre, entidadTipo, entidadLocalizacion);
+      Entidad entidad = obtenerEntidad(prestadora.getEntidades(), entidadNombre, entidadTipo);
       Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), establecimientoNombre, establecimientoTipo, establecimientoLocalizacion);
 
       if (servicioNombre.equals("Banio")) {
@@ -58,7 +59,7 @@ public class CargadorDeDatos {
     return new EntidadPrestadora(nombre);
   }
 
-  private Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad, String entidadLocalizacion) throws IOException {
+  private Entidad obtenerEntidad(List<Entidad> entidades, String nombre, String tipoEntidad) {
     //Devuelve una ya existente o la crea
     List<Entidad> repetidos = entidades.stream().filter(entidad -> entidad.getNombre().equals(nombre)).toList();
 
@@ -66,12 +67,7 @@ public class CargadorDeDatos {
       return repetidos.get(0);
     }
 
-    if (tipoEntidad.equals("DeEstablecimiento")){
-      return new EntidadDeEstablecimiento(nombre, Integer.valueOf(entidadLocalizacion));
-    }
-    else{
-      return new EntidadDeTransporte(nombre, tipoEntidad, Integer.valueOf(entidadLocalizacion));
-    }
+    return new Entidad(nombre, tipoEntidad);
   }
 
   private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoTipo, String establecimientoLocalizacion) throws IOException {
@@ -81,6 +77,9 @@ public class CargadorDeDatos {
       return repetidos.get(0);
     }
 
-    return new Establecimiento(establecimientoNombre, establecimientoTipo, Integer.valueOf(establecimientoLocalizacion));
+    //Acoplamiento
+    AdapterServicioGeo servicioGeo = ServicioGeoref.instancia();
+
+    return new Establecimiento(establecimientoNombre, establecimientoTipo, servicioGeo.obtenerMunicipio(establecimientoLocalizacion));
   }
 }

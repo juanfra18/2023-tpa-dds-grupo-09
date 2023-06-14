@@ -1,10 +1,10 @@
-organismoDeControl,entidadPrestadora,entidad,idLocalizacionEntidad,tipoEntidad,establecimiento,idLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,UNISEX
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,DAMAS
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Banio,CABALLEROS
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Retiro,2,ESTACION,Elevacion,ASCENSOR
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Vicente López,2,ESTACION,Elevacion,ESCALERAS_MECANICAS
-CNRT,Trenes Argentinos,Línea Mitre,6,FERROCARRIL,Rivadavia,2,ESTACION,Banio,DAMAS
-BCRA,Santander Río,Santander Río Capital Federal,2,DeEstablecimiento,Almagro,2,SUCURSAL,Elevacion,ASCENSOR
-BCRA,Santander Río,Santander Río Buenos Aires,6,DeEstablecimiento,General Alvear,2,SUCURSAL,Elevacion,ASCENSOR
-BCRA,BCBA,BCBA,2,DeEstablecimiento,9 de Julio,2,SUCURSAL,Elevacion,ASCENSOR
+organismoDeControl,entidadPrestadora,entidad,tipoEntidad,establecimiento,nombreLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,UNISEX
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,DAMAS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,CABALLEROS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Elevacion,ASCENSOR
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Vicente López,Capital Federal,ESTACION,Elevacion,ESCALERAS_MECANICAS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Rivadavia,Capital Federal,ESTACION,Banio,DAMAS
+BCRA,Santander Río,Santander Río Capital Federal,DeEstablecimiento,Almagro,Capital Federal,SUCURSAL,Elevacion,ASCENSOR
+BCRA,Santander Río,Santander Río Buenos Aires,DeEstablecimiento,General Alvear,Capital Federal,SUCURSAL,Elevacion,ASCENSOR
+BCRA,BCBA,BCBA,DeEstablecimiento,9 de Julio,Capital Federal,SUCURSAL,Elevacion,ASCENSOR

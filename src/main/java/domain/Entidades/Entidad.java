@@ -1,29 +1,22 @@
 package domain.Entidades;
 
 import lombok.Getter;
-import services.Localizacion.Localizacion;
-import services.Localizacion.Localizador;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 @Getter
-public abstract class Entidad {
-    protected String nombre;
-    protected List<Establecimiento> establecimientos;
-    protected Localizacion localizacion;
+public class Entidad {
+    private String nombre;
+    private List<Establecimiento> establecimientos;
+    private TipoEntidad tipoEntidad;
 
-    protected Entidad(String nombre, int idLocalizacion) throws IOException {
+    public Entidad(String nombre, String tipo) {
         this.nombre = nombre;
         this.establecimientos = new ArrayList<>();
-        this.localizacion = Localizador.devolverLocalizacion(idLocalizacion);
+        this.tipoEntidad = TipoEntidad.valueOf(tipo);
     }
-    public void agregarEstablecimiento(Establecimiento establecimiento) throws IOException {
+    public void agregarEstablecimiento(Establecimiento establecimiento) {
         establecimientos.removeIf(establecimiento1 -> establecimiento1.getNombre().equals(establecimiento.getNombre()));
         establecimientos.add(establecimiento);
     }
-    public void asignarLocalizacion(int id) throws IOException {
-        this.localizacion = Localizador.devolverLocalizacion(id);
-    }
-
-
 }

@@ -1,10 +1,8 @@
 package Personas;
 
 import domain.Entidades.Entidad;
-import domain.Entidades.EntidadDeEstablecimiento;
 import domain.Entidades.Establecimiento;
 import domain.Personas.Comunidad;
-import domain.Personas.Interes;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
@@ -13,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import services.Localizacion.Localizacion;
-import services.Localizacion.Localizador;
 
 import java.io.IOException;
 import java.util.List;

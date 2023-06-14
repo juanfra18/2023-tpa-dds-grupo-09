@@ -2,10 +2,8 @@ package domain.Entidades;
 
 import domain.Servicios.Servicio;
 import lombok.Getter;
-import services.Localizacion.Localizacion;
-import services.Localizacion.Localizador;
+import services.Localizacion.Municipio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +12,13 @@ public class Establecimiento {
   private String nombre;
   private TipoEstablecimiento tipoEstablecimiento;
   private List<Servicio> servicios;
-  private Localizacion localizacion;
+  private Municipio localizacion;
 
-  public Establecimiento(String nombre, String tipoEstablecimiento, int idLocalizacion) throws IOException {
+  public Establecimiento(String nombre, String tipoEstablecimiento, Municipio municipio) {
     this.nombre = nombre;
     this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
     this.servicios = new ArrayList<>();
-    this.localizacion = Localizador.devolverLocalizacion(idLocalizacion);
+    this.localizacion = municipio;
   }
   public boolean estaEnFuncionamiento(Servicio servicio) { // X CANTIDAD DE TIEMPO
     if (servicios.contains(servicio)) {
@@ -35,29 +33,9 @@ public class Establecimiento {
     return servicios.stream().anyMatch(servicio1 -> servicio1.getTipo().equals(servicio.getTipo()));
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-public void revisionTemporalDeServicios() {
-    if (!estaEnFuncionamiento(Servicio servicio))
-      if(estaInteresado (InteresadoEnServicios persona, Servicio servicio)){
-      enviarNotificacion(InteresadoEnServicios);
-    }
+  @Override
+  public boolean equals(Object otroEstablecimiento) {
+    Establecimiento e = (Establecimiento) otroEstablecimiento;
+    return e.getNombre().equals(this.nombre);
   }
-
-  public void enviarNotificaciones(InteresadoEnServicios persona) {
-    mensaje = "Flaco no funciona el servicio"
-    persona.recibirMensaje(mensaje);
- */
 }

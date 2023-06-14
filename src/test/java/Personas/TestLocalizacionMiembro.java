@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import org.junit.jupiter.api.Test;
-import services.Localizacion.Localizacion;
-import services.Localizacion.Localizador;
 
 import java.io.IOException;
 

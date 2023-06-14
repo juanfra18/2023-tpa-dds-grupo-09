@@ -14,4 +14,13 @@ public class Elevacion implements Servicio{
     public Elevacion(String tipoElevacion) {
         this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
     }
+
+    public boolean equals(Object otroServicio) {
+        if (otroServicio instanceof Elevacion) {
+            return ((Elevacion) otroServicio).tipoElevacion == this.tipoElevacion;
+        }
+        else {
+            return false;
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package domain.Personas;
 
-import domain.Servicios.Servicio;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -9,19 +8,12 @@ import java.util.List;
 public class Comunidad {
     private String nombre;
     private List<MiembroDeComunidad> miembros;
-    private List<Servicio> servicios;
-    private Interes interes;
 
-    public  Comunidad(String nombre, Interes interes) {
+    public  Comunidad(String nombre) {
         this.nombre = nombre;
-        this.interes = interes;
         this.miembros = new ArrayList<>();
     }
-    public void agregarServicio(Servicio servicio) {
-        servicios.add(servicio);
-    }
-
-    public void agregarPersona(MiembroDeComunidad unMiembro) {
+    public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);
     }
 }

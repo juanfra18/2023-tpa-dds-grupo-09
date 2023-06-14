@@ -17,9 +17,9 @@ public class MiembroDeComunidad {
     private String mail;
     private List<Entidad> entidadesDeInteres;
     private List<Servicio> serviciosDeInteres;
-    private List<Localizacion> localizaciones;
+    private List<Provincia> provincias;
+    private List<Municipio> municipios;
     private Usuario usuario;
-    private List<Interes> intereses;
     private List<Comunidad> comunidades;
 
 
@@ -27,17 +27,20 @@ public class MiembroDeComunidad {
         this.apellido = apellido;
         this.nombre = nombre;
         this.mail = mail;
-        this.localizaciones = new ArrayList<>();
-        this.intereses = new ArrayList<>();
+        this.provincias = new ArrayList<>();
+        this.municipios = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
     }
 
-    public void agregarLocalizacion(int id) throws IOException {
-        localizaciones.add(Localizador.devolverLocalizacion(id));
+    public void agregarProvincia(Provincia provincia) {
+        provincias.add(provincia);
     }
 
+    public void agregarMunicipio(Municipio municipio) {
+        municipios.add(municipio);
+    }
     public void agregarEntidadDeInteres(Entidad entidad) {
         entidadesDeInteres.add(entidad);
     }
@@ -47,33 +50,16 @@ public class MiembroDeComunidad {
     }
 
     public void unirseAComunidad(Comunidad unaComunidad) {
-        if (comparteInteres(unaComunidad)) {
-            this.comunidades.add(unaComunidad);
-            unaComunidad.agregarPersona(this);
-        }
-    }
-    public boolean comparteInteres(Comunidad unaComunidad) {
-        return intereses.contains(unaComunidad.getInteres());
+        this.comunidades.add(unaComunidad);
+        unaComunidad.agregarMiembro(this);
     }
 
-    public void agregarInteres() {
-        for (Entidad entidad : this.entidadesDeInteres) {
-            for (Establecimiento establecimiento : entidad.getEstablecimientos()) {
-                for (Servicio servicio : establecimiento.getServicios()) {
-                    if (meInteresa(this.localizaciones, servicio, establecimiento)) {
-                        Interes interes = new Interes();
-                        interes.setEntidad(entidad);
-                        interes.setEstablecimiento(establecimiento);
-                        interes.setServicio(servicio);
-                        this.intereses.add(interes);
-                    }
-                }
-            }
-        }
-    }
+    private boolean tieneInteres(Servicio servicio, Establecimiento establecimiento) {
 
-    private boolean meInteresa(List<Localizacion> localizaciones, Servicio servicio, Establecimiento establecimiento) {
-        return (serviciosDeInteres.contains(servicio) && localizaciones.
-            stream().anyMatch(localizacion -> localizacion.getId() == establecimiento.getLocalizacion().getId()));
+        boolean coincideEstablecimiento = this.entidadesDeInteres.stream().anyMatch(entidad -> entidad.getEstablecimientos().contains(establecimiento));
+        boolean coincideLocalizacion = this.municipios.stream().anyMatch(municipio -> establecimiento.getLocalizacion() == municipio);
+        boolean coincideServicio = this.serviciosDeInteres.contains(servicio);
+
+        return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 }
