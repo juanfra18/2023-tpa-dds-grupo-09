@@ -1,6 +1,5 @@
 package services.Archivos;
 
-import com.opencsv.exceptions.CsvException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,14 +32,8 @@ public class SistemaDeArchivos {
   }
 
   public List<String[]> csvALista(String ruta){
-    try {
-      AdapterLectorCSV adapter = new AdapterOpenCSV(); //punto de acoplamiento con librería externa
-      return adapter.leer(ruta);
-    }
-    catch (CsvException | IOException e)
-    {
-      throw new NoSePudoLeerArchivoCSV("No se pudo leer archivo CSV");
-    }
+    AdapterLectorCSV adapter = new AdapterOpenCSV(); //punto de acoplamiento con librería externa
+    return adapter.leer(ruta);
   }
 }
 

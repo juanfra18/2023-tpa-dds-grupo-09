@@ -6,6 +6,6 @@ import services.Localizacion.Provincia;
 import java.io.IOException;
 
 public interface AdapterServicioGeo {
-  public Municipio obtenerMunicipio(String nombre) throws IOException;
-  public Provincia obtenerProvincia(String nombre) throws IOException;
+  public Municipio obtenerMunicipio(String nombre);
+  public Provincia obtenerProvincia(String nombre);
 }
