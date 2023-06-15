@@ -1,6 +1,8 @@
 package domain.Servicios;
 
 
+import java.util.Objects;
+
 public class Elevacion implements Servicio{
     private TipoElevacion tipoElevacion;
 
@@ -14,8 +16,24 @@ public class Elevacion implements Servicio{
     public Elevacion(String tipoElevacion) {
         this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
     }
-
-    public boolean equals(Object otroServicio) {
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Elevacion otro = (Elevacion) obj;
+        return tipoElevacion == otro.tipoElevacion;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(tipoElevacion);
+    }
+}
+/*
+public boolean equals(Object otroServicio) {
         if (otroServicio instanceof Elevacion) {
             return ((Elevacion) otroServicio).tipoElevacion == this.tipoElevacion;
         }
@@ -23,4 +41,4 @@ public class Elevacion implements Servicio{
             return false;
         }
     }
-}
+ */

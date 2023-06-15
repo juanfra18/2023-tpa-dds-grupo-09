@@ -2,74 +2,99 @@ package Personas;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
-import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Banio;
-import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.ServicioGeoref;
 import services.Localizacion.Municipio;
 
 import java.io.IOException;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 public class TestInteresesMiembro {
-
-  static MiembroDeComunidad miembro;
-  static AdapterServicioGeo servicioGeo;
-  static Municipio municipio;
-
-  static Servicio banioHombres;
-  static Servicio banioMujeres;
-  static Establecimiento estacionRetiro;
-  static Establecimiento estacionTolosa;
-  static Entidad lineaMitre;
-  static Entidad lineaRoca;
-
-  @BeforeAll
-  public static void init() throws IOException {
+  @Mock
+  private AdapterServicioGeo servicioGeo;
+  private MiembroDeComunidad miembro;
+  private Municipio generalAlvarado;
+  private Municipio pinamar;
+  private Servicio banioHombres;
+  private Servicio banioMujeres;
+  private Establecimiento estacionRetiro;
+  private Establecimiento estacionTolosa;
+  private Establecimiento estacionPinamar;
+  private Entidad lineaMitre;
+  private Entidad lineaRoca;
+  @BeforeEach
+  public void init() throws IOException {
     miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
-    servicioGeo = ServicioGeoref.instancia();
-    municipio = servicioGeo.obtenerMunicipio("General Alvarado");
-
-    miembro.agregarMunicipio(municipio);
+    MockitoAnnotations.openMocks(this);
+    servicioGeo = mock(AdapterServicioGeo.class);
+    when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
+    when(servicioGeo.obtenerMunicipio("Pinamar")).thenReturn(pinamar);
 
     banioHombres = new Banio("CABALLEROS");
     banioMujeres = new Banio("DAMAS");
 
+    miembro.agregarMunicipio(generalAlvarado);
     miembro.agregarServicioDeInteres(banioHombres);
 
-    estacionRetiro = new Establecimiento("Retiro","ESTACION",municipio);
+    lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
+
+    estacionRetiro = new Establecimiento("Retiro","ESTACION", generalAlvarado);
     estacionRetiro.agregarServicio(banioHombres);
 
-    lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
-    lineaMitre.agregarEstablecimiento(estacionRetiro);
+    estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
+    estacionPinamar.agregarServicio(banioHombres);
 
-    estacionTolosa = new Establecimiento("Tolosa","ESTACION",municipio);
-    estacionTolosa.agregarServicio(banioMujeres);
+    lineaMitre.agregarEstablecimiento(estacionRetiro);
+    lineaMitre.agregarEstablecimiento(estacionPinamar);
 
     lineaRoca = new Entidad("Linea Roca","FERROCARRIL");
     lineaRoca.agregarEstablecimiento(estacionTolosa);
+
+    estacionTolosa = new Establecimiento("Tolosa","ESTACION", generalAlvarado);
+    estacionTolosa.agregarServicio(banioMujeres);
+
+    estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
+    estacionPinamar.agregarServicio(banioHombres);
+
   }
+
   @Test
-  public void leInteresaElServicioYElEstablecimiento(){
+  public void leInteresaElServicioYElEstablecimiento() throws IOException {
     miembro.agregarEntidadDeInteres(lineaMitre);
-    Assertions.assertTrue(miembro.tieneInteres(banioHombres,estacionRetiro));
+    Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
+    Assertions.assertTrue(miembro.tieneInteres(banioHombres, estacionRetiro));
   }
+
   @Test
-  public void noLeInteresaElServicio(){
+  public void noLeInteresaElServicio() throws IOException {
     miembro.agregarEntidadDeInteres(lineaRoca);
-    Assertions.assertFalse(miembro.tieneInteres(banioMujeres,estacionTolosa));
+    Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
+    Assertions.assertFalse(miembro.tieneInteres(banioMujeres, estacionTolosa));
   }
+
   @Test
-  public void leInteresaElServicioPeroNoElEstablecimiento(){
-    Assertions.assertFalse(miembro.tieneInteres(banioHombres,estacionRetiro));
+  public void leInteresaElServicioPeroNoElEstablecimiento() throws IOException {
+    Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
+    Assertions.assertFalse(miembro.tieneInteres(banioHombres, estacionRetiro));
+  }
+
+  @Test
+  public void leInteresaPeroNoQuedaCerca(){
+    miembro.agregarEntidadDeInteres(lineaMitre);
+    Assertions.assertTrue(miembro.tieneInteres(banioHombres,estacionPinamar));
   }
 }
+
 
 

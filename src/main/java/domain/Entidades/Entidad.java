@@ -15,8 +15,8 @@ public class Entidad {
         this.establecimientos = new ArrayList<>();
         this.tipoEntidad = TipoEntidad.valueOf(tipo);
     }
-    public void agregarEstablecimiento(Establecimiento establecimiento) {
-        establecimientos.removeIf(establecimiento1 -> establecimiento1.getNombre().equals(establecimiento.getNombre()));
-        establecimientos.add(establecimiento);
+    public void agregarEstablecimiento(Establecimiento unEstablecimiento) {
+        establecimientos.removeIf(establecimiento -> establecimiento.equals(unEstablecimiento));
+        establecimientos.add(unEstablecimiento);
     }
 }

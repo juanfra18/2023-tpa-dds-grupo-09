@@ -6,6 +6,7 @@ import services.Localizacion.Municipio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Establecimiento {
@@ -29,7 +30,25 @@ public class Establecimiento {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
-  public boolean establecimientoContieneServicio(Servicio servicio) {
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Establecimiento otro = (Establecimiento) obj;
+    return Objects.equals(nombre, otro.nombre)
+            && Objects.equals(tipoEstablecimiento, otro.tipoEstablecimiento)
+            && Objects.equals(servicios, otro.servicios)
+            && Objects.equals(localizacion, otro.localizacion);
+  }
+
+
+}
+/*
+ public boolean establecimientoContieneServicio(Servicio servicio) {
     return servicios.stream().anyMatch(servicio1 -> servicio1.getTipo().equals(servicio.getTipo()));
   }
 
@@ -38,4 +57,4 @@ public class Establecimiento {
     Establecimiento e = (Establecimiento) otroEstablecimiento;
     return e.getNombre().equals(this.nombre);
   }
-}
+ */
