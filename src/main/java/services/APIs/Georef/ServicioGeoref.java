@@ -35,31 +35,49 @@ public class ServicioGeoref implements AdapterServicioGeo{
         return instancia;
     }
 
-    public ListadoDeProvincias listadoDeProvincias() throws IOException {
-        Call<ListadoDeProvincias> requestProvinciasArgentinas = georefService.provincias();
-        Response<ListadoDeProvincias> responseProvinciasArgentinas = requestProvinciasArgentinas.execute();
-        return responseProvinciasArgentinas.body();
+    public ListadoDeProvincias listadoDeProvincias(){
+        try {
+            Call<ListadoDeProvincias> requestProvinciasArgentinas = georefService.provincias();
+            Response<ListadoDeProvincias> responseProvinciasArgentinas = requestProvinciasArgentinas.execute();
+            return responseProvinciasArgentinas.body();
+        }
+        catch (IOException e)
+        {
+            throw new NoSePudoConectarConAPI("No se pudo conectar con la API Georef");
+        }
     }
 
-    public ListadoDeMunicipios listadoDeMunicipios() throws IOException {
-        Call<ListadoDeMunicipios> requestMunicipiosArgentinos = georefService.municipios("id, nombre, provincia", maximaCantidadRegistrosDefault);
-        Response<ListadoDeMunicipios> responseMunicipiosArgentinos = requestMunicipiosArgentinos.execute();
-        return responseMunicipiosArgentinos.body();
+    public ListadoDeMunicipios listadoDeMunicipios(){
+        try {
+            Call<ListadoDeMunicipios> requestMunicipiosArgentinos = georefService.municipios("id, nombre, provincia", maximaCantidadRegistrosDefault);
+            Response<ListadoDeMunicipios> responseMunicipiosArgentinos = requestMunicipiosArgentinos.execute();
+            return responseMunicipiosArgentinos.body();
+        }
+        catch (IOException e)
+        {
+            throw new NoSePudoConectarConAPI("No se pudo conectar con la API Georef");
+        }
     }
 
-    public ListadoDeMunicipios listadoDeMunicipiosDeProvincia(Provincia provincia) throws IOException {
-        Call<ListadoDeMunicipios> requestListadoDeMunicipios = georefService.municipios(provincia.id, "id, nombre, provincia", maximaCantidadRegistrosDefault);
-        Response<ListadoDeMunicipios> responseListadoDeMunicipios = requestListadoDeMunicipios.execute();
-        return responseListadoDeMunicipios.body();
+    public ListadoDeMunicipios listadoDeMunicipiosDeProvincia(Provincia provincia){
+        try {
+            Call<ListadoDeMunicipios> requestListadoDeMunicipios = georefService.municipios(provincia.id, "id, nombre, provincia", maximaCantidadRegistrosDefault);
+            Response<ListadoDeMunicipios> responseListadoDeMunicipios = requestListadoDeMunicipios.execute();
+            return responseListadoDeMunicipios.body();
+        }
+        catch (IOException e)
+        {
+            throw new NoSePudoConectarConAPI("No se pudo conectar con la API Georef");
+        }
     }
 
     @Override
-    public Municipio obtenerMunicipio(String nombre) throws IOException {
+    public Municipio obtenerMunicipio(String nombre){
         return this.listadoDeMunicipios().municipios.stream().filter(municipio -> municipio.getNombre().equals(nombre)).toList().get(0);
     }
 
     @Override
-    public Provincia obtenerProvincia(String nombre) throws IOException {
+    public Provincia obtenerProvincia(String nombre){
         return this.listadoDeProvincias().provincias.stream().filter(provincia -> provincia.getNombre().equals(nombre)).toList().get(0);
     }
 }

@@ -25,7 +25,7 @@ public class TestLocalizacionMiembro {
   private String municipio = "General Alvarado";
 
   @BeforeEach
-  public void init() throws IOException {
+  public void init(){
     miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);

@@ -32,9 +32,15 @@ public class SistemaDeArchivos {
     return encontrado;
   }
 
-  public List<String[]> csvALista(String ruta) throws IOException, CsvException {
-    AdapterLectorCSV adapter = new AdapterOpenCSV(); //punto de acoplamiento con librería externa
-    return adapter.leer(ruta);
+  public List<String[]> csvALista(String ruta){
+    try {
+      AdapterLectorCSV adapter = new AdapterOpenCSV(); //punto de acoplamiento con librería externa
+      return adapter.leer(ruta);
+    }
+    catch (CsvException | IOException e)
+    {
+      throw new NoSePudoLeerArchivoCSV("No se pudo leer archivo CSV");
+    }
   }
 }
 

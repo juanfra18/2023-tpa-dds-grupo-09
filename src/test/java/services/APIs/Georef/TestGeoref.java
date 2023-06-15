@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import services.Localizacion.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 import java.util.Optional;
 
 public class TestGeoref {
@@ -15,7 +13,7 @@ public class TestGeoref {
         servicioGeoref = ServicioGeoref.instancia();
     }
     @Test
-    public void testProvincias() throws IOException {
+    public void testProvincias(){
         ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
         for(Provincia unaProvincia: listadoDeProvinciasArgentinas.provincias){
@@ -27,19 +25,19 @@ public class TestGeoref {
         Assertions.assertEquals((posibleProvincia.get().nombre), "Buenos Aires");
     }
     @Test
-    public void testMunicipios() throws IOException {
+    public void testMunicipios(){
         ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(6).get());
         for(Municipio unMunicipio: municipiosDeLaProvincia.municipios){
             System.out.println(unMunicipio.nombre + " " + unMunicipio.id);
         }
     }
     @Test
-    public void testProvincia() throws IOException {
+    public void testProvincia(){
         Provincia provincia = servicioGeoref.obtenerProvincia("Buenos Aires");
         Assertions.assertEquals(6,provincia.getId());
     }
     @Test
-    public void testMunicipio() throws IOException {
+    public void testMunicipio(){
         Municipio municipio = servicioGeoref.obtenerMunicipio("General Alvarado");
         Assertions.assertEquals(60280,municipio.getId());
     }

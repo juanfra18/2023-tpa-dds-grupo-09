@@ -12,9 +12,8 @@ public class AdapterOpenCSV implements AdapterLectorCSV {
     @Override
     public List<String[]> leer(String ruta) throws IOException, CsvException {
         CSVReader reader = new CSVReaderBuilder(new FileReader(ruta)).build();
+        reader.skip(1); //no lee el encabezado
         List<String[]> lista = reader.readAll();
-
-        lista.remove(0);
 
         return lista;
     }

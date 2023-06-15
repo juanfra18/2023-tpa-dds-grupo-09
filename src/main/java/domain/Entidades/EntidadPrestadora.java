@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class EntidadPrestadora {
@@ -20,5 +21,17 @@ public class EntidadPrestadora {
   }
   public void asignarPersona(String email){
     this.personaMail = email;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    EntidadPrestadora otro = (EntidadPrestadora) obj;
+    return Objects.equals(nombre, otro.nombre);
   }
 }
