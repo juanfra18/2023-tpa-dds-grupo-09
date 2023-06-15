@@ -5,19 +5,28 @@ import domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
+import services.Localizacion.Municipio;
 
 import java.util.List;
 
-public class TestCargaMasiva {
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class TestCargaMasivaMockeado {
   private RepositorioDeEmpresas repo;
+  @Mock
+  private AdapterServicioGeo servicioGeo;
 
   @BeforeEach
   public void init(){
     CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
-    AdapterServicioGeo servicioGeo = ServicioGeoref.instancia(); //punto de acoplamiento con georef
+    servicioGeo = mock(AdapterServicioGeo.class);
+    String municipio = "Capital Federal";
+    when(servicioGeo.obtenerMunicipio(municipio)).thenReturn(new Municipio(2,municipio));
+
     repo = new RepositorioDeEmpresas(cargadorDeDatos, servicioGeo);
   }
 
