@@ -23,7 +23,6 @@ public class TestCargaMasiva {
   @Test
   public void testServicios(){
     List<Servicio> servicios = repo.getEmpresas().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0).getEstablecimientos().get(0).getServicios();
-
     Assertions.assertEquals("ASCENSOR", servicios.get(3).getTipo());
   }
 

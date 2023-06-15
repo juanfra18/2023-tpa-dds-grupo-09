@@ -54,7 +54,7 @@ public class MiembroDeComunidad {
         unaComunidad.agregarMiembro(this);
     }
 
-    private boolean tieneInteres(Servicio servicio, Establecimiento establecimiento) {
+    public boolean tieneInteres(Servicio servicio, Establecimiento establecimiento) {
 
         boolean coincideEstablecimiento = this.entidadesDeInteres.stream().anyMatch(entidad -> entidad.getEstablecimientos().contains(establecimiento));
         boolean coincideLocalizacion = this.municipios.stream().anyMatch(municipio -> establecimiento.getLocalizacion() == municipio);

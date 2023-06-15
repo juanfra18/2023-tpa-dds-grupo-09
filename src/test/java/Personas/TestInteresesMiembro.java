@@ -4,63 +4,72 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
+import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import services.APIs.Georef.AdapterServicioGeo;
+import services.APIs.Georef.ServicioGeoref;
+import services.Localizacion.Municipio;
 
 import java.io.IOException;
-import java.util.List;
+
 
 public class TestInteresesMiembro {
 
-    private MiembroDeComunidad miembro;
-    static Localizacion almagro;
+  static MiembroDeComunidad miembro;
+  static AdapterServicioGeo servicioGeo;
+  static Municipio municipio;
 
-    @BeforeEach
-    private void setupInteres() throws IOException {
-        miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
-        almagro = Localizador.devolverLocalizacion(2035);
-        miembro.agregarLocalizacion(almagro.getId());
+  static Servicio banioHombres;
+  static Servicio banioMujeres;
+  static Establecimiento estacionRetiro;
+  static Establecimiento estacionTolosa;
+  static Entidad lineaMitre;
+  static Entidad lineaRoca;
 
-        Entidad santander = new EntidadDeEstablecimiento("Santander Rio Argentina", 2);
-        Establecimiento sucursalAlmagro = new Establecimiento("Sucursal Almagro", "SUCURSAL", 2035);
-        santander.agregarEstablecimiento(sucursalAlmagro);
-        miembro.agregarEntidadDeInteres(santander);
+  @BeforeAll
+  public static void init() throws IOException {
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
+    servicioGeo = ServicioGeoref.instancia();
+    municipio = servicioGeo.obtenerMunicipio("General Alvarado");
 
-        Servicio ascensor = new Elevacion("ASCENSOR");
-        sucursalAlmagro.agregarServicio(ascensor);
-        miembro.agregarServicioDeInteres(ascensor);
+    miembro.agregarMunicipio(municipio);
 
-        miembro.agregarInteres();
-    }
+    banioHombres = new Banio("CABALLEROS");
+    banioMujeres = new Banio("DAMAS");
 
-    @Test
-    public void testInteres() throws IOException {
-        setupInteres();
+    miembro.agregarServicioDeInteres(banioHombres);
 
-        List<Interes> intereses = miembro.getIntereses();
-        assertThat("Numero de intereses debería ser 1", intereses.size(), is(equalTo(1)));
+    estacionRetiro = new Establecimiento("Retiro","ESTACION",municipio);
+    estacionRetiro.agregarServicio(banioHombres);
 
-        Interes interes = intereses.get(0);
-        assertThat("ERROR EN entidad", interes.getEntidad(), is(equalTo(miembro.getEntidadesDeInteres().get(0))));
-        assertThat("ERROR EN establecimiento", interes.getEstablecimiento(), is(equalTo(miembro.getEntidadesDeInteres().get(0).getEstablecimientos().get(0))));
-        assertThat("ERROR EN servicio", interes.getServicio(), is(equalTo(miembro.getServiciosDeInteres().get(0))));
-    }
+    lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
+    lineaMitre.agregarEstablecimiento(estacionRetiro);
 
-    @Test
-    public void testearUnirseAcomunidad() throws IOException {
-        setupInteres();
-        Interes interes = miembro.getIntereses().get(0);
+    estacionTolosa = new Establecimiento("Tolosa","ESTACION",municipio);
+    estacionTolosa.agregarServicio(banioMujeres);
 
-        Comunidad comunidad = new Comunidad("Asociacion de Amor", interes);
-        miembro.unirseAComunidad(comunidad);
-        List<MiembroDeComunidad> miembros = comunidad.getMiembros();
-        assertTrue(miembros.contains(miembro));
-    }
+    lineaRoca = new Entidad("Linea Roca","FERROCARRIL");
+    lineaRoca.agregarEstablecimiento(estacionTolosa);
+  }
+  @Test
+  public void leInteresaElServicioYElEstablecimiento(){
+    miembro.agregarEntidadDeInteres(lineaMitre);
+    Assertions.assertTrue(miembro.tieneInteres(banioHombres,estacionRetiro));
+  }
+  @Test
+  public void noLeInteresaElServicio(){
+    miembro.agregarEntidadDeInteres(lineaRoca);
+    Assertions.assertFalse(miembro.tieneInteres(banioMujeres,estacionTolosa));
+  }
+  @Test
+  public void leInteresaElServicioPeroNoElEstablecimiento(){
+    Assertions.assertFalse(miembro.tieneInteres(banioHombres,estacionRetiro));
+  }
 }
 
 

@@ -30,7 +30,7 @@ public class CargadorDeDatos {
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl(organismoNombre));
       EntidadPrestadora prestadora = obtenerPrestadora(organismo.getEntidadesPrestadoras(), prestadoraNombre);
       Entidad entidad = obtenerEntidad(prestadora.getEntidades(), entidadNombre, entidadTipo);
-      Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), establecimientoNombre, establecimientoTipo, establecimientoLocalizacion);
+      Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), establecimientoNombre, establecimientoLocalizacion, establecimientoTipo);
 
       if (servicioNombre.equals("Banio")) {
         establecimiento.agregarServicio(new Banio(servicioTipo));
@@ -70,7 +70,7 @@ public class CargadorDeDatos {
     return new Entidad(nombre, tipoEntidad);
   }
 
-  private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoTipo, String establecimientoLocalizacion) throws IOException {
+  private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, String establecimientoNombre, String establecimientoLocalizacion, String establecimientoTipo) throws IOException {
     List<Establecimiento> repetidos = establecimientos.stream().filter(establecimiento -> establecimiento.getNombre().equals(establecimientoNombre)).toList();
 
     if(repetidos.size() != 0){

@@ -1,10 +1,10 @@
 organismoDeControl,entidadPrestadora,entidad,tipoEntidad,establecimiento,nombreLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,UNISEX
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,DAMAS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Banio,CABALLEROS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,Capital Federal,ESTACION,Elevacion,ASCENSOR
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Vicente López,Capital Federal,ESTACION,Elevacion,ESCALERAS_MECANICAS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Rivadavia,Capital Federal,ESTACION,Banio,DAMAS
-BCRA,Santander Río,Santander Río Capital Federal,DeEstablecimiento,Almagro,Capital Federal,SUCURSAL,Elevacion,ASCENSOR
-BCRA,Santander Río,Santander Río Buenos Aires,DeEstablecimiento,General Alvear,Capital Federal,SUCURSAL,Elevacion,ASCENSOR
-BCRA,BCBA,BCBA,DeEstablecimiento,9 de Julio,Capital Federal,SUCURSAL,Elevacion,ASCENSOR
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,UNISEX
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,DAMAS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,CABALLEROS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Elevacion,ASCENSOR
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Vicente López,General Alvarado,ESTACION,Elevacion,ESCALERAS_MECANICAS
+CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Rivadavia,General Alvarado,ESTACION,Banio,DAMAS
+BCRA,Santander Río,Santander Río Capital Federal,ESTABLECIMIENTO,Almagro,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
+BCRA,Santander Río,Santander Río Buenos Aires,ESTABLECIMIENTO,General Alvear,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
+BCRA,BCBA,BCBA,ESTABLECIMIENTO,9 de Julio,General Alvarado,SUCURSAL,Elevacion,ASCENSOR

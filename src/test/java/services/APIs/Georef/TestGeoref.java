@@ -33,4 +33,14 @@ public class TestGeoref {
             System.out.println(unMunicipio.nombre + " " + unMunicipio.id);
         }
     }
+    @Test
+    public void testProvincia() throws IOException {
+        Provincia provincia = servicioGeoref.obtenerProvincia("Buenos Aires");
+        Assertions.assertEquals(6,provincia.getId());
+    }
+    @Test
+    public void testMunicipio() throws IOException {
+        Municipio municipio = servicioGeoref.obtenerMunicipio("General Alvarado");
+        Assertions.assertEquals(60280,municipio.getId());
+    }
 }
