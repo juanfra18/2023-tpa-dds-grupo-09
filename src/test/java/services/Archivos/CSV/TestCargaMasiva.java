@@ -15,7 +15,7 @@ public class TestCargaMasiva {
   private RepositorioDeEmpresas repo;
 
   @BeforeEach
-  public void init() throws IOException, CsvException {
+  public void init(){
     CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
     repo = new RepositorioDeEmpresas(cargadorDeDatos);
   }
@@ -23,7 +23,7 @@ public class TestCargaMasiva {
   @Test
   public void testServicios(){
     List<Servicio> servicios = repo.getEmpresas().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0).getEstablecimientos().get(0).getServicios();
-    Assertions.assertEquals("ASCENSOR", servicios.get(3).getTipo());
+    Assertions.assertEquals("UNISEX", servicios.get(0).getTipo());
   }
 
   @Test

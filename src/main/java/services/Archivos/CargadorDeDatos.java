@@ -52,18 +52,18 @@ public class CargadorDeDatos {
 
   private EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, EntidadPrestadora posiblePrestadora) {
     //Devuelve una ya existente o la crea
-    Optional<EntidadPrestadora> entidadPrestadora = Optional.ofNullable(prestadoras.stream().filter(prestadora -> prestadora.equals(posiblePrestadora)).toList().get(0));
+    Optional<EntidadPrestadora> entidadPrestadora = prestadoras.stream().filter(prestadora -> prestadora.equals(posiblePrestadora)).toList().stream().findFirst();
     return entidadPrestadora.orElseGet(() -> posiblePrestadora);
   }
 
   private Entidad obtenerEntidad(List<Entidad> entidades, Entidad posibleEntidad) {
     //Devuelve una ya existente o la crea
-    Optional<Entidad> entidad = Optional.ofNullable(entidades.stream().filter(entidad1 -> entidad1.equals(posibleEntidad)).toList().get(0));
+    Optional<Entidad> entidad = entidades.stream().filter(entidad1 -> entidad1.equals(posibleEntidad)).toList().stream().findFirst();
     return entidad.orElseGet(() -> posibleEntidad);
   }
 
   private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, Establecimiento posibleEstablecimiento) {
-    Optional<Establecimiento> establecimiento = Optional.ofNullable(establecimientos.stream().filter(establecimiento1 -> establecimiento1.equals(posibleEstablecimiento)).toList().get(0));
+    Optional<Establecimiento> establecimiento = establecimientos.stream().filter(establecimiento1 -> establecimiento1.equals(posibleEstablecimiento)).toList().stream().findFirst();
     return establecimiento.orElseGet(() -> posibleEstablecimiento);
   }
 }
