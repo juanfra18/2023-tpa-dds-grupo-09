@@ -40,9 +40,8 @@ public class Establecimiento {
     }
     Establecimiento otro = (Establecimiento) obj;
     return Objects.equals(nombre, otro.nombre)
-            && Objects.equals(tipoEstablecimiento, otro.tipoEstablecimiento)
-            && Objects.equals(servicios, otro.servicios)
-            && Objects.equals(localizacion, otro.localizacion);
+        && Objects.equals(tipoEstablecimiento,otro.tipoEstablecimiento)
+        && Objects.equals(localizacion.getId(),otro.localizacion.getId());
   }
 
 
