@@ -3,7 +3,6 @@ package domain.Entidades;
 import Config.Config;
 import lombok.Getter;
 import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
 import services.Archivos.SistemaDeArchivos;
 import java.util.List;

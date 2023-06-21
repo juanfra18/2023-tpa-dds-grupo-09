@@ -2,6 +2,7 @@ package domain.Personas;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
+import domain.Incidentes.EstadoIncidente;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -61,5 +62,11 @@ public class MiembroDeComunidad {
         boolean coincideServicio = this.serviciosDeInteres.contains(servicio);
 
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
+    }
+
+    public void informarFuncionamiento(Servicio servicio, Entidad entidad, Establecimiento establecimiento, EstadoIncidente estado) {
+        for (Comunidad comunidad : comunidades) {
+            comunidad.guardarIncidente(servicio, entidad, establecimiento, estado);
+        }
     }
 }
