@@ -1,14 +1,11 @@
 package domain.Notificaciones;
 
-import domain.Personas.Comunidad;
+import domain.Incidentes.ReporteDeIncidente;
 
-public class Notificador {
+public class ReceptorDeNotificaciones {
   private FormaDeNotificar formaDeNotificar;
   private MedioDeComunicacion medioDeComunicacion;
-  public void recibirNotificacion(){
-    //TODO
-  }
-  public void reportarIncidente(Comunidad comunidad) {
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente){
     //TODO
   }
   public void cambiarFormaDeNotificar(String forma) {

@@ -1,5 +1,7 @@
 package domain.Notificaciones;
 
+import domain.Incidentes.ReporteDeIncidente;
+
 public interface AdapterViaMail {
-  void recibirNotificacion();
+  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente);
 }

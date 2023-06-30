@@ -3,6 +3,8 @@ package domain.Personas;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Incidentes.EstadoIncidente;
+import domain.Incidentes.ReporteDeIncidente;
+import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -22,6 +24,7 @@ public class MiembroDeComunidad {
     private List<Municipio> municipios;
     private Usuario usuario;
     private List<Comunidad> comunidades;
+    private ReceptorDeNotificaciones receptorDeNotificaciones;
 
 
     public MiembroDeComunidad(String apellido, String nombre, String mail) {
@@ -64,9 +67,11 @@ public class MiembroDeComunidad {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(Servicio servicio, Entidad entidad, Establecimiento establecimiento, EstadoIncidente estado) {
-        for (Comunidad comunidad : comunidades) {
-            comunidad.guardarIncidente(servicio, entidad, establecimiento, estado);
-        }
+    public void informarFuncionamiento(Entidad entidad, Establecimiento establecimiento, Servicio servicio, String estado, String observaciones) {
+        this.comunidades.forEach(comunidad -> comunidad.guardarIncidente(entidad, establecimiento, servicio, estado, this, observaciones));
+    }
+
+    public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
+        this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);
     }
 }
