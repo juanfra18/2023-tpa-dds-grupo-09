@@ -3,6 +3,7 @@ package domain.Personas;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 
+import domain.Incidentes.EstadoIncidente;
 import domain.Incidentes.ReporteDeIncidente;
 
 import domain.Notificaciones.EmisorDeNotificaciones;
@@ -37,5 +38,18 @@ public class Comunidad {
         ReporteDeIncidente reporte = new ReporteDeIncidente(estado, Date.from(Instant.now()), Time.from(Instant.now()), denunciante, entidad, establecimiento, servicio, observaciones);
         this.incidentesDeLaComunidad.add(reporte);
         this.emisorDeNotificaciones.EnviarNotificaciones(reporte);
+    }
+
+    public List<ReporteDeIncidente> IncidentesAbiertos(){
+
+        List<ReporteDeIncidente> incidentesDeCierre = incidentesDeLaComunidad.stream().filter(incidente -> incidente.cierreDeIncidente()).toList();
+        List<ReporteDeIncidente> incidentesDeApertura = incidentesDeLaComunidad.stream().filter(incidente -> !incidente.cierreDeIncidente()).toList();
+
+        List<ReporteDeIncidente> incidentesAbiertos = incidentesDeApertura.stream().filter(incidente ->
+                                                 !incidentesDeCierre.stream().anyMatch(incidenteCierre ->
+                                                  incidenteCierre.getEstablecimiento() == incidente.getEstablecimiento() &&
+                                                  incidenteCierre.getServicio() == incidente.getServicio())).toList();
+
+        return incidentesAbiertos;
     }
 }

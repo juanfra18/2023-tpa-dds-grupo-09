@@ -43,4 +43,11 @@ public class ReporteDeIncidente {
         && Objects.equals(this.servicio,otro.servicio)
         && Objects.equals(this.getEstado(),otro.getEstado());
   }
+
+  public Boolean cierreDeIncidente(){
+    if(estado == EstadoIncidente.CERRADO)
+      return true;
+    else
+      return false;
+  }
 }

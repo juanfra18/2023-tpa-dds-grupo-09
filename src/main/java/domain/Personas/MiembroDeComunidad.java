@@ -72,6 +72,11 @@ public class MiembroDeComunidad {
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
-        this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);
+        this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente,this);
+    }
+
+    public int distancia(ReporteDeIncidente reporteDeIncidente) {
+        //TODO
+        return 0;
     }
 }

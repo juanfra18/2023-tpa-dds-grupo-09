@@ -1,7 +1,8 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Personas.MiembroDeComunidad;
 
 public interface MedioDeComunicacion {
-  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente);
+  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, MiembroDeComunidad destinatario);
 }

@@ -1,10 +1,11 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Personas.MiembroDeComunidad;
 
 public class ViaWPP implements MedioDeComunicacion{
   private AdapterViaWPP adapterViaWPP;
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, MiembroDeComunidad destinatario) {
     //TODO
   }
 }
