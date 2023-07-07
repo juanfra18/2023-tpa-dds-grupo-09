@@ -1,21 +1,11 @@
 package domain.Personas;
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-
-import domain.Incidentes.EstadoIncidente;
 import domain.Incidentes.ReporteDeIncidente;
 
 import domain.Notificaciones.EmisorDeNotificaciones;
-import domain.Servicios.Servicio;
 import lombok.Getter;
 
-import java.sql.Time;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 @Getter
 public class Comunidad {
@@ -24,32 +14,27 @@ public class Comunidad {
     private List<ReporteDeIncidente> incidentesDeLaComunidad;
     private EmisorDeNotificaciones emisorDeNotificaciones;
 
-    public  Comunidad(String nombre) {
+    public Comunidad(String nombre, EmisorDeNotificaciones emisorDeNotificaciones) {
         this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.incidentesDeLaComunidad = new ArrayList<>();
-        this.emisorDeNotificaciones = new EmisorDeNotificaciones(this);
+        this.emisorDeNotificaciones = emisorDeNotificaciones;
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);
     }
-    public void guardarIncidente(Entidad entidad, Establecimiento establecimiento, Servicio servicio,
-                                 String estado, MiembroDeComunidad denunciante, String observaciones) {
-        ReporteDeIncidente reporte = new ReporteDeIncidente(estado, Date.from(Instant.now()), Time.from(Instant.now()), denunciante, entidad, establecimiento, servicio, observaciones);
-        this.incidentesDeLaComunidad.add(reporte);
-        this.emisorDeNotificaciones.EnviarNotificaciones(reporte);
+    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente) {
+        this.incidentesDeLaComunidad.add(reporteDeIncidente);
+        this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros);
     }
 
-    public List<ReporteDeIncidente> IncidentesAbiertos(){
-
-        List<ReporteDeIncidente> incidentesDeCierre = incidentesDeLaComunidad.stream().filter(incidente -> incidente.cierreDeIncidente()).toList();
-        List<ReporteDeIncidente> incidentesDeApertura = incidentesDeLaComunidad.stream().filter(incidente -> !incidente.cierreDeIncidente()).toList();
+    public List<ReporteDeIncidente> incidentesAbiertos(){
+        List<ReporteDeIncidente> incidentesDeCierre = incidentesDeLaComunidad.stream().filter(incidente -> incidente.cerrado()).toList();
+        List<ReporteDeIncidente> incidentesDeApertura = incidentesDeLaComunidad.stream().filter(incidente -> !incidente.cerrado()).toList();
 
         List<ReporteDeIncidente> incidentesAbiertos = incidentesDeApertura.stream().filter(incidente ->
                                                  !incidentesDeCierre.stream().anyMatch(incidenteCierre ->
-                                                  incidenteCierre.getEstablecimiento() == incidente.getEstablecimiento() &&
-                                                  incidenteCierre.getServicio() == incidente.getServicio())).toList();
-
+                                                  incidenteCierre.equals(incidente))).toList();
         return incidentesAbiertos;
     }
 }

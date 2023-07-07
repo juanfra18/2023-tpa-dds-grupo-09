@@ -2,6 +2,6 @@ package domain.Notificaciones.Reglas;
 
 import domain.Incidentes.ReporteDeIncidente;
 
-public interface ReglaSinApuros {
+public interface ReglaNotificacion {
   boolean cumpleRegla(ReporteDeIncidente reporteDeIncidente);
 }

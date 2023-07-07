@@ -1,30 +1,29 @@
 package domain.Notificaciones;
 
+import domain.Incidentes.EstadoIncidente;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Notificaciones.Reglas.ReglaSinApuros;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class SinApuros implements FormaDeNotificar{
-  private Date horario;
+public class SinApuros extends FormaDeNotificar{
   private List<ReporteDeIncidente> resumenDeIncidentes;
-  private List<ReglaSinApuros> reglaSinApuros;
-  public SinApuros() {
-    this.reglaSinApuros = new ArrayList<>();
-    this.resumenDeIncidentes = new ArrayList<>();
 
-    reglaSinApuros.add();
+  public SinApuros(MedioDeComunicacion medioDeComunicacion, String destinatario) {
+    super(medioDeComunicacion, destinatario);
+    this.resumenDeIncidentes = new ArrayList<>();
   }
-  public void recibirNotificacion(MedioDeComunicacion medioDeComunicacion, ReporteDeIncidente reporteDeIncidente) {
-    if (this.reglaSinApuros.stream().allMatch(regla -> regla.cumpleRegla(reporteDeIncidente))) {
+  @Override
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
+    if (reporteDeIncidente.getEstado().equals(EstadoIncidente.ABIERTO)) {
       this.resumenDeIncidentes.removeIf(reporte -> reporte.equals(reporteDeIncidente));
       this.resumenDeIncidentes.add(reporteDeIncidente);
     }
+    else {
+      this.resumenDeIncidentes.removeIf(reporte -> reporte.equals(reporteDeIncidente));
+    }
   }
-  public void envioProgramado(Date horario) {
-    //TODO
+  public void envioProgramado() {
+    this.resumenDeIncidentes.forEach(reporte -> this.recibirNotificacion(reporte));
     this.resumenDeIncidentes.clear(); //Así se borran antes que cumplan 24hs
   }
 }

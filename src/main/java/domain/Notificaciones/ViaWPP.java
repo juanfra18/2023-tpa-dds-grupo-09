@@ -5,7 +5,7 @@ import domain.Personas.MiembroDeComunidad;
 
 public class ViaWPP implements MedioDeComunicacion{
   private AdapterViaWPP adapterViaWPP;
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, MiembroDeComunidad destinatario) {
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String telefonoDestinatario, String asunto) {
     //TODO
   }
 }

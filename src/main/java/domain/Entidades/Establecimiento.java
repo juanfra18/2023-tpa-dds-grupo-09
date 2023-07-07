@@ -1,5 +1,6 @@
 package domain.Entidades;
 
+import domain.Incidentes.Posicion;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.Localizacion.Municipio;
@@ -14,6 +15,7 @@ public class Establecimiento {
   private TipoEstablecimiento tipoEstablecimiento;
   private List<Servicio> servicios;
   private Municipio localizacion;
+  private Posicion posicion;
 
   public Establecimiento(String nombre, String tipoEstablecimiento, Municipio municipio) {
     this.nombre = nombre;

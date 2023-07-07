@@ -40,14 +40,18 @@ public class ReporteDeIncidente {
     }
     ReporteDeIncidente otro = (ReporteDeIncidente) obj;
     return Objects.equals(this.establecimiento, otro.establecimiento)
-        && Objects.equals(this.servicio,otro.servicio)
-        && Objects.equals(this.getEstado(),otro.getEstado());
+        && Objects.equals(this.servicio,otro.servicio);
   }
 
-  public Boolean cierreDeIncidente(){
+  public Boolean cerrado(){
     if(estado == EstadoIncidente.CERRADO)
       return true;
     else
       return false;
+  }
+
+  public String mensaje() {
+    //TODO
+    return this.estado.toString();
   }
 }

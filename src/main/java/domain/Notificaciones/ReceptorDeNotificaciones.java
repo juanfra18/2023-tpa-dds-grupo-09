@@ -6,8 +6,19 @@ import domain.Personas.MiembroDeComunidad;
 public class ReceptorDeNotificaciones {
   private FormaDeNotificar formaDeNotificar;
   private MedioDeComunicacion medioDeComunicacion;
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, MiembroDeComunidad destinatario){
-    //TODO
+  private String mail;
+  private String telefono;
+  private String destinatario;
+
+  public ReceptorDeNotificaciones(String mail, String telefono) {
+    this.mail = mail;
+    this.telefono = telefono;
+  }
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente){
+    this.formaDeNotificar.recibirNotificacion(reporteDeIncidente);
+  }
+  public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
+    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente, this.destinatario, "Solicitud de Revisión de Incidente");
   }
   public void cambiarFormaDeNotificar(String forma) {
     //TODO

@@ -3,6 +3,7 @@ package Personas;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Personas.MiembroDeComunidad;
+import domain.Personas.Rol;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
@@ -45,7 +46,7 @@ public class TestInteresesMiembro {
     banioMujeres = new Banio("DAMAS");
 
     miembro.agregarMunicipio(generalAlvarado);
-    miembro.agregarServicioDeInteres(banioHombres);
+    miembro.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
 
     lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
 
