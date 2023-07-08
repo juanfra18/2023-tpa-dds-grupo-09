@@ -6,26 +6,31 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 import services.Localizacion.Municipio;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 import java.sql.Time;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Properties;
+
 
 public class ViaMailJavax implements AdapterViaMail{
   private String remitente = "disenioGrupo9@gmail.com";
-  private String claveemail = "caMbon-xuwxan-1ruzvi";
+  private String claveemail = "bwlmzwnlroykvjas"; //clave de aplicacion
   private String asunto;
   private String cuerpo;
 
   public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario){
     asunto = "Nuevo reporte de incidente";
     cuerpo = "Un miembro de una de las comunidades de la que usted forma parte ha reportado un incidente" +
-             " en " + reporteDeIncidente.getEstablecimiento() + " sobre el servicio de " + reporteDeIncidente.getServicio() +
+             " en " + reporteDeIncidente.getEstablecimiento().getNombre() + " sobre el servicio de " + reporteDeIncidente.getServicio().getTipo() +
              ". \n Observaciones: " + reporteDeIncidente.getObservaciones();
 
 
@@ -37,20 +42,18 @@ public class ViaMailJavax implements AdapterViaMail{
     props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
     props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
 
-    Session session = Session.getInstance(props, new Authenticator() {
-      protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(remitente, claveemail);
-      }
-    });
-
-    jakarta.mail.internet.MimeMessage message = new MimeMessage(session);
+    Session session = Session.getDefaultInstance(props);
+    MimeMessage message = new MimeMessage(session);
 
     try {
-      message.setFrom(new jakarta.mail.internet.InternetAddress(remitente));
+      message.setFrom(new InternetAddress(remitente));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));   //Se podrían añadir varios de la misma manera
       message.setSubject(asunto);
       message.setText(cuerpo);
-      Transport.send(message);
+      Transport transport = session.getTransport("smtp");
+      transport.connect("smtp.gmail.com", remitente, claveemail);
+      transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+      transport.close();
     }
     catch (MessagingException me) {
       me.printStackTrace();   //Si se produce un error

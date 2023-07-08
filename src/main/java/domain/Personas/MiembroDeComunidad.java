@@ -51,9 +51,7 @@ public class MiembroDeComunidad {
     }
 
     public void agregarServicioDeInteres(Servicio servicio, Rol rol) {
-        ParServicioRol parServicioRol = new ParServicioRol();
-        parServicioRol.setServicio(servicio);
-        parServicioRol.setRol(rol);
+        ParServicioRol parServicioRol = new ParServicioRol(servicio,rol);
         serviciosDeInteres.add(parServicioRol);
     }
 

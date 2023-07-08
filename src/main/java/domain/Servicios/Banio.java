@@ -12,7 +12,7 @@ public class Banio implements Servicio{
         return true;
     }
     public String getTipo(){
-        return String.valueOf(tipoBanio);
+        return "Banio " + String.valueOf(tipoBanio);
     }
     public Banio(String tipoBanio) {
         this.tipoBanio = TipoBanio.valueOf(tipoBanio);
