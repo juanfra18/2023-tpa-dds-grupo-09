@@ -5,25 +5,28 @@ import domain.Entidades.Establecimiento;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
 
 @Getter
 public class ReporteDeIncidente {
   private final EstadoIncidente estado;
-  private final Date fecha;
-  private final Date hora;
+  private final LocalDateTime fechaYhora;
   private final MiembroDeComunidad denunciante;
   private final Establecimiento establecimiento;
   private final Servicio servicio;
   private final String observaciones;
   private final Entidad entidad;
 
-  public ReporteDeIncidente(String estado, Date fecha, Date hora, MiembroDeComunidad denunciante, Entidad entidad,
+  public ReporteDeIncidente(String estado, LocalDateTime fechaYhora, MiembroDeComunidad denunciante, Entidad entidad,
                             Establecimiento establecimiento, Servicio servicio, String observaciones) {
     this.estado = EstadoIncidente.valueOf(estado);
-    this.fecha = fecha;
-    this.hora = hora;
+    this.fechaYhora = fechaYhora;
     this.denunciante = denunciante;
     this.establecimiento = establecimiento;
     this.servicio = servicio;
@@ -53,5 +56,16 @@ public class ReporteDeIncidente {
   public String mensaje() {
     //TODO
     return this.estado.toString();
+  }
+
+  public boolean dentroDeEstaSemana() {
+    LocalDateTime fechaActual = LocalDateTime.now();
+    return ChronoUnit.DAYS.between(fechaActual,fechaYhora) <= 7;
+  }
+
+  public boolean nuevo() {
+    LocalDateTime fechaActual = LocalDateTime.now();
+    Duration tiempoDesdeElReporte = Duration.between(fechaYhora,fechaActual);
+    return tiempoDesdeElReporte.toHours() < 24;
   }
 }

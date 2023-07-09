@@ -1,11 +1,13 @@
 package domain.Notificaciones;
 
+import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import services.Archivos.SistemaDeArchivos;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class EmisorDeNotificaciones{
     private static EmisorDeNotificaciones instancia = null;
@@ -17,6 +19,7 @@ public class EmisorDeNotificaciones{
     }
   public void enviarNotificaciones(ReporteDeIncidente reporteDeIncidente, List<MiembroDeComunidad> miembros) {
     miembros.forEach(miembroDeComunidad -> miembroDeComunidad.recibirNotificacion(reporteDeIncidente));
+    //el que envio recibe asi puede revisar bien que la informacion sea correcta
   }
   public void solicitarRevisionDeIncidente(List<Comunidad> comunidades){
      /*for(Comunidad comunidad : comunidades) {
@@ -31,4 +34,35 @@ public class EmisorDeNotificaciones{
                      forEach(miembroDeComunidad -> miembroDeComunidad.recibirSolicitudDeRevision(incidente))
      ));
   }
+
+  public void generarRankings2(List<Comunidad> comunidades, List<Entidad> entidades){
+    List<ReporteDeIncidente> incidentesDeComunidades = comunidades.stream().flatMap(comunidad -> comunidad.getIncidentesDeLaComunidad().stream()).collect(Collectors.toList());
+    List<ReporteDeIncidente> incidentesDeLaSemana = incidentesDeComunidades.stream().filter(reporteDeIncidente -> reporteDeIncidente.dentroDeEstaSemana()).collect(Collectors.toList());
+
+    List<ReporteDeIncidente> incidentesAbiertos = comunidades.stream().flatMap(comunidad -> comunidad.incidentesAbiertos().stream()).collect(Collectors.toList());
+
+    List<ReporteDeIncidente> incidentesRankeables = incidentesDeLaSemana.stream().filter(reporteDeIncidente -> !(reporteDeIncidente.nuevo() && incidentesAbiertos.contains(reporteDeIncidente))).collect(Collectors.toList());
+    //no se tienen en cuenta aquellos incidentes ocurridos hace menos de 24 horas que sigan abiertos
+
+    for(Entidad entidad : entidades)
+    {
+      List<ReporteDeIncidente> incidentesDeLaEntidad = incidentesRankeables.stream().filter(reporteDeIncidente -> reporteDeIncidente.getEntidad().equals(entidad)).collect(Collectors.toList());
+      for(int i = 0; i < incidentesDeLaEntidad.stream().count(); i++)
+        entidad.nuevoIncidente();
+    }
+
+      Collections.sort(entidades,Comparator.comparing(entidad -> entidad.getCantidadDeIncidentesPorSemana()));
+    SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+    sistemaDeArchivos.escribirRankings2("resources/ranking2.csv",entidades);
+  }
+
+/*  public static void main(String[] args) {
+    EmisorDeNotificaciones emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
+    CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+    AdapterServicioGeo servicioGeo = ServicioGeoref.instancia();
+    RepositorioDeEmpresas repositorioDeEmpresas = new RepositorioDeEmpresas(cargadorDeDatos,servicioGeo);
+    List<Entidad> entidades = repositorioDeEmpresas.getEmpresas().stream().flatMap(empresa -> empresa.getEntidadesPrestadoras().stream()).collect(Collectors.toList()).stream().flatMap(entidadPrestadora -> entidadPrestadora.getEntidades().stream()).collect(Collectors.toList());
+  }
+ */
 }
+

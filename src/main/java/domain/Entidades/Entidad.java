@@ -11,6 +11,7 @@ public class Entidad {
     private String nombre;
     private List<Establecimiento> establecimientos;
     private TipoEntidad tipoEntidad;
+    private Integer CantidadDeIncidentesPorSemana = 0;
 
     public Entidad(String nombre, String tipo) {
         this.nombre = nombre;
@@ -33,5 +34,9 @@ public class Entidad {
         Entidad otro = (Entidad) obj;
         return Objects.equals(nombre, otro.nombre)
             && Objects.equals(tipoEntidad, otro.tipoEntidad);
+    }
+
+    public void nuevoIncidente() {
+        this.CantidadDeIncidentesPorSemana++;
     }
 }

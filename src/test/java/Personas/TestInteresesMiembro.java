@@ -3,6 +3,7 @@ package Personas;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Personas.MiembroDeComunidad;
+import domain.Personas.ParServicioRol;
 import domain.Personas.Rol;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
@@ -36,7 +37,7 @@ public class TestInteresesMiembro {
   private Entidad lineaRoca;
   @BeforeEach
   public void init() throws IOException {
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789");
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
     when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
@@ -94,6 +95,14 @@ public class TestInteresesMiembro {
   public void leInteresaPeroNoQuedaCerca(){
     miembro.agregarEntidadDeInteres(lineaMitre);
     Assertions.assertTrue(miembro.tieneInteres(banioHombres,estacionPinamar));
+  }
+
+  @Test
+  public void CambiarRolDeServicioDeInters(){
+    ParServicioRol banioYrol = miembro.getServiciosDeInteres().stream().filter(parServicioRol -> parServicioRol.getServicio().equals(banioHombres)).findFirst().get();
+    Assertions.assertEquals("AFECTADO",banioYrol.getRol().toString());
+    miembro.cambiarRolSobreServicio(banioHombres);
+    Assertions.assertEquals("OBSERVADOR",banioYrol.getRol().toString());
   }
 }
 

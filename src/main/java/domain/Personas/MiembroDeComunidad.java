@@ -15,6 +15,7 @@ import services.Localizacion.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class MiembroDeComunidad {
@@ -54,6 +55,11 @@ public class MiembroDeComunidad {
         ParServicioRol parServicioRol = new ParServicioRol(servicio,rol);
         serviciosDeInteres.add(parServicioRol);
     }
+    public void cambiarRolSobreServicio(Servicio servicio){
+        Optional<ParServicioRol> parServicioRolExistente = this.serviciosDeInteres.stream().filter(parServicioRol -> parServicioRol.getServicio().equals(servicio)).findFirst();
+        if(parServicioRolExistente.isPresent())
+            parServicioRolExistente.get().cambiarRol();//de esta forma no creamos una nueva instancia sino que la modificamos
+    }
 
     public void unirseAComunidad(Comunidad unaComunidad) {
         this.comunidades.add(unaComunidad);
@@ -67,7 +73,7 @@ public class MiembroDeComunidad {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente) {
+    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente) {//no nos importa donde se crea el reporte
         this.comunidades.forEach(comunidad -> comunidad.guardarIncidente(reporteDeIncidente));
     }
 

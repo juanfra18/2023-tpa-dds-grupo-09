@@ -14,4 +14,11 @@ public class ParServicioRol {
         this.servicio = servicio;
         this.rol = rol;
     }
+
+    public void cambiarRol(){
+        if(this.rol == Rol.OBSERVADOR)
+            this.rol = Rol.AFECTADO;
+        else
+            this.rol = Rol.OBSERVADOR;
+    }
 }

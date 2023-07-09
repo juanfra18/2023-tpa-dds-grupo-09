@@ -26,7 +26,7 @@ public class TestLocalizacionMiembro {
 
   @BeforeEach
   public void init(){
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com");
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789");
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
   }

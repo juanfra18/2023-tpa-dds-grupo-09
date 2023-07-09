@@ -14,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
 import java.sql.Time;
@@ -30,8 +31,8 @@ public class ViaMailJavax implements AdapterViaMail{
   public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario){
     asunto = "Nuevo reporte de incidente";
     cuerpo = "Un miembro de una de las comunidades de la que usted forma parte ha reportado un incidente" +
-             " en " + reporteDeIncidente.getEstablecimiento().getNombre() + " sobre el servicio de " + reporteDeIncidente.getServicio().getTipo() +
-             ". \n Observaciones: " + reporteDeIncidente.getObservaciones();
+        " en " + reporteDeIncidente.getEstablecimiento().getNombre() + " sobre el servicio de " + reporteDeIncidente.getServicio().getTipo() +
+        ". \n Observaciones: " + reporteDeIncidente.getObservaciones();
 
 
     Properties props = System.getProperties();
@@ -65,7 +66,7 @@ public class ViaMailJavax implements AdapterViaMail{
     Servicio servicio = new Banio("UNISEX");
     Entidad entidad = new Entidad("Jorge", "ESTABLECIMIENTO");
     Establecimiento establecimiento = new Establecimiento("Hola", "SUCURSAL", new Municipio(6, "CABA"));
-    ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente("CERRADO", Date.from(Instant.now()), Time.from(Instant.now()), miembroDeComunidad, entidad, establecimiento, servicio, "hola");
+    ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente("CERRADO", LocalDateTime.from(Instant.now()), miembroDeComunidad, entidad, establecimiento, servicio, "hola");
     mailJavax.recibirNotificacion(reporteDeIncidente, "juanpaoli@gmail.com");
   }
 }
