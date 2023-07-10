@@ -5,8 +5,12 @@ import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
 import services.Archivos.SistemaDeArchivos;
 
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     /*Entidades con mayor cantidad de incidentes reportados en la semana.
@@ -15,8 +19,49 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     incidente que se genere sobre dicha prestación en un plazo de 24 horas siempre y cuando el mismo continúe abierto. */
     /*Se considera el período semanal desde el lunes a las 0.00 h. hasta el domingo 23.59 h.*/
 
-    public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentes) {
-        List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
+    public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentes){
+        int[] contadorAux = new int[entidades.size()];
+
+        for(ReporteDeIncidente reporteDeIncidente : incidentes)
+        {
+            List<ReporteDeIncidente> ListaAuxiliar = incidentes;
+            ListaAuxiliar.stream().filter(incidente -> incidente.equals(reporteDeIncidente));
+            ListaAuxiliar.forEach(incidente -> incidentes.remove(incidente));
+            Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
+                @Override
+                public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
+                    return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
+                }
+            });
+
+            boolean abierto = false;
+            LocalDateTime horarioIncidente = null;
+
+            for(int i = 0; i < ListaAuxiliar.size(); i++)
+            {
+                if(!ListaAuxiliar.get(i).cerrado() && (!abierto || abiertoHaceMenosde24Horas(ListaAuxiliar.get(i),horarioIncidente)))
+                {
+                    horarioIncidente = ListaAuxiliar.get(i).getFechaYhora();
+                    contadorAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())]++;
+                    abierto = true;
+                }
+
+                else if(ListaAuxiliar.get(i).cerrado())
+                {
+                    abierto = false;
+                }
+            }
+        }
+        Collections.sort(entidades, new Comparator<Entidad>() {
+            @Override
+            public int compare(Entidad entidad1, Entidad entidad2) {
+                int index1 = entidades.indexOf(entidad1);
+                int index2 = entidades.indexOf(entidad2);
+                return Integer.compare(contadorAux[index1], contadorAux[index2]);
+            }
+        });
+
+       /* List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
 
         Set<ReporteDeIncidente> setIncidentes = new HashSet<>(); //para que no se repitan los incidentes
         incidentesConsiderados.forEach(incidente -> setIncidentes.add(incidente)); //Si hiciera collector.toset arriba no asegura preservar el orden
@@ -30,16 +75,23 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
 
         entidadesPorCantidadDeIncidentes.forEach(entidad -> listaStringEntidades.add(new String[]
             {entidad.getNombre(),entidad.getTipoEntidad().toString(),entidad.numeroDeIncidentes(incidentesConsideradosSinRepeticion).toString()}));
-
+*/
+        List<String[]> listaDeStrings = new ArrayList<>();
+        for(Entidad entidad : entidades)
+        {
+            listaDeStrings.add(new String[]{entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(contadorAux[entidades.indexOf(entidad)])});
+        }
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};
-        sistemaDeArchivos.escribirRanking(Config.RANKING_2, encabezado, listaStringEntidades);
+        sistemaDeArchivos.escribirRanking(Config.RANKING_2, encabezado, listaDeStrings);
     }
-    private boolean seConsidera(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
+
+
+    /*private boolean seConsidera(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
         return incidente.cerrado() || (!incidente.cerrado() && !this.abiertoHaceMenosde24Horas(incidente, listaReportes));
-    }
-    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
-        return listaReportes.stream().anyMatch(i->i.equals(incidente)&&
-                Math.abs(ChronoUnit.HOURS.between(incidente.getFechaYhora(), i.getFechaYhora()))<24);
+    }*/
+    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente1, LocalDateTime horarioIncidente){
+        return Math.abs(ChronoUnit.HOURS.between(incidente1.getFechaYhora(), horarioIncidente))<24;
     }
 }
+
