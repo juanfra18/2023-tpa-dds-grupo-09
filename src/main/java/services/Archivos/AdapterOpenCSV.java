@@ -27,19 +27,18 @@ public class AdapterOpenCSV implements AdapterLectorCSV {
     }
 
     @Override
-    public void escribir(String ruta, String[] encabezado ,List<Entidad> entidades) {
+    public void escribir(String ruta, String[] encabezado ,List<String[]> lineas) {
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(ruta));
 
             writer.writeNext(encabezado);
-            for(Entidad entidad : entidades)
-            {
-                writer.writeNext(new String[]{entidad.getNombre(),entidad.getTipoEntidad().toString(),entidad.getCantidadDeIncidentesPorSemana().toString()});
-            }
+
+            lineas.forEach(linea -> writer.writeNext(linea));
+
             writer.close();
         }
         catch (IOException e) {
-            throw new NoSePudoLeerArchivoCSV("No se pudo leer el archivo CSV");
+            throw new NoSePudoLeerArchivoCSV("No se pudo escribir sobre el archivo CSV");
         }
     }
 }

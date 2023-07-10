@@ -6,12 +6,15 @@ import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -60,8 +63,22 @@ public class ReporteDeIncidente {
   }
 
   public boolean dentroDeEstaSemana() {
-    LocalDateTime fechaActual = LocalDateTime.now();
-    return ChronoUnit.DAYS.between(fechaActual,fechaYhora) <= 7;
+    LocalDateTime inicioDeSemana = LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+    LocalDateTime finalDeSemana = LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+    return this.getFechaYhora().isAfter(inicioDeSemana) && this.getFechaYhora().isBefore(finalDeSemana);
+  }
+
+  public Long tiempoDeCierre(ReporteDeIncidente incidente, List<ReporteDeIncidente> incidentes) {
+    //asume que ya le llega la lista con 1 reporte de apertura y 1 de cierre por incidente
+    return ChronoUnit.HOURS.between(incidentes.stream().filter(reporteDeIncidente ->
+        reporteDeIncidente.cerrado() && reporteDeIncidente.equals(incidente)).toList().get(0).getFechaYhora(), incidente.getFechaYhora());
+
+    //Básicamente lo anterior hace esto:
+    /*for(ReporteDeIncidente reporteDeIncidente : incidentes){
+      if (reporteDeIncidente.equals(incidente) && reporteDeIncidente.cerrado()){
+        return ChronoUnit.HOURS.between(reporteDeIncidente.getFechaYhora(), incidente.getFechaYhora());
+      }
+    }*/
   }
 
   public boolean nuevo() {

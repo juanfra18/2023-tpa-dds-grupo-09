@@ -1,5 +1,6 @@
 package domain.Entidades;
 
+import domain.Incidentes.ReporteDeIncidente;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ public class Entidad {
     private String nombre;
     private List<Establecimiento> establecimientos;
     private TipoEntidad tipoEntidad;
-    private Integer CantidadDeIncidentesPorSemana = 0;
 
     public Entidad(String nombre, String tipo) {
         this.nombre = nombre;
@@ -36,7 +36,8 @@ public class Entidad {
             && Objects.equals(tipoEntidad, otro.tipoEntidad);
     }
 
-    public void nuevoIncidente() {
-        this.CantidadDeIncidentesPorSemana++;
+    public Integer numeroDeIncidentes(List<ReporteDeIncidente> incidentes){
+        return incidentes.stream().filter(
+            incidente->incidente.getEntidad().equals(this)).toList().size();
     }
 }

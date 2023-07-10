@@ -36,6 +36,7 @@ public class EmisorDeNotificaciones{
      ));
   }
 
+  /*
   public void generarRankings2(List<Comunidad> comunidades, List<Entidad> entidades){
     List<ReporteDeIncidente> incidentesDeComunidades = comunidades.stream().flatMap(comunidad -> comunidad.getIncidentesDeLaComunidad().stream()).collect(Collectors.toList());
     List<ReporteDeIncidente> incidentesDeLaSemana = incidentesDeComunidades.stream().filter(reporteDeIncidente -> reporteDeIncidente.dentroDeEstaSemana()).collect(Collectors.toList());
