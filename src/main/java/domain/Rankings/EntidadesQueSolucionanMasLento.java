@@ -12,6 +12,7 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
 
     //HACER UN REPO SEMANAL DE INCIDENTES Y AL FINAL DE LA SEMANA SUBIRLO A UNO GLOBAL Y VACIARLO (?
     public void armarRanking(List<Entidad> entidades,List<ReporteDeIncidente> incidentes) {
-
+        //TODO obtener el listado de reportes entero (del repositorio de reportes) y de ahí filtrar los de esta semana
+        //o sea, asumimos que del repositorio llegan todos los incidentes
     }
 }

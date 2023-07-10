@@ -39,7 +39,7 @@ public class AdapterOpenCSV implements AdapterLectorCSV {
             writer.close();
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new NoSePudoLeerArchivoCSV("No se pudo leer el archivo CSV");
         }
     }
 }

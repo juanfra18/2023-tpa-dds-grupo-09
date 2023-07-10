@@ -1,12 +1,13 @@
 package domain.Rankings;
 
+import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Incidentes.RepositorioDeIncidentes;
+import services.Archivos.SistemaDeArchivos;
+
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     /*Entidades con mayor cantidad de incidentes reportados en la semana.
@@ -15,21 +16,23 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     incidente que se genere sobre dicha prestación en un plazo de 24 horas siempre y cuando el mismo continúe abierto. */
     /*Se considera el período semanal desde el lunes a las 0.00 h. hasta el domingo 23.59 h.*/
 
-    public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentesConsiderados) {
-         entidades.stream()
-                .sorted(Comparator.comparingInt(e->incidentesConsiderados.stream().filter(
+    public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentes) {
+        List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
+        List<Entidad> entidadesPorIncidentes = entidades.stream()
+                .sorted(Comparator.comparingInt(
+                    e->incidentesConsiderados.stream().filter(
                         i->i.getEntidad().equals(e)).toList().size()))
-                .collect(Collectors.toList());
+                .toList();
 
-         //TODO : devuelve una lista de entidades o llama a servicio csv para q cree el archivo
+        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+        String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};
+        sistemaDeArchivos.escribirRanking(Config.RANKING_2, encabezado, entidadesPorIncidentes);
     }
-    public boolean seConsidera(ReporteDeIncidente incidente){
-        return incidente.cerrado() || !incidente.cerrado() && !this.abiertoHaceMenosde24Horas(incidente);
+    private boolean seConsidera(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
+        return incidente.cerrado() || (!incidente.cerrado() && !this.abiertoHaceMenosde24Horas(incidente, listaReportes));
     }
-    public boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente){
-        RepositorioDeIncidentes repositorioDeIncidentes= new RepositorioDeIncidentes();
-
-        return repositorioDeIncidentes.getReportes().stream().anyMatch(i->i.equals(incidente)&&
+    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
+        return listaReportes.stream().anyMatch(i->i.equals(incidente)&&
                 Math.abs(ChronoUnit.HOURS.between(incidente.getFechaYhora(), i.getFechaYhora()))<24);
     }
 }

@@ -1,5 +1,6 @@
 package domain.Notificaciones;
 
+import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Personas.Comunidad;
@@ -53,7 +54,8 @@ public class EmisorDeNotificaciones{
 
       Collections.sort(entidades,Comparator.comparing(entidad -> entidad.getCantidadDeIncidentesPorSemana()));
     SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-    sistemaDeArchivos.escribirRankings2("resources/ranking2.csv",entidades);
+    String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};
+    sistemaDeArchivos.escribirRanking(Config.RANKING_2,encabezado,entidades);
   }
 
 /*  public static void main(String[] args) {

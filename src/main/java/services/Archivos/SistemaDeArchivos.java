@@ -38,9 +38,8 @@ public class SistemaDeArchivos {
     return adapter.leer(ruta);
   }
 
-  public void escribirRankings2(String ruta, List<Entidad> entidades){
+  public void escribirRanking(String ruta, String[] encabezado, List<Entidad> entidades){
     AdapterLectorCSV adapter = new AdapterOpenCSV();
-    String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};
     adapter.escribir(ruta,encabezado,entidades);
   }
 }
