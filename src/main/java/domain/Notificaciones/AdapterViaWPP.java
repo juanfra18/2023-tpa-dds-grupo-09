@@ -4,5 +4,5 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Personas.MiembroDeComunidad;
 
 public interface AdapterViaWPP {
-  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String telefonoDestinatario);
+  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String telefonoDestinatario, String asunto);
 }

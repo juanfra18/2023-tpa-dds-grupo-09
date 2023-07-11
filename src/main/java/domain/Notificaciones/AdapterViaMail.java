@@ -4,5 +4,5 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Personas.MiembroDeComunidad;
 
 public interface AdapterViaMail {
-  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario);
+  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario, String asunto);
 }

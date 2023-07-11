@@ -1,11 +1,15 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Personas.MiembroDeComunidad;
 
 public class ViaMail implements MedioDeComunicacion{
-  private AdapterViaMail viaMail;
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario, String asunto) {
-    //TODO
+  private AdapterViaMail servicioMail;
+  private String destinatario;
+  public ViaMail(String destinatario){
+    this.servicioMail = new ViaMailJavax(); //acoplamiento con biblioteca externa
+    this.destinatario = destinatario;
+  }
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String asunto) {
+    this.servicioMail.recibirNotificacion(reporteDeIncidente, this.destinatario, asunto);
   }
 }

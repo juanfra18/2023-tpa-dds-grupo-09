@@ -77,7 +77,6 @@ public class MiembroDeComunidad {
         this.comunidades.forEach(comunidad -> comunidad.guardarIncidente(reporteDeIncidente));
     }
 
-    //TODO configurar receptor
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
         if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
             this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);

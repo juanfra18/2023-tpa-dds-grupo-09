@@ -58,8 +58,9 @@ public class ReporteDeIncidente {
   }
 
   public String mensaje() {
-    //TODO
-    return this.estado.toString();
+    return "Incidente en "+ this.getEstablecimiento().getNombre()+", " +
+        "en el servicio "+ this.getServicio().getTipo()+"." +
+        "\nObservaciones: "+this.getObservaciones();
   }
 
   public boolean dentroDeEstaSemana() {

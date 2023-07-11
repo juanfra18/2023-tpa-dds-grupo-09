@@ -8,8 +8,8 @@ import java.util.List;
 public class SinApuros extends FormaDeNotificar{
   private List<ReporteDeIncidente> resumenDeIncidentes;
 
-  public SinApuros(MedioDeComunicacion medioDeComunicacion, String destinatario) {
-    super(medioDeComunicacion, destinatario);
+  public SinApuros(MedioDeComunicacion medioDeComunicacion) {
+    super(medioDeComunicacion);
     this.resumenDeIncidentes = new ArrayList<>();
   }
   @Override

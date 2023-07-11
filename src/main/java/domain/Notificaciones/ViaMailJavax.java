@@ -28,13 +28,7 @@ public class ViaMailJavax implements AdapterViaMail{
   private String asunto;
   private String cuerpo;
 
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario){
-    asunto = "Nuevo reporte de incidente";
-    cuerpo = "Un miembro de una de las comunidades de la que usted forma parte ha reportado un incidente" +
-        " en " + reporteDeIncidente.getEstablecimiento().getNombre() + " sobre el servicio de " + reporteDeIncidente.getServicio().getTipo() +
-        ". \n Observaciones: " + reporteDeIncidente.getObservaciones();
-
-
+  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario, String asunto){
     Properties props = System.getProperties();
     props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
     props.put("mail.smtp.user", remitente);
@@ -50,7 +44,7 @@ public class ViaMailJavax implements AdapterViaMail{
       message.setFrom(new InternetAddress(remitente));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));   //Se podrían añadir varios de la misma manera
       message.setSubject(asunto);
-      message.setText(cuerpo);
+      message.setText(reporteDeIncidente.mensaje());
       Transport transport = session.getTransport("smtp");
       transport.connect("smtp.gmail.com", remitente, claveemail);
       transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
@@ -60,6 +54,7 @@ public class ViaMailJavax implements AdapterViaMail{
       me.printStackTrace();   //Si se produce un error
     }
   }
+  /*
   public static void main(String[] args) {
     ViaMailJavax mailJavax = new ViaMailJavax();
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad("Paoli", "Juan", "juanpaoli@gmail.com", "3442560890");
@@ -68,5 +63,5 @@ public class ViaMailJavax implements AdapterViaMail{
     Establecimiento establecimiento = new Establecimiento("Hola", "SUCURSAL", new Municipio(6, "CABA"));
     ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente("CERRADO", LocalDateTime.from(Instant.now()), miembroDeComunidad, entidad, establecimiento, servicio, "hola");
     mailJavax.recibirNotificacion(reporteDeIncidente, "juanpaoli@gmail.com");
-  }
+  }*/
 }

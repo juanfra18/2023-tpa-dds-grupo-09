@@ -24,20 +24,19 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
 
         for(ReporteDeIncidente reporteDeIncidente : incidentes)
         {
-            List<ReporteDeIncidente> ListaAuxiliar = incidentes;
-            ListaAuxiliar.stream().filter(incidente -> incidente.equals(reporteDeIncidente));
-            ListaAuxiliar.forEach(incidente -> incidentes.remove(incidente));
+            List<ReporteDeIncidente> ListaAuxiliar = incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList();
+            ListaAuxiliar.forEach(incidente -> incidentes.remove(incidente)); //se podría hacer de una el filter con !equals. Igual raro modificar la lista sobre la que iterás
             Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
                 @Override
                 public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
                     return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
                 }
-            });
+            }); //por qué ordenarlo por fecha? se supone que llegan y se pone la fecha actual
 
             boolean abierto = false;
             LocalDateTime horarioIncidente = null;
 
-            for(int i = 0; i < ListaAuxiliar.size(); i++)
+            for(int i = 0; i < ListaAuxiliar.size(); i++) //por qué el i y no incidente: listaauxiliar
             {
                 if(!ListaAuxiliar.get(i).cerrado() && (!abierto || abiertoHaceMenosde24Horas(ListaAuxiliar.get(i),horarioIncidente)))
                 {
@@ -59,7 +58,7 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
                 int index2 = entidades.indexOf(entidad2);
                 return Integer.compare(contadorAux[index1], contadorAux[index2]);
             }
-        });
+        }); //qué es contadorAux? según qué ordena?
 
        /* List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
 
@@ -77,7 +76,7 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
             {entidad.getNombre(),entidad.getTipoEntidad().toString(),entidad.numeroDeIncidentes(incidentesConsideradosSinRepeticion).toString()}));
 */
         List<String[]> listaDeStrings = new ArrayList<>();
-        for(Entidad entidad : entidades)
+        for(Entidad entidad : entidades) //foreach?
         {
             listaDeStrings.add(new String[]{entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(contadorAux[entidades.indexOf(entidad)])});
         }
