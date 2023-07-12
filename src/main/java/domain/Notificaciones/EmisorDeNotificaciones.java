@@ -34,7 +34,7 @@ public class EmisorDeNotificaciones{
              forEach(incidente -> comunidad.getMiembros().
                      forEach(miembroDeComunidad -> miembroDeComunidad.recibirSolicitudDeRevision(incidente))
      ));
-  }
+  } //un main llama a esto cada cierto tiempo
 
   /*
   public void generarRankings2(List<Comunidad> comunidades, List<Entidad> entidades){

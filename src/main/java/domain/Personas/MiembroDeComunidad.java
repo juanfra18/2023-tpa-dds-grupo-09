@@ -14,8 +14,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import services.Localizacion.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 public class MiembroDeComunidad {
@@ -84,7 +86,7 @@ public class MiembroDeComunidad {
     }
 
     public Posicion posicion(){
-        //TODO
+        //TOMOCK
         return null;
     }
     public boolean validarSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente){
@@ -95,5 +97,17 @@ public class MiembroDeComunidad {
         if (this.validarSolicitudDeRevision(reporteDeIncidente)){
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
+    }
+    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesAbiertos(){
+        List<ReporteDeIncidente> reportes = new ArrayList<>();
+        this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
+        return reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.ABIERTO)).toList()
+            .stream().collect(Collectors.toSet()).stream().toList(); //se usa el set para evitar repetidos, queda el último
+    }
+    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrado(){
+        List<ReporteDeIncidente> reportes = new ArrayList<>();
+        this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
+        return reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.CERRADO)).toList()
+            .stream().collect(Collectors.toSet()).stream().toList(); //se repite entre las distintas comunidades el cierre
     }
 }
