@@ -25,11 +25,12 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
         for(ReporteDeIncidente reporteDeIncidente : incidentes)
         {
             List<ReporteDeIncidente> ListaAuxiliar = incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList();
-            ListaAuxiliar.forEach(incidente -> incidentes.remove(incidente)); //se podría hacer de una el filter con !equals. Igual raro modificar la lista sobre la que iterás
+            incidentes.removeAll(ListaAuxiliar); //se podría hacer de una el filter con !equals. Igual raro modificar la lista sobre la que iterás
             Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
                 @Override
-                public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
-                    return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
+
+            public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
+                return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
                 }
             }); //por qué ordenarlo por fecha? se supone que llegan y se pone la fecha actual
 
@@ -59,8 +60,8 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
                 return Integer.compare(contadorAux[index1], contadorAux[index2]);
             }
         }); //qué es contadorAux? según qué ordena?
-
-       /* List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
+/*
+        List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
 
         Set<ReporteDeIncidente> setIncidentes = new HashSet<>(); //para que no se repitan los incidentes
         incidentesConsiderados.forEach(incidente -> setIncidentes.add(incidente)); //Si hiciera collector.toset arriba no asegura preservar el orden
@@ -91,6 +92,11 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     }*/
     private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente1, LocalDateTime horarioIncidente){
         return Math.abs(ChronoUnit.HOURS.between(incidente1.getFechaYhora(), horarioIncidente))<24;
+    }
+
+    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
+        return listaReportes.stream().anyMatch(i->i.equals(incidente)&&
+                Math.abs(ChronoUnit.HOURS.between(incidente.getFechaYhora(), i.getFechaYhora()))<24);
     }
 }
 

@@ -6,15 +6,15 @@ import domain.Entidades.Establecimiento;
 import domain.Incidentes.EstadoIncidente;
 import domain.Incidentes.Posicion;
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
-import org.apache.commons.lang3.tuple.Pair;
-import services.Localizacion.*;
-import java.io.IOException;
+import services.Localizacion.Municipio;
+import services.Localizacion.Provincia;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -75,8 +75,9 @@ public class MiembroDeComunidad {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente) {//no nos importa donde se crea el reporte
+    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, RepositorioDeIncidentes repositorioDeIncidentes) {//no nos importa donde se crea el reporte
         this.comunidades.forEach(comunidad -> comunidad.guardarIncidente(reporteDeIncidente));
+        repositorioDeIncidentes.registrarIncidente(reporteDeIncidente);
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {

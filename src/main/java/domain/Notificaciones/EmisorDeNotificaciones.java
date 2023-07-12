@@ -1,14 +1,14 @@
 package domain.Notificaciones;
 
-import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
-import services.Archivos.SistemaDeArchivos;
+import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
+import domain.Rankings.EntidadesQueSolucionanMasLento;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class EmisorDeNotificaciones{
     private static EmisorDeNotificaciones instancia = null;
@@ -18,6 +18,8 @@ public class EmisorDeNotificaciones{
         }
         return instancia;
     }
+    EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes;
+    EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
   public void enviarNotificaciones(ReporteDeIncidente reporteDeIncidente, List<MiembroDeComunidad> miembros) {
     miembros.forEach(miembroDeComunidad -> miembroDeComunidad.recibirNotificacion(reporteDeIncidente));
     //el que envio recibe asi puede revisar bien que la informacion sea correcta
@@ -35,6 +37,16 @@ public class EmisorDeNotificaciones{
                      forEach(miembroDeComunidad -> miembroDeComunidad.recibirSolicitudDeRevision(incidente))
      ));
   } //un main llama a esto cada cierto tiempo
+
+
+    public void generarRankings (List<Entidad> entidades, RepositorioDeIncidentes repositorioDeIncidentes)
+    {
+        List<ReporteDeIncidente> reportesDeEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
+
+        entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,reportesDeEstaSemana);
+        entidadesQueSolucionanMasLento.armarRanking(entidades,reportesDeEstaSemana);
+
+    }
 
   /*
   public void generarRankings2(List<Comunidad> comunidades, List<Entidad> entidades){
