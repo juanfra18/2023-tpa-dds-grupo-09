@@ -57,12 +57,14 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
 
                 }
             }
-            Collections.sort(entidades, new Comparator<Entidad>() {
+            List<Entidad> entidadesOrdenadas = new ArrayList<>(entidades);
+
+            Collections.sort(entidadesOrdenadas, new Comparator<Entidad>() {
                 @Override
                 public int compare(Entidad entidad1, Entidad entidad2) {
                     int index1 = entidades.indexOf(entidad1);
                     int index2 = entidades.indexOf(entidad2);
-                    return Integer.compare(promedioAux[index1], promedioAux[index2]);
+                    return Integer.compare(promedioAux[index2], promedioAux[index1]);
                 }
             });
             /*
@@ -76,7 +78,7 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
         */
 
             List<String[]> listaDeStrings = new ArrayList<>();
-            for (Entidad entidad : entidades) {
+            for (Entidad entidad : entidadesOrdenadas) {
                 listaDeStrings.add(new String[]{entidad.getNombre(), entidad.getTipoEntidad().toString(), Integer.toString(promedioAux[entidades.indexOf(entidad)] / 3600) + " horas," + Integer.toString(promedioAux[entidades.indexOf(entidad)] % 3600 / 60) + " minutos"});
 
             }

@@ -57,17 +57,18 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
                 }
             }
         }
-        Collections.sort(entidades, new Comparator<Entidad>() {
+        List<Entidad> entidadesOrdenadas = new ArrayList<>(entidades);
+        Collections.sort(entidadesOrdenadas, new Comparator<Entidad>() {
             @Override
             public int compare(Entidad entidad1, Entidad entidad2) {
                 int index1 = entidades.indexOf(entidad1);
                 int index2 = entidades.indexOf(entidad2);
-                return Integer.compare(contadorAux[index1], contadorAux[index2]);
+                return Integer.compare(contadorAux[index2], contadorAux[index1]);
             }
         });
 
         List<String[]> listaDeStrings = new ArrayList<>();
-        for(Entidad entidad : entidades) //foreach?
+        for(Entidad entidad : entidadesOrdenadas) //foreach?
         {
             listaDeStrings.add(new String[]{entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(contadorAux[entidades.indexOf(entidad)])});
         }
