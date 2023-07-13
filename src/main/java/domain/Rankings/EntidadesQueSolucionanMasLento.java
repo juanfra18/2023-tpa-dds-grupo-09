@@ -44,12 +44,12 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
                         abierto = false;
                     }
                 }
-
-                for (int i = 0; i < entidades.size(); i++) {
-                    if (contadorAux[i] != 0)
-                        promedioAux[i] /= contadorAux[i];
-                }
             }
+        }
+
+        for (int i = 0; i < entidades.size(); i++) {
+            if (contadorAux[i] != 0)
+                promedioAux[i] /= contadorAux[i];
         }
 
         List<Entidad> entidadesOrdenadas = this.ordenarEntidades(entidades, promedioAux);

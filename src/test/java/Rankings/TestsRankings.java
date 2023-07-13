@@ -118,7 +118,7 @@ public class TestsRankings {
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,12,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,10,13,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,12,13,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,14,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
