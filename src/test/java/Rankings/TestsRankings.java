@@ -109,19 +109,22 @@ public class TestsRankings {
         //LocalDateTime.parse("2015-08-04T10:11:30")
 
 
-        incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2015,8,4,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2015,8,4,10,15,30),maria,lineaRoca, estacionTolosa,banioMujeres,"Se robaron el inodoro");
+        incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
+
+        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,15,30),maria,lineaRoca, estacionTolosa,banioMujeres,"Se robaron el inodoro");
         maria.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
 
-        incidenteBanioMujer = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2015,8,4,10,20,30),julieta,lineaRoca, estacionTolosa,banioMujeres,"Devolvieron el inodoro");
+        incidenteBanioMujer = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,10,20,30),julieta,lineaRoca, estacionTolosa,banioMujeres,"Devolvieron el inodoro");
         julieta.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
 
-        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2015,8,4,10,25,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado");
+        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,25,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
 
-        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2015,8,4,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
+        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
 
     }
@@ -129,7 +132,11 @@ public class TestsRankings {
 
     @Test
     public void rankingSolucionanMasLento() {
-    entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
+        List<ReporteDeIncidente> ll = repositorioDeIncidentes.getIncidentesEstaSemana();
+        for(ReporteDeIncidente reporteDeIncidente : ll)
+        {
+            System.out.println(reporteDeIncidente.getFechaYhora());
+        }
     }
 
     @Test

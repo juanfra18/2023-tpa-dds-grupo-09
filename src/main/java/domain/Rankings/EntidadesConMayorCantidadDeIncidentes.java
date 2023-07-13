@@ -21,34 +21,40 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
 
     public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentes){
         int[] contadorAux = new int[entidades.size()];
+        List<ReporteDeIncidente> ListaEspera = new ArrayList<>();
 
         for(ReporteDeIncidente reporteDeIncidente : incidentes)
         {
-            List<ReporteDeIncidente> ListaAuxiliar = incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList();
-            incidentes.removeAll(ListaAuxiliar); //se podría hacer de una el filter con !equals. Igual raro modificar la lista sobre la que iterás
-            Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
-                @Override
-
-            public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
-                return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
-                }
-            }); //por qué ordenarlo por fecha? se supone que llegan y se pone la fecha actual
-
-            boolean abierto = false;
-            LocalDateTime horarioIncidente = null;
-
-            for(int i = 0; i < ListaAuxiliar.size(); i++) //por qué el i y no incidente: listaauxiliar
+            if(!ListaEspera.contains(reporteDeIncidente))
             {
-                if(!ListaAuxiliar.get(i).cerrado() && (!abierto || abiertoHaceMenosde24Horas(ListaAuxiliar.get(i),horarioIncidente)))
-                {
-                    horarioIncidente = ListaAuxiliar.get(i).getFechaYhora();
-                    contadorAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())]++;
-                    abierto = true;
-                }
+                List<ReporteDeIncidente> ListaAuxiliar = incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList();
 
-                else if(ListaAuxiliar.get(i).cerrado())
+                ListaEspera.addAll(ListaAuxiliar);
+
+                List<ReporteDeIncidente> ListaMutable = new ArrayList<>(ListaAuxiliar); //no me dejaba modificar la lista auxiliar ->inmutable
+                Collections.sort(ListaMutable, new Comparator<ReporteDeIncidente>() {
+                    @Override
+                    public int compare(ReporteDeIncidente incidente1, ReporteDeIncidente incidente2) {
+                        return incidente1.getFechaYhora().compareTo(incidente2.getFechaYhora());
+                    }
+                });
+
+                boolean abierto = false;
+                LocalDateTime horarioIncidente = null;
+
+                for(int i = 0; i < ListaMutable.size(); i++) //por qué el i y no incidente: listaauxiliar
                 {
-                    abierto = false;
+                    if(!ListaMutable.get(i).cerrado() && (!abierto || !abiertoHaceMenosde24Horas(ListaMutable.get(i),horarioIncidente)))
+                    {
+                        horarioIncidente = ListaMutable.get(i).getFechaYhora();
+                        contadorAux[entidades.indexOf(ListaMutable.get(i).getEntidad())]++;
+                        abierto = true;
+                    }
+
+                    else if(ListaMutable.get(i).cerrado())
+                    {
+                        abierto = false;
+                    }
                 }
             }
         }
@@ -59,23 +65,8 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
                 int index2 = entidades.indexOf(entidad2);
                 return Integer.compare(contadorAux[index1], contadorAux[index2]);
             }
-        }); //qué es contadorAux? según qué ordena?
-/*
-        List<ReporteDeIncidente> incidentesConsiderados = incidentes.stream().filter(incidente -> this.seConsidera(incidente, incidentes)).toList();
+        });
 
-        Set<ReporteDeIncidente> setIncidentes = new HashSet<>(); //para que no se repitan los incidentes
-        incidentesConsiderados.forEach(incidente -> setIncidentes.add(incidente)); //Si hiciera collector.toset arriba no asegura preservar el orden
-        List<ReporteDeIncidente> incidentesConsideradosSinRepeticion = setIncidentes.stream().toList();
-
-        List<Entidad> entidadesPorCantidadDeIncidentes = entidades.stream().sorted(
-            Comparator.comparingInt(entidad -> entidad.numeroDeIncidentes(incidentesConsideradosSinRepeticion)))
-                .toList();
-
-        List<String[]> listaStringEntidades = new ArrayList<>();
-
-        entidadesPorCantidadDeIncidentes.forEach(entidad -> listaStringEntidades.add(new String[]
-            {entidad.getNombre(),entidad.getTipoEntidad().toString(),entidad.numeroDeIncidentes(incidentesConsideradosSinRepeticion).toString()}));
-*/
         List<String[]> listaDeStrings = new ArrayList<>();
         for(Entidad entidad : entidades) //foreach?
         {
@@ -87,9 +78,9 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
     }
 
 
-    /*private boolean seConsidera(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
-        return incidente.cerrado() || (!incidente.cerrado() && !this.abiertoHaceMenosde24Horas(incidente, listaReportes));
-    }*/
+
+
+
     private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente1, LocalDateTime horarioIncidente){
         return Math.abs(ChronoUnit.HOURS.between(incidente1.getFechaYhora(), horarioIncidente))<24;
     }
