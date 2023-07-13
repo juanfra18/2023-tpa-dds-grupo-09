@@ -133,10 +133,8 @@ public class TestsRankings {
     @Test
     public void rankingSolucionanMasLento() {
         List<ReporteDeIncidente> ll = repositorioDeIncidentes.getIncidentesEstaSemana();
-        for(ReporteDeIncidente reporteDeIncidente : ll)
-        {
-            System.out.println(reporteDeIncidente.getFechaYhora());
-        }
+        entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
+
     }
 
     @Test

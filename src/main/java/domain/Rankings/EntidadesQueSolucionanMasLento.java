@@ -5,6 +5,9 @@ import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
 import services.Archivos.SistemaDeArchivos;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,48 +21,50 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
     public void armarRanking(List<Entidad> entidades,List<ReporteDeIncidente> incidentes) {
         int[] promedioAux = new int[entidades.size()]; //no buscamos la máxima precisión (float)
         int[] contadorAux = new int[entidades.size()];
+        List<ReporteDeIncidente> ListaEspera = new ArrayList<>();
 
-        for(ReporteDeIncidente reporteDeIncidente : incidentes){
-            List<ReporteDeIncidente> ListaAuxiliar = incidentes;
-            ListaAuxiliar.stream().filter(incidente -> incidente.equals(reporteDeIncidente));
-            ListaAuxiliar.forEach(incidente -> incidentes.remove(incidente));
-            Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
+        for(ReporteDeIncidente reporteDeIncidente : incidentes) {
+            if (!ListaEspera.contains(reporteDeIncidente)) {
+                List<ReporteDeIncidente> ListaAuxiliar = new ArrayList<>(incidentes);
+                ListaAuxiliar.stream().filter(incidente -> incidente.equals(reporteDeIncidente));
+                ListaEspera.addAll(ListaAuxiliar);
+                Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
+                    @Override
+                    public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2) {
+                        return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
+                    }
+                });
+
+
+                boolean abierto = false;
+                LocalDateTime tiempoApertura=LocalDateTime.now();
+
+                for (int i = 0; i < ListaAuxiliar.size(); i++) {
+                    if (!ListaAuxiliar.get(i).cerrado() && !abierto) {
+                        tiempoApertura = ListaAuxiliar.get(i).getFechaYhora();
+                        abierto = true;
+                    } else if (ListaAuxiliar.get(i).cerrado() && abierto) {
+                        LocalDateTime tiempoCierre = ListaAuxiliar.get(i).getFechaYhora();
+                        Duration tiempoQueTardoEnCerrarse = Duration.between(tiempoApertura, tiempoCierre);
+                        promedioAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())] += tiempoQueTardoEnCerrarse.getSeconds();
+                        contadorAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())]++;
+                        abierto = false;
+                    }
+                }
+                for (int i = 0; i < entidades.size(); i++) {
+                    if (contadorAux[i] != 0)
+                        promedioAux[i] /= contadorAux[i];
+
+                }
+            }
+            Collections.sort(entidades, new Comparator<Entidad>() {
                 @Override
-                public int compare(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
-                    return reporteDeIncidente1.getFechaYhora().compareTo(reporteDeIncidente2.getFechaYhora());
+                public int compare(Entidad entidad1, Entidad entidad2) {
+                    int index1 = entidades.indexOf(entidad1);
+                    int index2 = entidades.indexOf(entidad2);
+                    return Integer.compare(promedioAux[index1], promedioAux[index2]);
                 }
             });
-
-
-            boolean abierto = false;
-            float tiempoApertura = 0;
-
-            for(int i = 0; i < ListaAuxiliar.size(); i++){
-                if(!ListaAuxiliar.get(i).cerrado() && !abierto){
-                    tiempoApertura = ListaAuxiliar.get(i).getFechaYhora().getSecond();
-                    abierto = true;
-                }
-
-                else if(ListaAuxiliar.get(i).cerrado() && abierto){
-                    tiempoApertura = Math.abs(ListaAuxiliar.get(i).getFechaYhora().getSecond() - tiempoApertura);
-                    promedioAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())] += tiempoApertura;
-                    contadorAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())]++;
-                    abierto = false;
-                }
-            }
-            for(int i = 0; i < ListaAuxiliar.size(); i++){
-                promedioAux[i] /= contadorAux[i];
-
-            }
-        }
-        Collections.sort(entidades, new Comparator<Entidad>() {
-            @Override
-            public int compare(Entidad entidad1, Entidad entidad2) {
-                int index1 = entidades.indexOf(entidad1);
-                int index2 = entidades.indexOf(entidad2);
-                return Integer.compare(promedioAux[index1], promedioAux[index2]);
-            }
-        });
             /*
         //el repositorio de incidentes se encarga de obtener los de esta semana. Acá llegan esos ya filtrados
         //por cada entidad, ver su promedio de cierre de incidentes, hacer un map clave: nombreentidad, valor: promedio y subirlo al csv
@@ -70,14 +75,14 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
         // cada entidad y su tiempo promedio correspondiente
         */
 
-        List<String[]> listaDeStrings = new ArrayList<>();
-        for(Entidad entidad : entidades)
-        {
-            listaDeStrings.add(new String[]{entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(promedioAux[entidades.indexOf(entidad)]/3600)+" horas," +Integer.toString(promedioAux[entidades.indexOf(entidad)]%3600/60) + " minutos"});
+            List<String[]> listaDeStrings = new ArrayList<>();
+            for (Entidad entidad : entidades) {
+                listaDeStrings.add(new String[]{entidad.getNombre(), entidad.getTipoEntidad().toString(), Integer.toString(promedioAux[entidades.indexOf(entidad)] / 3600) + " horas," + Integer.toString(promedioAux[entidades.indexOf(entidad)] % 3600 / 60) + " minutos"});
 
+            }
+            SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+            String[] encabezado = {"Nombre Entidad", "Tipo Entidad", "Tiempo promedio de resolución de incidentes"};
+            sistemaDeArchivos.escribirRanking(Config.RANKING_1, encabezado, listaDeStrings);
         }
-        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-        String[] encabezado = {"Nombre Entidad","Tipo Entidad","Tiempo promedio de resolución de incidentes"};
-        sistemaDeArchivos.escribirRanking(Config.RANKING_1, encabezado, listaDeStrings);
     }
 }

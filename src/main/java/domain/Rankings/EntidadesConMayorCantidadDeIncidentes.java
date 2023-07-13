@@ -27,12 +27,11 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
         {
             if(!ListaEspera.contains(reporteDeIncidente))
             {
-                List<ReporteDeIncidente> ListaAuxiliar = incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList();
+                List<ReporteDeIncidente> ListaAuxiliar = new ArrayList<>(incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList());
 
                 ListaEspera.addAll(ListaAuxiliar);
 
-                List<ReporteDeIncidente> ListaMutable = new ArrayList<>(ListaAuxiliar); //no me dejaba modificar la lista auxiliar ->inmutable
-                Collections.sort(ListaMutable, new Comparator<ReporteDeIncidente>() {
+                Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
                     @Override
                     public int compare(ReporteDeIncidente incidente1, ReporteDeIncidente incidente2) {
                         return incidente1.getFechaYhora().compareTo(incidente2.getFechaYhora());
@@ -42,16 +41,16 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
                 boolean abierto = false;
                 LocalDateTime horarioIncidente = null;
 
-                for(int i = 0; i < ListaMutable.size(); i++) //por qué el i y no incidente: listaauxiliar
+                for(int i = 0; i < ListaAuxiliar.size(); i++) //por qué el i y no incidente: listaauxiliar
                 {
-                    if(!ListaMutable.get(i).cerrado() && (!abierto || !abiertoHaceMenosde24Horas(ListaMutable.get(i),horarioIncidente)))
+                    if(!ListaAuxiliar.get(i).cerrado() && (!abierto || !abiertoHaceMenosde24Horas(ListaAuxiliar.get(i),horarioIncidente)))
                     {
-                        horarioIncidente = ListaMutable.get(i).getFechaYhora();
-                        contadorAux[entidades.indexOf(ListaMutable.get(i).getEntidad())]++;
+                        horarioIncidente = ListaAuxiliar.get(i).getFechaYhora();
+                        contadorAux[entidades.indexOf(ListaAuxiliar.get(i).getEntidad())]++;
                         abierto = true;
                     }
 
-                    else if(ListaMutable.get(i).cerrado())
+                    else if(ListaAuxiliar.get(i).cerrado())
                     {
                         abierto = false;
                     }
