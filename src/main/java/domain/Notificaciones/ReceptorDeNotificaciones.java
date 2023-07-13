@@ -22,10 +22,15 @@ public class ReceptorDeNotificaciones {
     this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente, "Solicitud de Revisión de Incidente");
   }
   public void cambiarFormaDeNotificar(String forma) {
-    switch(forma){
-      case "CUANDO_SUCEDEN": this.formaDeNotificar = new CuandoSuceden(this.medioDeComunicacion); break;
-      case "SIN_APUROS": this.formaDeNotificar = new SinApuros(this.medioDeComunicacion); break;
-      default: throw new RuntimeException("Forma de notificar no válida");
+    if (this.medioDeComunicacion == null){
+      throw new RuntimeException("Antes de configurar la forma de notificar se debe configurar el medio");
+    }
+    else {
+      switch(forma){
+        case "CUANDO_SUCEDEN": this.formaDeNotificar = new CuandoSuceden(this.medioDeComunicacion); break;
+        case "SIN_APUROS": this.formaDeNotificar = new SinApuros(this.medioDeComunicacion); break;
+        default: throw new RuntimeException("Forma de notificar no válida");
+      }
     }
   }
   public void cambiarMedioDeComunicacion(String medio) {

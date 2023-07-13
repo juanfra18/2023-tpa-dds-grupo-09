@@ -1,11 +1,15 @@
 package Rankings;
 
+import Config.Config;
 import domain.Entidades.Entidad;
+import domain.Entidades.EntidadPrestadora;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.RepositorioDeEmpresas;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Notificaciones.AdapterViaMail;
 import domain.Notificaciones.EmisorDeNotificaciones;
+import domain.Notificaciones.ViaMailJavax;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
@@ -52,6 +56,7 @@ public class TestsRankings {
     private RepositorioDeEmpresas repositorioDeEmpresas;
     private Comunidad comunidad;
     private EmisorDeNotificaciones emisorDeNotificaciones;
+    private EntidadPrestadora entidadPrestadora;
 
 
 
@@ -67,33 +72,38 @@ public class TestsRankings {
         emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
 
-        pablo = new MiembroDeComunidad("perez", "pablo", "perez.pablito@gmail.com","123456789");
+        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1nosoymas@gmail.com","123456789");
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321");
         julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425");
 
         MockitoAnnotations.openMocks(this);
+        generalAlvarado = mock(Municipio.class);
+        pinamar = mock(Municipio.class);
+        when(generalAlvarado.getId()).thenReturn(1);
+        when(pinamar.getId()).thenReturn(2);
         servicioGeo = mock(AdapterServicioGeo.class);
         when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
         when(servicioGeo.obtenerMunicipio("Pinamar")).thenReturn(pinamar);
 
+
         banioHombres = new Banio("CABALLEROS");
         banioMujeres = new Banio("DAMAS");
 
-        pablo.agregarMunicipio(generalAlvarado);
+        pablo.agregarMunicipio(servicioGeo.obtenerMunicipio("General Alvarado"));
+        pablo.agregarMunicipio(servicioGeo.obtenerMunicipio("Pinamar"));
         pablo.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
-        pablo.agregarMunicipio(generalAlvarado);
         pablo.agregarServicioDeInteres(banioMujeres, Rol.valueOf("OBSERVADOR"));
-        maria.agregarMunicipio(generalAlvarado);
+        maria.agregarMunicipio(servicioGeo.obtenerMunicipio("General Alvarado"));
         maria.agregarServicioDeInteres(banioMujeres, Rol.valueOf("AFECTADO"));
-        julieta.agregarMunicipio(generalAlvarado);
+        julieta.agregarMunicipio(servicioGeo.obtenerMunicipio("General Alvarado"));
         julieta.agregarServicioDeInteres(banioMujeres, Rol.valueOf("AFECTADO"));
 
         lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
 
-        estacionRetiro = new Establecimiento("Retiro","ESTACION", generalAlvarado);
+        estacionRetiro = new Establecimiento("Retiro","ESTACION", servicioGeo.obtenerMunicipio("General Alvarado"));
         estacionRetiro.agregarServicio(banioHombres);
 
-        estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
+        estacionPinamar = new Establecimiento("Pinamar", "ESTACION", servicioGeo.obtenerMunicipio("Pinamar"));
         estacionPinamar.agregarServicio(banioHombres);
 
         lineaMitre.agregarEstablecimiento(estacionRetiro);
@@ -102,10 +112,10 @@ public class TestsRankings {
         lineaRoca = new Entidad("Linea Roca","FERROCARRIL");
         lineaRoca.agregarEstablecimiento(estacionTolosa);
 
-        estacionTolosa = new Establecimiento("Tolosa","ESTACION", generalAlvarado);
+        estacionTolosa = new Establecimiento("Tolosa","ESTACION", servicioGeo.obtenerMunicipio("General Alvarado"));
         estacionTolosa.agregarServicio(banioMujeres);
 
-        estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
+        estacionPinamar = new Establecimiento("Pinamar", "ESTACION", servicioGeo.obtenerMunicipio("Pinamar"));
         estacionPinamar.agregarServicio(banioHombres);
 
         entidades.add(lineaMitre);
@@ -115,6 +125,11 @@ public class TestsRankings {
         pablo.unirseAComunidad(comunidad);
         julieta.unirseAComunidad(comunidad);
         maria.unirseAComunidad(comunidad);
+
+        //pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail
+        //pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
+        //pablo.agregarEntidadDeInteres(lineaMitre);
+
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
@@ -166,5 +181,16 @@ public class TestsRankings {
     @Test
     public void rankingMayorCantidadDeIncidentes() {
         entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
+    }
+    @Test
+    public void recibirInformacion() {
+        entidadesConMayorCantidadDeIncidentes.armarRanking(entidades, repositorioDeIncidentes.getIncidentesEstaSemana()); //ranking 2
+        entidadesQueSolucionanMasLento.armarRanking(entidades, repositorioDeIncidentes.getIncidentesEstaSemana());
+        AdapterViaMail viaMail = new ViaMailJavax();
+        entidadPrestadora = new EntidadPrestadora("La Prestadora");
+        entidadPrestadora.agregarEntidad(lineaMitre);
+        entidadPrestadora.agregarEntidad(lineaRoca);
+        entidadPrestadora.asignarPersona("juanpaoli@gmail.com");
+        entidadPrestadora.enviarInformacion(Config.RANKING_1, viaMail);
     }
 }

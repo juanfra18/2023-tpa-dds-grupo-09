@@ -1,5 +1,9 @@
 package domain.Entidades;
 
+import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Notificaciones.AdapterViaMail;
+import domain.Notificaciones.ViaMailJavax;
+import domain.Rankings.Tierlist;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -21,6 +25,9 @@ public class EntidadPrestadora {
   }
   public void asignarPersona(String email){
     this.personaMail = email;
+  }
+  public void enviarInformacion(String ruta, AdapterViaMail viaMail){
+    viaMail.enviarArchivo(ruta, personaMail, "Información sobre entidades");
   }
 
   @Override
