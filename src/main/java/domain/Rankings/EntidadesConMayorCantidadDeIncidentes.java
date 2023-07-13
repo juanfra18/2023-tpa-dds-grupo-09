@@ -85,9 +85,8 @@ public class EntidadesConMayorCantidadDeIncidentes implements Tierlist{
         return Math.abs(ChronoUnit.HOURS.between(incidente1.getFechaYhora(), horarioIncidente))<24;
     }
 
-    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente, List<ReporteDeIncidente> listaReportes){
-        return listaReportes.stream().anyMatch(i->i.equals(incidente)&&
-                Math.abs(ChronoUnit.HOURS.between(incidente.getFechaYhora(), i.getFechaYhora()))<24);
+    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente){
+        return Math.abs(ChronoUnit.HOURS.between(incidente.getFechaYhora(), LocalDateTime.now()))<24;
     }
 }
 

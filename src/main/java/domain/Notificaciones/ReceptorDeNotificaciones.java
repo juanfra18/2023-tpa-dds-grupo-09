@@ -22,25 +22,17 @@ public class ReceptorDeNotificaciones {
     this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente, "Solicitud de Revisión de Incidente");
   }
   public void cambiarFormaDeNotificar(String forma) {
-    if(forma.equals("CUANDO_SUCEDEN")) {
-      this.formaDeNotificar = new CuandoSuceden(medioDeComunicacion);
-    }
-    else if(forma.equals("SIN_APUROS")) {
-      this.formaDeNotificar = new SinApuros(medioDeComunicacion);
-    }
-    else {
-      throw new RuntimeException("Forma de notificar no válida");
+    switch(forma){
+      case "CUANDO_SUCEDEN": this.formaDeNotificar = new CuandoSuceden(this.medioDeComunicacion); break;
+      case "SIN_APUROS": this.formaDeNotificar = new SinApuros(this.medioDeComunicacion); break;
+      default: throw new RuntimeException("Forma de notificar no válida");
     }
   }
   public void cambiarMedioDeComunicacion(String medio) {
-    if(medio.equals("WhatsApp")){
-      this.medioDeComunicacion = new ViaWPP(this.telefono);
-    }
-    else if(medio.equals("Mail")){
-      this.medioDeComunicacion = new ViaMail(this.mail);
-    }
-    else {
-      throw new RuntimeException("Medio de comunicación no válido");
+    switch(medio){
+      case "WhatsApp": this.medioDeComunicacion = new ViaWPP(this.telefono); break;
+      case "Mail": this.medioDeComunicacion = new ViaMail(this.mail); break;
+      default: throw new RuntimeException("Medio de comunicación no válido");
     }
   }
 }
