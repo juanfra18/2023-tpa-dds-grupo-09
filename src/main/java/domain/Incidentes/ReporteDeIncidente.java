@@ -67,7 +67,8 @@ public class ReporteDeIncidente {
     LocalDateTime inicioDeSemana = LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
     LocalDateTime finalDeSemana = LocalDateTime.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
 
-    return this.getFechaYhora().isAfter(inicioDeSemana) && this.getFechaYhora().isBefore(finalDeSemana);
+    return ((this.getFechaYhora().isAfter(inicioDeSemana) && this.getFechaYhora().isBefore(finalDeSemana)
+              || this.esElMismoDia(inicioDeSemana) || this.esElMismoDia(finalDeSemana)));
   }
 
   public Long tiempoDeCierre(ReporteDeIncidente incidente, List<ReporteDeIncidente> incidentes) {
@@ -87,6 +88,12 @@ public class ReporteDeIncidente {
     LocalDateTime fechaActual = LocalDateTime.now();
     Duration tiempoDesdeElReporte = Duration.between(fechaYhora,fechaActual);
     return tiempoDesdeElReporte.toHours() < 24;
+  }
+
+  public boolean esElMismoDia(LocalDateTime lunesOdomingo){ //si no esta entre semana, es el lunes o domingo de esta semana
+    return lunesOdomingo.getDayOfMonth() == this.fechaYhora.getDayOfMonth() &&
+        lunesOdomingo.getMonth() == this.fechaYhora.getMonth() &&
+        lunesOdomingo.getYear() == this.fechaYhora.getYear();
   }
 
 }

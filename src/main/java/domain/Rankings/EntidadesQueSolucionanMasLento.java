@@ -25,8 +25,8 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
 
         for(ReporteDeIncidente reporteDeIncidente : incidentes) {
             if (!ListaEspera.contains(reporteDeIncidente)) {
-                List<ReporteDeIncidente> ListaAuxiliar = new ArrayList<>(incidentes);
-                ListaAuxiliar.stream().filter(incidente -> incidente.equals(reporteDeIncidente));
+                List<ReporteDeIncidente> ListaAuxiliar = new ArrayList<>(incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList());
+
                 ListaEspera.addAll(ListaAuxiliar);
                 Collections.sort(ListaAuxiliar, new Comparator<ReporteDeIncidente>() {
                     @Override
