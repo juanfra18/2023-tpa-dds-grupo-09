@@ -10,8 +10,11 @@ import domain.Rankings.EntidadesQueSolucionanMasLento;
 
 import java.util.List;
 
-public class EmisorDeNotificaciones{
+public class EmisorDeNotificaciones {
     private static EmisorDeNotificaciones instancia = null;
+    private EmisorDeNotificaciones(){
+
+    }
     public static EmisorDeNotificaciones getInstancia() {
         if(instancia == null){
             instancia = new EmisorDeNotificaciones();

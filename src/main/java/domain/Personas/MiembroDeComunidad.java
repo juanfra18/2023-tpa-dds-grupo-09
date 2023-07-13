@@ -14,9 +14,7 @@ import lombok.Getter;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -102,13 +100,19 @@ public class MiembroDeComunidad {
     public List<ReporteDeIncidente> solicitarInformacionDeIncidentesAbiertos(){
         List<ReporteDeIncidente> reportes = new ArrayList<>();
         this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
-        return reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.ABIERTO)).toList()
-            .stream().collect(Collectors.toSet()).stream().toList(); //se usa el set para evitar repetidos, queda el último
+        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>();
+        for (ReporteDeIncidente reporteDeIncidente : reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.ABIERTO)).toList()){
+            if (!listaAuxiliar.contains(reporteDeIncidente)) {listaAuxiliar.add(reporteDeIncidente);}
+        }
+        return listaAuxiliar;
     }
-    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrado(){
+    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrados(){
         List<ReporteDeIncidente> reportes = new ArrayList<>();
         this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
-        return reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.CERRADO)).toList()
-            .stream().collect(Collectors.toSet()).stream().toList(); //se repite entre las distintas comunidades el cierre
+        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>();
+        for (ReporteDeIncidente reporteDeIncidente : reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.CERRADO)).toList()){
+            if (!listaAuxiliar.contains(reporteDeIncidente)) {listaAuxiliar.add(reporteDeIncidente);}
+        }
+        return listaAuxiliar;
     }
 }

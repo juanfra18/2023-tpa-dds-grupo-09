@@ -5,6 +5,8 @@ import domain.Entidades.Establecimiento;
 import domain.Entidades.RepositorioDeEmpresas;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Notificaciones.EmisorDeNotificaciones;
+import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
@@ -48,6 +50,8 @@ public class TestsRankings {
     private MiembroDeComunidad maria;
     private MiembroDeComunidad julieta;
     private RepositorioDeEmpresas repositorioDeEmpresas;
+    private Comunidad comunidad;
+    private EmisorDeNotificaciones emisorDeNotificaciones;
 
 
 
@@ -60,7 +64,8 @@ public class TestsRankings {
         entidades = new ArrayList<Entidad>();
         //repositorioDeEmpresas = new RepositorioDeEmpresas(new CargadorDeDatos(),servicioGeo);
         //repositorioDeEmpresas.getEmpresas().forEach(empresa -> empresa.getEntidadesPrestadoras().forEach(ep -> entidades.addAll(ep.getEntidades())));
-
+        emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
+        comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
 
         pablo = new MiembroDeComunidad("perez", "pablo", "perez.pablito@gmail.com","123456789");
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321");
@@ -107,18 +112,20 @@ public class TestsRankings {
         entidades.add(lineaRoca);
 
         //LocalDateTime.parse("2015-08-04T10:11:30")
-
+        pablo.unirseAComunidad(comunidad);
+        julieta.unirseAComunidad(comunidad);
+        maria.unirseAComunidad(comunidad);
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,11,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,11,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se arregló el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,12,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,12,13,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,7,11,12,13,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se arregló el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,14,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
@@ -135,7 +142,6 @@ public class TestsRankings {
 
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
-
     }
 
 
@@ -143,13 +149,22 @@ public class TestsRankings {
     public void rankingSolucionanMasLento() {
         List<ReporteDeIncidente> ll = repositorioDeIncidentes.getIncidentesEstaSemana();
         entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
-
     }
 
+    @Test
+    public void solicitarInformacionDeIncidentesAbiertos(){
+        for (ReporteDeIncidente incidente : pablo.solicitarInformacionDeIncidentesAbiertos()){
+            System.out.println(incidente.mensaje());
+        }
+    }
+    @Test
+    public void solicitarInformacionDeIncidentesCerrados(){
+        for (ReporteDeIncidente incidente : pablo.solicitarInformacionDeIncidentesCerrados()){
+            System.out.println(incidente.mensaje());
+        }
+    }
     @Test
     public void rankingMayorCantidadDeIncidentes() {
         entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
     }
-
-
 }
