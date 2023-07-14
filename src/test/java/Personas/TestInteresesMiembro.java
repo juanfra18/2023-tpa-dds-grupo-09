@@ -37,7 +37,7 @@ public class TestInteresesMiembro {
   private Entidad lineaRoca;
   @BeforeEach
   public void init() throws IOException {
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789");
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp");
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
     when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);

@@ -96,14 +96,4 @@ public class ViaMailJavax implements AdapterViaMail{
       me.printStackTrace();   //Si se produce un error
     }
   }
-  /*
-  public static void main(String[] args) {
-    ViaMailJavax mailJavax = new ViaMailJavax();
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad("Paoli", "Juan", "juanpaoli@gmail.com", "3442560890");
-    Servicio servicio = new Banio("UNISEX");
-    Entidad entidad = new Entidad("Jorge", "ESTABLECIMIENTO");
-    Establecimiento establecimiento = new Establecimiento("Hola", "SUCURSAL", new Municipio(6, "CABA"));
-    ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente("CERRADO", LocalDateTime.from(Instant.now()), miembroDeComunidad, entidad, establecimiento, servicio, "hola");
-    mailJavax.recibirNotificacion(reporteDeIncidente, "juanpaoli@gmail.com");
-  }*/
 }

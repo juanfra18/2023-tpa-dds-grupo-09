@@ -15,7 +15,6 @@ import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 public class MiembroDeComunidad {
@@ -41,6 +40,7 @@ public class MiembroDeComunidad {
         this.comunidades = new ArrayList<>();
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
     }
+
 
     public void agregarProvincia(Provincia provincia) {
         provincias.add(provincia);
@@ -86,12 +86,12 @@ public class MiembroDeComunidad {
         }
     }
 
-    public Posicion posicion(){
+    public Posicion setPosicion(){
         //TOMOCK
         return null;
     }
     public boolean validarSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente){
-        return reporteDeIncidente.getEstablecimiento().getPosicion().distancia(this.posicion()) <= Config.DISTANCIA_MINIMA
+        return reporteDeIncidente.getEstablecimiento().getPosicion().distancia(this.setPosicion()) <= Config.DISTANCIA_MINIMA
                 && this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento());
     }
     public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
@@ -99,22 +99,27 @@ public class MiembroDeComunidad {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesAbiertos(){
+    public List<ReporteDeIncidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
         List<ReporteDeIncidente> reportes = new ArrayList<>();
         this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
+
         List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>();
-        for (ReporteDeIncidente reporteDeIncidente : reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.ABIERTO)).toList()){
-            if (!listaAuxiliar.contains(reporteDeIncidente)) {listaAuxiliar.add(reporteDeIncidente);}
+        for (ReporteDeIncidente reporteDeIncidente : reportes.stream()
+                .filter(reporte -> reporte.getEstado().equals(estado))
+                .toList()) {
+            if (!listaAuxiliar.contains(reporteDeIncidente)) {
+                listaAuxiliar.add(reporteDeIncidente);
+            }
         }
         return listaAuxiliar;
     }
-    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrados(){
-        List<ReporteDeIncidente> reportes = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
-        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>();
-        for (ReporteDeIncidente reporteDeIncidente : reportes.stream().filter(reporte -> reporte.getEstado().equals(EstadoIncidente.CERRADO)).toList()){
-            if (!listaAuxiliar.contains(reporteDeIncidente)) {listaAuxiliar.add(reporteDeIncidente);}
-        }
-        return listaAuxiliar;
+
+    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesAbiertos() {
+        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
     }
+
+    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrados() {
+        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
+    }
+
 }

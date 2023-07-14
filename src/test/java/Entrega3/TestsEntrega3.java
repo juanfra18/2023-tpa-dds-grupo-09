@@ -1,4 +1,4 @@
-package Rankings;
+package Entrega3;
 
 import Config.Config;
 import domain.Entidades.Entidad;
@@ -26,16 +26,14 @@ import org.mockito.MockitoAnnotations;
 import services.APIs.Georef.AdapterServicioGeo;
 import services.Localizacion.Municipio;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestsRankings {
+public class TestsEntrega3 {
     private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
     private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes;
     private List<Entidad> entidades;
@@ -68,20 +66,20 @@ public class TestsRankings {
 
 
     @BeforeEach
-    public void init() throws IOException {
+    public void init() {
         entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
         entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
         repositorioDeIncidentes = new RepositorioDeIncidentes();
-        entidades = new ArrayList<Entidad>();
+        entidades = new ArrayList<>();
         //repositorioDeEmpresas = new RepositorioDeEmpresas(new CargadorDeDatos(),servicioGeo);
         //repositorioDeEmpresas.getEmpresas().forEach(empresa -> empresa.getEntidadesPrestadoras().forEach(ep -> entidades.addAll(ep.getEntidades())));
         emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
         comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
 
-        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaoli@gmail.com","123456789");
-        maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321");
-        julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425");
+        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp");
+        maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321", "CUANDO_SUCEDEN", "Mail");
+        julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425", "SIN_APUROS", "Mail");
 
         MockitoAnnotations.openMocks(this);
         generalAlvarado = mock(Municipio.class);
@@ -135,7 +133,7 @@ public class TestsRankings {
         julieta.unirseAComunidad(comunidad);
         maria.unirseAComunidad(comunidad);
 
-        pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail/whatsapp (no hace nada en wsp)
+        //pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail/whatsapp (no hace nada en wsp)
         pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
         pablo.agregarEntidadDeInteres(lineaMitre);
 
@@ -149,7 +147,7 @@ public class TestsRankings {
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,3,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-        /*
+
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
@@ -176,7 +174,7 @@ public class TestsRankings {
 
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
-        */
+
     }
 
 
