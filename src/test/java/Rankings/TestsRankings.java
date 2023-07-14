@@ -29,6 +29,7 @@ import services.Localizacion.Municipio;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -78,7 +79,7 @@ public class TestsRankings {
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
         comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
 
-        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1nosoymas@gmail.com","123456789");
+        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaoli@gmail.com","123456789");
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321");
         julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425");
 
@@ -134,15 +135,21 @@ public class TestsRankings {
         julieta.unirseAComunidad(comunidad);
         maria.unirseAComunidad(comunidad);
 
-        //pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail
-        //pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
-        //pablo.agregarEntidadDeInteres(lineaMitre);
+        pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail/whatsapp (no hace nada en wsp)
+        pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
+        pablo.agregarEntidadDeInteres(lineaMitre);
+
+        julieta.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("WhatsApp");
+        maria.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("WhatsApp");
+        julieta.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
+        maria.getReceptorDeNotificaciones().cambiarFormaDeNotificar("SIN_APUROS");
+
 
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,3,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
-
+        /*
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
@@ -169,7 +176,7 @@ public class TestsRankings {
 
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
-
+        */
     }
 
 
@@ -230,5 +237,21 @@ public class TestsRankings {
         posicion1 = new Posicion("100,100");
         posicion2 = new Posicion("50,50");
         Assertions.assertTrue(posicion1.distancia(posicion2) <= Config.DISTANCIA_MINIMA);
+    }
+
+    @Test
+    public void peticionDeRevision(){
+        List<Comunidad> comunidades = new ArrayList<>();
+        EmisorDeNotificaciones nuevoEmisor = EmisorDeNotificaciones.getInstancia();
+        pablo = mock(MiembroDeComunidad.class);
+        julieta = mock(MiembroDeComunidad.class);
+        maria = mock(MiembroDeComunidad.class);
+        Comunidad comunidadMock = new Comunidad("Los+Mockeados", nuevoEmisor);
+        when(pablo.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        when(julieta.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        when(maria.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        comunidadMock.agregarMiembro(pablo); comunidadMock.agregarMiembro(julieta); comunidadMock.agregarMiembro(maria);
+        comunidades.add(comunidadMock);
+        nuevoEmisor.solicitarRevisionDeIncidente(comunidades); //no se me ocurre como mockear la posicion, puse que devuelva true a la solicitud en miembro y manda el mail
     }
 }

@@ -8,7 +8,9 @@ import domain.Personas.MiembroDeComunidad;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import domain.Rankings.EntidadesQueSolucionanMasLento;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class EmisorDeNotificaciones {
     private static EmisorDeNotificaciones instancia = null;
@@ -28,13 +30,6 @@ public class EmisorDeNotificaciones {
     //el que envio recibe asi puede revisar bien que la informacion sea correcta
   }
   public void solicitarRevisionDeIncidente(List<Comunidad> comunidades){
-     /*for(Comunidad comunidad : comunidades) {
-         for(ReporteDeIncidente incidente : comunidad.incidentesAbiertos()){
-             for(MiembroDeComunidad miembroDeComunidad : comunidad.getMiembros()){
-                 miembroDeComunidad.recibirSolicitudDeRevision(incidente);
-             }
-         }
-     }*/ //PROFE ESTA MEJOR EL FOR
      comunidades.forEach(comunidad -> comunidad.incidentesAbiertos().
              forEach(incidente -> comunidad.getMiembros().
                      forEach(miembroDeComunidad -> miembroDeComunidad.recibirSolicitudDeRevision(incidente))
