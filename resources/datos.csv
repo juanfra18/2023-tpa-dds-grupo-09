@@ -1,10 +1,5 @@
 organismoDeControl,entidadPrestadora,entidad,tipoEntidad,establecimiento,nombreLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,UNISEX
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,DAMAS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,CABALLEROS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Elevacion,ASCENSOR
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Vicente López,General Alvarado,ESTACION,Elevacion,ESCALERAS_MECANICAS
-CNRT,Trenes Argentinos,Línea Mitre,FERROCARRIL,Rivadavia,General Alvarado,ESTACION,Banio,DAMAS
-BCRA,Santander Río,Santander Río Capital Federal,ESTABLECIMIENTO,Almagro,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
-BCRA,Santander Río,Santander Río Buenos Aires,ESTABLECIMIENTO,General Alvear,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
-BCRA,BCBA,BCBA,ESTABLECIMIENTO,9 de Julio,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
+CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,UNISEX
+CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Roca,FERROCARRIL,Vicente López,General Alvarado,ESTACION,Elevacion,ESCALERAS_MECANICAS
+BCRA,diseniogrupo9@gmail.com,Santander Río,diseniogrupo9@gmail.com,Santander Río Buenos Aires,ESTABLECIMIENTO,General Alvear,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
+BCRA,diseniogrupo9@gmail.com,BCBA,diseniogrupo9@gmail.com,BCBA,ESTABLECIMIENTO,9 de Julio,General Alvarado,SUCURSAL,Elevacion,ASCENSOR

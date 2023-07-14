@@ -13,9 +13,11 @@ public class EntidadPrestadora {
   private String nombre;
   private String personaMail;
   private ViaMail viaMail;
-  public EntidadPrestadora(String nombre){
+  public EntidadPrestadora(String nombre, String personaMail){
     this.nombre = nombre;
     this.entidades = new ArrayList<>();
+    this.personaMail = personaMail;
+    this.viaMail = new ViaMail(this.personaMail);
   }
   public void agregarEntidad(Entidad entidad){
     entidades.removeIf(entidad1 -> entidad1.getNombre().equals(entidad.getNombre()));

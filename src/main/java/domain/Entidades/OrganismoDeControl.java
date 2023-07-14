@@ -12,9 +12,11 @@ public class OrganismoDeControl {
   private String nombre;
   private String personaMail;
   private ViaMail viaMail;
-  public OrganismoDeControl(String nombre){
+  public OrganismoDeControl(String nombre, String personaMail){
     this.nombre = nombre;
     this.entidadesPrestadoras = new ArrayList<>();
+    this.personaMail = personaMail;
+    this.viaMail = new ViaMail(this.personaMail);
   }
   public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){
     entidadesPrestadoras.removeIf(entidadPrestadora1 -> entidadPrestadora1.getNombre().equals(entidadPrestadora.getNombre()));

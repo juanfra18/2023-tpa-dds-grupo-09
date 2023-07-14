@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import services.APIs.Georef.AdapterServicioGeo;
+import services.Archivos.CargadorDeDatos;
 import services.Localizacion.Municipio;
 
 import java.time.LocalDateTime;
@@ -202,14 +203,8 @@ public class TestsEntrega3 {
     }
     @Test
     public void recibirInformacion() {
-        entidadesConMayorCantidadDeIncidentes.armarRanking(entidades, repositorioDeIncidentes.getIncidentesEstaSemana()); //ranking 2
-        entidadesQueSolucionanMasLento.armarRanking(entidades, repositorioDeIncidentes.getIncidentesEstaSemana());
-        AdapterViaMail viaMail = new ViaMailJavax();
-        entidadPrestadora = new EntidadPrestadora("La Prestadora");
-        entidadPrestadora.agregarEntidad(lineaMitre);
-        entidadPrestadora.agregarEntidad(lineaRoca);
-        entidadPrestadora.asignarPersona("juanpaoli@gmail.com");
-        viaMail.enviarArchivo(Config.RANKING_1, entidadPrestadora.getPersonaMail(), "Información de entidades");
+        repositorioDeEmpresas = new RepositorioDeEmpresas(new CargadorDeDatos(), servicioGeo);
+        emisorDeNotificaciones.generarRankings(repositorioDeEmpresas, repositorioDeIncidentes);
     }
 
     @Test
