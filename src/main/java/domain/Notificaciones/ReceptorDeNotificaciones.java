@@ -11,7 +11,9 @@ public class ReceptorDeNotificaciones {
   private String mail;
   private String telefono;
 
-  public ReceptorDeNotificaciones(String mail, String telefono) {
+  public ReceptorDeNotificaciones(String medioDeComunicacion, String formaDeNotificar ,String mail, String telefono) {
+    this.cambiarMedioDeComunicacion(medioDeComunicacion);
+    this.cambiarFormaDeNotificar(formaDeNotificar);
     this.mail = mail;
     this.telefono = telefono;
   }

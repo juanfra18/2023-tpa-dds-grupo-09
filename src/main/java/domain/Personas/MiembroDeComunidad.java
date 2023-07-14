@@ -28,8 +28,10 @@ public class MiembroDeComunidad {
     private Usuario usuario;
     private List<Comunidad> comunidades;
     private ReceptorDeNotificaciones receptorDeNotificaciones;
+    private String formaDeNotificarSeleccionada;
+    private String medioDeComunicacionSeleccionado;
 
-    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono) {
+    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, String formaDeNotificarSeleccionada, String medioDeComunicacionSeleccionado) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.provincias = new ArrayList<>();
@@ -37,7 +39,7 @@ public class MiembroDeComunidad {
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
-        this.receptorDeNotificaciones = new ReceptorDeNotificaciones(mail, telefono);
+        this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
     }
 
     public void agregarProvincia(Provincia provincia) {
