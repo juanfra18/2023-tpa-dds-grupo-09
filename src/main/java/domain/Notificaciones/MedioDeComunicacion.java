@@ -1,8 +1,7 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Personas.MiembroDeComunidad;
 
 public interface MedioDeComunicacion {
-  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String asunto);
+  void recibirNotificacion(String mensaje, String asunto);
 }

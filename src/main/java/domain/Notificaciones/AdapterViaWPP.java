@@ -1,8 +1,7 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Personas.MiembroDeComunidad;
 
 public interface AdapterViaWPP {
-  void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String telefonoDestinatario, String asunto);
+  void recibirNotificacion(String mensaje, String telefonoDestinatario, String asunto);
 }

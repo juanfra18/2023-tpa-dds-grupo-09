@@ -5,15 +5,11 @@ import domain.Entidades.Establecimiento;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
-
 import java.time.DayOfWeek;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 

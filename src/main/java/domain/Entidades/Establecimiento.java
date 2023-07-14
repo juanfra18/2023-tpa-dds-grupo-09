@@ -4,7 +4,6 @@ import domain.Incidentes.Posicion;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.Localizacion.Municipio;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

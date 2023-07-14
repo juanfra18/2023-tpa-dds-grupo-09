@@ -3,15 +3,10 @@ package domain.Rankings;
 import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Incidentes.RepositorioDeIncidentes;
 import services.Archivos.SistemaDeArchivos;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class EntidadesQueSolucionanMasLento extends Tierlist{

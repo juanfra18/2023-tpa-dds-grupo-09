@@ -1,7 +1,6 @@
 package domain.Usuario;
 
 import domain.Seguridad.RegistroDeUsuarioException;
-
 import java.util.ArrayList;
 import java.util.List;
 

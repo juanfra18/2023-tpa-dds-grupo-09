@@ -35,14 +35,14 @@ public class EmisorDeNotificaciones {
   } //un main llama a esto cada cierto tiempo
 
 
-    public void generarRankings (List<Entidad> entidades, RepositorioDeIncidentes repositorioDeIncidentes)
-    {
-        List<ReporteDeIncidente> reportesDeEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
+  public void generarRankings (List<Entidad> entidades, RepositorioDeIncidentes repositorioDeIncidentes)
+  {
+      List<ReporteDeIncidente> reportesDeEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
 
-        entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,reportesDeEstaSemana);
-        entidadesQueSolucionanMasLento.armarRanking(entidades,reportesDeEstaSemana);
+      entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,reportesDeEstaSemana);
+      entidadesQueSolucionanMasLento.armarRanking(entidades,reportesDeEstaSemana);
 
-    }
+  }
 
 }
 

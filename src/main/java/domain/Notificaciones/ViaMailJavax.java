@@ -1,12 +1,5 @@
 package domain.Notificaciones;
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Incidentes.ReporteDeIncidente;
-import domain.Personas.MiembroDeComunidad;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
-import services.Localizacion.Municipio;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -15,22 +8,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.sql.DataSource;
-import java.time.LocalDateTime;
 import java.util.Properties;
-
-import java.sql.Time;
-import java.time.Instant;
-import java.util.Date;
 
 
 public class ViaMailJavax implements AdapterViaMail{
   private String remitente = "disenioGrupo9@gmail.com";
   private String claveemail = "bwlmzwnlroykvjas"; //clave de aplicacion
-  private String asunto;
-  private String cuerpo;
 
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String mailDestinatario, String asunto){
+  public void recibirNotificacion(String mensaje, String mailDestinatario, String asunto){
     Properties props = System.getProperties();
     props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
     props.put("mail.smtp.user", remitente);
@@ -46,7 +31,7 @@ public class ViaMailJavax implements AdapterViaMail{
       message.setFrom(new InternetAddress(remitente));
       message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailDestinatario));   //Se podrían añadir varios de la misma manera
       message.setSubject(asunto);
-      message.setText(reporteDeIncidente.mensaje());
+      message.setText(mensaje);
       Transport transport = session.getTransport("smtp");
       transport.connect("smtp.gmail.com", remitente, claveemail);
       transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));

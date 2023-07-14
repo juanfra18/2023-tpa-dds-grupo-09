@@ -9,7 +9,7 @@ public class ViaMail implements MedioDeComunicacion{
     this.servicioMail = new ViaMailJavax(); //acoplamiento con biblioteca externa
     this.destinatario = destinatario;
   }
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String asunto) {
-    this.servicioMail.recibirNotificacion(reporteDeIncidente, this.destinatario, asunto);
+  public void recibirNotificacion(String mensaje, String asunto) {
+    this.servicioMail.recibirNotificacion(mensaje, this.destinatario, asunto);
   }
 }

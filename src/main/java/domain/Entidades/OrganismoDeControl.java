@@ -1,11 +1,7 @@
 package domain.Entidades;
 
-import domain.Incidentes.RepositorioDeIncidentes;
-import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
-import domain.Rankings.EntidadesQueSolucionanMasLento;
-import domain.Rankings.Tierlist;
-import lombok.Getter;
 
+import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -10,6 +10,6 @@ public abstract class FormaDeNotificar {
   }
 
   public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente){
-    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente, "Reporte de Incidente");
+    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Reporte de Incidente");
   }
 }

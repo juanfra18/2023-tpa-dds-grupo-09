@@ -1,6 +1,5 @@
 package domain.Notificaciones;
 
-import domain.Incidentes.ReporteDeIncidente;
 
 public class ViaWPP implements MedioDeComunicacion{
   private AdapterViaWPP servicioWPP;
@@ -9,7 +8,7 @@ public class ViaWPP implements MedioDeComunicacion{
     this.servicioWPP = new ViaWPPConcreto(); //acoplamiento
     this.destinatario = destinatario;
   }
-  public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente, String asunto) {
-    this.servicioWPP.recibirNotificacion(reporteDeIncidente, this.destinatario, asunto);
+  public void recibirNotificacion(String mensaje, String asunto) {
+    this.servicioWPP.recibirNotificacion(mensaje, this.destinatario, asunto);
   }
 }

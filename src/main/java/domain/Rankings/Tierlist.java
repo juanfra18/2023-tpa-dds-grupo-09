@@ -2,8 +2,6 @@ package domain.Rankings;
 
 import domain.Entidades.Entidad;
 import domain.Incidentes.ReporteDeIncidente;
-import services.Archivos.SistemaDeArchivos;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

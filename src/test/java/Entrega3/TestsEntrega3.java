@@ -209,7 +209,7 @@ public class TestsEntrega3 {
         entidadPrestadora.agregarEntidad(lineaMitre);
         entidadPrestadora.agregarEntidad(lineaRoca);
         entidadPrestadora.asignarPersona("juanpaoli@gmail.com");
-        entidadPrestadora.enviarInformacion(Config.RANKING_1, viaMail);
+        viaMail.enviarArchivo(Config.RANKING_1, entidadPrestadora.getPersonaMail(), "Información de entidades");
     }
 
     @Test

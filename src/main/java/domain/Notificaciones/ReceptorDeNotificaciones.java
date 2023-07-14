@@ -1,9 +1,6 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Personas.MiembroDeComunidad;
-
-import java.util.Optional;
 
 public class ReceptorDeNotificaciones {
   private FormaDeNotificar formaDeNotificar;
@@ -21,7 +18,7 @@ public class ReceptorDeNotificaciones {
     this.formaDeNotificar.recibirNotificacion(reporteDeIncidente);
   }
   public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
-    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente, "Solicitud de Revisión de Incidente");
+    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Solicitud de Revisión de Incidente");
   }
   public void cambiarFormaDeNotificar(String forma) {
     if (this.medioDeComunicacion == null){
