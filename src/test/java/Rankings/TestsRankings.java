@@ -5,6 +5,7 @@ import domain.Entidades.Entidad;
 import domain.Entidades.EntidadPrestadora;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.RepositorioDeEmpresas;
+import domain.Incidentes.Posicion;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Notificaciones.AdapterViaMail;
@@ -17,6 +18,7 @@ import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import domain.Rankings.EntidadesQueSolucionanMasLento;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -55,8 +57,11 @@ public class TestsRankings {
     private MiembroDeComunidad julieta;
     private RepositorioDeEmpresas repositorioDeEmpresas;
     private Comunidad comunidad;
+    private Comunidad comunidad2;
     private EmisorDeNotificaciones emisorDeNotificaciones;
     private EntidadPrestadora entidadPrestadora;
+    private Posicion posicion1;
+    private Posicion posicion2;
 
 
 
@@ -71,6 +76,7 @@ public class TestsRankings {
         //repositorioDeEmpresas.getEmpresas().forEach(empresa -> empresa.getEntidadesPrestadoras().forEach(ep -> entidades.addAll(ep.getEntidades())));
         emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
+        comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
 
         pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1nosoymas@gmail.com","123456789");
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321");
@@ -123,12 +129,18 @@ public class TestsRankings {
 
         //LocalDateTime.parse("2015-08-04T10:11:30")
         pablo.unirseAComunidad(comunidad);
+        pablo.unirseAComunidad(comunidad2);
+
         julieta.unirseAComunidad(comunidad);
         maria.unirseAComunidad(comunidad);
 
         //pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail
         //pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
         //pablo.agregarEntidadDeInteres(lineaMitre);
+
+
+        incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,3,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
+        pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
 
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,11,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
@@ -157,6 +169,7 @@ public class TestsRankings {
 
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,7,12,10,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,repositorioDeIncidentes);
+
     }
 
 
@@ -192,5 +205,30 @@ public class TestsRankings {
         entidadPrestadora.agregarEntidad(lineaRoca);
         entidadPrestadora.asignarPersona("juanpaoli@gmail.com");
         entidadPrestadora.enviarInformacion(Config.RANKING_1, viaMail);
+    }
+
+    @Test
+    public void ReportarUnIncidente(){
+        pablo.informarFuncionamiento(incidenteBanioHombre,repositorioDeIncidentes);
+
+        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getObservaciones());
+        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getServicio());
+        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
+
+        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getObservaciones());
+        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getServicio());
+        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
+    }
+
+    @Test
+    public void IncidentesDeLaSemana(){
+        Assertions.assertEquals(9,repositorioDeIncidentes.getIncidentesEstaSemana().size());
+    }
+
+    @Test
+    public void DistanciasCercanas(){
+        posicion1 = new Posicion("100,100");
+        posicion2 = new Posicion("50,50");
+        Assertions.assertTrue(posicion1.distancia(posicion2) <= Config.DISTANCIA_MINIMA);
     }
 }
