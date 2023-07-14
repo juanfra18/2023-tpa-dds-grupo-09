@@ -1,6 +1,7 @@
 package domain.Entidades;
 
 
+import domain.Notificaciones.ViaMail;
 import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class EntidadPrestadora {
   private List<Entidad> entidades;
   private String nombre;
   private String personaMail;
+  private ViaMail viaMail;
   public EntidadPrestadora(String nombre){
     this.nombre = nombre;
     this.entidades = new ArrayList<>();
@@ -21,6 +23,7 @@ public class EntidadPrestadora {
   }
   public void asignarPersona(String email){
     this.personaMail = email;
+    this.viaMail = new ViaMail(email);
   }
 
   @Override
@@ -33,5 +36,9 @@ public class EntidadPrestadora {
     }
     EntidadPrestadora otro = (EntidadPrestadora) obj;
     return Objects.equals(nombre, otro.nombre);
+  }
+
+  public void recibirInforme(String ruta,String asunto){
+    this.viaMail.recibirArchivos(ruta,asunto);
   }
 }

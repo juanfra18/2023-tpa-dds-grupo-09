@@ -1,6 +1,5 @@
 package domain.Notificaciones;
 
-import domain.Incidentes.ReporteDeIncidente;
 
 public class ViaMail implements MedioDeComunicacion{
   private AdapterViaMail servicioMail;
@@ -12,4 +11,9 @@ public class ViaMail implements MedioDeComunicacion{
   public void recibirNotificacion(String mensaje, String asunto) {
     this.servicioMail.recibirNotificacion(mensaje, this.destinatario, asunto);
   }
+
+  public void recibirArchivos(String ruta, String asunto){
+    this.servicioMail.enviarArchivo(ruta,this.destinatario,asunto);
+  }
+  
 }
