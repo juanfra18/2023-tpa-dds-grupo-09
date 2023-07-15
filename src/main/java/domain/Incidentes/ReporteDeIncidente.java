@@ -47,10 +47,7 @@ public class ReporteDeIncidente {
   }
 
   public Boolean cerrado(){
-    if(estado == EstadoIncidente.CERRADO)
-      return true;
-    else
-      return false;
+    return estado == EstadoIncidente.CERRADO;
   }
 
   public String mensaje() {
