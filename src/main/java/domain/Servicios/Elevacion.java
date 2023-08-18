@@ -16,8 +16,7 @@ public class Elevacion implements Servicio{
     public Elevacion(String tipoElevacion) {
         this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
     }
-    @Override
-    public boolean equals(Object obj) {
+    public boolean igualito(Object obj) {
         if (this == obj) {
             return true;
         }

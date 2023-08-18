@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Tierlist {
     protected List<ReporteDeIncidente> obtenerListaSinRepetirIncidente(List<ReporteDeIncidente> incidentes, List<ReporteDeIncidente> listaEspera, ReporteDeIncidente reporteDeIncidente){
-        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>(incidentes.stream().filter(incidente -> incidente.equals(reporteDeIncidente)).toList());
+        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>(incidentes.stream().filter(incidente -> incidente.igualito(reporteDeIncidente)).toList());
         listaEspera.addAll(listaAuxiliar);
         Collections.sort(listaAuxiliar, new Comparator<ReporteDeIncidente>() {
             @Override

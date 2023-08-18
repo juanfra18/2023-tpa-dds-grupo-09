@@ -28,10 +28,10 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
                 LocalDateTime tiempoApertura = LocalDateTime.now();
 
                 for (ReporteDeIncidente incidente : listaAuxiliar) {
-                    if (!incidente.cerrado() && !abierto) {
+                    if (!incidente.esDeCierre() && !abierto) {
                         tiempoApertura = incidente.getFechaYhora();
                         abierto = true;
-                    } else if (incidente.cerrado() && abierto) {
+                    } else if (incidente.esDeCierre() && abierto) {
                         LocalDateTime tiempoCierre = incidente.getFechaYhora();
                         Duration tiempoQueTardoEnCerrarse = Duration.between(tiempoApertura, tiempoCierre);
                         promedioAux[entidades.indexOf(incidente.getEntidad())] += tiempoQueTardoEnCerrarse.getSeconds();

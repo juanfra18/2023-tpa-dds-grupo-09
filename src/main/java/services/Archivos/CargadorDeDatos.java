@@ -4,7 +4,6 @@ import domain.Entidades.*;
 import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
 import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.ServicioGeoref;
 
 import java.util.*;
 
@@ -52,18 +51,18 @@ public class CargadorDeDatos {
 
   private EntidadPrestadora obtenerPrestadora(List<EntidadPrestadora> prestadoras, EntidadPrestadora posiblePrestadora) {
     //Devuelve una ya existente o la crea
-    Optional<EntidadPrestadora> entidadPrestadora = prestadoras.stream().filter(prestadora -> prestadora.equals(posiblePrestadora)).toList().stream().findFirst();
+    Optional<EntidadPrestadora> entidadPrestadora = prestadoras.stream().filter(prestadora -> prestadora.igualito(posiblePrestadora)).toList().stream().findFirst();
     return entidadPrestadora.orElseGet(() -> posiblePrestadora);
   }
 
   private Entidad obtenerEntidad(List<Entidad> entidades, Entidad posibleEntidad) {
     //Devuelve una ya existente o la crea
-    Optional<Entidad> entidad = entidades.stream().filter(entidad1 -> entidad1.equals(posibleEntidad)).toList().stream().findFirst();
+    Optional<Entidad> entidad = entidades.stream().filter(entidad1 -> entidad1.igualito(posibleEntidad)).toList().stream().findFirst();
     return entidad.orElseGet(() -> posibleEntidad);
   }
 
   private Establecimiento obtenerEstablecimiento(List<Establecimiento> establecimientos, Establecimiento posibleEstablecimiento) {
-    Optional<Establecimiento> establecimiento = establecimientos.stream().filter(establecimiento1 -> establecimiento1.equals(posibleEstablecimiento)).toList().stream().findFirst();
+    Optional<Establecimiento> establecimiento = establecimientos.stream().filter(establecimiento1 -> establecimiento1.igualito(posibleEstablecimiento)).toList().stream().findFirst();
     return establecimiento.orElseGet(() -> posibleEstablecimiento);
   }
 }

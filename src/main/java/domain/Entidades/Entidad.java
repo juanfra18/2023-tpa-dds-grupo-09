@@ -19,12 +19,11 @@ public class Entidad {
         this.tipoEntidad = TipoEntidad.valueOf(tipo);
     }
     public void agregarEstablecimiento(Establecimiento unEstablecimiento) {
-        establecimientos.removeIf(establecimiento -> establecimiento.equals(unEstablecimiento));
+        establecimientos.removeIf(establecimiento -> establecimiento.igualito(unEstablecimiento));
         establecimientos.add(unEstablecimiento);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    public boolean igualito(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -38,6 +37,6 @@ public class Entidad {
 
     public Integer numeroDeIncidentes(List<ReporteDeIncidente> incidentes){
         return incidentes.stream().filter(
-            incidente->incidente.getEntidad().equals(this)).toList().size();
+            incidente->incidente.getEntidad().igualito(this)).toList().size();
     }
 }

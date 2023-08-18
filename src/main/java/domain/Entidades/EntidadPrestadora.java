@@ -28,8 +28,7 @@ public class EntidadPrestadora {
     this.viaMail = new ViaMail(email);
   }
 
-  @Override
-  public boolean equals(Object obj) {
+  public boolean igualito(Object obj) {
     if (this == obj) {
       return true;
     }

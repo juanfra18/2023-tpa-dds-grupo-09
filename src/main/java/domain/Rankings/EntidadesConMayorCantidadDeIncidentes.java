@@ -28,12 +28,12 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
                 LocalDateTime horarioIncidente = null;
 
                 for (ReporteDeIncidente incidente : ListaAuxiliar ) {
-                    if (!incidente.cerrado() && (!abierto || !this.abiertoHaceMenosde24Horas(incidente, horarioIncidente))){
+                    if (!incidente.esDeCierre() && (!abierto || !this.abiertoHaceMenosde24Horas(incidente, horarioIncidente))){
                         horarioIncidente = incidente.getFechaYhora();
                         contadorAux[entidades.indexOf(incidente.getEntidad())]++;
                         abierto = true;
                     }
-                    else if (incidente.cerrado()){
+                    else if (incidente.esDeCierre()){
                         abierto = false;
                     }
                 }

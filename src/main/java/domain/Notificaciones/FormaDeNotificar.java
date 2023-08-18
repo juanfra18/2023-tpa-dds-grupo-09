@@ -5,7 +5,7 @@ import domain.Incidentes.ReporteDeIncidente;
 public abstract class FormaDeNotificar {
   protected MedioDeComunicacion medioDeComunicacion;
 
-  public FormaDeNotificar(MedioDeComunicacion medioDeComunicacion) {
+  protected FormaDeNotificar(MedioDeComunicacion medioDeComunicacion) {
     this.medioDeComunicacion = medioDeComunicacion;
   }
 

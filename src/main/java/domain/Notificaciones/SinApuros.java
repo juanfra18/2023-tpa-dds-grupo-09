@@ -14,12 +14,12 @@ public class SinApuros extends FormaDeNotificar{
   }
   @Override
   public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
-    if (reporteDeIncidente.getEstado().equals(EstadoIncidente.ABIERTO)) {
-      this.resumenDeIncidentes.removeIf(reporte -> reporte.equals(reporteDeIncidente));
+    if (reporteDeIncidente.getClasificacion().equals(EstadoIncidente.ABIERTO)) {
+      this.resumenDeIncidentes.removeIf(reporte -> reporte.igualito(reporteDeIncidente));
       this.resumenDeIncidentes.add(reporteDeIncidente);
     }
     else {
-      this.resumenDeIncidentes.removeIf(reporte -> reporte.equals(reporteDeIncidente));
+      this.resumenDeIncidentes.removeIf(reporte -> reporte.igualito(reporteDeIncidente));
     }
   }
   public void envioProgramado() {

@@ -31,8 +31,7 @@ public class Establecimiento {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
-  @Override
-  public boolean equals(Object obj) {
+  public boolean igualito(Object obj) {
     if (this == obj) {
       return true;
     }

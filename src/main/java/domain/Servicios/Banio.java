@@ -17,8 +17,7 @@ public class Banio implements Servicio{
         this.tipoBanio = TipoBanio.valueOf(tipoBanio);
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    public boolean igualito(Object obj) {
         if (this == obj) {
             return true;
         }

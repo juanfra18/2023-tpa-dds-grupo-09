@@ -6,16 +6,13 @@ import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import java.time.DayOfWeek;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
 public class ReporteDeIncidente {
-  private final EstadoIncidente estado;
+  private final EstadoIncidente clasificacion;
   private final LocalDateTime fechaYhora;
   private final MiembroDeComunidad denunciante;
   private final Establecimiento establecimiento;
@@ -25,7 +22,7 @@ public class ReporteDeIncidente {
 
   public ReporteDeIncidente(String estado, LocalDateTime fechaYhora, MiembroDeComunidad denunciante, Entidad entidad,
                             Establecimiento establecimiento, Servicio servicio, String observaciones) {
-    this.estado = EstadoIncidente.valueOf(estado);
+    this.clasificacion = EstadoIncidente.valueOf(estado);
     this.fechaYhora = fechaYhora;
     this.denunciante = denunciante;
     this.establecimiento = establecimiento;
@@ -33,8 +30,7 @@ public class ReporteDeIncidente {
     this.observaciones = observaciones;
     this.entidad = entidad;
   }
-  @Override
-  public boolean equals(Object obj) {
+  public boolean igualito(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -46,8 +42,8 @@ public class ReporteDeIncidente {
         && Objects.equals(this.servicio,otro.servicio);
   }
 
-  public Boolean cerrado(){
-    return estado == EstadoIncidente.CERRADO;
+  public Boolean esDeCierre(){
+    return clasificacion == EstadoIncidente.CERRADO;
   }
 
   public String mensaje() {
@@ -64,24 +60,19 @@ public class ReporteDeIncidente {
               || this.esElMismoDia(inicioDeSemana) || this.esElMismoDia(finalDeSemana)));
   }
 
-  public Long tiempoDeCierre(ReporteDeIncidente incidente, List<ReporteDeIncidente> incidentes) {
+  /*public Long tiempoDeCierre(ReporteDeIncidente incidente, List<ReporteDeIncidente> incidentes) {
     //asume que ya le llega la lista con 1 reporte de apertura y 1 de cierre por incidente
     return ChronoUnit.HOURS.between(incidentes.stream().filter(reporteDeIncidente ->
         reporteDeIncidente.cerrado() && reporteDeIncidente.equals(incidente)).toList().get(0).getFechaYhora(), incidente.getFechaYhora());
+    }
+  }*/
 
-    //Básicamente lo anterior hace esto:
-    /*for(ReporteDeIncidente reporteDeIncidente : incidentes){
-      if (reporteDeIncidente.equals(incidente) && reporteDeIncidente.cerrado()){
-        return ChronoUnit.HOURS.between(reporteDeIncidente.getFechaYhora(), incidente.getFechaYhora());
-      }
-    }*/
-  }
-
+  /*
   public boolean nuevo() {
     LocalDateTime fechaActual = LocalDateTime.now();
     Duration tiempoDesdeElReporte = Duration.between(fechaYhora,fechaActual);
     return tiempoDesdeElReporte.toHours() < 24;
-  }
+  }*/
 
   public boolean esElMismoDia(LocalDateTime lunesOdomingo){ //si no esta entre semana, es el lunes o domingo de esta semana
     return lunesOdomingo.getDayOfMonth() == this.fechaYhora.getDayOfMonth() &&

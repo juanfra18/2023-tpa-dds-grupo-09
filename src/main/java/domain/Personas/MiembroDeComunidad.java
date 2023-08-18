@@ -3,10 +3,7 @@ package domain.Personas;
 import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
-import domain.Incidentes.EstadoIncidente;
-import domain.Incidentes.Posicion;
-import domain.Incidentes.ReporteDeIncidente;
-import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Incidentes.*;
 import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
@@ -75,9 +72,8 @@ public class MiembroDeComunidad {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, RepositorioDeIncidentes repositorioDeIncidentes) {//no nos importa donde se crea el reporte
-        this.comunidades.forEach(comunidad -> comunidad.guardarIncidente(reporteDeIncidente));
-        repositorioDeIncidentes.registrarIncidente(reporteDeIncidente);
+    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
+        comunidad.guardarIncidente(reporteDeIncidente);
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
@@ -99,26 +95,18 @@ public class MiembroDeComunidad {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<ReporteDeIncidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
-        List<ReporteDeIncidente> reportes = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> reportes.addAll(comunidad.getIncidentesDeLaComunidad()));
+    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
+        List<Incidente> incidentes = new ArrayList<>();
+        this.comunidades.forEach(comunidad -> incidentes.addAll(comunidad.getIncidentesDeLaComunidad()));
 
-        List<ReporteDeIncidente> listaAuxiliar = new ArrayList<>();
-        for (ReporteDeIncidente reporteDeIncidente : reportes.stream()
-                .filter(reporte -> reporte.getEstado().equals(estado))
-                .toList()) {
-            if (!listaAuxiliar.contains(reporteDeIncidente)) {
-                listaAuxiliar.add(reporteDeIncidente);
-            }
-        }
-        return listaAuxiliar;
+        return incidentes.stream().filter(i -> i.tieneEstado(estado)).toList();
     }
 
-    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesAbiertos() {
+    public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {
         return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
     }
 
-    public List<ReporteDeIncidente> solicitarInformacionDeIncidentesCerrados() {
+    public List<Incidente> solicitarInformacionDeIncidentesCerrados() {
         return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
     }
 

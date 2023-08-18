@@ -6,6 +6,6 @@ import domain.Incidentes.ReporteDeIncidente;
 public class IncidenteAbierto implements ReglaNotificacion {
   @Override
   public boolean cumpleRegla(ReporteDeIncidente reporteDeIncidente) {
-    return reporteDeIncidente.getEstado().equals(EstadoIncidente.ABIERTO);
+    return reporteDeIncidente.getClasificacion().equals(EstadoIncidente.ABIERTO);
   }
 }
