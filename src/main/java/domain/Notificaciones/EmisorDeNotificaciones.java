@@ -57,7 +57,7 @@ public class EmisorDeNotificaciones {
     repositorioDeEmpresas.getEmpresas().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
     repositorioDeEmpresas.getEmpresas().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
 
-    entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.reci  birInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
+    entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
     entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
 
   }

@@ -26,6 +26,8 @@ public class MiembroDeComunidad {
     private ReceptorDeNotificaciones receptorDeNotificaciones;
     private String formaDeNotificarSeleccionada;
     private String medioDeComunicacionSeleccionado;
+    private String mail;
+    private String telefono;
 
     public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, String formaDeNotificarSeleccionada, String medioDeComunicacionSeleccionado) {
         this.apellido = apellido;
@@ -35,6 +37,8 @@ public class MiembroDeComunidad {
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
+        this.mail = mail;
+        this.telefono = telefono;
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
     }
 
@@ -74,7 +78,7 @@ public class MiembroDeComunidad {
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
         comunidad.guardarIncidente(reporteDeIncidente);
-    }
+    } //TODO pasamanos, capaz no debería existir este método y se hace desde afuera el comunidad.guardarIncidente. Si no, hay que añadirle algún uso
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
         if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
