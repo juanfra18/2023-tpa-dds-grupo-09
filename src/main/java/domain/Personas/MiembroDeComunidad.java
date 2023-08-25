@@ -26,10 +26,9 @@ public class MiembroDeComunidad {
     private ReceptorDeNotificaciones receptorDeNotificaciones;
     private String formaDeNotificarSeleccionada;
     private String medioDeComunicacionSeleccionado;
-    private String mail;
-    private String telefono;
+    private RepositorioDeIncidentes repositorioDeIncidentes;
 
-    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, String formaDeNotificarSeleccionada, String medioDeComunicacionSeleccionado) {
+    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, String formaDeNotificarSeleccionada, String medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.provincias = new ArrayList<>();
@@ -37,9 +36,8 @@ public class MiembroDeComunidad {
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
-        this.mail = mail;
-        this.telefono = telefono;
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
+        this.repositorioDeIncidentes = repositorioDeIncidentes;
     }
 
 
@@ -77,8 +75,10 @@ public class MiembroDeComunidad {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
+        //aca quiza habria que guardarlo en el repodeincidentes
+        repositorioDeIncidentes.registrarIncidente(reporteDeIncidente);
         comunidad.guardarIncidente(reporteDeIncidente);
-    } //TODO pasamanos, capaz no debería existir este método y se hace desde afuera el comunidad.guardarIncidente. Si no, hay que añadirle algún uso
+    }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
         if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
@@ -92,7 +92,7 @@ public class MiembroDeComunidad {
     }
     public boolean validarSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente){
         return reporteDeIncidente.getEstablecimiento().getPosicion().distancia(this.setPosicion()) <= Config.DISTANCIA_MINIMA
-                && this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento());
+            && this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento());
     }
     public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
         if (this.validarSolicitudDeRevision(reporteDeIncidente)){
@@ -100,10 +100,19 @@ public class MiembroDeComunidad {
         }
     }
     public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
-        List<Incidente> incidentes = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> incidentes.addAll(comunidad.getIncidentesDeLaComunidad()));
+        List<Incidente> incidentesDeMisComunidades = new ArrayList<>();
+        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeLaComunidad()));
 
-        return incidentes.stream().filter(i -> i.tieneEstado(estado)).toList();
+        List<Incidente> incidentesDeEstadoSeleccionado = new ArrayList<>();
+        incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
+
+        List<Incidente> incidentesUnicos = new ArrayList<>();
+
+        for(Incidente incidente : incidentesDeEstadoSeleccionado){
+            if(!incidentesUnicos.stream().anyMatch(i -> i.igualito(incidente) && !i.equals(incidente)))
+                incidentesUnicos.add(incidente);
+        }
+        return incidentesUnicos;
     }
 
     public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {

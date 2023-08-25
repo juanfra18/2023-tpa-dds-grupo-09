@@ -76,7 +76,7 @@ public class TestsEntrega3 {
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
         comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
 
-        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaoli@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
+        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321", "CUANDO_SUCEDEN", "Mail",repositorioDeIncidentes);
         julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425", "SIN_APUROS", "Mail",repositorioDeIncidentes);
 
@@ -130,8 +130,8 @@ public class TestsEntrega3 {
         julieta.unirseAComunidad(comunidad);
         maria.unirseAComunidad(comunidad);
 
-        pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail/whatsapp (no hace nada en wsp)
-        pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
+        //pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("Mail"); //descomentar estas 3 líneas para mandar mail/whatsapp (no hace nada en wsp)
+        //pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar("CUANDO_SUCEDEN");
         pablo.agregarEntidadDeInteres(lineaMitre);
 
         //julieta.getReceptorDeNotificaciones().cambiarMedioDeComunicacion("WhatsApp");
