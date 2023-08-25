@@ -1,6 +1,5 @@
 package domain.Notificaciones;
 
-import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 
 public class ReceptorDeNotificaciones {
@@ -9,7 +8,7 @@ public class ReceptorDeNotificaciones {
   private String mail;
   private String telefono;
 
-  public ReceptorDeNotificaciones(String medioDeComunicacion, String formaDeNotificar ,String mail, String telefono) {
+  public ReceptorDeNotificaciones(MedioDeComunicacion medioDeComunicacion, FormaDeNotificar formaDeNotificar ,String mail, String telefono) {
     this.cambiarMedioDeComunicacion(medioDeComunicacion);
     this.cambiarFormaDeNotificar(formaDeNotificar);
     this.mail = mail;
@@ -21,23 +20,10 @@ public class ReceptorDeNotificaciones {
   public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
     this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Solicitud de Revisión de Incidente");
   }
-  public void cambiarFormaDeNotificar(String forma) {
-    if (this.medioDeComunicacion == null){
-      throw new RuntimeException("Antes de configurar la forma de notificar se debe configurar el medio");
-    }
-    else {
-      switch(forma){
-        case "CUANDO_SUCEDEN": this.formaDeNotificar = new CuandoSuceden(this.medioDeComunicacion); break;
-        case "SIN_APUROS": this.formaDeNotificar = new SinApuros(this.medioDeComunicacion); break;
-        default: throw new RuntimeException("Forma de notificar no válida");
-      }
-    }
+  public void cambiarFormaDeNotificar(FormaDeNotificar forma) {
+    this.formaDeNotificar = forma;
   }
-  public void cambiarMedioDeComunicacion(String medio) {
-    switch(medio){
-      case "WhatsApp": this.medioDeComunicacion = new ViaWPP(this.telefono); break;
-      case "Mail": this.medioDeComunicacion = new ViaMail(this.mail); break;
-      default: throw new RuntimeException("Medio de comunicación no válido");
-    }
+  public void cambiarMedioDeComunicacion(MedioDeComunicacion medio) {
+    this.medioDeComunicacion = medio;
   }
 }

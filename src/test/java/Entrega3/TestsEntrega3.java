@@ -6,9 +6,7 @@ import domain.Entidades.EntidadPrestadora;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.RepositorioDeEmpresas;
 import domain.Incidentes.*;
-import domain.Notificaciones.AdapterViaMail;
-import domain.Notificaciones.EmisorDeNotificaciones;
-import domain.Notificaciones.ViaMailJavax;
+import domain.Notificaciones.*;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
@@ -20,7 +18,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import services.APIs.Georef.AdapterServicioGeo;
 import services.Archivos.CargadorDeDatos;
 import services.Localizacion.Municipio;
@@ -60,6 +61,14 @@ public class TestsEntrega3 {
     private EntidadPrestadora entidadPrestadora;
     private Posicion posicion1;
     private Posicion posicion2;
+    @Mock
+    private MedioDeComunicacion mail;
+    @Mock
+    private MedioDeComunicacion wpp;
+
+    private FormaDeNotificar cuandoSuceden;
+    private FormaDeNotificar sinApuro;
+
 
 
 
@@ -76,9 +85,36 @@ public class TestsEntrega3 {
         comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
         comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
 
-        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaol1@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
-        maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321", "CUANDO_SUCEDEN", "Mail",repositorioDeIncidentes);
-        julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425", "SIN_APUROS", "Mail",repositorioDeIncidentes);
+        //Se mockea el envio de Mails y Wpp
+        MockitoAnnotations.openMocks(this);
+        mail = mock(ViaMail.class);
+        Mockito.doAnswer(new Answer() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                System.out.println("Mensaje " + args[0]);
+                System.out.println("Asunto: " + args[1]);
+                return null;
+            }
+        }).when(mail).recibirNotificacion(Mockito.anyString(),Mockito.anyString());
+
+        wpp = mock(ViaWPP.class);
+        Mockito.doAnswer(new Answer() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                System.out.println("Mensaje " + args[0]);
+                System.out.println("Asunto: " + args[1]);
+                return null;
+            }
+        }).when(wpp).recibirNotificacion(Mockito.anyString(),Mockito.anyString());
+
+        cuandoSuceden = new CuandoSuceden(mail);
+        sinApuro = new SinApuros(wpp);
+
+        pablo = new MiembroDeComunidad("perez", "pablo", "juanpaoli@gmail.com","123456789", cuandoSuceden, mail,repositorioDeIncidentes);
+        maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321", cuandoSuceden, mail,repositorioDeIncidentes);
+        julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425", sinApuro, wpp,repositorioDeIncidentes);
 
         MockitoAnnotations.openMocks(this);
         generalAlvarado = mock(Municipio.class);
@@ -143,7 +179,7 @@ public class TestsEntrega3 {
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,22,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
-
+/*
         incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,8,22,17,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
 
@@ -153,7 +189,6 @@ public class TestsEntrega3 {
         incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,8,23,20,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(1));
 
-/*
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,24,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(1));
 
@@ -178,6 +213,8 @@ public class TestsEntrega3 {
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,26,19,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,pablo.getComunidades().get(0));
 */
+
+
     }
 
 

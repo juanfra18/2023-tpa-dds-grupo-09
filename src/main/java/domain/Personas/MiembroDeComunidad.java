@@ -4,6 +4,8 @@ import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Incidentes.*;
+import domain.Notificaciones.FormaDeNotificar;
+import domain.Notificaciones.MedioDeComunicacion;
 import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
@@ -24,11 +26,9 @@ public class MiembroDeComunidad {
     private Usuario usuario;
     private List<Comunidad> comunidades;
     private ReceptorDeNotificaciones receptorDeNotificaciones;
-    private String formaDeNotificarSeleccionada;
-    private String medioDeComunicacionSeleccionado;
     private RepositorioDeIncidentes repositorioDeIncidentes;
 
-    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, String formaDeNotificarSeleccionada, String medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes) {
+    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.provincias = new ArrayList<>();

@@ -4,6 +4,8 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.RepositorioDeEmpresas;
 import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Notificaciones.FormaDeNotificar;
+import domain.Notificaciones.MedioDeComunicacion;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.ParServicioRol;
 import domain.Personas.Rol;
@@ -38,9 +40,11 @@ public class TestInteresesMiembro {
   private Entidad lineaMitre;
   private Entidad lineaRoca;
   private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
+  private FormaDeNotificar cuandoSuceden;
+  private MedioDeComunicacion mail;
   @BeforeEach
   public void init() throws IOException {
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", cuandoSuceden, mail,repositorioDeIncidentes);
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
     when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
