@@ -1,5 +1,6 @@
 package domain.Notificaciones;
 
+import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 
 public abstract class FormaDeNotificar {

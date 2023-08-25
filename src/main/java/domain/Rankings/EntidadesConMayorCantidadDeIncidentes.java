@@ -2,12 +2,14 @@ package domain.Rankings;
 
 import Config.Config;
 import domain.Entidades.Entidad;
+import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import services.Archivos.SistemaDeArchivos;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
     /*Entidades con mayor cantidad de incidentes reportados en la semana.
@@ -16,28 +18,13 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
     incidente que se genere sobre dicha prestación en un plazo de 24 horas siempre y cuando el mismo continúe abierto. */
     /*Se considera el período semanal desde el lunes a las 0.00 h. hasta el domingo 23.59 h.*/
 
-    public void armarRanking(List<Entidad> entidades, List<ReporteDeIncidente> incidentes){
+    public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes){
         int[] contadorAux = new int[entidades.size()];
-        List<ReporteDeIncidente> listaEspera = new ArrayList<>();
 
-        for(ReporteDeIncidente reporteDeIncidente : incidentes) {
-            if(!listaEspera.contains(reporteDeIncidente)) {
-                List<ReporteDeIncidente> ListaAuxiliar = this.obtenerListaSinRepetirIncidente(incidentes, listaEspera, reporteDeIncidente);
-
-                boolean abierto = false;
-                LocalDateTime horarioIncidente = null;
-
-                for (ReporteDeIncidente incidente : ListaAuxiliar ) {
-                    if (!incidente.esDeCierre() && (!abierto || !this.abiertoHaceMenosde24Horas(incidente, horarioIncidente))){
-                        horarioIncidente = incidente.getFechaYhora();
-                        contadorAux[entidades.indexOf(incidente.getEntidad())]++;
-                        abierto = true;
-                    }
-                    else if (incidente.esDeCierre()){
-                        abierto = false;
-                    }
-                }
-            }
+        for(Incidente incidente : incidentes) {
+            Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
+            int cantidadDiasAbierto = incidente.diasAbierto();
+            contadorAux[entidades.indexOf(entidadConIncidente.get())] += cantidadDiasAbierto;
         }
 
         List<Entidad> entidadesOrdenadas = this.ordenarEntidades(entidades, contadorAux);
@@ -50,9 +37,5 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
         String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};
         sistemaDeArchivos.escribirRanking(Config.RANKING_2, encabezado, listaDeStrings);
     }
-    private boolean abiertoHaceMenosde24Horas(ReporteDeIncidente incidente1, LocalDateTime horarioIncidente){
-        return Math.abs(ChronoUnit.HOURS.between(incidente1.getFechaYhora(), horarioIncidente))<24;
-    }
-
 }
 

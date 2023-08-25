@@ -1,6 +1,7 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.EstadoIncidente;
+import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import java.util.ArrayList;
 import java.util.List;

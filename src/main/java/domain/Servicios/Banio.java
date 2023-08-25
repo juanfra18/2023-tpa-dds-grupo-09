@@ -4,7 +4,7 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
-public class Banio implements Servicio{
+public class Banio extends Servicio{
     private TipoBanio tipoBanio;
     public boolean estaActivo() {
         //TODO

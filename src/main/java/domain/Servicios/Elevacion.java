@@ -3,7 +3,7 @@ package domain.Servicios;
 
 import java.util.Objects;
 
-public class Elevacion implements Servicio{
+public class Elevacion extends Servicio{
     private TipoElevacion tipoElevacion;
 
     public boolean estaActivo() {

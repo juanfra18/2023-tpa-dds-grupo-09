@@ -27,21 +27,34 @@ public class Comunidad {
         this.miembros.add(unMiembro);
     }
     public void guardarIncidente(ReporteDeIncidente reporteDeIncidente) {
-        Optional<Incidente> incidenteOptional = this.incidentesDeLaComunidad.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().equals(reporteDeIncidente.getServicio())).findFirst();
-        if (incidenteOptional.isPresent()) {
+        List<Incidente> incidentesSobreLaMismaProblematica = this.incidentesDeLaComunidad.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
+        Incidente mismoIncidente = null;
+
+        if(!incidentesSobreLaMismaProblematica.isEmpty())
+        {
+            mismoIncidente  = incidentesSobreLaMismaProblematica.get(incidentesSobreLaMismaProblematica.size()-1);
+        }
+        //para obtener el mismo incidente pero el mas reciente
+
+        if (mismoIncidente != null && !mismoIncidente.cerrado()) {
             if (reporteDeIncidente.esDeCierre()){
-                incidenteOptional.get().setReporteDeCierre(reporteDeIncidente);
+                mismoIncidente.setReporteDeCierre(reporteDeIncidente);
+                this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros); //se cierra incidente
             }
             else {
-                incidenteOptional.get().agregarReporteDeApertura(reporteDeIncidente);
+                mismoIncidente.agregarReporteDeApertura(reporteDeIncidente);
             }
         }
-        else {
-            Incidente incidente = new Incidente(reporteDeIncidente.getEstablecimiento(), reporteDeIncidente.getServicio());
-            incidente.agregarReporteDeApertura(reporteDeIncidente);
-            this.incidentesDeLaComunidad.add(incidente);
+        else { //si no existe o fue cerrado, creo uno nuevo
+            if(!reporteDeIncidente.esDeCierre())
+            {
+                Incidente incidente = new Incidente(reporteDeIncidente.getEstablecimiento(), reporteDeIncidente.getServicio());
+                incidente.agregarReporteDeApertura(reporteDeIncidente);
+                this.incidentesDeLaComunidad.add(incidente);
+
+                this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros); //se crea un nuevo incidente
+            }
         }
-        this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros);
     }
     public List<Incidente> incidentesAbiertos(){
         return this.incidentesDeLaComunidad.stream().filter(i -> !i.cerrado()).toList();

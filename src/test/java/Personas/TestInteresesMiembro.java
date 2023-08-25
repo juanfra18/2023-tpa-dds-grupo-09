@@ -2,6 +2,8 @@ package Personas;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
+import domain.Entidades.RepositorioDeEmpresas;
+import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.ParServicioRol;
 import domain.Personas.Rol;
@@ -35,9 +37,10 @@ public class TestInteresesMiembro {
   private Establecimiento estacionPinamar;
   private Entidad lineaMitre;
   private Entidad lineaRoca;
+  private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
   @BeforeEach
   public void init() throws IOException {
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp");
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
     when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
@@ -46,7 +49,7 @@ public class TestInteresesMiembro {
     banioHombres = new Banio("CABALLEROS");
     banioMujeres = new Banio("DAMAS");
 
-    miembro.agregarMunicipio(generalAlvarado);
+    miembro.agregarMunicipio(pinamar);
     miembro.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
 
     lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
@@ -65,10 +68,6 @@ public class TestInteresesMiembro {
 
     estacionTolosa = new Establecimiento("Tolosa","ESTACION", generalAlvarado);
     estacionTolosa.agregarServicio(banioMujeres);
-
-    estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
-    estacionPinamar.agregarServicio(banioHombres);
-
   }
 
   @Test

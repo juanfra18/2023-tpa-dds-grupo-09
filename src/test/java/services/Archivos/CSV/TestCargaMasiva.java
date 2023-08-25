@@ -24,14 +24,14 @@ public class TestCargaMasiva {
   @Test
   public void testServicios(){
     List<Servicio> servicios = repo.getEmpresas().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0).getEstablecimientos().get(0).getServicios();
-    Assertions.assertEquals("UNISEX", servicios.get(0).getTipo());
+    Assertions.assertEquals("Banio UNISEX", servicios.get(0).getTipo());
   }
 
   @Test
   public void testEstablecimientos(){
     List<Establecimiento> establecimientos = repo.getEmpresas().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0).getEstablecimientos();
 
-    Assertions.assertEquals("Rivadavia", establecimientos.get(2).getNombre());
+    Assertions.assertEquals("Retiro", establecimientos.get(0).getNombre());
   }
 
   @Test

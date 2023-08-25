@@ -2,43 +2,31 @@ package domain.Rankings;
 
 import Config.Config;
 import domain.Entidades.Entidad;
+import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import services.Archivos.SistemaDeArchivos;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EntidadesQueSolucionanMasLento extends Tierlist{
 /*Entidades con mayor promedio de tiempo de cierre de incidentes (diferencia entre horario de
 cierre de incidente y horario de apertura) en la semana.
 Este ranking es orientativo y puede no ser la tasa real de corrección de las fallas;*/
 
-    public void armarRanking(List<Entidad> entidades,List<ReporteDeIncidente> incidentes) {
+    public void armarRanking(List<Entidad> entidades,List<Incidente> incidentes) {
         int[] promedioAux = new int[entidades.size()]; //no buscamos la máxima precisión (float)
         int[] contadorAux = new int[entidades.size()];
-        List<ReporteDeIncidente> listaEspera = new ArrayList<>();
 
-        for(ReporteDeIncidente reporteDeIncidente : incidentes) {
-            if (!listaEspera.contains(reporteDeIncidente)) {
-
-                List<ReporteDeIncidente> listaAuxiliar = this.obtenerListaSinRepetirIncidente(incidentes, listaEspera, reporteDeIncidente);
-
-                boolean abierto = false;
-                LocalDateTime tiempoApertura = LocalDateTime.now();
-
-                for (ReporteDeIncidente incidente : listaAuxiliar) {
-                    if (!incidente.esDeCierre() && !abierto) {
-                        tiempoApertura = incidente.getFechaYhora();
-                        abierto = true;
-                    } else if (incidente.esDeCierre() && abierto) {
-                        LocalDateTime tiempoCierre = incidente.getFechaYhora();
-                        Duration tiempoQueTardoEnCerrarse = Duration.between(tiempoApertura, tiempoCierre);
-                        promedioAux[entidades.indexOf(incidente.getEntidad())] += tiempoQueTardoEnCerrarse.getSeconds();
-                        contadorAux[entidades.indexOf(incidente.getEntidad())]++;
-                        abierto = false;
-                    }
-                }
+        for(Incidente incidente: incidentes)
+        {
+            if(incidente.cerrado())
+            {
+                Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
+                promedioAux[entidades.indexOf(entidadConIncidente.get())] += incidente.tiempoDeCierre();
+                contadorAux[entidades.indexOf(entidadConIncidente.get())] ++; //aca no tenemos en cuenta la cantidad de dias abierto?
             }
         }
 
@@ -51,7 +39,7 @@ Este ranking es orientativo y puede no ser la tasa real de corrección de las fa
         List<String[]> listaDeStrings = new ArrayList<>();
         entidadesOrdenadas.forEach(entidad ->
                 listaDeStrings.add(new String[]
-                        {entidad.getNombre(), entidad.getTipoEntidad().toString(), Integer.toString(promedioAux[entidades.indexOf(entidad)] / 3600) + " horas," + Integer.toString(promedioAux[entidades.indexOf(entidad)] % 3600 / 60) + " minutos"}));
+                        {entidad.getNombre(), entidad.getTipoEntidad().toString(), Integer.toString(promedioAux[entidades.indexOf(entidad)] / 60) + " horas," + Integer.toString(promedioAux[entidades.indexOf(entidad)] % 60) + " minutos"}));
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         sistemaDeArchivos.escribirRanking(Config.RANKING_1, new String[]{"Nombre Entidad", "Tipo Entidad", "Tiempo promedio de resolución de incidentes"}, listaDeStrings);
     }

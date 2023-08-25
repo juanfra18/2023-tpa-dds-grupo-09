@@ -46,11 +46,6 @@ public class ReporteDeIncidente {
     return clasificacion == EstadoIncidente.CERRADO;
   }
 
-  public String mensaje() {
-    return "Incidente en "+ this.getEstablecimiento().getNombre()+", " +
-        "en el servicio "+ this.getServicio().getTipo()+"." +
-        "\nObservaciones: "+this.getObservaciones();
-  }
 
   public boolean dentroDeEstaSemana() {
     LocalDateTime inicioDeSemana = LocalDateTime.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
@@ -78,6 +73,12 @@ public class ReporteDeIncidente {
     return lunesOdomingo.getDayOfMonth() == this.fechaYhora.getDayOfMonth() &&
         lunesOdomingo.getMonth() == this.fechaYhora.getMonth() &&
         lunesOdomingo.getYear() == this.fechaYhora.getYear();
+  }
+
+  public String mensaje() {
+    return "Incidente en "+ this.getEstablecimiento().getNombre()+", " +
+        "en el servicio "+ this.getServicio().getTipo()+"." +
+        "\nObservaciones: "+this.getObservaciones();
   }
 
 }

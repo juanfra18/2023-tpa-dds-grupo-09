@@ -1,5 +1,6 @@
 package Personas;
 
+import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Personas.MiembroDeComunidad;
 import org.junit.jupiter.api.Assertions;
 
@@ -23,10 +24,11 @@ public class TestLocalizacionMiembro {
   private MiembroDeComunidad miembro;
   private String provincia = "Buenos Aires";
   private String municipio = "General Alvarado";
+  private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
 
   @BeforeEach
   public void init(){
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp");
+    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", "CUANDO_SUCEDEN", "WhatsApp",repositorioDeIncidentes);
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
   }
