@@ -17,8 +17,8 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
     independientemente de la comunidad de la que forma parte, no se consideran, para el presente ranking, ningún
     incidente que se genere sobre dicha prestación en un plazo de 24 horas siempre y cuando el mismo continúe abierto. */
     /*Se considera el período semanal desde el lunes a las 0.00 h. hasta el domingo 23.59 h.*/
-
-    public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes){
+    @Override
+    protected int[] obtenerValoresPorEntidad(List<Entidad> entidades, List<Incidente> incidentes) {
         int[] contadorAux = new int[entidades.size()];
 
         for(Incidente incidente : incidentes) {
@@ -27,11 +27,16 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
             contadorAux[entidades.indexOf(entidadConIncidente.get())] += cantidadDiasAbierto;
         }
 
-        List<Entidad> entidadesOrdenadas = this.ordenarEntidades(entidades, contadorAux);
+        return contadorAux;
+    }
+
+    @Override
+    protected void generarRanking(List<Entidad> entidadesOrdenadas,List<Entidad> entidades,int[] contadorAux) {
         List<String[]> listaDeStrings = new ArrayList<>();
         entidadesOrdenadas.forEach(entidad ->
-                listaDeStrings.add(new String[]
-                        {entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(contadorAux[entidades.indexOf(entidad)])}));
+            listaDeStrings.add(new String[]
+                {entidad.getNombre(),entidad.getTipoEntidad().toString(),Integer.toString(contadorAux[entidades.indexOf(entidad)])}));
+        //el contador no esta ordenado, sigue con los indices de la lista inicial
 
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         String[] encabezado = {"Nombre Entidad","Tipo Entidad","Cantidad de Incidentes reportados en la semana"};

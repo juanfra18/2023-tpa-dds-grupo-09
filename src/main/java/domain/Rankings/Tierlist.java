@@ -21,4 +21,15 @@ public abstract class Tierlist {
         });
         return entidadesOrdenadas;
     }
+
+    protected abstract int[] obtenerValoresPorEntidad(List<Entidad> entidades, List<Incidente> incidentes);
+    protected abstract void generarRanking(List<Entidad> entidadesOrdenadas,List<Entidad> entidades,int[] contadorAux);
+    public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes){
+        int[] contadorAux = new int[entidades.size()];
+        List<Entidad> entidadesOrdenadas = new ArrayList<>();
+
+        contadorAux = obtenerValoresPorEntidad(entidades,incidentes);
+        entidadesOrdenadas = ordenarEntidades(entidades,contadorAux);
+        generarRanking(entidadesOrdenadas,entidades,contadorAux);
+    }
 }
