@@ -75,7 +75,6 @@ public class MiembroDeComunidad {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
-        //aca quiza habria que guardarlo en el repodeincidentes
         repositorioDeIncidentes.registrarIncidente(reporteDeIncidente);
         comunidad.guardarIncidente(reporteDeIncidente);
     }

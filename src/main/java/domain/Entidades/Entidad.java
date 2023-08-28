@@ -2,7 +2,6 @@ package domain.Entidades;
 
 import domain.Incidentes.ReporteDeIncidente;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

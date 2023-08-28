@@ -2,13 +2,10 @@ package domain.Personas;
 
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
-
 import domain.Notificaciones.EmisorDeNotificaciones;
 import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 public class Comunidad {

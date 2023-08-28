@@ -1,12 +1,9 @@
 package domain.Incidentes;
 
-import domain.Entidades.EntidadPrestadora;
 import domain.Entidades.Establecimiento;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
