@@ -13,19 +13,36 @@ import lombok.Getter;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
+import javax.persistence.*;
 import java.util.*;
 
 @Getter
+@Entity
+@Table(name="miembroDeComuu")
 public class MiembroDeComunidad {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @Column
     private String apellido;
+    @Column
     private String nombre;
+    @Transient
     private List<Entidad> entidadesDeInteres;
+    @Transient
     private List<ParServicioRol> serviciosDeInteres;
+    @Transient
     private List<Provincia> provincias;
+    @Transient
     private List<Municipio> municipios;
+    @Transient
     private Usuario usuario;
+    @Transient
     private List<Comunidad> comunidades;
+    @Transient
     private ReceptorDeNotificaciones receptorDeNotificaciones;
+    @Transient
     private RepositorioDeIncidentes repositorioDeIncidentes;
 
     public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes) {
