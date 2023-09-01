@@ -2,14 +2,25 @@ package domain.Entidades;
 
 import domain.Incidentes.ReporteDeIncidente;
 import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name = "entidad")
 public class Entidad {
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column
     private String nombre;
+    @OneToMany
+    @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private List<Establecimiento> establecimientos;
+    @Enumerated(EnumType.STRING)
     private TipoEntidad tipoEntidad;
 
     public Entidad(String nombre, String tipo) {

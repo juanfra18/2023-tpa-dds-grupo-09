@@ -4,16 +4,29 @@ import domain.Incidentes.Posicion;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.Localizacion.Municipio;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name="establecimiento")
 public class Establecimiento {
+  @Id
+  @GeneratedValue
+  private int id;
+  @Column
   private String nombre;
+  @Enumerated(EnumType.STRING)
   private TipoEstablecimiento tipoEstablecimiento;
+  @Transient //MANY TO MANY A HERENCIA
   private List<Servicio> servicios;
+  @ManyToOne
+  @JoinColumn(name="municipio_id",referencedColumnName = "id")
   private Municipio localizacion;
+  @Transient
   private Posicion posicion;
 
   public Establecimiento(String nombre, String tipoEstablecimiento, Municipio municipio) {

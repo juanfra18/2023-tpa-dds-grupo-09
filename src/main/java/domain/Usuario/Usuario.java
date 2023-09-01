@@ -4,11 +4,21 @@ import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Seguridad.ValidadorDeContrasenias;
 import lombok.Getter;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name="usuario")
 public class Usuario {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @Column
     @Getter
     private String username;
+    @Column
     private String contrasenia;
+    @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
 
   public Usuario(String username, String contrasenia) throws RegistroDeUsuarioException {

@@ -3,15 +3,27 @@ package domain.Entidades;
 
 import domain.Notificaciones.ViaMail;
 import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name = "entidadPrestadora")
 public class EntidadPrestadora {
+  @Id
+  @GeneratedValue
+  private int id;
+  @OneToMany
+  @JoinColumn(name="entidad_id",referencedColumnName = "id")
   private List<Entidad> entidades;
+  @Column
   private String nombre;
+  @Column
   private String personaMail;
+  @Transient
   private ViaMail viaMail;
   public EntidadPrestadora(String nombre, String personaMail){
     this.nombre = nombre;

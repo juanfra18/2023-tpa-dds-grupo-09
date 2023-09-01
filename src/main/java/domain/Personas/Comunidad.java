@@ -4,14 +4,25 @@ import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.EmisorDeNotificaciones;
 import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Entity
+@Table(name="comunidad")
 public class Comunidad {
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column
     private String nombre;
+    @ManyToMany(mappedBy = "comunidades")
     private List<MiembroDeComunidad> miembros;
+    @Transient
     private List<Incidente> incidentesDeLaComunidad;
+    @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;
 
     public Comunidad(String nombre, EmisorDeNotificaciones emisorDeNotificaciones) {

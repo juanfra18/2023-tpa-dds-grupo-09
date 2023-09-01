@@ -4,6 +4,8 @@ import domain.Entidades.Establecimiento;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,10 +13,22 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name="incidente")
 public class Incidente {
+    @Id
+    @GeneratedValue
+    private int id;
+    @ManyToOne
+    @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private Establecimiento establecimiento;
+    @Transient
     private Servicio servicio;
+    @OneToMany
+    @JoinColumn(name = "reporteDeIncidente_id",referencedColumnName = "id")
     private List<ReporteDeIncidente> reportesDeApertura;
+    @OneToOne
+    @JoinColumn(name = "reporteDeIncidente_id",referencedColumnName = "id")
     @Setter
     private ReporteDeIncidente reporteDeCierre;
 

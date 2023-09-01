@@ -5,19 +5,36 @@ import domain.Entidades.Establecimiento;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
+
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
 @Getter
+@Entity
+@Table(name="reporteDeIncidente")
 public class ReporteDeIncidente {
+  @Id
+  @GeneratedValue
+  private int id;
+  @Enumerated(EnumType.STRING)
   private final EstadoIncidente clasificacion;
+  @Transient //CONVERTER DE FECHA
   private final LocalDateTime fechaYhora;
+  @ManyToOne
+  @JoinColumn(name="miembro_id",referencedColumnName = "id")
   private final MiembroDeComunidad denunciante;
+  @ManyToOne
+  @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
   private final Establecimiento establecimiento;
+  @Transient
   private final Servicio servicio;
+  @Column
   private final String observaciones;
+  @ManyToOne
+  @JoinColumn(name="entidad_id",referencedColumnName = "id")
   private final Entidad entidad;
 
   public ReporteDeIncidente(String estado, LocalDateTime fechaYhora, MiembroDeComunidad denunciante, Entidad entidad,

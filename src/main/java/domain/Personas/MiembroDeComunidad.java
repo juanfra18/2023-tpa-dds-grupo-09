@@ -18,7 +18,7 @@ import java.util.*;
 
 @Getter
 @Entity
-@Table(name="miembroDeComuu")
+@Table(name="miembroDeComunidad")
 public class MiembroDeComunidad {
     @Id
     @GeneratedValue
@@ -28,17 +28,21 @@ public class MiembroDeComunidad {
     private String apellido;
     @Column
     private String nombre;
-    @Transient
+    @OneToMany
+    @JoinColumn(name="entidad_id",referencedColumnName = "id")
     private List<Entidad> entidadesDeInteres;
-    @Transient
+    @Transient //COMO HACER PARA QUE SEAN 2 COLUMNAS DISTINTAS
     private List<ParServicioRol> serviciosDeInteres;
-    @Transient
+    @OneToMany
+    @JoinColumn(name="provincia_id",referencedColumnName = "id")
     private List<Provincia> provincias;
-    @Transient
+    @OneToMany
+    @JoinColumn(name="municipio_id",referencedColumnName = "id")
     private List<Municipio> municipios;
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id") // Asegura que la columna sea única
     private Usuario usuario;
-    @Transient
+    @ManyToMany
     private List<Comunidad> comunidades;
     @Transient
     private ReceptorDeNotificaciones receptorDeNotificaciones;
@@ -140,3 +144,5 @@ public class MiembroDeComunidad {
     }
 
 }
+
+
