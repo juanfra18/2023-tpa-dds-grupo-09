@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 public class RepositorioDeEmpresas {
-    private List<OrganismoDeControl> empresas;
+    private List<OrganismoDeControl> empresas; //TODO
     public RepositorioDeEmpresas(CargadorDeDatos cargadorDeDatos, AdapterServicioGeo servicioGeo) {
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         this.empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeo);

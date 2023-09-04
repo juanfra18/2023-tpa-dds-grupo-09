@@ -1,9 +1,15 @@
 package domain.Servicios;
 
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
+@Table(name = "elevacion")
 public class Elevacion extends Servicio{
+    @Id
+    @GeneratedValue
+    private int id;
+    @Enumerated(EnumType.STRING)
     private TipoElevacion tipoElevacion;
 
     public boolean estaActivo() {
@@ -31,13 +37,3 @@ public class Elevacion extends Servicio{
         return Objects.hash(tipoElevacion);
     }
 }
-/*
-public boolean equals(Object otroServicio) {
-        if (otroServicio instanceof Elevacion) {
-            return ((Elevacion) otroServicio).tipoElevacion == this.tipoElevacion;
-        }
-        else {
-            return false;
-        }
-    }
- */

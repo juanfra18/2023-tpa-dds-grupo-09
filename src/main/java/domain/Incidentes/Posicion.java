@@ -2,9 +2,19 @@ package domain.Incidentes;
 
 import lombok.Getter;
 
+import javax.persistence.*;
+
+
 @Getter
+@Entity
+@Table(name = "posicion")
 public class Posicion {
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column(name = "latitud")
     private double latitud;
+    @Column(name = "longitud")
     private double longitud;
     public Posicion(String coordenadas) { //Ingresa en formato "40.7486,-73.9864"
         String[] aux = coordenadas.split(",");

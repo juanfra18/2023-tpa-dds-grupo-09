@@ -19,11 +19,11 @@ public class EntidadPrestadora {
   @OneToMany
   @JoinColumn(name="entidad_id",referencedColumnName = "id")
   private List<Entidad> entidades;
-  @Column
+  @Column(name = "nombre")
   private String nombre;
-  @Column
+  @Column(name = "personaMail")
   private String personaMail;
-  @Transient
+  @Transient //TODO
   private ViaMail viaMail;
   public EntidadPrestadora(String nombre, String personaMail){
     this.nombre = nombre;

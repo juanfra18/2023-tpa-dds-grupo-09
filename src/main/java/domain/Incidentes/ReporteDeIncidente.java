@@ -31,7 +31,7 @@ public class ReporteDeIncidente {
   private final Establecimiento establecimiento;
   @Transient
   private final Servicio servicio;
-  @Column
+  @Column(name = "observaciones")
   private final String observaciones;
   @ManyToOne
   @JoinColumn(name="entidad_id",referencedColumnName = "id")

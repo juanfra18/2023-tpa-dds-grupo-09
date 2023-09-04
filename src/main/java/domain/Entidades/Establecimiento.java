@@ -17,7 +17,7 @@ public class Establecimiento {
   @Id
   @GeneratedValue
   private int id;
-  @Column
+  @Column(name = "nombre")
   private String nombre;
   @Enumerated(EnumType.STRING)
   private TipoEstablecimiento tipoEstablecimiento;
@@ -26,7 +26,8 @@ public class Establecimiento {
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")
   private Municipio localizacion;
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "posicion_id", referencedColumnName = "id")
   private Posicion posicion;
 
   public Establecimiento(String nombre, String tipoEstablecimiento, Municipio municipio) {

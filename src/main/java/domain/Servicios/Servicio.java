@@ -1,10 +1,13 @@
 package domain.Servicios;
 
 import domain.Entidades.Establecimiento;
+import domain.Persistencia.Persistente;
 
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Persistence;
 import java.util.Objects;
-
-public abstract class Servicio {
+@MappedSuperclass
+public abstract class Servicio extends Persistente {
   public abstract boolean estaActivo();
   public abstract String getTipo();
 

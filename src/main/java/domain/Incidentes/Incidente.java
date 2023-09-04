@@ -22,7 +22,7 @@ public class Incidente {
     @ManyToOne
     @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private Establecimiento establecimiento;
-    @Transient
+    @Transient //TODO
     private Servicio servicio;
     @OneToMany
     @JoinColumn(name = "reporteDeIncidente_id",referencedColumnName = "id")

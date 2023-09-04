@@ -15,7 +15,7 @@ public class Entidad {
     @Id
     @GeneratedValue
     private int id;
-    @Column
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany
     @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
