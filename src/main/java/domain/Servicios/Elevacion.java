@@ -4,11 +4,8 @@ package domain.Servicios;
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
-@Table(name = "elevacion")
+@DiscriminatorValue("elevacion")
 public class Elevacion extends Servicio{
-    @Id
-    @GeneratedValue
-    private int id;
     @Enumerated(EnumType.STRING)
     private TipoElevacion tipoElevacion;
 

@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Municipio {
     @Id
     public int id;
-    @Column
+    @Column(name = "nombre")
     public String nombre;
     @ManyToOne
     @JoinColumn(name="provincia_id",referencedColumnName = "id")

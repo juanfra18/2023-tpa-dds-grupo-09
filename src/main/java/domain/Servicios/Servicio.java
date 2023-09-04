@@ -3,10 +3,12 @@ package domain.Servicios;
 import domain.Entidades.Establecimiento;
 import domain.Persistencia.Persistente;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.Objects;
-@MappedSuperclass
+@Entity
+@Table(name = "servicio")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
 public abstract class Servicio extends Persistente {
   public abstract boolean estaActivo();
   public abstract String getTipo();

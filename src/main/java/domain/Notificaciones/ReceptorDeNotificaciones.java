@@ -1,11 +1,23 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Persistencia.Persistente;
 
-public class ReceptorDeNotificaciones {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "receptorDeNotificaciones")
+public class ReceptorDeNotificaciones extends Persistente {
+  @Transient
   private FormaDeNotificar formaDeNotificar;
+  @Transient
   private MedioDeComunicacion medioDeComunicacion;
+  @Column(name = "mail")
   private String mail;
+  @Column(name = "telefono")
   private String telefono;
 
   public ReceptorDeNotificaciones(MedioDeComunicacion medioDeComunicacion, FormaDeNotificar formaDeNotificar ,String mail, String telefono) {

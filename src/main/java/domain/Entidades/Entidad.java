@@ -1,6 +1,7 @@
 package domain.Entidades;
 
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -11,10 +12,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name = "entidad")
-public class Entidad {
-    @Id
-    @GeneratedValue
-    private int id;
+public class Entidad extends Persistente {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany

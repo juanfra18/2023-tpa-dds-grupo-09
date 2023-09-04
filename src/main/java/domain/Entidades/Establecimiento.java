@@ -1,6 +1,7 @@
 package domain.Entidades;
 
 import domain.Incidentes.Posicion;
+import domain.Persistencia.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import services.Localizacion.Municipio;
@@ -13,15 +14,12 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name="establecimiento")
-public class Establecimiento {
-  @Id
-  @GeneratedValue
-  private int id;
+public class Establecimiento extends Persistente {
   @Column(name = "nombre")
   private String nombre;
   @Enumerated(EnumType.STRING)
   private TipoEstablecimiento tipoEstablecimiento;
-  @Transient //MANY TO MANY A HERENCIA
+  @ManyToMany
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")

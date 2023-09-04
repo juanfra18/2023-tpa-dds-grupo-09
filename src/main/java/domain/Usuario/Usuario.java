@@ -1,5 +1,6 @@
 package domain.Usuario;
 
+import domain.Persistencia.Persistente;
 import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Seguridad.ValidadorDeContrasenias;
 import lombok.Getter;
@@ -8,15 +9,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="usuario")
-public class Usuario {
-    @Id
-    @GeneratedValue
-    private int id;
-
-    @Column
+public class Usuario extends Persistente {
+    @Column(name = "username")
     @Getter
     private String username;
-    @Column
+    @Column(name = "password")
     private String contrasenia;
     @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();

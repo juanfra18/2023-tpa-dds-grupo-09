@@ -1,10 +1,15 @@
 package domain.Servicios;
 
 import lombok.Getter;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
+@Entity
+@DiscriminatorValue("banio")
 public class Banio extends Servicio{
+    @Enumerated(EnumType.STRING)
     private TipoBanio tipoBanio;
     public boolean estaActivo() {
         //TODO

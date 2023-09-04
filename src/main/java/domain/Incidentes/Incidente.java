@@ -1,6 +1,7 @@
 package domain.Incidentes;
 
 import domain.Entidades.Establecimiento;
+import domain.Persistencia.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,20 +16,18 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name="incidente")
-public class Incidente {
-    @Id
-    @GeneratedValue
-    private int id;
+public class Incidente extends Persistente {
     @ManyToOne
     @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private Establecimiento establecimiento;
-    @Transient //TODO
+    @ManyToOne
+    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
     @OneToMany
-    @JoinColumn(name = "reporteDeIncidente_id",referencedColumnName = "id")
+    @JoinColumn(name = "incidente_id")
     private List<ReporteDeIncidente> reportesDeApertura;
     @OneToOne
-    @JoinColumn(name = "reporteDeIncidente_id",referencedColumnName = "id")
+    @JoinColumn(name = "reporteDeIncidenteCierre_id",referencedColumnName = "id")
     @Setter
     private ReporteDeIncidente reporteDeCierre;
 

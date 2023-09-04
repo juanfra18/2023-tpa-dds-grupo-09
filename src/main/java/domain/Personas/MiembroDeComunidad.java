@@ -7,6 +7,7 @@ import domain.Incidentes.*;
 import domain.Notificaciones.FormaDeNotificar;
 import domain.Notificaciones.MedioDeComunicacion;
 import domain.Notificaciones.ReceptorDeNotificaciones;
+import domain.Persistencia.Persistente;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -19,19 +20,16 @@ import java.util.*;
 @Getter
 @Entity
 @Table(name="miembroDeComunidad")
-public class MiembroDeComunidad {
-    @Id
-    @GeneratedValue
-    private int id;
-
-    @Column
+public class MiembroDeComunidad extends Persistente {
+    @Column(name = "apellido")
     private String apellido;
-    @Column
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany
     @JoinColumn(name="entidad_id",referencedColumnName = "id")
     private List<Entidad> entidadesDeInteres;
-    @Transient //COMO HACER PARA QUE SEAN 2 COLUMNAS DISTINTAS
+    @OneToMany
+    @JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
     private List<ParServicioRol> serviciosDeInteres;
     @OneToMany
     @JoinColumn(name="provincia_id",referencedColumnName = "id")
@@ -44,7 +42,7 @@ public class MiembroDeComunidad {
     private Usuario usuario;
     @ManyToMany
     private List<Comunidad> comunidades;
-    @Transient
+    @OneToOne
     private ReceptorDeNotificaciones receptorDeNotificaciones;
     @Transient
     private RepositorioDeIncidentes repositorioDeIncidentes;

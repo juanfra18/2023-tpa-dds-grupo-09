@@ -2,6 +2,7 @@ package domain.Entidades;
 
 
 import domain.Notificaciones.ViaMail;
+import domain.Persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -12,10 +13,7 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name = "entidadPrestadora")
-public class EntidadPrestadora {
-  @Id
-  @GeneratedValue
-  private int id;
+public class EntidadPrestadora extends Persistente {
   @OneToMany
   @JoinColumn(name="entidad_id",referencedColumnName = "id")
   private List<Entidad> entidades;

@@ -3,6 +3,7 @@ package domain.Personas;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.EmisorDeNotificaciones;
+import domain.Persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -12,15 +13,13 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name="comunidad")
-public class Comunidad {
-    @Id
-    @GeneratedValue
-    private int id;
-    @Column
+public class Comunidad extends Persistente {
+    @Column(name = "nombre")
     private String nombre;
     @ManyToMany(mappedBy = "comunidades")
     private List<MiembroDeComunidad> miembros;
-    @Transient
+    @OneToMany
+    @JoinColumn(name = "comunidad_id")
     private List<Incidente> incidentesDeLaComunidad;
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;

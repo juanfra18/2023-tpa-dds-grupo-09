@@ -1,5 +1,6 @@
 package domain.Incidentes;
 
+import domain.Persistencia.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -8,10 +9,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "posicion")
-public class Posicion {
-    @Id
-    @GeneratedValue
-    private int id;
+public class Posicion extends Persistente {
     @Column(name = "latitud")
     private double latitud;
     @Column(name = "longitud")

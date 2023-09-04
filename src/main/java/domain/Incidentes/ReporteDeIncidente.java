@@ -2,6 +2,8 @@ package domain.Incidentes;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
+import domain.Persistencia.Converters.LocalDateTimeAttributeConverter;
+import domain.Persistencia.Persistente;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
@@ -15,13 +17,11 @@ import java.util.Objects;
 @Getter
 @Entity
 @Table(name="reporteDeIncidente")
-public class ReporteDeIncidente {
-  @Id
-  @GeneratedValue
-  private int id;
+public class ReporteDeIncidente extends Persistente {
   @Enumerated(EnumType.STRING)
   private final EstadoIncidente clasificacion;
-  @Transient //CONVERTER DE FECHA
+  @Convert(converter = LocalDateTimeAttributeConverter.class)
+  @Column(name = "fechaYHora")
   private final LocalDateTime fechaYhora;
   @ManyToOne
   @JoinColumn(name="miembro_id",referencedColumnName = "id")
@@ -29,7 +29,8 @@ public class ReporteDeIncidente {
   @ManyToOne
   @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
   private final Establecimiento establecimiento;
-  @Transient
+  @ManyToOne
+  @JoinColumn(name = "servicio_id", referencedColumnName = "id")
   private final Servicio servicio;
   @Column(name = "observaciones")
   private final String observaciones;

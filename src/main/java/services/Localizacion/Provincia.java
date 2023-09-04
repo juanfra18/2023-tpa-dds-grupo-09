@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Provincia {
     @Id
     public int id;
-    @Column
+    @Column(name = "nombre")
     public String nombre;
 
     public Provincia(int id, String nombre) {

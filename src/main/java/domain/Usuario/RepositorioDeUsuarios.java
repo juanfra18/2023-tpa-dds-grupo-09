@@ -4,7 +4,7 @@ import domain.Seguridad.RegistroDeUsuarioException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioDeUsuarios {
+public class RepositorioDeUsuarios { //TODO
     private List<Usuario> usuarios;
 
     public RepositorioDeUsuarios(){
