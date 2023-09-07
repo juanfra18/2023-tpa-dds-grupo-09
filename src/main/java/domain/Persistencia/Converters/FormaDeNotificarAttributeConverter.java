@@ -9,6 +9,9 @@ public class FormaDeNotificarAttributeConverter implements AttributeConverter<Fo
   public String convertToDatabaseColumn(FormaDeNotificar formaDeNotificar) {
     String nombreForma = "";
 
+    if (formaDeNotificar == null)
+      return null;
+
     switch (formaDeNotificar.getClass().getName()) {
       case "CuandoSuceden": nombreForma = "cuandoSuceden"; break;
       case "SinApuros": nombreForma = "sinApuros"; break;

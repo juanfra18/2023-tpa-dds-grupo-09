@@ -11,6 +11,7 @@ import domain.Persistencia.Persistente;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
+import lombok.Setter;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
@@ -18,6 +19,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name="miembroDeComunidad")
 public class MiembroDeComunidad extends Persistente {
@@ -37,26 +39,27 @@ public class MiembroDeComunidad extends Persistente {
     @OneToMany
     @JoinColumn(name="municipio_id",referencedColumnName = "id")
     private List<Municipio> municipios;
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "usuario_id", referencedColumnName = "id") // Asegura que la columna sea única
     private Usuario usuario;
     @ManyToMany
     private List<Comunidad> comunidades;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private ReceptorDeNotificaciones receptorDeNotificaciones;
     @Transient
     private RepositorioDeIncidentes repositorioDeIncidentes;
 
-    public MiembroDeComunidad(String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes) {
-        this.apellido = apellido;
-        this.nombre = nombre;
+    public MiembroDeComunidad() {
+        //String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes
+        //this.apellido = apellido;
+        //this.nombre = nombre;
         this.provincias = new ArrayList<>();
         this.municipios = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
-        this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
-        this.repositorioDeIncidentes = repositorioDeIncidentes;
+        //this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
+        //this.repositorioDeIncidentes = repositorioDeIncidentes;
     }
 
 

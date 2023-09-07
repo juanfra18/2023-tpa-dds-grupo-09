@@ -4,8 +4,10 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Persistencia.Converters.FormaDeNotificarAttributeConverter;
 import domain.Persistencia.Converters.MedioDeComunicacionAttributeConverter;
 import domain.Persistencia.Persistente;
+import lombok.Setter;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "receptorDeNotificaciones")
@@ -16,16 +18,19 @@ public class ReceptorDeNotificaciones extends Persistente {
   @Convert(converter = MedioDeComunicacionAttributeConverter.class)
   @Column(name = "medioDeComunicacion")
   private MedioDeComunicacion medioDeComunicacion;
+  @Setter
   @Column(name = "mail")
   private String mail;
+  @Setter
   @Column(name = "telefono")
   private String telefono;
 
-  public ReceptorDeNotificaciones(MedioDeComunicacion medioDeComunicacion, FormaDeNotificar formaDeNotificar ,String mail, String telefono) {
-    this.cambiarMedioDeComunicacion(medioDeComunicacion);
-    this.cambiarFormaDeNotificar(formaDeNotificar);
-    this.mail = mail;
-    this.telefono = telefono;
+  public ReceptorDeNotificaciones() {
+    //MedioDeComunicacion medioDeComunicacion, FormaDeNotificar formaDeNotificar ,String mail, String telefono
+    //this.cambiarMedioDeComunicacion(medioDeComunicacion);
+    //this.cambiarFormaDeNotificar(formaDeNotificar);
+    //this.mail = mail;
+    //this.telefono = telefono;
   }
   private String getDestinatario(){
     String destinatario = null;

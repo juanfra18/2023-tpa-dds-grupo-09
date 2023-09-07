@@ -12,6 +12,9 @@ public class MedioDeComunicacionAttributeConverter implements AttributeConverter
   public String convertToDatabaseColumn(MedioDeComunicacion medioDeComunicacion) {
     String nombreMedio = "";
 
+    if (medioDeComunicacion == null)
+      return null;
+
     switch (medioDeComunicacion.getClass().getName()) {
       case "ViaMail": nombreMedio = "mail"; break;
       case "ViaWPP": nombreMedio = "wpp"; break;

@@ -23,10 +23,10 @@ public class Incidente extends Persistente {
     @ManyToOne
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "incidente_id")
     private List<ReporteDeIncidente> reportesDeApertura;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "reporteDeIncidenteCierre_id",referencedColumnName = "id")
     @Setter
     private ReporteDeIncidente reporteDeCierre;

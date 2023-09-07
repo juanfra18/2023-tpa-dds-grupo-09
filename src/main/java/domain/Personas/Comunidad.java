@@ -5,12 +5,14 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.EmisorDeNotificaciones;
 import domain.Persistencia.Persistente;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name="comunidad")
 public class Comunidad extends Persistente {
@@ -24,11 +26,12 @@ public class Comunidad extends Persistente {
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;
 
-    public Comunidad(String nombre, EmisorDeNotificaciones emisorDeNotificaciones) {
-        this.nombre = nombre;
+    public Comunidad() {
+        //String nombre, EmisorDeNotificaciones emisorDeNotificaciones
+        //this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.incidentesDeLaComunidad = new ArrayList<>();
-        this.emisorDeNotificaciones = emisorDeNotificaciones;
+        //this.emisorDeNotificaciones = emisorDeNotificaciones;
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);

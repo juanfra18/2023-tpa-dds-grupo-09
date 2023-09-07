@@ -32,7 +32,7 @@ public class ReporteDeIncidente extends Persistente {
   @ManyToOne
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
   private final Servicio servicio;
-  @Column(name = "observaciones")
+  @Column(name = "observaciones", columnDefinition = "text")
   private final String observaciones;
   @ManyToOne
   @JoinColumn(name="entidad_id",referencedColumnName = "id")

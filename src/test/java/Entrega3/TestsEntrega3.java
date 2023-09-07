@@ -88,6 +88,7 @@ public class TestsEntrega3 {
         //Se mockea el envio de Mails y Wpp
         MockitoAnnotations.openMocks(this);
         mail = mock(ViaMail.class);
+        /*
         Mockito.doAnswer(new Answer() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -108,7 +109,7 @@ public class TestsEntrega3 {
                 return null;
             }
         }).when(wpp).recibirNotificacion(Mockito.anyString(),Mockito.anyString());
-
+        */
         cuandoSuceden = new CuandoSuceden();
         sinApuro = new SinApuros();
 
