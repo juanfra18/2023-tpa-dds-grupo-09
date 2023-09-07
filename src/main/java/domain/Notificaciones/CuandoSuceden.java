@@ -2,7 +2,5 @@ package domain.Notificaciones;
 
 
 public class CuandoSuceden extends FormaDeNotificar{
-  public CuandoSuceden(MedioDeComunicacion medioDeComunicacion) {
-    super(medioDeComunicacion);
-  }
+//TODO que sinapuros herede de cuando suceden
 }

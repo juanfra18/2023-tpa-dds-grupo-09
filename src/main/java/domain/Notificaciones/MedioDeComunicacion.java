@@ -3,5 +3,5 @@ package domain.Notificaciones;
 import domain.Incidentes.ReporteDeIncidente;
 
 public interface MedioDeComunicacion {
-  void recibirNotificacion(String mensaje, String asunto);
+  void recibirNotificacion(String mensaje, String asunto, String destinatario);
 }

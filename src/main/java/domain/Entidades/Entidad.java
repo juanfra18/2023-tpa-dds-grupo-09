@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Entidad extends Persistente {
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private List<Establecimiento> establecimientos;
     @Enumerated(EnumType.STRING)

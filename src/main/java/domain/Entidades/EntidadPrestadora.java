@@ -4,6 +4,7 @@ package domain.Entidades;
 import domain.Notificaciones.ViaMail;
 import domain.Persistencia.Persistente;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class EntidadPrestadora extends Persistente {
   @Column(name = "nombre")
   private String nombre;
   @Column(name = "personaMail")
+  @Setter
   private String personaMail;
   @Transient //TODO
   private ViaMail viaMail;
@@ -27,15 +29,11 @@ public class EntidadPrestadora extends Persistente {
     this.nombre = nombre;
     this.entidades = new ArrayList<>();
     this.personaMail = personaMail;
-    this.viaMail = new ViaMail(this.personaMail);
+    this.viaMail = new ViaMail();
   }
   public void agregarEntidad(Entidad entidad){
     entidades.removeIf(entidad1 -> entidad1.getNombre().equals(entidad.getNombre()));
     entidades.add(entidad);
-  }
-  public void asignarPersona(String email){
-    this.personaMail = email;
-    this.viaMail = new ViaMail(email);
   }
 
   public boolean igualito(Object obj) {
@@ -50,6 +48,6 @@ public class EntidadPrestadora extends Persistente {
   }
 
   public void recibirInforme(String ruta,String asunto){
-    this.viaMail.recibirArchivos(ruta,asunto);
+    this.viaMail.recibirArchivos(ruta,asunto,this.personaMail);
   }
 }

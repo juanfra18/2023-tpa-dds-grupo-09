@@ -109,8 +109,8 @@ public class TestsEntrega3 {
             }
         }).when(wpp).recibirNotificacion(Mockito.anyString(),Mockito.anyString());
 
-        cuandoSuceden = new CuandoSuceden(mail);
-        sinApuro = new SinApuros(wpp);
+        cuandoSuceden = new CuandoSuceden();
+        sinApuro = new SinApuros();
 
         pablo = new MiembroDeComunidad("perez", "pablo", "juanpaoli@gmail.com","123456789", cuandoSuceden, mail,repositorioDeIncidentes);
         maria = new MiembroDeComunidad("llaurado", "maria", "llauradom@gmail.com","987654321", cuandoSuceden, mail,repositorioDeIncidentes);
