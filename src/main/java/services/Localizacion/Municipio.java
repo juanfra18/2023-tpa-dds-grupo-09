@@ -13,7 +13,7 @@ public class Municipio {
     public int id;
     @Column(name = "nombre")
     public String nombre;
-    @ManyToOne
+    @ManyToOne //CORREGIR APARECEN COLUMNAS DE MAS EN AMBAS TABLAS (1 Y 1)
     @JoinColumn(name="provincia_id",referencedColumnName = "id")
     public Provincia provincia;
 
