@@ -14,7 +14,9 @@ public class TestUsuario {
 
     @BeforeAll
     public static void init1(){
-        usuario1 = new Usuario("pedrito", "HolaMundo@3");
+        usuario1 = new Usuario();
+        usuario1.setUsername("pedrito");
+        usuario1.cambiarContrasenia("HolaMundo@3");
     }
     @BeforeEach //deben ser 1 repositorio distinto en cada test
     public void init2(){
@@ -31,12 +33,16 @@ public class TestUsuario {
     }
     @Test
     public void testRepositorioExito(){ //es exitoso porque logra almacenar 2 usernames ya que estos son distintos
-        Usuario usuario2 = new Usuario("jorge", "HolaMundo@3");
+        Usuario usuario2 = new Usuario();
+        usuario2.setUsername("jorge");
+        usuario2.cambiarContrasenia("HolaMundo@3");
         Assertions.assertDoesNotThrow(() -> repo.agregarUsername(usuario2));
     }
     @Test
     public void testRepositorioFalla() throws RegistroDeUsuarioException { //falla ya que ambos usernames son iguales
-        Usuario usuario2 = new Usuario("pedrito", "HolaMundo@3");
+        Usuario usuario2 = new Usuario();
+        usuario2.setUsername("pedrito" );
+        usuario2.cambiarContrasenia("HolaMundo@3");
         Assertions.assertThrows(RegistroDeUsuarioException.class, () -> repo.agregarUsername(usuario2));
     }
 }

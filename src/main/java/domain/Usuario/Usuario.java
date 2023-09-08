@@ -4,6 +4,7 @@ import domain.Persistencia.Persistente;
 import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Seguridad.ValidadorDeContrasenias;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,16 +13,17 @@ import javax.persistence.*;
 public class Usuario extends Persistente {
     @Column(name = "username")
     @Getter
+    @Setter
     private String username;
     @Column(name = "password")
     private String contrasenia;
     @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
 
-  public Usuario(String username, String contrasenia) throws RegistroDeUsuarioException {
-      validador.validarContrasenia(contrasenia);
-      this.username = username;
-      this.contrasenia = contrasenia;
+  public Usuario() throws RegistroDeUsuarioException {
+      //validador.validarContrasenia(contrasenia);
+      /*this.username = username;
+      this.contrasenia = contrasenia;*/
     }
     public void cambiarContrasenia(String nuevaContrasenia) throws RegistroDeUsuarioException {
       if(nuevaContrasenia != contrasenia) {

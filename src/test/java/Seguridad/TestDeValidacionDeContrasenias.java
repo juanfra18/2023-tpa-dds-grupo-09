@@ -16,14 +16,18 @@ public class TestDeValidacionDeContrasenias {
   @Test
   public void inicioDeSesionFallido() {
     Assertions.assertThrows(RegistroDeUsuarioException.class, () -> {
-      Usuario usuario = new Usuario("juan", "LaCasaEnElLago");
+      Usuario usuario = new Usuario();
+      usuario.setUsername("juan");
+      usuario.cambiarContrasenia("LaCasaEnElLago");
     });
   }
 
   @Test
   public void inicioDeSesionExitoso() {
     Assertions.assertDoesNotThrow(() -> {
-      Usuario usuario = new Usuario("juan", "LaCasaEnElLag@");
+      Usuario usuario = new Usuario();
+      usuario.setUsername("juan");
+      usuario.cambiarContrasenia("LaCasaEnElLag@");
     });
   }
   @Test
