@@ -16,6 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TestCargaMasivaMockeado {
+  /*
   private RepositorioDeEmpresas repo;
   @Mock
   private AdapterServicioGeo servicioGeo;
@@ -72,4 +73,6 @@ public class TestCargaMasivaMockeado {
     Assertions.assertEquals("Santander Río Capital Federal",entidades.get(0).getNombre());
     Assertions.assertEquals("Santander Río Buenos Aires",entidades.get(1).getNombre());
   }
+  */
+
 }

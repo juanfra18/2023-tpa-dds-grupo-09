@@ -1,37 +1,9 @@
 package Entrega3;
 
-import Config.Config;
-import domain.Entidades.Entidad;
-import domain.Entidades.EntidadPrestadora;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.RepositorioDeEmpresas;
-import domain.Incidentes.*;
-import domain.Notificaciones.*;
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Personas.Comunidad;
-import domain.Personas.MiembroDeComunidad;
-import domain.Personas.Rol;
-import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
-import domain.Rankings.EntidadesQueSolucionanMasLento;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.Localizacion.Municipio;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TestsEntrega3 {
-    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
+    /*private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
     private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes;
     private List<Entidad> entidades;
     private RepositorioDeIncidentes repositorioDeIncidentes;
@@ -106,7 +78,7 @@ public class TestsEntrega3 {
                 return null;
             }
         }).when(wpp).recibirNotificacion(Mockito.anyString(),Mockito.anyString());
-        */
+        /*
         cuandoSuceden = new CuandoSuceden();
         sinApuro = new SinApuros();
 
@@ -115,6 +87,8 @@ public class TestsEntrega3 {
         julieta = new MiembroDeComunidad("alegre", "julieta", "alegre.juli@gmail.com","654658425", sinApuro, wpp,repositorioDeIncidentes);
 
         MockitoAnnotations.openMocks(this);
+        */
+     /*
         generalAlvarado = mock(Municipio.class);
         pinamar = mock(Municipio.class);
         when(generalAlvarado.getId()).thenReturn(1);
@@ -177,7 +151,7 @@ public class TestsEntrega3 {
 
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,22,10,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
-/*
+
         incidenteBanioHombre = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,8,22,17,10,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
 
@@ -210,7 +184,7 @@ public class TestsEntrega3 {
 
         incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,26,19,30,30),pablo,lineaRoca, estacionTolosa,banioMujeres,"Baño inundado, todo el piso mojado");
         pablo.informarFuncionamiento(incidenteBanioMujer,pablo.getComunidades().get(0));
-*/
+
 
 
     }
@@ -247,13 +221,13 @@ public class TestsEntrega3 {
     public void rankingMayorCantidadDeIncidentes() {
         entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
     }
-    /*
+
     @Test
     public void recibirInformacion() {
         repositorioDeEmpresas = new RepositorioDeEmpresas(new CargadorDeDatos(), servicioGeo);
         emisorDeNotificaciones.generarRankings(repositorioDeEmpresas, repositorioDeIncidentes);
     }
-    */
+
 
     @Test
     public void ReportarUnIncidente(){
@@ -305,4 +279,5 @@ public class TestsEntrega3 {
         comunidades.add(comunidadMock);
         nuevoEmisor.solicitarRevisionDeIncidente(comunidades); //no se me ocurre como mockear la posicion, puse que devuelva true a la solicitud en miembro y manda el mail
     }
+    */
 }

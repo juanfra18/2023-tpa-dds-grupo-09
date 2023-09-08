@@ -58,7 +58,9 @@ public class Comunidad extends Persistente {
         else { //si no existe o fue cerrado, creo uno nuevo
             if(!reporteDeIncidente.esDeCierre())
             {
-                Incidente incidente = new Incidente(reporteDeIncidente.getEstablecimiento(), reporteDeIncidente.getServicio());
+                Incidente incidente = new Incidente();
+                incidente.setEstablecimiento(reporteDeIncidente.getEstablecimiento());
+                incidente.setServicio(reporteDeIncidente.getServicio());
                 incidente.agregarReporteDeApertura(reporteDeIncidente);
                 this.incidentesDeLaComunidad.add(incidente);
 

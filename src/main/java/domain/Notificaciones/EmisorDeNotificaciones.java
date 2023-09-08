@@ -7,6 +7,7 @@ import domain.Entidades.RepositorioDeEmpresas;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
+import domain.Persistencia.Repositorios.RepositorioDeReportesDeIncidentes;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;

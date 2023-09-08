@@ -29,27 +29,27 @@ public class RepositorioComunidad implements WithSimplePersistenceUnit {
 
     System.out.println(repo.buscarTodos().size());
 
-    repo.eliminar(comunidad);
+    //repo.eliminar(comunidad);
   }
-  private void agregar(Comunidad comunidad) {
+  public void agregar(Comunidad comunidad) {
     this.tx.begin();
     entityManager().persist(comunidad);
     this.tx.commit();
   }
-  private void modificar(Comunidad comunidad) {
+  public void modificar(Comunidad comunidad) {
     this.tx.begin();
     entityManager().merge(comunidad);
     this.tx.commit();
   }
-  private void eliminar(Comunidad comunidad) {
+  public void eliminar(Comunidad comunidad) {
     this.tx.begin();
     entityManager().remove(comunidad);
     this.tx.commit();
   }
-  private Comunidad buscar(long id){
+  public Comunidad buscar(long id){
     return entityManager().find(Comunidad.class, id);
   }
-  private List<Comunidad> buscarTodos(){
+  public List<Comunidad> buscarTodos(){
     return entityManager().createQuery("from Comunidad", Comunidad.class).getResultList();
   }
 }

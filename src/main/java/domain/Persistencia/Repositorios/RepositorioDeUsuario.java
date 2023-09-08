@@ -33,25 +33,25 @@ public class RepositorioDeUsuario implements WithSimplePersistenceUnit {
       repo.eliminar(jorge);
     }
 
-    private void agregar(Usuario usuario) {
+  public void agregar(Usuario usuario) {
         this.tx.begin();
         entityManager().persist(usuario);
         this.tx.commit();
     }
-    private void modificar(Usuario usuario) {
+  public void modificar(Usuario usuario) {
         this.tx.begin();
         entityManager().merge(usuario);
         this.tx.commit();
     }
-    private void eliminar(Usuario usuario) {
+  public void eliminar(Usuario usuario) {
         this.tx.begin();
         entityManager().remove(usuario);
         this.tx.commit();
     }
-    private Usuario buscar(long id){
+  public Usuario buscar(long id){
         return entityManager().find(Usuario.class, id);
     }
-    private List<Usuario> buscarTodos(){
+  public List<Usuario> buscarTodos(){
         return entityManager().createQuery("from MiembroDeComunidad", Usuario.class).getResultList();
     }
 }

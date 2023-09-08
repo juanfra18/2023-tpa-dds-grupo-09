@@ -36,8 +36,9 @@ public class ReporteDeIncidente extends Persistente {
   private  Servicio servicio;
   @Column(name = "observaciones", columnDefinition = "text")
   private  String observaciones;
-  @ManyToOne
-  @JoinColumn(name="entidad_id",referencedColumnName = "id")
+  //@ManyToOne
+  //@JoinColumn(name="entidad_id",referencedColumnName = "id")
+  @Transient
   private  Entidad entidad;
 
   public ReporteDeIncidente() {

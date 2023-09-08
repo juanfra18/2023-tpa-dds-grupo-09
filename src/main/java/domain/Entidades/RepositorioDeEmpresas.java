@@ -17,10 +17,10 @@ public class RepositorioDeEmpresas {
     }
     public static void main(String[] args) {
         CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
-        RepositorioDeOrganismos repositorioDeOrganismos = new RepositorioDeOrganismos();
+       // RepositorioDeOrganismos repositorioDeOrganismos = new RepositorioDeOrganismos();
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-        cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), se);
-        this.empresas.forEach(e => repositorioDeOrganismos.agregar(e));
+        //cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), se);
+        //this.empresas.forEach(e => repositorioDeOrganismos.agregar(e));
     }
 }
 

@@ -1,6 +1,5 @@
 package domain.Persistencia.Repositorios;
 
-
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.TipoEntidad;
@@ -11,93 +10,111 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Banio;
-import domain.Servicios.Elevacion;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import lombok.Getter;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
 import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
-    private List<Incidente> incidentes;
-    private EntityTransaction tx;
+  private List<Incidente> incidentes;
+  private EntityTransaction tx;
 
-    public RepositorioDeIncidentes() {
-        incidentes = new ArrayList<>();
-        this.tx = entityManager().getTransaction();
-    }
+  public RepositorioDeIncidentes() {
+    this.tx = entityManager().getTransaction();
+  }
 
-    public static void main(String[] args) {
-        RepositorioDeIncidentes repo = new RepositorioDeIncidentes();
-        ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
-
-        Provincia jujuy = new Provincia();
-        jujuy.setId(38);
-        jujuy.setNombre("Jujuy");
-        Municipio Yavi = new Municipio();
-        Yavi.setId(386273);
-        Yavi.setNombre("Yavi");
-        Yavi.setProvincia(jujuy);
-
-        FormaDeNotificar formaDeNotificar = new CuandoSuceden();
-        MedioDeComunicacion medioDeComunicacion = new ViaMail();
-        ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
-        receptorDeNotificaciones.setMail("hola@mail.net");
-        receptorDeNotificaciones.setTelefono("+1333333453");
-        receptorDeNotificaciones.cambiarFormaDeNotificar(formaDeNotificar);
-        receptorDeNotificaciones.cambiarMedioDeComunicacion(medioDeComunicacion);
-
-        MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-        miembroDeComunidad.setNombre("pablo");
-        miembroDeComunidad.setApellido("perez");
-        miembroDeComunidad.setReceptorDeNotificaciones(receptorDeNotificaciones);
-        miembroDeComunidad.setRepositorioDeIncidentes(repo);
-
-        Servicio banio = new Banio();
-        banio.setTipo("DAMAS");
-
-        Establecimiento establecimiento = new Establecimiento();
-        establecimiento.setLocalizacion(Yavi);
-        establecimiento.setNombre("Yavi");
-        establecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf("ESTACION"));
-        establecimiento.agregarServicio(banio);
-
-        Entidad entidad = new Entidad();
-        entidad.setTipoEntidad(TipoEntidad.valueOf("FERROCARRIL"));
-        entidad.setNombre("Mitre");
-        entidad.agregarEstablecimiento(establecimiento);
+  public static void main(String[] args) {
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
+    ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
+    ReporteDeIncidente reporteDeIncidente2 = new ReporteDeIncidente();
+    ReporteDeIncidente reporteDeIncidente3 = new ReporteDeIncidente();
+    ReporteDeIncidente reporteDeIncidente4 = new ReporteDeIncidente();
+    RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = new RepositorioMiembroDeComunidad();
 
 
-        reporteDeIncidente.setEstablecimiento(establecimiento);
-        reporteDeIncidente.setServicio(banio);
-        reporteDeIncidente.setDenunciante(miembroDeComunidad);
-        reporteDeIncidente.setObservaciones("Juan tapo el baño");
-        reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("ABIERTO"));
-        reporteDeIncidente.setEntidad(entidad);
-        reporteDeIncidente.setFechaYhora(LocalDateTime.of(2023,8,22,10,10,30));
+    Provincia jujuy = new Provincia();
+    jujuy.setId(38);
+    jujuy.setNombre("Jujuy");
+    Municipio Yavi = new Municipio();
+    Yavi.setId(386273);
+    Yavi.setNombre("Yavi");
+    Yavi.setProvincia(jujuy);
 
-        repo.agregar(reporteDeIncidente);
+    FormaDeNotificar formaDeNotificar = new CuandoSuceden();
+    MedioDeComunicacion medioDeComunicacion = new ViaMail();
+    ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
+    receptorDeNotificaciones.setMail("hola@mail.net");
+    receptorDeNotificaciones.setTelefono("+1333333453");
+    receptorDeNotificaciones.cambiarFormaDeNotificar(formaDeNotificar);
+    receptorDeNotificaciones.cambiarMedioDeComunicacion(medioDeComunicacion);
 
-        receptorDeNotificaciones.setMail("juapoliXxx");
+    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
+    miembroDeComunidad.setNombre("pablo");
+    miembroDeComunidad.setApellido("perez");
+    miembroDeComunidad.setReceptorDeNotificaciones(receptorDeNotificaciones);
+    miembroDeComunidad.setRepositorioDeReportesDeIncidentes(repositorioDeReportesDeIncidentes);
 
-        repo.modificar(reporteDeIncidente);
+    repositorioMiembroDeComunidad.agregar(miembroDeComunidad);
 
-        System.out.println(repo.buscar(reporteDeIncidente.getId()).getNombre());
+    Servicio banio = new Banio();
+    banio.setTipo("DAMAS");
 
-        //repo.eliminar(miembroDeComunidad);
+    Establecimiento establecimiento = new Establecimiento();
+    establecimiento.setLocalizacion(Yavi);
+    establecimiento.setNombre("Yavi");
+    establecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf("ESTACION"));
+    establecimiento.agregarServicio(banio);
 
-        repo.buscarTodos().forEach(reporte -> System.out.println(reporte.getNombre()));
-    }
+    Entidad entidad = new Entidad();
+    entidad.setTipoEntidad(TipoEntidad.valueOf("FERROCARRIL"));
+    entidad.setNombre("Mitre");
+    entidad.agregarEstablecimiento(establecimiento);
 
 
-    public void registrarIncidente(ReporteDeIncidente reporteDeIncidente) {
-        List<Incidente> incidentesSobreLaMismaProblematica = this.incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
+    reporteDeIncidente.setEstablecimiento(establecimiento);
+    reporteDeIncidente.setServicio(banio);
+    reporteDeIncidente.setDenunciante(miembroDeComunidad);
+    reporteDeIncidente.setObservaciones("Juan tapo el baño");
+    reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("ABIERTO"));
+    reporteDeIncidente.setEntidad(entidad);
+    reporteDeIncidente.setFechaYhora(LocalDateTime.of(2023,10,1,10,10,30));
+
+    reporteDeIncidente2.setEstablecimiento(establecimiento);
+    reporteDeIncidente2.setServicio(banio);
+    reporteDeIncidente2.setDenunciante(miembroDeComunidad);
+    reporteDeIncidente2.setObservaciones("Juan tapo el baño");
+    reporteDeIncidente2.setClasificacion(EstadoIncidente.valueOf("ABIERTO"));
+    reporteDeIncidente2.setEntidad(entidad);
+    reporteDeIncidente2.setFechaYhora(LocalDateTime.of(2023,10,2,12,10,30));
+
+    reporteDeIncidente3.setEstablecimiento(establecimiento);
+    reporteDeIncidente3.setServicio(banio);
+    reporteDeIncidente3.setDenunciante(miembroDeComunidad);
+    reporteDeIncidente3.setObservaciones("Baño destapado");
+    reporteDeIncidente3.setClasificacion(EstadoIncidente.valueOf("CERRADO"));
+    reporteDeIncidente3.setEntidad(entidad);
+    reporteDeIncidente3.setFechaYhora(LocalDateTime.of(2023,10,3,12,10,30));
+
+    reporteDeIncidente4.setEstablecimiento(establecimiento);
+    reporteDeIncidente4.setServicio(banio);
+    reporteDeIncidente4.setDenunciante(miembroDeComunidad);
+    reporteDeIncidente4.setObservaciones("Juan tapo el baño denuevo");
+    reporteDeIncidente4.setClasificacion(EstadoIncidente.valueOf("ABIERTO"));
+    reporteDeIncidente4.setEntidad(entidad);
+    reporteDeIncidente4.setFechaYhora(LocalDateTime.of(2023,10,3,14,10,30));
+
+    repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
+    repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente2);
+    repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente3);
+    repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente4);
+  }
+  public void registrarReporte(ReporteDeIncidente reporteDeIncidente) {
+    //buscartodos
+        List<Incidente> incidentesSobreLaMismaProblematica = this.buscarTodos().stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
         Incidente mismoIncidente = null;
 
         if (!incidentesSobreLaMismaProblematica.isEmpty()) {
@@ -111,43 +128,44 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
             } else { //es del mismo incidente, pero no de cierre
                 mismoIncidente.agregarReporteDeApertura(reporteDeIncidente);
             }
+          this.modificar(mismoIncidente);
         } else { // No es del mismo incidente y no es de cierre
             if (!reporteDeIncidente.esDeCierre()) {
-                Incidente incidente = new Incidente(reporteDeIncidente.getEstablecimiento(), reporteDeIncidente.getServicio());
+                Incidente incidente = new Incidente();
+                incidente.setEstablecimiento(reporteDeIncidente.getEstablecimiento());
+                incidente.setServicio(reporteDeIncidente.getServicio());
                 incidente.agregarReporteDeApertura(reporteDeIncidente);
-                this.incidentes.add(incidente);
+                this.agregar(incidente);
             }
         }
     }
 
     public List<Incidente> getIncidentesEstaSemana() {
-        return incidentes.stream().filter(incidente -> incidente.primeraApertura().dentroDeEstaSemana()).toList();
+        return this.buscarTodos().stream().filter(incidente -> incidente.primeraApertura().dentroDeEstaSemana()).toList();
     }
 
-    private void agregar(ReporteDeIncidente reporteDeIncidente) {
-        this.tx.begin();
-        registrarIncidente(reporteDeIncidente);
-        entityManager().persist(reporteDeIncidente);
-        this.tx.commit();
-    }
+  public void agregar(Incidente incidente) {
+    this.tx.begin();
+    entityManager().persist(incidente);
+    this.tx.commit();
+  }
 
-    private void modificar(ReporteDeIncidente reporteDeIncidente) {
-        this.tx.begin();
-        entityManager().merge(reporteDeIncidente);
-        this.tx.commit();
-    }
+  public void modificar(Incidente incidente) {
+    this.tx.begin();
+    entityManager().merge(incidente);
+    this.tx.commit();
+  }
+  public void eliminar(Incidente incidente) {
+    this.tx.begin();
+    entityManager().remove(incidente);
+    this.tx.commit();
+  }
 
-    private void eliminar(ReporteDeIncidente reporteDeIncidente) {
-        this.tx.begin();
-        entityManager().remove(reporteDeIncidente);
-        this.tx.commit();
-    }
+  public Incidente buscar(long id) {
+    return entityManager().find(Incidente.class, id);
+  }
 
-    private ReporteDeIncidente buscar(long id) {
-        return entityManager().find(ReporteDeIncidente.class, id);
-    }
-
-    private List<ReporteDeIncidente> buscarTodos() {
-        return entityManager().createQuery("from ReporteDeIncidente", ReporteDeIncidente.class).getResultList();
-    }
+  public List<Incidente> buscarTodos() {
+    return entityManager().createQuery("from Incidente", Incidente.class).getResultList();
+  }
 }

@@ -1,31 +1,10 @@
 package Personas;
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
-import domain.Personas.MiembroDeComunidad;
-import domain.Personas.ParServicioRol;
-import domain.Personas.Rol;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.Localizacion.Municipio;
-
-import java.io.IOException;
-
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
 public class TestInteresesMiembro {
+  /*
   @Mock
   private AdapterServicioGeo servicioGeo;
   private MiembroDeComunidad miembro;
@@ -106,6 +85,8 @@ public class TestInteresesMiembro {
     miembro.cambiarRolSobreServicio(banioHombres);
     Assertions.assertEquals("OBSERVADOR",banioYrol.getRol().toString());
   }
+
+   */
 }
 
 

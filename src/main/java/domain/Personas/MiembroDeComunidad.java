@@ -7,6 +7,7 @@ import domain.Incidentes.*;
 import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Persistencia.Persistente;
 import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
+import domain.Persistencia.Repositorios.RepositorioDeReportesDeIncidentes;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -46,7 +47,7 @@ public class MiembroDeComunidad extends Persistente {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private ReceptorDeNotificaciones receptorDeNotificaciones;
     @Transient
-    private RepositorioDeIncidentes repositorioDeIncidentes;
+    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes;
 
     public MiembroDeComunidad() {
         //String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes
@@ -96,7 +97,7 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
-        repositorioDeIncidentes.registrarIncidente(reporteDeIncidente);
+        repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
         comunidad.guardarIncidente(reporteDeIncidente);
     }
 

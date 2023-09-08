@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
+@Setter
 @Entity
 @Table(name="incidente")
 public class Incidente extends Persistente {
@@ -28,12 +29,11 @@ public class Incidente extends Persistente {
     private List<ReporteDeIncidente> reportesDeApertura;
     @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "reporteDeIncidenteCierre_id",referencedColumnName = "id")
-    @Setter
     private ReporteDeIncidente reporteDeCierre;
 
-    public Incidente(Establecimiento establecimiento, Servicio servicio) {
-        this.establecimiento = establecimiento;
-        this.servicio = servicio;
+    public Incidente() {
+       // this.establecimiento = establecimiento;
+        //this.servicio = servicio;
         this.reportesDeApertura = new ArrayList<>();
     }
 

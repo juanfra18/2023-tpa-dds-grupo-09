@@ -52,10 +52,10 @@ public class RepositorioEntidad implements WithSimplePersistenceUnit {
         System.out.println(repo.buscarTodos().size());
 
     }
-    private Entidad buscar(long id){
+    public Entidad buscar(long id){
         return entityManager().find(Entidad.class, id);
     }
-    private List<Entidad> buscarTodos(){
+    public List<Entidad> buscarTodos(){
         return entityManager().createQuery("from Entidad", Entidad.class).getResultList();
     }
 }

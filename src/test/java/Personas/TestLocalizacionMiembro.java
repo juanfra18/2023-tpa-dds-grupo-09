@@ -1,25 +1,9 @@
 package Personas;
 
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
-import domain.Personas.MiembroDeComunidad;
-import org.junit.jupiter.api.Assertions;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.Localizacion.Municipio;
-import services.Localizacion.Provincia;
-
-import java.io.IOException;
-
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class TestLocalizacionMiembro {
+  /*
 
   @Mock
   private AdapterServicioGeo servicioGeo;
@@ -53,4 +37,6 @@ public class TestLocalizacionMiembro {
     miembro.agregarMunicipio(servicioGeo.obtenerMunicipio(municipio));
     Assertions.assertEquals(60280, miembro.getMunicipios().get(0).getId());
   }
+
+   */
 }

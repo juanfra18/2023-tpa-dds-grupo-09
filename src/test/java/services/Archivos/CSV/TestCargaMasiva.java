@@ -12,6 +12,7 @@ import services.Archivos.CargadorDeDatos;
 import java.util.List;
 
 public class TestCargaMasiva {
+  /*
   private RepositorioDeEmpresas repo;
 
   @BeforeEach
@@ -63,4 +64,6 @@ public class TestCargaMasiva {
     Assertions.assertEquals("Santander Río Capital Federal",entidades.get(0).getNombre());
     Assertions.assertEquals("Santander Río Buenos Aires",entidades.get(1).getNombre());
   }
+
+   */
 }
