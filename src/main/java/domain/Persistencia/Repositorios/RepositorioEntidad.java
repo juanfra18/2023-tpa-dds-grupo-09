@@ -1,8 +1,16 @@
 package domain.Persistencia.Repositorios;
 
+import domain.Entidades.Entidad;
+import domain.Entidades.Establecimiento;
+import domain.Entidades.TipoEntidad;
+import domain.Entidades.TipoEstablecimiento;
 import domain.Notificaciones.*;
 import domain.Personas.Comunidad;
+import domain.Servicios.Banio;
+import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import services.Localizacion.Municipio;
+import services.Localizacion.Provincia;
 
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -14,42 +22,40 @@ public class RepositorioEntidad implements WithSimplePersistenceUnit {
     }
 
     public static void main(String[] args) {
-        RepositorioComunidad repo = new RepositorioComunidad();
-        Comunidad comunidad = new Comunidad();
-        comunidad.setNombre("comunidadcita");
-        comunidad.setEmisorDeNotificaciones(EmisorDeNotificaciones.getInstancia());
+        RepositorioEntidad repo = new RepositorioEntidad();
 
-        repo.agregar(comunidad);
+        Provincia jujuy = new Provincia();
+        jujuy.setId(38);
+        jujuy.setNombre("Jujuy");
+        Municipio Yavi = new Municipio();
+        Yavi.setId(386273);
+        Yavi.setNombre("Yavi");
+        Yavi.setProvincia(jujuy);
 
-        comunidad.setNombre("Xx__messilovers__xX");
+        Servicio banio = new Banio();
+        banio.setTipo("DAMAS");
 
-        repo.modificar(comunidad);
+        Establecimiento estacionYavi = new Establecimiento();
+        estacionYavi.setLocalizacion(Yavi);
+        estacionYavi.setNombre("Yavi");
+        estacionYavi.setTipoEstablecimiento(TipoEstablecimiento.valueOf("ESTACION"));
+        estacionYavi.agregarServicio(banio);
 
-        System.out.println(repo.buscar(comunidad.getId()).getNombre());
+        Entidad ferrocarrilMitre = new Entidad();
+        ferrocarrilMitre.setTipoEntidad(TipoEntidad.valueOf("FERROCARRIL"));
+        ferrocarrilMitre.setNombre("Mitre");
+        ferrocarrilMitre.agregarEstablecimiento(estacionYavi);
+
+
+        System.out.println(repo.buscar(ferrocarrilMitre.getId()).getNombre());
 
         System.out.println(repo.buscarTodos().size());
 
-        repo.eliminar(comunidad);
     }
-    private void agregar(Comunidad comunidad) {
-        this.tx.begin();
-        entityManager().persist(comunidad);
-        this.tx.commit();
+    private Entidad buscar(long id){
+        return entityManager().find(Entidad.class, id);
     }
-    private void modificar(Comunidad comunidad) {
-        this.tx.begin();
-        entityManager().merge(comunidad);
-        this.tx.commit();
-    }
-    private void eliminar(Comunidad comunidad) {
-        this.tx.begin();
-        entityManager().remove(comunidad);
-        this.tx.commit();
-    }
-    private Comunidad buscar(long id){
-        return entityManager().find(Comunidad.class, id);
-    }
-    private List<Comunidad> buscarTodos(){
-        return entityManager().createQuery("from Comunidad", Comunidad.class).getResultList();
+    private List<Entidad> buscarTodos(){
+        return entityManager().createQuery("from Entidad", Entidad.class).getResultList();
     }
 }

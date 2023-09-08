@@ -22,7 +22,7 @@ public class Establecimiento extends Persistente {
   @Enumerated(EnumType.STRING)
   @Setter
   private TipoEstablecimiento tipoEstablecimiento;
-  @ManyToMany
+  @ManyToMany(mappedBy = "Establecimiento", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")

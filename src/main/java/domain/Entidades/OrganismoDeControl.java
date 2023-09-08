@@ -14,20 +14,22 @@ import java.util.List;
 @Entity
 @Table(name="organismoDeControl")
 public class OrganismoDeControl extends Persistente {
-  @OneToMany
+  @OneToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinColumn(name="entidadPrestadora_id",referencedColumnName = "id")
   private List<EntidadPrestadora> entidadesPrestadoras;
   @Column(name = "nombre")
+  @Setter
   private String nombre;
   @Setter
   @Column(name = "personaMail")
   private String personaMail;
-  @Transient //TODO
+  @Transient
   private ViaMail viaMail;
-  public OrganismoDeControl(String nombre, String personaMail){
-    this.nombre = nombre;
+  public OrganismoDeControl(){
+    //String nombre, String personaMail
+    //this.nombre = nombre;
     this.entidadesPrestadoras = new ArrayList<>();
-    this.personaMail = personaMail;
+    //this.personaMail = personaMail;
     this.viaMail = new ViaMail();
   }
   public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){

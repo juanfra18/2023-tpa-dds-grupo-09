@@ -59,7 +59,6 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
         miembroDeComunidad.setReceptorDeNotificaciones(receptorDeNotificaciones);
         miembroDeComunidad.setRepositorioDeIncidentes(repo);
 
-
         Servicio banio = new Banio();
         banio.setTipo("DAMAS");
 
@@ -89,11 +88,11 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
 
         repo.modificar(reporteDeIncidente);
 
-        System.out.println(repo.buscar(reporteDeIncidente.getId()).getDenunciante());
+        System.out.println(repo.buscar(reporteDeIncidente.getId()).getNombre());
 
         //repo.eliminar(miembroDeComunidad);
 
-        repo.buscarTodos().forEach(reporte -> System.out.println(reporte.getEstablecimiento()));
+        repo.buscarTodos().forEach(reporte -> System.out.println(reporte.getNombre()));
     }
 
 

@@ -15,20 +15,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "entidadPrestadora")
 public class EntidadPrestadora extends Persistente {
-  @OneToMany
+  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinColumn(name="entidad_id",referencedColumnName = "id")
   private List<Entidad> entidades;
   @Column(name = "nombre")
+  @Setter
   private String nombre;
   @Column(name = "personaMail")
   @Setter
   private String personaMail;
-  @Transient //TODO
+  @Transient
   private ViaMail viaMail;
-  public EntidadPrestadora(String nombre, String personaMail){
-    this.nombre = nombre;
+  public EntidadPrestadora(){
+    //String nombre, String personaMail
+    //this.nombre = nombre;
     this.entidades = new ArrayList<>();
-    this.personaMail = personaMail;
+    //this.personaMail = personaMail;
     this.viaMail = new ViaMail();
   }
   public void agregarEntidad(Entidad entidad){

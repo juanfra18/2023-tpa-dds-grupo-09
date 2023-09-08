@@ -53,6 +53,10 @@ public class ReporteDeIncidente extends Persistente {
     this.entidad = entidad;
     */
   }
+
+  public String getNombre() {
+    return String.valueOf(establecimiento) + " " +  String.valueOf(servicio);
+  }
   public boolean igualito(Object obj) {
     if (this == obj) {
       return true;

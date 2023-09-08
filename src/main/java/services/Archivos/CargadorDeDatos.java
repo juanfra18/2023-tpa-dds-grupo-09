@@ -3,6 +3,7 @@ package services.Archivos;
 import domain.Entidades.*;
 import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
+import domain.Servicios.Servicio;
 import services.APIs.Georef.AdapterServicioGeo;
 
 import java.util.*;
@@ -24,20 +25,37 @@ public class CargadorDeDatos {
       String servicioNombre = elemento[9];
       String servicioTipo = elemento[10];
 
-      EntidadPrestadora posiblePrestadora = new EntidadPrestadora(prestadoraNombre, prestadoraMail);
-      Entidad posibleEntidad = new Entidad(entidadNombre, entidadTipo);
+      EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
+        posiblePrestadora.setPersonaMail(prestadoraMail);
+        posiblePrestadora.setNombre(prestadoraNombre);
 
-      Establecimiento posibleEstablecimiento = new Establecimiento(establecimientoNombre, establecimientoTipo, servicioGeo.obtenerMunicipio(establecimientoLocalizacion));
+      Entidad posibleEntidad = new Entidad();
+      posibleEntidad.setNombre(entidadNombre);
+      posibleEntidad.setTipoEntidad(TipoEntidad.valueOf(entidadTipo));
 
-      OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl(organismoNombre, organismoMail));
+      Establecimiento posibleEstablecimiento = new Establecimiento();
+      posibleEstablecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf(establecimientoTipo));
+      posibleEstablecimiento.setLocalizacion(servicioGeo.obtenerMunicipio(establecimientoLocalizacion));
+      posibleEstablecimiento.setNombre(establecimientoNombre);
+
+      OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl());
+      organismo.setPersonaMail(organismoMail);
+      organismo.setNombre(organismoNombre);
+
       EntidadPrestadora prestadora = obtenerPrestadora(organismo.getEntidadesPrestadoras(), posiblePrestadora);
       Entidad entidad = obtenerEntidad(prestadora.getEntidades(), posibleEntidad);
       Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), posibleEstablecimiento);
 
+      Servicio banio = new Banio();
+      banio.setTipo(servicioTipo);
+
+      Servicio elevador = new Elevacion();
+      elevador.setTipo(servicioTipo);
+
       if (servicioNombre.equals("Banio")) {
-        establecimiento.agregarServicio(new Banio(servicioTipo));
+        establecimiento.agregarServicio(banio);
       } else {
-        establecimiento.agregarServicio(new Elevacion(servicioTipo));
+        establecimiento.agregarServicio(elevador);
       }
 
       entidad.agregarEstablecimiento(establecimiento);

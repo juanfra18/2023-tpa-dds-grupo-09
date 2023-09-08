@@ -1,6 +1,7 @@
 package domain.Entidades;
 
 import Config.Config;
+import domain.Persistencia.Repositorios.RepositorioEntidad;
 import lombok.Getter;
 import services.APIs.Georef.AdapterServicioGeo;
 import services.Archivos.CargadorDeDatos;
@@ -14,4 +15,13 @@ public class RepositorioDeEmpresas {
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         this.empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeo);
     }
+    public static void main(String[] args) {
+        CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+        RepositorioDeOrganismos repositorioDeOrganismos = new RepositorioDeOrganismos();
+        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+        cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), se);
+        this.empresas.forEach(e => repositorioDeOrganismos.agregar(e));
+    }
 }
+
+
