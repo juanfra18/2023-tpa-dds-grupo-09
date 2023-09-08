@@ -13,6 +13,7 @@ public abstract class Servicio extends Persistente {
   public abstract boolean estaActivo();
   public abstract String getTipo();
 
+  public abstract void setTipo(String tipo);
   public boolean igualito(Object obj) {
     if (this == obj) {
       return true;

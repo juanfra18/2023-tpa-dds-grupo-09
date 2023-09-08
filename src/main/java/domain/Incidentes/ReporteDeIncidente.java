@@ -7,6 +7,7 @@ import domain.Persistencia.Persistente;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -14,32 +15,35 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
+@Setter
 @Getter
 @Entity
 @Table(name="reporteDeIncidente")
 public class ReporteDeIncidente extends Persistente {
   @Enumerated(EnumType.STRING)
-  private final EstadoIncidente clasificacion;
+  private  EstadoIncidente clasificacion;
   @Convert(converter = LocalDateTimeAttributeConverter.class)
   @Column(name = "fechaYHora")
-  private final LocalDateTime fechaYhora;
+  private  LocalDateTime fechaYhora;
   @ManyToOne
   @JoinColumn(name="miembro_id",referencedColumnName = "id")
-  private final MiembroDeComunidad denunciante;
+  private  MiembroDeComunidad denunciante;
   @ManyToOne
   @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
-  private final Establecimiento establecimiento;
+  private  Establecimiento establecimiento;
   @ManyToOne
   @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-  private final Servicio servicio;
+  private  Servicio servicio;
   @Column(name = "observaciones", columnDefinition = "text")
-  private final String observaciones;
+  private  String observaciones;
   @ManyToOne
   @JoinColumn(name="entidad_id",referencedColumnName = "id")
-  private final Entidad entidad;
+  private  Entidad entidad;
 
-  public ReporteDeIncidente(String estado, LocalDateTime fechaYhora, MiembroDeComunidad denunciante, Entidad entidad,
-                            Establecimiento establecimiento, Servicio servicio, String observaciones) {
+  public ReporteDeIncidente() {
+    /*
+    String estado, LocalDateTime fechaYhora, MiembroDeComunidad denunciante, Entidad entidad,
+                               Establecimiento establecimiento, Servicio servicio, String observaciones
     this.clasificacion = EstadoIncidente.valueOf(estado);
     this.fechaYhora = fechaYhora;
     this.denunciante = denunciante;
@@ -47,6 +51,7 @@ public class ReporteDeIncidente extends Persistente {
     this.servicio = servicio;
     this.observaciones = observaciones;
     this.entidad = entidad;
+    */
   }
   public boolean igualito(Object obj) {
     if (this == obj) {

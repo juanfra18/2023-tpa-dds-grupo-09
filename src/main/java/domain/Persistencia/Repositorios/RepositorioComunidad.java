@@ -1,14 +1,10 @@
 package domain.Persistencia.Repositorios;
 
-import domain.Incidentes.ReporteDeIncidente;
-import domain.Incidentes.RepositorioDeIncidentes;
 import domain.Notificaciones.*;
 import domain.Personas.Comunidad;
-import domain.Personas.MiembroDeComunidad;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioComunidad implements WithSimplePersistenceUnit {

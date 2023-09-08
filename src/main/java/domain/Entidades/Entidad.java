@@ -3,12 +3,13 @@ package domain.Entidades;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Persistencia.Persistente;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+@Setter
 @Getter
 @Entity
 @Table(name = "entidad")
@@ -21,10 +22,11 @@ public class Entidad extends Persistente {
     @Enumerated(EnumType.STRING)
     private TipoEntidad tipoEntidad;
 
-    public Entidad(String nombre, String tipo) {
-        this.nombre = nombre;
+    public Entidad() {
+        //String nombre, String tipo
+        //this.nombre = nombre;
         this.establecimientos = new ArrayList<>();
-        this.tipoEntidad = TipoEntidad.valueOf(tipo);
+        //this.tipoEntidad = TipoEntidad.valueOf(tipo);
     }
     public void agregarEstablecimiento(Establecimiento unEstablecimiento) {
         establecimientos.removeIf(establecimiento -> establecimiento.igualito(unEstablecimiento));

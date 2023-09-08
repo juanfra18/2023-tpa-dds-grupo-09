@@ -1,6 +1,6 @@
 package Personas;
 
-import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
 import domain.Notificaciones.FormaDeNotificar;
 import domain.Notificaciones.MedioDeComunicacion;
 import domain.Personas.MiembroDeComunidad;

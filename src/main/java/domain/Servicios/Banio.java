@@ -1,6 +1,7 @@
 package domain.Servicios;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,17 +11,22 @@ import java.util.Objects;
 @DiscriminatorValue("banio")
 public class Banio extends Servicio{
     @Enumerated(EnumType.STRING)
+    @Setter
     private TipoBanio tipoBanio;
+
+    public Banio () {};
     public boolean estaActivo() {
         //TODO
         return true;
     }
+    @Override
+    public void setTipo(String tipo) {
+        tipoBanio = TipoBanio.valueOf(tipo);
+    }
     public String getTipo(){
         return "Banio " + String.valueOf(tipoBanio);
     }
-    public Banio(String tipoBanio) {
-        this.tipoBanio = TipoBanio.valueOf(tipoBanio);
-    }
+
 
     public boolean igualito(Object obj) {
         if (this == obj) {

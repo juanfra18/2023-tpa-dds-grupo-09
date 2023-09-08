@@ -4,6 +4,7 @@ import domain.Incidentes.Posicion;
 import domain.Persistencia.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
+import lombok.Setter;
 import services.Localizacion.Municipio;
 
 import javax.persistence.*;
@@ -16,23 +17,27 @@ import java.util.Objects;
 @Table(name="establecimiento")
 public class Establecimiento extends Persistente {
   @Column(name = "nombre")
+  @Setter
   private String nombre;
   @Enumerated(EnumType.STRING)
+  @Setter
   private TipoEstablecimiento tipoEstablecimiento;
   @ManyToMany
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")
+  @Setter
   private Municipio localizacion;
   @ManyToOne
   @JoinColumn(name = "posicion_id", referencedColumnName = "id")
   private Posicion posicion;
 
-  public Establecimiento(String nombre, String tipoEstablecimiento, Municipio municipio) {
-    this.nombre = nombre;
-    this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
+  public Establecimiento() {
+    //String nombre, String tipoEstablecimiento, Municipio municipio
+    //this.nombre = nombre;
+    //this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
     this.servicios = new ArrayList<>();
-    this.localizacion = municipio;
+    //this.localizacion = municipio;
   }
   public boolean estaEnFuncionamiento(Servicio servicio) { // X CANTIDAD DE TIEMPO
     if (servicios.contains(servicio)) {

@@ -2,8 +2,7 @@ package Personas;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
-import domain.Entidades.RepositorioDeEmpresas;
-import domain.Incidentes.RepositorioDeIncidentes;
+import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
 import domain.Notificaciones.FormaDeNotificar;
 import domain.Notificaciones.MedioDeComunicacion;
 import domain.Personas.MiembroDeComunidad;
