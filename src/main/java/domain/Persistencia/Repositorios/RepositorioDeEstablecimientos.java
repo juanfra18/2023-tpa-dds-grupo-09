@@ -50,6 +50,13 @@ public class RepositorioDeEstablecimientos implements WithSimplePersistenceUnit 
         System.out.println(repo.buscarTodos().size());
 
         //repo.eliminar(comunidad);
+
+        Establecimiento estacionYavi2 = new Establecimiento();
+        estacionYavi2.setNombre("Estacion");
+        estacionYavi2.setLocalizacion(Yavi);
+        estacionYavi2.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+
+        repo.agregar(estacionYavi2);
     }
     public void agregar(Establecimiento establecimiento) {
         this.tx.begin();

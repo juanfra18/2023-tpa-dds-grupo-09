@@ -36,13 +36,9 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
         ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
 
-        Provincia jujuy = new Provincia();
-        jujuy.setId(38);
-        jujuy.setNombre("Jujuy");
-        Municipio Yavi = new Municipio();
-        Yavi.setId(386273);
-        Yavi.setNombre("Yavi");
-        Yavi.setProvincia(jujuy);
+        Provincia jujuy = new RepositorioProvincias().buscar(38);
+
+        Municipio Yavi = new RepositorioDeMunicipios().buscar(386273);
 
         FormaDeNotificar formaDeNotificar = new CuandoSuceden();
         MedioDeComunicacion medioDeComunicacion = new ViaMail();
@@ -52,36 +48,23 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         receptorDeNotificaciones.cambiarFormaDeNotificar(formaDeNotificar);
         receptorDeNotificaciones.cambiarMedioDeComunicacion(medioDeComunicacion);
 
-        MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-        miembroDeComunidad.setNombre("pablo");
-        miembroDeComunidad.setApellido("perez");
-        miembroDeComunidad.setReceptorDeNotificaciones(receptorDeNotificaciones);
-        miembroDeComunidad.setRepositorioDeReportesDeIncidentes(repo);
+        MiembroDeComunidad miembroDeComunidad = new RepositorioMiembroDeComunidad().buscar(1L);
 
-        RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = new RepositorioMiembroDeComunidad();
-        repositorioMiembroDeComunidad.agregar(miembroDeComunidad);
+        Servicio banio = new RepositorioServicio().buscar(16L);
 
+        RepositorioDeEstablecimientos repositorioDeEstablecimientos = new RepositorioDeEstablecimientos();
 
-        Servicio banio = new Banio();
-        banio.setTipo("DAMAS");
+        Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(15L);
 
-        Establecimiento establecimiento = new Establecimiento();
-        establecimiento.setLocalizacion(Yavi);
-        establecimiento.setNombre("Yavi");
-        establecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf("ESTACION"));
-        establecimiento.agregarServicio(banio);
+        RepositorioEntidad repositorioEntidad = new RepositorioEntidad();
 
-        Entidad entidad = new Entidad();
-        entidad.setTipoEntidad(TipoEntidad.valueOf("FERROCARRIL"));
-        entidad.setNombre("Mitre");
-        entidad.agregarEstablecimiento(establecimiento);
-
+        Entidad entidad = repositorioEntidad.buscar(30L);
 
         reporteDeIncidente.setEstablecimiento(establecimiento);
         reporteDeIncidente.setServicio(banio);
         reporteDeIncidente.setDenunciante(miembroDeComunidad);
         reporteDeIncidente.setObservaciones("Juan tapo el baño");
-        reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("ABIERTO"));
+        reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("CERRADO"));
         reporteDeIncidente.setEntidad(entidad);
         reporteDeIncidente.setFechaYhora(LocalDateTime.of(2023,8,22,10,10,30));
 

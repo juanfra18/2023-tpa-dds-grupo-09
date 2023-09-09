@@ -20,8 +20,6 @@ public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
     RepositorioProvincias repositorioProvincias = new RepositorioProvincias();
     RepositorioDeMunicipios repositorioDeMunicipios = new RepositorioDeMunicipios();
 
-    ListadoDeMunicipios municipiosDeLaProvincia = servicioGeoref.listadoDeMunicipiosDeProvincia(servicioGeoref.listadoDeProvincias().provinciaDeId(6).get());
-
     repositorioProvincias.buscarTodos().forEach(
         provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
             getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
@@ -42,7 +40,7 @@ public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
     entityManager().remove(municipio);
     this.tx.commit();
   }
-  public Municipio buscar(long id){
+  public Municipio buscar(int id){
     return entityManager().find(Municipio.class, id);
   }
 

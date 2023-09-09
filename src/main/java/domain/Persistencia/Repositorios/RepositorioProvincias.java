@@ -38,7 +38,7 @@ public class RepositorioProvincias implements WithSimplePersistenceUnit {
     entityManager().remove(provincia);
     this.tx.commit();
   }
-  public Provincia buscar(long id){
+  public Provincia buscar(int id){
     return entityManager().find(Provincia.class, id);
   }
 

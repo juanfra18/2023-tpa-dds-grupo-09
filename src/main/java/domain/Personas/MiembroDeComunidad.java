@@ -33,11 +33,9 @@ public class MiembroDeComunidad extends Persistente {
     @OneToMany
     @JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
     private List<ParServicioRol> serviciosDeInteres;
-    @OneToMany
-    @JoinColumn(name="provincia_id",referencedColumnName = "id")
+    @ManyToMany
     private List<Provincia> provincias;
-    @OneToMany
-    @JoinColumn(name="municipio_id",referencedColumnName = "id")
+    @ManyToMany
     private List<Municipio> municipios;
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "usuario_id", referencedColumnName = "id") // Asegura que la columna sea única

@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name="organismoDeControl")
 public class OrganismoDeControl extends Persistente {
   @OneToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-  @JoinColumn(name="entidadPrestadora_id",referencedColumnName = "id")
+  @JoinColumn(name="organismodecontrol_id",referencedColumnName = "id")
   private List<EntidadPrestadora> entidadesPrestadoras;
   @Column(name = "nombre")
   @Setter

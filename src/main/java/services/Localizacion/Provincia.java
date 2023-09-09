@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "provincia")
 public class Provincia {
+    @Id
+    //private int identificador;
     @NaturalId
     public int id;
     @Column(name = "nombre")
