@@ -1,7 +1,7 @@
 package Usuario;
 
 import domain.Seguridad.RegistroDeUsuarioException;
-import domain.Usuario.RepositorioDeUsuarios;
+import domain.Persistencia.Repositorios.RepositorioDeUsuarios;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
