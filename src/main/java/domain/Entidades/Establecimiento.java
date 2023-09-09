@@ -33,11 +33,7 @@ public class Establecimiento extends Persistente {
   private Posicion posicion;
 
   public Establecimiento() {
-    //String nombre, String tipoEstablecimiento, Municipio municipio
-    //this.nombre = nombre;
-    //this.tipoEstablecimiento = TipoEstablecimiento.valueOf(tipoEstablecimiento);
     this.servicios = new ArrayList<>();
-    //this.localizacion = municipio;
   }
   public boolean estaEnFuncionamiento(Servicio servicio) { // X CANTIDAD DE TIEMPO
     if (servicios.contains(servicio)) {
@@ -48,14 +44,14 @@ public class Establecimiento extends Persistente {
   public void agregarServicio(Servicio servicio) {
     this.servicios.add(servicio);
   }
-  public boolean igualito(Object obj) {
-    if (this == obj) {
+  public boolean igualito(Establecimiento establecimiento) {
+    if (this == establecimiento) {
       return true;
     }
-    if (obj == null || getClass() != obj.getClass()) {
+    if (establecimiento == null || getClass() != establecimiento.getClass()) {
       return false;
     }
-    Establecimiento otro = (Establecimiento) obj;
+    Establecimiento otro = establecimiento;
     return Objects.equals(nombre, otro.nombre)
         && Objects.equals(tipoEstablecimiento,otro.tipoEstablecimiento)
         && Objects.equals(localizacion.getId(),otro.localizacion.getId());

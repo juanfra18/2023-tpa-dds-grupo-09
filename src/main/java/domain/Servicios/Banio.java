@@ -28,14 +28,14 @@ public class Banio extends Servicio{
     }
 
 
-    public boolean igualito(Object obj) {
-        if (this == obj) {
+    public boolean igualito(Servicio banio) {
+        if (this == banio) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (banio == null || getClass() != banio.getClass()) {
             return false;
         }
-        Banio otro = (Banio) obj;
+        Banio otro = (Banio) banio;
         return tipoBanio == otro.tipoBanio;
     }
 
@@ -45,13 +45,3 @@ public class Banio extends Servicio{
     }
 }
 
-/*
- public boolean equals(Object otroServicio) {
-        if (otroServicio instanceof Banio) {
-            return ((Banio) otroServicio).tipoBanio == this.tipoBanio;
-        }
-        else {
-            return false;
-        }
-    }
- */

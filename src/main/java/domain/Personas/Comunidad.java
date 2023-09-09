@@ -27,11 +27,8 @@ public class Comunidad extends Persistente {
     private EmisorDeNotificaciones emisorDeNotificaciones;
 
     public Comunidad() {
-        //String nombre, EmisorDeNotificaciones emisorDeNotificaciones
-        //this.nombre = nombre;
         this.miembros = new ArrayList<>();
         this.incidentesDeLaComunidad = new ArrayList<>();
-        //this.emisorDeNotificaciones = emisorDeNotificaciones;
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);

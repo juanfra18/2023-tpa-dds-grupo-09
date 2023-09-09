@@ -9,22 +9,24 @@ import services.APIs.Georef.GeorefService;
 import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
 import services.Archivos.SistemaDeArchivos;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 public class RepositorioDeEmpresas {
-    private static List<OrganismoDeControl> empresas; //Rveisar si puedo evitar hacerlo static TODO
-    public RepositorioDeEmpresas(CargadorDeDatos cargadorDeDatos, AdapterServicioGeo servicioGeo) {
-        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-        this.empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeo);
-    }
+
+    public RepositorioDeEmpresas() {}
     public static void main(String[] args) {
+
+        List<OrganismoDeControl> empresas;
+
         CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
 
         RepositorioDeOrganismosDeControl repositorioDeOrganismos = new RepositorioDeOrganismosDeControl();
-        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-        cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
+        empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
         empresas.forEach(e -> repositorioDeOrganismos.agregar(e));
     }
 }

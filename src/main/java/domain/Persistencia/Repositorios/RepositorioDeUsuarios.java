@@ -23,7 +23,7 @@ public class RepositorioDeUsuarios implements WithSimplePersistenceUnit { // Ver
         jorge.setUsername("jorge");
         jorge.cambiarContrasenia("HolaMundo@3");
 
-        repo.agregar(jorge);
+        repo.agregarUsername(jorge);
 
         System.out.println(repo.buscar(jorge.getId()).getUsername());
 
@@ -41,6 +41,7 @@ public class RepositorioDeUsuarios implements WithSimplePersistenceUnit { // Ver
         }
         else {
             usuarios.add(usuario);
+            this.agregar(usuario);
         }
     }
     public void agregar(Usuario usuario) {

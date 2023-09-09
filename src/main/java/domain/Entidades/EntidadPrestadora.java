@@ -27,10 +27,7 @@ public class EntidadPrestadora extends Persistente {
   @Transient
   private ViaMail viaMail;
   public EntidadPrestadora(){
-    //String nombre, String personaMail
-    //this.nombre = nombre;
     this.entidades = new ArrayList<>();
-    //this.personaMail = personaMail;
     this.viaMail = new ViaMail();
   }
   public void agregarEntidad(Entidad entidad){
@@ -38,14 +35,14 @@ public class EntidadPrestadora extends Persistente {
     entidades.add(entidad);
   }
 
-  public boolean igualito(Object obj) {
-    if (this == obj) {
+  public boolean igualito(EntidadPrestadora entidadPrestadora) {
+    if (this == entidadPrestadora) {
       return true;
     }
-    if (obj == null || getClass() != obj.getClass()) {
+    if (entidadPrestadora == null || getClass() != entidadPrestadora.getClass()) {
       return false;
     }
-    EntidadPrestadora otro = (EntidadPrestadora) obj;
+    EntidadPrestadora otro = entidadPrestadora;
     return Objects.equals(nombre, otro.nombre);
   }
 

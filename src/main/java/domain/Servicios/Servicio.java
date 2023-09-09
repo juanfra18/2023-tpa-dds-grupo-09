@@ -14,14 +14,14 @@ public abstract class Servicio extends Persistente {
   public abstract String getTipo();
 
   public abstract void setTipo(String tipo);
-  public boolean igualito(Object obj) {
-    if (this == obj) {
+  public boolean igualito(Servicio servicio) {
+    if (this == servicio) {
       return true;
     }
-    if (obj == null || getClass() != obj.getClass()) {
+    if (servicio == null || getClass() != servicio.getClass()) {
       return false;
     }
-    Servicio otro = (Servicio) obj;
+    Servicio otro = servicio;
     return Objects.equals(getTipo(),otro.getTipo())
         && Objects.equals(getClass(),otro.getClass());
   }

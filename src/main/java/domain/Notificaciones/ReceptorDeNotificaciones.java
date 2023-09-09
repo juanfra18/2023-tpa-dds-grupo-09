@@ -25,13 +25,7 @@ public class ReceptorDeNotificaciones extends Persistente {
   @Column(name = "telefono")
   private String telefono;
 
-  public ReceptorDeNotificaciones() {
-    //MedioDeComunicacion medioDeComunicacion, FormaDeNotificar formaDeNotificar ,String mail, String telefono
-    //this.cambiarMedioDeComunicacion(medioDeComunicacion);
-    //this.cambiarFormaDeNotificar(formaDeNotificar);
-    //this.mail = mail;
-    //this.telefono = telefono;
-  }
+  public ReceptorDeNotificaciones() {}
   private String getDestinatario(){
     String destinatario = null;
 

@@ -26,10 +26,7 @@ public class OrganismoDeControl extends Persistente {
   @Transient
   private ViaMail viaMail;
   public OrganismoDeControl(){
-    //String nombre, String personaMail
-    //this.nombre = nombre;
     this.entidadesPrestadoras = new ArrayList<>();
-    //this.personaMail = personaMail;
     this.viaMail = new ViaMail();
   }
   public void agregarEntidadPrestadora(EntidadPrestadora entidadPrestadora){

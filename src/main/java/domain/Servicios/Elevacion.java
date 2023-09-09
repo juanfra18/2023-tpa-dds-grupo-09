@@ -20,18 +20,15 @@ public class Elevacion extends Servicio{
     public String getTipo(){
         return String.valueOf(tipoElevacion);
     }
-    public Elevacion() {
-        //String tipoElevacion
-        //this.tipoElevacion = TipoElevacion.valueOf(tipoElevacion);
-    }
-    public boolean igualito(Object obj) {
-        if (this == obj) {
+    public Elevacion() {}
+    public boolean igualito(Elevacion elevacion) {
+        if (this == elevacion) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (elevacion == null || getClass() != elevacion.getClass()) {
             return false;
         }
-        Elevacion otro = (Elevacion) obj;
+        Elevacion otro = elevacion;
         return tipoElevacion == otro.tipoElevacion;
     }
     @Override

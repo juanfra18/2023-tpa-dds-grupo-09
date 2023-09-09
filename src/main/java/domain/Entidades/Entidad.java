@@ -23,24 +23,21 @@ public class Entidad extends Persistente {
     private TipoEntidad tipoEntidad;
 
     public Entidad() {
-        //String nombre, String tipo
-        //this.nombre = nombre;
         this.establecimientos = new ArrayList<>();
-        //this.tipoEntidad = TipoEntidad.valueOf(tipo);
     }
     public void agregarEstablecimiento(Establecimiento unEstablecimiento) {
         establecimientos.removeIf(establecimiento -> establecimiento.igualito(unEstablecimiento));
         establecimientos.add(unEstablecimiento);
     }
 
-    public boolean igualito(Object obj) {
-        if (this == obj) {
+    public boolean igualito(Entidad entidad) {
+        if (this == entidad) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (entidad == null || getClass() != entidad.getClass()) {
             return false;
         }
-        Entidad otro = (Entidad) obj;
+        Entidad otro = entidad;
         return Objects.equals(nombre, otro.nombre)
             && Objects.equals(tipoEntidad, otro.tipoEntidad);
     }

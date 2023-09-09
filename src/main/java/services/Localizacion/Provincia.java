@@ -2,6 +2,7 @@ package services.Localizacion;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 @Setter
@@ -9,14 +10,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "provincia")
 public class Provincia {
-    @Id
+    @NaturalId
     public int id;
     @Column(name = "nombre")
     public String nombre;
 
-    public Provincia() {
-        //int id, String nombre
-        //this.id = id;
-        //this.nombre = nombre;
-    }
+    public Provincia() {}
 }

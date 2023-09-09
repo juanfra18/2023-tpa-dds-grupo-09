@@ -27,7 +27,7 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
     this.tx = entityManager().getTransaction();
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) { // Se pasa por parametro o se instancian
     RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
     ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
     ReporteDeIncidente reporteDeIncidente2 = new ReporteDeIncidente();

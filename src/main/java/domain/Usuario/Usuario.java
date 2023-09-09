@@ -19,11 +19,8 @@ public class Usuario extends Persistente {
     private String contrasenia;
     @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
-
   public Usuario() throws RegistroDeUsuarioException {
-      //validador.validarContrasenia(contrasenia);
-      /*this.username = username;
-      this.contrasenia = contrasenia;*/
+      this.validador = new ValidadorDeContrasenias();
     }
     public void cambiarContrasenia(String nuevaContrasenia) throws RegistroDeUsuarioException {
       if(nuevaContrasenia != contrasenia) {

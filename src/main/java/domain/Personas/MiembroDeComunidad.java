@@ -50,16 +50,11 @@ public class MiembroDeComunidad extends Persistente {
     private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes;
 
     public MiembroDeComunidad() {
-        //String apellido, String nombre, String mail, String telefono, FormaDeNotificar formaDeNotificarSeleccionada, MedioDeComunicacion medioDeComunicacionSeleccionado, RepositorioDeIncidentes repositorioDeIncidentes
-        //this.apellido = apellido;
-        //this.nombre = nombre;
         this.provincias = new ArrayList<>();
         this.municipios = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
-        //this.receptorDeNotificaciones = new ReceptorDeNotificaciones(medioDeComunicacionSeleccionado,formaDeNotificarSeleccionada,mail, telefono);
-        //this.repositorioDeIncidentes = repositorioDeIncidentes;
     }
 
 

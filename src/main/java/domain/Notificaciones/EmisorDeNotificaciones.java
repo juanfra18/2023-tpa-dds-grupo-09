@@ -6,7 +6,9 @@ import domain.Entidades.EntidadPrestadora;
 import domain.Persistencia.Repositorios.RepositorioDeEmpresas;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
+import domain.Persistencia.Repositorios.RepositorioDeEntidadPrestadora;
 import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
+import domain.Persistencia.Repositorios.RepositorioDeOrganismosDeControl;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
@@ -42,9 +44,9 @@ public class EmisorDeNotificaciones {
   } //un main llama a esto cada cierto tiempo
 
 
-  public void generarRankings (RepositorioDeEmpresas repositorioDeEmpresas, RepositorioDeIncidentes repositorioDeIncidentes)
+  public void generarRankings (RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora, RepositorioDeIncidentes repositorioDeIncidentes, RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl)
   {
-    List<EntidadPrestadora> entidadesPrestadoras = repositorioDeEmpresas.getEmpresas().stream().flatMap(organismoDeControl -> organismoDeControl.getEntidadesPrestadoras().stream()).toList();
+    List<EntidadPrestadora> entidadesPrestadoras = repositorioDeEntidadPrestadora.buscarTodos();
     List<Entidad> entidades = new ArrayList<>();
     entidadesPrestadoras.forEach(entidadPrestadora -> entidades.addAll(entidadPrestadora.getEntidades()));
 
@@ -55,8 +57,8 @@ public class EmisorDeNotificaciones {
     this.entidadesQueSolucionanMasLento.armarRanking(entidades,incidentesDeEstaSemana);
 
 
-    repositorioDeEmpresas.getEmpresas().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
-    repositorioDeEmpresas.getEmpresas().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
+    repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
+    repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
 
     entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
     entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));

@@ -32,8 +32,6 @@ public class Incidente extends Persistente {
     private ReporteDeIncidente reporteDeCierre;
 
     public Incidente() {
-       // this.establecimiento = establecimiento;
-        //this.servicio = servicio;
         this.reportesDeApertura = new ArrayList<>();
     }
 
@@ -56,14 +54,14 @@ public class Incidente extends Persistente {
         return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.reporteDeCierre.getFechaYhora());
     } //lo hacemos en minutos y dsp se pasa a horas y minutos en el ranking
 
-    public boolean igualito(Object obj) {
-        if (this == obj) {
+    public boolean igualito(Incidente incidente) {
+        if (this == incidente) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (incidente == null || getClass() != incidente.getClass()) {
             return false;
         }
-        Incidente otro = (Incidente) obj;
+        Incidente otro = incidente;
         return Objects.equals(establecimiento, otro.getEstablecimiento())
             && Objects.equals(servicio,otro.getServicio());
     }
