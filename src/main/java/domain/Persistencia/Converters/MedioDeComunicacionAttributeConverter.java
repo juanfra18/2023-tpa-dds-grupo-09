@@ -16,8 +16,8 @@ public class MedioDeComunicacionAttributeConverter implements AttributeConverter
       return null;
 
     switch (medioDeComunicacion.getClass().getName()) {
-      case "ViaMail": nombreMedio = "mail"; break;
-      case "ViaWPP": nombreMedio = "wpp"; break;
+      case "domain.Notificaciones.ViaMail": nombreMedio = "mail"; break;
+      case "domain.Notificaciones.ViaWPP": nombreMedio = "wpp"; break;
     }
 
     return nombreMedio;

@@ -4,12 +4,14 @@ import domain.Incidentes.ReporteDeIncidente;
 import domain.Persistencia.Converters.FormaDeNotificarAttributeConverter;
 import domain.Persistencia.Converters.MedioDeComunicacionAttributeConverter;
 import domain.Persistencia.Persistente;
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 
 @Entity
+@Getter
 @Table(name = "receptorDeNotificaciones")
 public class ReceptorDeNotificaciones extends Persistente {
   @Convert(converter = FormaDeNotificarAttributeConverter.class)

@@ -53,8 +53,8 @@ public class MiembroDeComunidad extends Persistente {
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
+        this.receptorDeNotificaciones = new ReceptorDeNotificaciones(); //para que se persiste automaticamente
     }
-
 
     public void agregarProvincia(Provincia provincia) {
         provincias.add(provincia);
