@@ -1,4 +1,4 @@
-package domain.Rankings;
+package ServicioAPI;
 
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
