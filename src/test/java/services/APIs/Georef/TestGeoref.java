@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 public class TestGeoref {
-    /*
     static ServicioGeoref servicioGeoref;
     @BeforeAll
     public static void init(){
@@ -42,6 +41,4 @@ public class TestGeoref {
         Municipio municipio = servicioGeoref.obtenerMunicipio("General Alvarado");
         Assertions.assertEquals(60280,municipio.getId());
     }
-
-     */
 }

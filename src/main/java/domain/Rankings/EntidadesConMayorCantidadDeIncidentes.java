@@ -17,9 +17,19 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
     independientemente de la comunidad de la que forma parte, no se consideran, para el presente ranking, ningún
     incidente que se genere sobre dicha prestación en un plazo de 24 horas siempre y cuando el mismo continúe abierto. */
     /*Se considera el período semanal desde el lunes a las 0.00 h. hasta el domingo 23.59 h.*/
+
+
     @Override
     protected int[] obtenerValoresPorEntidad(List<Entidad> entidades, List<Incidente> incidentes) {
         int[] contadorAux = new int[entidades.size()];
+
+        /*
+        Ordenar los incidentes por horario y filtrar por tipo de incidente y recorrer
+        uno por uno, contar a partir del horario de apertura
+        que hayan pasado 24 horas, o si fue cerrado, avanzar hasta el proximo incidente luego de dicho horario
+        y seguir recorriendo
+         */
+
 
         for(Incidente incidente : incidentes) {
             Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();

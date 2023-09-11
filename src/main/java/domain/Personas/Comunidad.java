@@ -22,7 +22,8 @@ public class Comunidad extends Persistente {
     private String nombre;
     @ManyToMany(mappedBy = "comunidades")
     private List<MiembroDeComunidad> miembros;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @JoinColumn(name = "comunidad_id")
     private List<Incidente> incidentesDeLaComunidad;
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;

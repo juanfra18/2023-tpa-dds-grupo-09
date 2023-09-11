@@ -147,6 +147,9 @@ public class CargaDeDatos {
 
             repositorioMiembroDeComunidad.agregar(pablo);
 
+            comunidad.setNombre("los+picantes");
+            repositorioComunidad.modificar(comunidad);
+
 
             //miembro de comunidad reporta incidentes
             estacionRetiro = repositorioDeEstablecimientos.buscar(4);
@@ -160,7 +163,28 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
             pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+/*
+            incidenteBanioLineaMitre.setDenunciante(pablo);
+            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+            incidenteBanioLineaMitre.setEntidad(lineaMitre);
+            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,20,30,30));
+            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        Assertions.assertTrue(true);
+            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+
+            incidenteBanioLineaMitre.setDenunciante(pablo);
+            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
+            incidenteBanioLineaMitre.setEntidad(lineaMitre);
+            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,20,30,30));
+            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
+
+            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+*/
+
+      Assertions.assertTrue(true);
     }
 }

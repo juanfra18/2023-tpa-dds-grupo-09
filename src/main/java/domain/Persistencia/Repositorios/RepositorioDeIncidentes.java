@@ -112,34 +112,6 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
     repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente3);
     repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente4);
   }
-  public void registrarReporte(ReporteDeIncidente reporteDeIncidente) {
-    //buscartodos
-        List<Incidente> incidentesSobreLaMismaProblematica = this.buscarTodos().stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
-        Incidente mismoIncidente = null;
-
-        if (!incidentesSobreLaMismaProblematica.isEmpty()) {
-            mismoIncidente = incidentesSobreLaMismaProblematica.get(incidentesSobreLaMismaProblematica.size() - 1);
-        }
-        //para obtener el mismo incidente pero el mas reciente
-
-        if (mismoIncidente != null && !mismoIncidente.cerrado()) {
-            if (reporteDeIncidente.esDeCierre()) { //hay q cerrar el reporte y ver si no hay otros tmb sin cerrar
-                mismoIncidente.setReporteDeCierre(reporteDeIncidente);
-            } else { //es del mismo incidente, pero no de cierre
-                mismoIncidente.agregarReporteDeApertura(reporteDeIncidente);
-            }
-          this.modificar(mismoIncidente);
-        } else { // No es del mismo incidente y no es de cierre
-            if (!reporteDeIncidente.esDeCierre()) {
-                Incidente incidente = new Incidente();
-                incidente.setEstablecimiento(reporteDeIncidente.getEstablecimiento());
-                incidente.setServicio(reporteDeIncidente.getServicio());
-                incidente.agregarReporteDeApertura(reporteDeIncidente);
-                this.agregar(incidente);
-            }
-        }
-    }
-
     public List<Incidente> getIncidentesEstaSemana() {
         return this.buscarTodos().stream().filter(incidente -> incidente.primeraApertura().dentroDeEstaSemana()).toList();
     }

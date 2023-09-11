@@ -85,8 +85,6 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         this.tx.begin();
         entityManager().persist(reporteDeIncidente);
         this.tx.commit();
-
-        repositorioDeIncidentes.registrarReporte(reporteDeIncidente);
     }
 
     public void modificar(ReporteDeIncidente reporteDeIncidente) {
