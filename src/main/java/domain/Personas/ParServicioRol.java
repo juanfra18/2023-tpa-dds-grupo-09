@@ -18,10 +18,7 @@ public class ParServicioRol extends Persistente {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    public ParServicioRol(Servicio servicio, Rol rol) {
-        this.servicio = servicio;
-        this.rol = rol;
-    }
+    public ParServicioRol() {}
 
     public void cambiarRol(){
         if(this.rol == Rol.OBSERVADOR)

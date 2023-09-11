@@ -2,6 +2,7 @@ package domain.Persistencia.Repositorios;
 
 import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
+import domain.Personas.ParServicioRol;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;
@@ -9,8 +10,10 @@ import java.util.List;
 
 public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
+  RepositorioParServicioRol repositorioParServicioRol;
   public RepositorioMiembroDeComunidad(){
      this.tx = entityManager().getTransaction();
+     repositorioParServicioRol = new RepositorioParServicioRol();
   }
 
   public static void main(String[] args) {

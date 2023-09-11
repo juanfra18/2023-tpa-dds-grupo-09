@@ -6,7 +6,6 @@ import domain.Entidades.Establecimiento;
 import domain.Incidentes.*;
 import domain.Notificaciones.ReceptorDeNotificaciones;
 import domain.Persistencia.Persistente;
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
 import domain.Persistencia.Repositorios.RepositorioDeReportesDeIncidentes;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
@@ -27,11 +26,11 @@ public class MiembroDeComunidad extends Persistente {
     private String apellido;
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany
-    @JoinColumn(name="entidad_id",referencedColumnName = "id")
+    @ManyToMany
     private List<Entidad> entidadesDeInteres;
-    @OneToMany
-    @JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
+    //@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}) //REVISAR ESTA RELACION TODO
+    //@JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
+    @Transient
     private List<ParServicioRol> serviciosDeInteres;
     @ManyToMany
     private List<Provincia> provincias;
@@ -68,7 +67,9 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void agregarServicioDeInteres(Servicio servicio, Rol rol) {
-        ParServicioRol parServicioRol = new ParServicioRol(servicio,rol);
+        ParServicioRol parServicioRol = new ParServicioRol();
+        parServicioRol.setServicio(servicio);
+        parServicioRol.setRol(rol);
         serviciosDeInteres.add(parServicioRol);
     }
     public void cambiarRolSobreServicio(Servicio servicio){

@@ -1,9 +1,11 @@
 package domain.Personas;
 
+import ServicioAPI.RepoComunidad;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.EmisorDeNotificaciones;
 import domain.Persistencia.Persistente;
+import domain.Persistencia.Repositorios.RepositorioComunidad;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,11 +22,12 @@ public class Comunidad extends Persistente {
     private String nombre;
     @ManyToMany(mappedBy = "comunidades")
     private List<MiembroDeComunidad> miembros;
-    @OneToMany
-    @JoinColumn(name = "comunidad_id")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Incidente> incidentesDeLaComunidad;
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;
+    @Transient
+    private RepositorioComunidad repositorioComunidad;
 
     public Comunidad() {
         this.miembros = new ArrayList<>();
@@ -64,6 +67,7 @@ public class Comunidad extends Persistente {
                 this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros); //se crea un nuevo incidente
             }
         }
+        repositorioComunidad.modificar(this);
     }
     public List<Incidente> incidentesAbiertos(){
         return this.incidentesDeLaComunidad.stream().filter(i -> !i.cerrado()).toList();

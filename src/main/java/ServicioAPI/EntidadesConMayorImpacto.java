@@ -27,7 +27,7 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     // nivelDeImpacto = Σ (t resolución de incidente) + Cantidad de incidentes no resueltos * CNF
     // total = nivelDeImpacto * cantMiembros (miembros.afectados.size())
     // total -> Armas el ranking
-
+/*
     protected int[] obtenerValoresPorEntidad(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades) {
         int[] tiempoDeResolucion = new int[entidades.size()];
         int[] cantIncidentesNoResueltos = new int[entidades.size()];
@@ -72,4 +72,6 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] promedioAux) {
 
     }
+
+ */
 }

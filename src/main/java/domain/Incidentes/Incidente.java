@@ -21,8 +21,9 @@ public class Incidente extends Persistente {
     @ManyToOne
     @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
     private Establecimiento establecimiento;
-    @ManyToOne
-    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
+    //@ManyToOne
+    //@JoinColumn(name = "servicio_id", referencedColumnName = "id")
+    @Transient
     private Servicio servicio;
     @OneToMany(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "incidente_id")
