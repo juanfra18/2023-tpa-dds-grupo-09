@@ -14,8 +14,7 @@ import domain.Persistencia.Repositorios.*;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
+import domain.Servicios.*;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -89,6 +88,20 @@ public class CargaDeDatos {
                 provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
                     getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
 
+            //Se cargan los servicios
+            RepositorioServicio repositorioServicio = new RepositorioServicio();
+            Banio banio = new Banio();
+            banio.setTipo(TipoBanio.DAMAS.toString());
+            repositorioServicio.agregar(banio);
+            banio.setTipo(TipoBanio.CABALLEROS.toString());
+            repositorioServicio.agregar(banio);
+            banio.setTipo(TipoBanio.UNISEX.toString());
+            repositorioServicio.agregar(banio);
+            Elevacion elevacion = new Elevacion();
+            elevacion.setTipo(TipoElevacion.ESCALERAS_MECANICAS.toString());
+            repositorioServicio.agregar(elevacion);
+            elevacion.setTipo(TipoElevacion.ASCENSOR.toString());
+            repositorioServicio.agregar(elevacion);
             //Se cargan las empresas
             empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));

@@ -22,7 +22,7 @@ public class Establecimiento extends Persistente {
   @Enumerated(EnumType.STRING)
   @Setter
   private TipoEstablecimiento tipoEstablecimiento;
-  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @ManyToMany //todo para que la tabla intermedia tenga un id y permite varias entradas iguales
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")

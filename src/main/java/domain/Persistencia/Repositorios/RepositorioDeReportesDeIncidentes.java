@@ -33,7 +33,7 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
     }
 
     public static void main(String[] args) {
-        RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
+        /*RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
         ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
 
         Provincia jujuy = new RepositorioProvincias().buscar(38);
@@ -79,6 +79,8 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         //repo.eliminar(miembroDeComunidad);
 
         repo.buscarTodos().forEach(reporte -> System.out.println(reporte.getNombre()));
+
+         */
     }
 
     public void agregar(ReporteDeIncidente reporteDeIncidente) {

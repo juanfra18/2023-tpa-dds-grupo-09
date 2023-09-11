@@ -16,21 +16,15 @@ public class RepositorioServicio implements WithSimplePersistenceUnit {
     RepositorioServicio repo = new RepositorioServicio();
 
     Servicio banio = new Banio();
-    banio.setTipo(TipoBanio.UNISEX.toString());
+    banio.setTipo(TipoBanio.DAMAS.toString());
     Servicio elevacion = new Elevacion();
-    elevacion.setTipo(TipoElevacion.ESCALERAS_MECANICAS.toString());
+    elevacion.setTipo(TipoElevacion.ASCENSOR.toString());
 
     repo.agregar(banio);
     repo.agregar(elevacion);
 
-    banio.setTipo(TipoBanio.CABALLEROS.toString());
-    repo.modificar(banio);
 
-    System.out.println(repo.buscarTodos().toString());
 
-    repo.eliminar(banio);
-
-    System.out.println(repo.buscar(banio.getId()));
   }
 
   public void agregar(Servicio servicio) {
@@ -48,8 +42,13 @@ public class RepositorioServicio implements WithSimplePersistenceUnit {
     entityManager().remove(servicio);
     this.tx.commit();
   }
-  public Servicio buscar(long id){
-    return entityManager().find(Servicio.class, id);
+  public Servicio buscarBanio(TipoBanio tipo){
+    return (Servicio) entityManager().createQuery("from Servicio where tipoBanio = :tipo").
+            setParameter("tipo",tipo).getResultList().get(0);
+  }
+  public Servicio buscarElevacion(TipoElevacion tipo){
+    return (Servicio) entityManager().createQuery("from Servicio where tipoElevacion = :tipo").
+        setParameter("tipo",tipo).getResultList().get(0);
   }
   public List<Servicio> buscarTodos(){
     return entityManager().createQuery("from Servicio", Servicio.class).getResultList();

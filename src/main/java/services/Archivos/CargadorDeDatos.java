@@ -1,9 +1,8 @@
 package services.Archivos;
 
 import domain.Entidades.*;
-import domain.Servicios.Banio;
-import domain.Servicios.Elevacion;
-import domain.Servicios.Servicio;
+import domain.Persistencia.Repositorios.RepositorioServicio;
+import domain.Servicios.*;
 import services.APIs.Georef.AdapterServicioGeo;
 
 import java.util.*;
@@ -46,14 +45,12 @@ public class CargadorDeDatos {
       Entidad entidad = obtenerEntidad(prestadora.getEntidades(), posibleEntidad);
       Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), posibleEstablecimiento);
 
-
+      RepositorioServicio repositorioServicio = new RepositorioServicio();
       if (servicioNombre.equals("Banio")) {
-        Servicio banio = new Banio();
-        banio.setTipo(servicioTipo);
+        Servicio banio = repositorioServicio.buscarBanio(TipoBanio.valueOf(servicioTipo));
         establecimiento.agregarServicio(banio);
       } else {
-        Servicio elevador = new Elevacion();
-        elevador.setTipo(servicioTipo);
+        Servicio elevador = repositorioServicio.buscarElevacion(TipoElevacion.valueOf(servicioTipo));
         establecimiento.agregarServicio(elevador);
       }
 
