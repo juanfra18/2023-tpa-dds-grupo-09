@@ -22,7 +22,8 @@ public class Establecimiento extends Persistente {
   @Enumerated(EnumType.STRING)
   @Setter
   private TipoEstablecimiento tipoEstablecimiento;
-  @ManyToMany //todo para que la tabla intermedia tenga un id y permite varias entradas iguales
+  @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinColumn(name="establecimiento_id")
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")

@@ -45,12 +45,13 @@ public class CargadorDeDatos {
       Entidad entidad = obtenerEntidad(prestadora.getEntidades(), posibleEntidad);
       Establecimiento establecimiento = obtenerEstablecimiento(entidad.getEstablecimientos(), posibleEstablecimiento);
 
-      RepositorioServicio repositorioServicio = new RepositorioServicio();
       if (servicioNombre.equals("Banio")) {
-        Servicio banio = repositorioServicio.buscarBanio(TipoBanio.valueOf(servicioTipo));
+        Servicio banio = new Banio();
+        banio.setTipo(servicioTipo);
         establecimiento.agregarServicio(banio);
       } else {
-        Servicio elevador = repositorioServicio.buscarElevacion(TipoElevacion.valueOf(servicioTipo));
+        Servicio elevador = new Elevacion();
+        elevador.setTipo(servicioTipo);
         establecimiento.agregarServicio(elevador);
       }
 
