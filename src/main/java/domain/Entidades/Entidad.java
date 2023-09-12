@@ -1,7 +1,7 @@
 package domain.Entidades;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 

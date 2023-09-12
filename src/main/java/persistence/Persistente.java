@@ -1,4 +1,4 @@
-package domain.Persistencia;
+package persistence;
 
 import lombok.Getter;
 

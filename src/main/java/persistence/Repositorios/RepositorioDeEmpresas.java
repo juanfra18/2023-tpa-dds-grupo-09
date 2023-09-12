@@ -1,20 +1,16 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import Config.Config;
 import domain.Entidades.OrganismoDeControl;
-import domain.Persistencia.Repositorios.RepositorioEntidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Elevacion;
 import domain.Servicios.TipoBanio;
 import domain.Servicios.TipoElevacion;
 import lombok.Getter;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.GeorefService;
 import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
 import services.Archivos.SistemaDeArchivos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

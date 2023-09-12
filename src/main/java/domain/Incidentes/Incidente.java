@@ -1,7 +1,7 @@
 package domain.Incidentes;
 
 import domain.Entidades.Establecimiento;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,31 +28,39 @@ public class Incidente extends Persistente {
     @OneToMany(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "incidente_id")
     private List<ReporteDeIncidente> reportesDeApertura;
-    @OneToOne(cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "reporteDeIncidenteCierre_id",referencedColumnName = "id")
-    private ReporteDeIncidente reporteDeCierre;
+    @OneToMany(cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "incidente_id",referencedColumnName = "id")
+    private List<ReporteDeIncidente> reportesDeCierre;
 
     public Incidente() {
         this.reportesDeApertura = new ArrayList<>();
+        this.reportesDeCierre = new ArrayList<>();
     }
 
     public ReporteDeIncidente primeraApertura(){
         return this.reportesDeApertura.get(0);
     }
-    public void agregarReporteDeApertura(ReporteDeIncidente ... reportes){
+    public void agregarReporteDeApertura(ReporteDeIncidente reporteDeIncidente){
         // Se asume que los reportes están en orden cronológico
-        Collections.addAll(this.reportesDeApertura, reportes);
+        if (this.reportesDeApertura.isEmpty()) {
+            this.establecimiento = reporteDeIncidente.getEstablecimiento();
+            this.servicio = reporteDeIncidente.getServicio();
+        }
+        this.reportesDeApertura.add(reporteDeIncidente);
+    }
+    public void agregarReporteDeCierre(ReporteDeIncidente reporteDeIncidente){
+        this.reportesDeCierre.add(reporteDeIncidente);
     }
 
     public boolean cerrado(){
-        return !(this.reporteDeCierre == null);
+        return !(this.reportesDeCierre.isEmpty());
     }
     public boolean tieneEstado(EstadoIncidente estadoIncidente){
         return (this.cerrado() && estadoIncidente == EstadoIncidente.CERRADO)
                 || (!this.cerrado() && estadoIncidente == EstadoIncidente.ABIERTO);
     }
     public Long tiempoDeCierre(){
-        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.reporteDeCierre.getFechaYhora());
+        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.reportesDeCierre.get(0).getFechaYhora());
     } //lo hacemos en minutos y dsp se pasa a horas y minutos en el ranking
 
     public boolean igualito(Incidente incidente) {

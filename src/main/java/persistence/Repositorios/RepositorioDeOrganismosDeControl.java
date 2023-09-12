@@ -1,8 +1,6 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Entidades.*;
-import domain.Notificaciones.*;
-import domain.Personas.Comunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
@@ -12,15 +10,14 @@ import services.Localizacion.Provincia;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepositorioDeEntidadPrestadora implements WithSimplePersistenceUnit {
+public class RepositorioDeOrganismosDeControl implements WithSimplePersistenceUnit {
     private EntityTransaction tx;
-    public RepositorioDeEntidadPrestadora(){
+    public RepositorioDeOrganismosDeControl(){
         this.tx = entityManager().getTransaction();
     }
 
     public static void main(String[] args) {
-        RepositorioDeEntidadPrestadora repo = new RepositorioDeEntidadPrestadora();
-        EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
+        RepositorioDeOrganismosDeControl repo = new RepositorioDeOrganismosDeControl();
 
         Provincia jujuy = new Provincia();
         jujuy.setId(38);
@@ -44,42 +41,47 @@ public class RepositorioDeEntidadPrestadora implements WithSimplePersistenceUnit
         entidad.setNombre("Mitre");
         entidad.agregarEstablecimiento(establecimiento);
 
+        EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
         entidadPrestadora.setNombre("Diegomaster");
         entidadPrestadora.setPersonaMail("Rizzler@callme.com");
         entidadPrestadora.agregarEntidad(entidad);
 
+        OrganismoDeControl organismoDeControl = new OrganismoDeControl();
+        organismoDeControl.setNombre("Paolopoli");
+        organismoDeControl.setPersonaMail("jfranpali@mujereslover");
+        organismoDeControl.agregarEntidadPrestadora(entidadPrestadora);
 
-        repo.agregar(entidadPrestadora);
+        repo.agregar(organismoDeControl);
 
-        entidadPrestadora.setNombre("Xx__messilovers__xX");
+        organismoDeControl.setNombre("Xx__messilovers__xX");
 
-        repo.modificar(entidadPrestadora);
+        repo.modificar(organismoDeControl);
 
-        System.out.println(repo.buscar(entidadPrestadora.getId()).getNombre());
+        System.out.println(repo.buscar(organismoDeControl.getId()).getNombre());
 
         System.out.println(repo.buscarTodos().size());
 
         //repo.eliminar(comunidad);
     }
-    public void agregar(EntidadPrestadora entidadPrestadora) {
+    public void agregar(OrganismoDeControl organismoDeControl) {
         this.tx.begin();
-        entityManager().persist(entidadPrestadora);
+        entityManager().persist(organismoDeControl);
         this.tx.commit();
     }
-    public void modificar(EntidadPrestadora entidadPrestadora) {
+    public void modificar(OrganismoDeControl organismoDeControl) {
         this.tx.begin();
-        entityManager().merge(entidadPrestadora);
+        entityManager().merge(organismoDeControl);
         this.tx.commit();
     }
-    public void eliminar(EntidadPrestadora entidadPrestadora) {
+    public void eliminar(OrganismoDeControl organismoDeControl) {
         this.tx.begin();
-        entityManager().remove(entidadPrestadora);
+        entityManager().remove(organismoDeControl);
         this.tx.commit();
     }
-    public EntidadPrestadora buscar(long id){
-        return entityManager().find(EntidadPrestadora.class, id);
+    public OrganismoDeControl buscar(long id){
+        return entityManager().find(OrganismoDeControl.class, id);
     }
-    public List<EntidadPrestadora> buscarTodos(){
-        return entityManager().createQuery("from EntidadPrestadora", EntidadPrestadora.class).getResultList();
+    public List<OrganismoDeControl> buscarTodos(){
+        return entityManager().createQuery("from OrganismoDeControl", OrganismoDeControl.class).getResultList();
     }
 }

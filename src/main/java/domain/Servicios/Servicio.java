@@ -1,7 +1,6 @@
 package domain.Servicios;
 
-import domain.Entidades.Establecimiento;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 
 import javax.persistence.*;
 import java.util.Objects;

@@ -2,36 +2,28 @@ package Repositorios;
 
 import Config.Config;
 import domain.Entidades.Entidad;
-import domain.Entidades.EntidadPrestadora;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.OrganismoDeControl;
 import domain.Incidentes.EstadoIncidente;
-import domain.Incidentes.Incidente;
 import domain.Incidentes.Posicion;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.*;
-import domain.Persistencia.Repositorios.*;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
 import domain.Servicios.*;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import services.APIs.Georef.AdapterServicioGeo;
+import persistence.Repositorios.*;
 import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
 import services.Archivos.SistemaDeArchivos;
-import services.Localizacion.ListadoDeMunicipios;
 import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CargaDeDatos {

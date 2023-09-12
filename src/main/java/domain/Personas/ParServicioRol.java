@@ -1,6 +1,6 @@
 package domain.Personas;
 
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;

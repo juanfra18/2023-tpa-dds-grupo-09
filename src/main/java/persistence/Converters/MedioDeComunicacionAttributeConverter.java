@@ -1,4 +1,4 @@
-package domain.Persistencia.Converters;
+package persistence.Converters;
 
 import domain.Notificaciones.MedioDeComunicacion;
 import domain.Notificaciones.ViaMail;

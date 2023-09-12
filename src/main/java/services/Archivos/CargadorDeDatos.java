@@ -1,7 +1,7 @@
 package services.Archivos;
 
 import domain.Entidades.*;
-import domain.Persistencia.Repositorios.RepositorioServicio;
+import persistence.Repositorios.RepositorioServicio;
 import domain.Servicios.*;
 import services.APIs.Georef.AdapterServicioGeo;
 

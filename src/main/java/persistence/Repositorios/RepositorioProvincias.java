@@ -1,6 +1,5 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
-import domain.Personas.Comunidad;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import services.APIs.Georef.ServicioGeoref;
 import services.Localizacion.ListadoDeProvincias;

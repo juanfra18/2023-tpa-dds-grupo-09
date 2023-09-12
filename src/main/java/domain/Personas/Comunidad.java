@@ -1,15 +1,16 @@
 package domain.Personas;
 
-import ServicioAPI.RepoComunidad;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.EmisorDeNotificaciones;
-import domain.Persistencia.Persistente;
-import domain.Persistencia.Repositorios.RepositorioComunidad;
+import persistence.Persistente;
+import persistence.Repositorios.RepositorioComunidad;
 import lombok.Getter;
 import lombok.Setter;
+import persistence.Repositorios.RepositorioDeIncidentes;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Comunidad extends Persistente {
     private List<MiembroDeComunidad> miembros;
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     @JoinColumn(name = "comunidad_id")
-    private List<Incidente> incidentesDeLaComunidad;
+    private List<ReporteDeIncidente> reportesDeLaComunidad;
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;
     @Transient
@@ -32,49 +33,55 @@ public class Comunidad extends Persistente {
 
     public Comunidad() {
         this.miembros = new ArrayList<>();
-        this.incidentesDeLaComunidad = new ArrayList<>();
+        this.reportesDeLaComunidad = new ArrayList<>();
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);
     }
-    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente) {
-        List<Incidente> incidentesSobreLaMismaProblematica = this.incidentesDeLaComunidad.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
-        Incidente mismoIncidente = null;
+    public boolean cerroIncidente(Incidente incidente) {
+        return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeCierre().contains(r));
+    }
+    public List<Incidente> getIncidentesDeComunidad(List<Incidente> incidentes) {
+        return incidentes.stream().filter(i -> this.incidenteEsDeComunidad(i)).toList();
+    }
+    public boolean incidenteEsDeComunidad(Incidente incidente) {
+        return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeApertura().contains(r));
+    }
+    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente, RepositorioDeIncidentes repositorioDeIncidentes) {
+        List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
+        List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
 
-        if(!incidentesSobreLaMismaProblematica.isEmpty())
+        if(incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
         {
-            mismoIncidente  = incidentesSobreLaMismaProblematica.get(incidentesSobreLaMismaProblematica.size()-1);
+            Incidente incidente = new Incidente();
+            incidente.agregarReporteDeApertura(reporteDeIncidente);
+            repositorioDeIncidentes.agregar(incidente);
         }
-        //para obtener el mismo incidente pero el mas reciente
-
-        if (mismoIncidente != null && !mismoIncidente.cerrado()) {
-            if (reporteDeIncidente.esDeCierre()){
-                mismoIncidente.setReporteDeCierre(reporteDeIncidente);
-                this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros); //se cierra incidente
+        else {
+            boolean agregado = false;
+            for (Incidente incidente : incidentesSobreLaMismaProblematica) {
+                if (this.incidenteEsDeComunidad(incidente) && (!agregado)) {
+                    if (reporteDeIncidente.esDeCierre() && (this.reportesDeLaComunidad.stream().anyMatch(r -> !incidente.getReportesDeCierre().contains(r)))) {
+                        incidente.agregarReporteDeCierre(reporteDeIncidente);
+                        agregado = true;
+                    } else {
+                        incidente.agregarReporteDeApertura(reporteDeIncidente);
+                        agregado = true;
+                    }
+                }
             }
-            else {
-                mismoIncidente.agregarReporteDeApertura(reporteDeIncidente);
-            }
-        }
-        else { //si no existe o fue cerrado, creo uno nuevo
-            if(!reporteDeIncidente.esDeCierre())
-            {
+            if (!agregado) { //en principio siempre acá es de apertura
                 Incidente incidente = new Incidente();
-                incidente.setEstablecimiento(reporteDeIncidente.getEstablecimiento());
-                incidente.setServicio(reporteDeIncidente.getServicio());
                 incidente.agregarReporteDeApertura(reporteDeIncidente);
-                this.incidentesDeLaComunidad.add(incidente);
-
-                this.emisorDeNotificaciones.enviarNotificaciones(reporteDeIncidente, this.miembros); //se crea un nuevo incidente
+                repositorioDeIncidentes.agregar(incidente);
             }
         }
-        repositorioComunidad.modificar(this);
-    }
-    public List<Incidente> incidentesAbiertos(){
-        return this.incidentesDeLaComunidad.stream().filter(i -> !i.cerrado()).toList();
-    }
 
-    public boolean reportaronIncidente(Incidente incidente) {
-        return this.incidentesDeLaComunidad.stream().filter(i -> i.igualito(incidente)).toList().size() >= 1;
+        this.reportesDeLaComunidad.add(reporteDeIncidente);
+
+        repositorioComunidad.agregar(this);
+    }
+    public List<Incidente> incidentesAbiertos(List<Incidente> incidentes){
+        return this.getIncidentesDeComunidad(incidentes).stream().filter(i -> !i.cerrado()).toList();
     }
 }

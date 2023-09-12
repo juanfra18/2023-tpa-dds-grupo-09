@@ -1,18 +1,18 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import services.Localizacion.Municipio;
 
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepositorioDeReceptoresDeNotificaciones implements WithSimplePersistenceUnit {
+public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-
-  public RepositorioDeReceptoresDeNotificaciones(){
-    this.tx = entityManager().getTransaction();
+  RepositorioParServicioRol repositorioParServicioRol;
+  public RepositorioMiembroDeComunidad(){
+     this.tx = entityManager().getTransaction();
+     repositorioParServicioRol = new RepositorioParServicioRol();
   }
 
   public static void main(String[] args) {
@@ -33,28 +33,37 @@ public class RepositorioDeReceptoresDeNotificaciones implements WithSimplePersis
     miembroDeComunidad.getReceptorDeNotificaciones().setTelefono("+1333333453");
 
     repo.agregar(miembroDeComunidad);
+
+    miembroDeComunidad.setApellido("fernandez");
+
+    repo.modificar(miembroDeComunidad);
+
+    System.out.println(repo.buscar(miembroDeComunidad.getId()).getNombre());
+
+    //repo.eliminar(miembroDeComunidad);
+
+    repo.buscarTodos().forEach(m -> System.out.println(m.getApellido()));
   }
 
-  public void agregar(ReceptorDeNotificaciones receptorDeNotificaciones) {
+  public void agregar(MiembroDeComunidad miembroDeComunidad) {
     this.tx.begin();
-    entityManager().persist(receptorDeNotificaciones);
+    entityManager().persist(miembroDeComunidad);
     this.tx.commit();
   }
-  public void modificar(ReceptorDeNotificaciones receptorDeNotificaciones) {
+  public void modificar(MiembroDeComunidad miembroDeComunidad) {
     this.tx.begin();
-    entityManager().merge(receptorDeNotificaciones);
+    entityManager().merge(miembroDeComunidad);
     this.tx.commit();
   }
-  public void eliminar(ReceptorDeNotificaciones receptorDeNotificaciones) {
+  public void eliminar(MiembroDeComunidad miembroDeComunidad) {
     this.tx.begin();
-    entityManager().remove(receptorDeNotificaciones);
+    entityManager().remove(miembroDeComunidad);
     this.tx.commit();
   }
-  public ReceptorDeNotificaciones buscar(long id){
-    return entityManager().find(ReceptorDeNotificaciones.class, id);
+  public MiembroDeComunidad buscar(long id){
+    return entityManager().find(MiembroDeComunidad.class, id);
   }
-
-  public List<ReceptorDeNotificaciones> buscarTodos(){
-    return entityManager().createQuery("from ReceptordeNotificaciones", ReceptorDeNotificaciones.class).getResultList();
+  public List<MiembroDeComunidad> buscarTodos(){
+    return entityManager().createQuery("from MiembroDeComunidad", MiembroDeComunidad.class).getResultList();
   }
 }

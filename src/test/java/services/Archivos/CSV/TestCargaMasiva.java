@@ -1,18 +1,5 @@
 package services.Archivos.CSV;
 
-import domain.Entidades.*;
-import domain.Persistencia.Repositorios.RepositorioDeEmpresas;
-import domain.Servicios.Servicio;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.ServicioGeoref;
-import services.Archivos.CargadorDeDatos;
-import services.Archivos.SistemaDeArchivos;
-
-import java.util.List;
-
 public class TestCargaMasiva {
   /*
   List<OrganismoDeControl> empresas;

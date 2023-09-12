@@ -1,4 +1,4 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import services.APIs.Georef.ServicioGeoref;

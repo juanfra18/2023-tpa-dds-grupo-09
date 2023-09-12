@@ -1,7 +1,5 @@
 package ServicioAPI;
 
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Persistencia.Repositorios.RepositorioEntidad;
 import io.javalin.Javalin;
 
 public class WebApp {
@@ -12,11 +10,8 @@ public class WebApp {
     Integer port = Integer.parseInt(
         System.getProperty("port", "8080"));
     Javalin app = Javalin.create().start(port);
-    app.get("/",ctx -> ctx.result("Hola Mundo"));//cuando alguien vaya al path devuelve hola mundo
     app.post("/ranking",
-        new PasarDatosController(repoEntidad, repoIncidente, repoComunidad)); //cuando haga el post que ya devuelva, un solo controller
-    app.get("/ranking",
-        new ObtenerRankingController(repoEntidad, repoIncidente, repoComunidad));
+        new ProcesarDatosController(repoEntidad, repoIncidente, repoComunidad)); //cuando haga el post que ya devuelva, un solo controller
   }
 }
 

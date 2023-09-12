@@ -1,4 +1,4 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Usuario.Usuario;

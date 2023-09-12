@@ -1,4 +1,4 @@
-package domain.Persistencia.Converters;
+package persistence.Converters;
 import domain.Notificaciones.*;
 
 import javax.persistence.AttributeConverter;

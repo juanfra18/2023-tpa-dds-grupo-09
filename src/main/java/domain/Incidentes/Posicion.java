@@ -1,6 +1,6 @@
 package domain.Incidentes;
 
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import lombok.Getter;
 
 import javax.persistence.*;

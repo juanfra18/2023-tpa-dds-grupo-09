@@ -1,4 +1,4 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;

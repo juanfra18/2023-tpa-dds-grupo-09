@@ -1,10 +1,8 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
-import domain.Incidentes.Posicion;
 import domain.Personas.ParServicioRol;
 import domain.Personas.Rol;
 import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import javax.persistence.EntityTransaction;

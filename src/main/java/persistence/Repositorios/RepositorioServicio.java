@@ -1,6 +1,5 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
-import domain.Notificaciones.*;
 import domain.Servicios.*;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import javax.persistence.EntityTransaction;

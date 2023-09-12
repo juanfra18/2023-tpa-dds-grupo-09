@@ -5,8 +5,9 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Incidentes.*;
 import domain.Notificaciones.ReceptorDeNotificaciones;
-import domain.Persistencia.Persistente;
-import domain.Persistencia.Repositorios.RepositorioDeReportesDeIncidentes;
+import persistence.Persistente;
+import persistence.Repositorios.RepositorioDeIncidentes;
+import persistence.Repositorios.RepositorioDeReportesDeIncidentes;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -90,9 +91,9 @@ public class MiembroDeComunidad extends Persistente {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
+    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad, RepositorioDeIncidentes repositorioDeIncidentes) {//no nos importa donde se crea el reporte
         repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
-        comunidad.guardarIncidente(reporteDeIncidente);
+        comunidad.guardarIncidente(reporteDeIncidente, repositorioDeIncidentes);
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
@@ -114,9 +115,9 @@ public class MiembroDeComunidad extends Persistente {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
+    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado, List<Incidente> incidentes) {
         List<Incidente> incidentesDeMisComunidades = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeLaComunidad()));
+        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeComunidad(incidentes)));
 
         List<Incidente> incidentesDeEstadoSeleccionado = new ArrayList<>();
         incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
@@ -130,17 +131,17 @@ public class MiembroDeComunidad extends Persistente {
         return incidentesUnicos;
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
+    public List<Incidente> solicitarInformacionDeIncidentesAbiertos(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, incidentes);
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesCerrados() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
+    public List<Incidente> solicitarInformacionDeIncidentesCerrados(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, incidentes);
     }
 
     public boolean afectadoPor(Incidente incidente) {
-        //this.serviciosDeInteres.stream().filter(servicioRol -> servicioRol.getRol() == Rol.AFECTADO).anyMatch();
-        return this.tieneInteres(incidente.getServicio(), incidente.getEstablecimiento());// && (this.);
+        boolean tieneRolAfectado = this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().igualito(incidente.getServicio()));
+        return this.tieneInteres(incidente.getServicio(), incidente.getEstablecimiento()) && tieneRolAfectado;
     }
 }
 

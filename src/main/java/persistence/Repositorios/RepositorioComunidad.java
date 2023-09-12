@@ -1,4 +1,4 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Notificaciones.*;
 import domain.Personas.Comunidad;
