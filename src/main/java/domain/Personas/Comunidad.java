@@ -73,4 +73,8 @@ public class Comunidad extends Persistente {
     public List<Incidente> incidentesAbiertos(){
         return this.incidentesDeLaComunidad.stream().filter(i -> !i.cerrado()).toList();
     }
+
+    public boolean reportaronIncidente(Incidente incidente) {
+        return this.incidentesDeLaComunidad.stream().filter(i -> i.igualito(incidente)).toList().size() >= 1;
+    }
 }

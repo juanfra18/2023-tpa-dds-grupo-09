@@ -14,7 +14,7 @@ public class WebApp {
     Javalin app = Javalin.create().start(port);
     app.get("/",ctx -> ctx.result("Hola Mundo"));//cuando alguien vaya al path devuelve hola mundo
     app.post("/ranking",
-        new PasarDatosController(repoEntidad, repoIncidente, repoComunidad));
+        new PasarDatosController(repoEntidad, repoIncidente, repoComunidad)); //cuando haga el post que ya devuelva, un solo controller
     app.get("/ranking",
         new ObtenerRankingController(repoEntidad, repoIncidente, repoComunidad));
   }

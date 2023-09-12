@@ -138,6 +138,10 @@ public class MiembroDeComunidad extends Persistente {
         return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
     }
 
+    public boolean afectadoPor(Incidente incidente) {
+        //this.serviciosDeInteres.stream().filter(servicioRol -> servicioRol.getRol() == Rol.AFECTADO).anyMatch();
+        return this.tieneInteres(incidente.getServicio(), incidente.getEstablecimiento());// && (this.);
+    }
 }
 
 
