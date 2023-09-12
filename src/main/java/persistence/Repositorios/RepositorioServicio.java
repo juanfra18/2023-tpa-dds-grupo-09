@@ -1,5 +1,6 @@
 package persistence.Repositorios;
 
+import domain.Incidentes.Incidente;
 import domain.Servicios.*;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import javax.persistence.EntityTransaction;
@@ -41,14 +42,10 @@ public class RepositorioServicio implements WithSimplePersistenceUnit {
     entityManager().remove(servicio);
     this.tx.commit();
   }
-  public Servicio buscarBanio(TipoBanio tipo){
-    return (Servicio) entityManager().createQuery("from Servicio where tipoBanio = :tipo").
-            setParameter("tipo",tipo).getResultList().get(0);
+  public Servicio buscar(long id) {
+    return entityManager().find(Servicio.class, id);
   }
-  public Servicio buscarElevacion(TipoElevacion tipo){
-    return (Servicio) entityManager().createQuery("from Servicio where tipoElevacion = :tipo").
-        setParameter("tipo",tipo).getResultList().get(0);
-  }
+
   public List<Servicio> buscarTodos(){
     return entityManager().createQuery("from Servicio", Servicio.class).getResultList();
   }

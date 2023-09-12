@@ -41,6 +41,9 @@ public class Comunidad extends Persistente {
     public boolean cerroIncidente(Incidente incidente) {
         return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeCierre().contains(r));
     }
+    public boolean abrioIncidente(Incidente incidente) {
+        return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeApertura().contains(r));
+    }
     public List<Incidente> getIncidentesDeComunidad(List<Incidente> incidentes) {
         return incidentes.stream().filter(i -> this.incidenteEsDeComunidad(i)).toList();
     }
@@ -51,20 +54,19 @@ public class Comunidad extends Persistente {
         List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
         List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
 
-        if(incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
+        if (incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
         {
             Incidente incidente = new Incidente();
             incidente.agregarReporteDeApertura(reporteDeIncidente);
             repositorioDeIncidentes.agregar(incidente);
-        }
-        else {
+        } else {/*{
             boolean agregado = false;
             for (Incidente incidente : incidentesSobreLaMismaProblematica) {
                 if (this.incidenteEsDeComunidad(incidente) && (!agregado)) {
                     if (reporteDeIncidente.esDeCierre() && (this.reportesDeLaComunidad.stream().anyMatch(r -> !incidente.getReportesDeCierre().contains(r)))) {
                         incidente.agregarReporteDeCierre(reporteDeIncidente);
                         agregado = true;
-                    } else {
+                    } else{
                         incidente.agregarReporteDeApertura(reporteDeIncidente);
                         agregado = true;
                     }
@@ -75,8 +77,33 @@ public class Comunidad extends Persistente {
                 incidente.agregarReporteDeApertura(reporteDeIncidente);
                 repositorioDeIncidentes.agregar(incidente);
             }
+            */
+            boolean agregado = false;
+            for (Incidente incidente : incidentesSobreLaMismaProblematica) {
+                if (this.incidenteEsDeComunidad(incidente) && !agregado && !this.cerroIncidente(incidente)) {
+                    if(reporteDeIncidente.esDeCierre())
+                    {
+                        incidente.agregarReporteDeCierre(reporteDeIncidente);
+                        agregado = true;
+                    }
+                    else if(!reporteDeIncidente.esDeCierre())
+                    {
+                        incidente.agregarReporteDeApertura(reporteDeIncidente); //lo agrego, va a haber mas de un reporte de apertura de esta comunidad
+                        agregado = true;
+                    }
+                }
+                else if(!this.incidenteEsDeComunidad(incidente) && !agregado) //primer incidente no abierto por la comunidad
+                {
+                    incidente.agregarReporteDeApertura(reporteDeIncidente);
+                    agregado = true;
+                }
+            }
+            if (!agregado) { //en principio siempre acá es de apertura
+                Incidente incidente = new Incidente();
+                incidente.agregarReporteDeApertura(reporteDeIncidente);
+                repositorioDeIncidentes.agregar(incidente);
+            }
         }
-
         this.reportesDeLaComunidad.add(reporteDeIncidente);
 
         repositorioComunidad.agregar(this);

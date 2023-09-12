@@ -91,7 +91,8 @@ public class MiembroDeComunidad extends Persistente {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad, RepositorioDeIncidentes repositorioDeIncidentes) {//no nos importa donde se crea el reporte
+    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
+        RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
         repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
         comunidad.guardarIncidente(reporteDeIncidente, repositorioDeIncidentes);
     }
