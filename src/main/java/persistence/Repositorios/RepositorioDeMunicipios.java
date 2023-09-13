@@ -1,8 +1,7 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import services.APIs.Georef.ServicioGeoref;
-import services.Localizacion.ListadoDeMunicipios;
 import services.Localizacion.Municipio;
 
 import javax.persistence.EntityTransaction;

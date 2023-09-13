@@ -2,7 +2,7 @@ package domain.Entidades;
 
 
 import domain.Notificaciones.ViaMail;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 

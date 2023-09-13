@@ -1,6 +1,3 @@
 organismoDeControl,mailDeContacto,entidadPrestadora,entidad,tipoEntidad,establecimiento,nombreLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
-CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Mitre,FERROCARRIL,Retiro,General Alvarado,ESTACION,Banio,UNISEX
-CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Roca,FERROCARRIL,Vicente López,General Alvarado,ESTACION,Elevacion,ESCALERAS_MECANICAS
-BCRA,diseniogrupo9@gmail.com,Santander Río,diseniogrupo9@gmail.com,Santander Río Capital Federal,ESTABLECIMIENTO,General Alvear,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
-BCRA,diseniogrupo9@gmail.com,Santander Río,diseniogrupo9@gmail.com,Santander Río Buenos Aires,ESTABLECIMIENTO,General Alvear,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
-BCRA,diseniogrupo9@gmail.com,BCBA,diseniogrupo9@gmail.com,BCBA,ESTABLECIMIENTO,9 de Julio,General Alvarado,SUCURSAL,Elevacion,ASCENSOR
+CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Mitre,FERROCARRIL,Retiro,Yavi,ESTACION,Banio,UNISEX
+CNRT,diseniogrupo9@gmail.com,Trenes Argentinos,diseniogrupo9@gmail.com,Linea Roca,FERROCARRIL,Vicente López,Yavi,ESTACION,Elevacion,ESCALERAS_MECANICAS

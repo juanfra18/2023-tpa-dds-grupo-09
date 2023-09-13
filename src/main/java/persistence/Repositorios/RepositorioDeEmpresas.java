@@ -1,16 +1,12 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import Config.Config;
 import domain.Entidades.OrganismoDeControl;
-import domain.Persistencia.Repositorios.RepositorioEntidad;
 import lombok.Getter;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.APIs.Georef.GeorefService;
 import services.APIs.Georef.ServicioGeoref;
 import services.Archivos.CargadorDeDatos;
 import services.Archivos.SistemaDeArchivos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,6 +24,7 @@ public class RepositorioDeEmpresas {
         RepositorioDeOrganismosDeControl repositorioDeOrganismos = RepositorioDeOrganismosDeControl.getInstancia();
         empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
         empresas.forEach(e -> repositorioDeOrganismos.agregar(e));
+
     }
 }
 

@@ -2,8 +2,8 @@ package domain.Incidentes;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
-import domain.Persistencia.Converters.LocalDateTimeAttributeConverter;
-import domain.Persistencia.Persistente;
+import persistence.Converters.LocalDateTimeAttributeConverter;
+import persistence.Persistente;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Servicio;
 import lombok.Getter;
@@ -21,25 +21,26 @@ import java.util.Objects;
 @Table(name="reporteDeIncidente")
 public class ReporteDeIncidente extends Persistente {
   @Enumerated(EnumType.STRING)
-  private  EstadoIncidente clasificacion;
+  @Column(name = "clasificacion")
+  private EstadoIncidente clasificacion;
   @Convert(converter = LocalDateTimeAttributeConverter.class)
   @Column(name = "fechaYHora")
-  private  LocalDateTime fechaYhora;
+  private LocalDateTime fechaYhora;
   @ManyToOne
   @JoinColumn(name="miembro_id",referencedColumnName = "id")
-  private  MiembroDeComunidad denunciante;
+  private MiembroDeComunidad denunciante;
   @ManyToOne
   @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
-  private  Establecimiento establecimiento;
-  @ManyToOne
-  @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-  private  Servicio servicio;
-  @Column(name = "observaciones", columnDefinition = "text")
-  private  String observaciones;
+  private Establecimiento establecimiento;
   //@ManyToOne
-  //@JoinColumn(name="entidad_id",referencedColumnName = "id")
+  //@JoinColumn(name = "servicio_id", referencedColumnName = "id")
   @Transient
-  private  Entidad entidad;
+  private Servicio servicio;
+  @Column(name = "observaciones", columnDefinition = "text")
+  private String observaciones;
+  @ManyToOne
+  @JoinColumn(name="entidad_id",referencedColumnName = "id")
+  private Entidad entidad;
 
   public ReporteDeIncidente() {}
   public String getNombre() {

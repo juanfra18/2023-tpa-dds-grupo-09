@@ -1,4 +1,4 @@
-package domain.Persistencia.Converters;
+package persistence.Converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

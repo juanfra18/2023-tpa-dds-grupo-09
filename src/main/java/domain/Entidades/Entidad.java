@@ -1,7 +1,7 @@
 package domain.Entidades;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class Entidad extends Persistente {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name="entidad_id",referencedColumnName = "id")
+    @JoinColumn(name="entidad_id")
     private List<Establecimiento> establecimientos;
     @Enumerated(EnumType.STRING)
     private TipoEntidad tipoEntidad;

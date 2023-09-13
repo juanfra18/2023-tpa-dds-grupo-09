@@ -5,9 +5,9 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Incidentes.*;
 import domain.Notificaciones.ReceptorDeNotificaciones;
-import domain.Persistencia.Persistente;
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Persistencia.Repositorios.RepositorioDeReportesDeIncidentes;
+import persistence.Persistente;
+import persistence.Repositorios.RepositorioDeIncidentes;
+import persistence.Repositorios.RepositorioDeReportesDeIncidentes;
 import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
@@ -27,11 +27,11 @@ public class MiembroDeComunidad extends Persistente {
     private String apellido;
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany
-    @JoinColumn(name="entidad_id",referencedColumnName = "id")
+    @ManyToMany
     private List<Entidad> entidadesDeInteres;
-    @OneToMany
-    @JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
+    //@OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}) //REVISAR ESTA RELACION TODO
+    //@JoinColumn(name = "par_servicio_rol_id", referencedColumnName = "id") //TODO checkear
+    @Transient
     private List<ParServicioRol> serviciosDeInteres;
     @ManyToMany
     private List<Provincia> provincias;
@@ -68,7 +68,9 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void agregarServicioDeInteres(Servicio servicio, Rol rol) {
-        ParServicioRol parServicioRol = new ParServicioRol(servicio,rol);
+        ParServicioRol parServicioRol = new ParServicioRol();
+        parServicioRol.setServicio(servicio);
+        parServicioRol.setRol(rol);
         serviciosDeInteres.add(parServicioRol);
     }
     public void cambiarRolSobreServicio(Servicio servicio){
@@ -90,8 +92,9 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
+        RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
         repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
-        comunidad.guardarIncidente(reporteDeIncidente);
+        comunidad.guardarIncidente(reporteDeIncidente, repositorioDeIncidentes);
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
@@ -113,9 +116,9 @@ public class MiembroDeComunidad extends Persistente {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
+    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado, List<Incidente> incidentes) {
         List<Incidente> incidentesDeMisComunidades = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeLaComunidad()));
+        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeComunidad(incidentes)));
 
         List<Incidente> incidentesDeEstadoSeleccionado = new ArrayList<>();
         incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
@@ -129,14 +132,18 @@ public class MiembroDeComunidad extends Persistente {
         return incidentesUnicos;
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
+    public List<Incidente> solicitarInformacionDeIncidentesAbiertos(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, incidentes);
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesCerrados() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
+    public List<Incidente> solicitarInformacionDeIncidentesCerrados(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, incidentes);
     }
 
+    public boolean afectadoPor(Incidente incidente) {
+        boolean tieneRolAfectado = this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().igualito(incidente.getServicio()));
+        return this.tieneInteres(incidente.getServicio(), incidente.getEstablecimiento()) && tieneRolAfectado;
+    }
 }
 
 

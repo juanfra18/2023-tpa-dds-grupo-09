@@ -1,6 +1,6 @@
 package domain.Usuario;
 
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Seguridad.ValidadorDeContrasenias;
 import lombok.Getter;

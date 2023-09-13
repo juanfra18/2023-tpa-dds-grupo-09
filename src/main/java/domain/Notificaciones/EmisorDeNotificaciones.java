@@ -3,12 +3,11 @@ package domain.Notificaciones;
 import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Entidades.EntidadPrestadora;
-import domain.Persistencia.Repositorios.RepositorioDeEmpresas;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Persistencia.Repositorios.RepositorioDeEntidadPrestadora;
-import domain.Persistencia.Repositorios.RepositorioDeIncidentes;
-import domain.Persistencia.Repositorios.RepositorioDeOrganismosDeControl;
+import persistence.Repositorios.RepositorioDeEntidadPrestadora;
+import persistence.Repositorios.RepositorioDeIncidentes;
+import persistence.Repositorios.RepositorioDeOrganismosDeControl;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
@@ -36,8 +35,8 @@ public class EmisorDeNotificaciones {
     miembros.forEach(miembroDeComunidad -> miembroDeComunidad.recibirNotificacion(reporteDeIncidente));
     //el que envio recibe asi puede revisar bien que la informacion sea correcta
   }
-  public void solicitarRevisionDeIncidente(List<Comunidad> comunidades){
-    comunidades.forEach(comunidad -> comunidad.incidentesAbiertos().
+  public void solicitarRevisionDeIncidente(List<Comunidad> comunidades, List<Incidente> incidentes){
+    comunidades.forEach(comunidad -> comunidad.incidentesAbiertos(incidentes).
         forEach(incidente -> comunidad.getMiembros().
             forEach(miembroDeComunidad -> miembroDeComunidad.recibirSolicitudDeRevision(incidente.primeraApertura()))
         ));

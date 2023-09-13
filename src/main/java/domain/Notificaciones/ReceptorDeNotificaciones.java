@@ -1,9 +1,9 @@
 package domain.Notificaciones;
 
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Persistencia.Converters.FormaDeNotificarAttributeConverter;
-import domain.Persistencia.Converters.MedioDeComunicacionAttributeConverter;
-import domain.Persistencia.Persistente;
+import persistence.Converters.FormaDeNotificarAttributeConverter;
+import persistence.Converters.MedioDeComunicacionAttributeConverter;
+import persistence.Persistente;
 import lombok.Getter;
 import lombok.Setter;
 

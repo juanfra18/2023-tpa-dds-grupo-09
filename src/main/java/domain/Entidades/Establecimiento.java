@@ -1,7 +1,7 @@
 package domain.Entidades;
 
 import domain.Incidentes.Posicion;
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,8 @@ public class Establecimiento extends Persistente {
   @Enumerated(EnumType.STRING)
   @Setter
   private TipoEstablecimiento tipoEstablecimiento;
-  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinColumn(name="establecimiento_id")
   private List<Servicio> servicios;
   @ManyToOne
   @JoinColumn(name="municipio_id",referencedColumnName = "id")

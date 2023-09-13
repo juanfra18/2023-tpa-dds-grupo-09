@@ -1,24 +1,11 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.TipoEntidad;
-import domain.Entidades.TipoEstablecimiento;
-import domain.Incidentes.EstadoIncidente;
-import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Notificaciones.*;
-import domain.Personas.MiembroDeComunidad;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import lombok.Getter;
-import services.Localizacion.Municipio;
-import services.Localizacion.Provincia;
 
 import javax.persistence.EntityTransaction;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -41,7 +28,7 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
     }
 
     public static void main(String[] args) {
-        RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
+        /*RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
         ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
 
         Provincia jujuy = RepositorioProvincias.getInstancia().buscar(38);
@@ -87,14 +74,14 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         //repo.eliminar(miembroDeComunidad);
 
         repo.buscarTodos().forEach(reporte -> System.out.println(reporte.getNombre()));
+
+         */
     }
 
     public void agregar(ReporteDeIncidente reporteDeIncidente) {
         this.tx.begin();
         entityManager().persist(reporteDeIncidente);
         this.tx.commit();
-
-        repositorioDeIncidentes.registrarReporte(reporteDeIncidente);
     }
 
     public void modificar(ReporteDeIncidente reporteDeIncidente) {

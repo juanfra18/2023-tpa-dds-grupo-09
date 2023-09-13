@@ -1,11 +1,9 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.TipoEntidad;
 import domain.Entidades.TipoEstablecimiento;
-import domain.Notificaciones.*;
-import domain.Personas.Comunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;

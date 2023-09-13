@@ -1,4 +1,4 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
@@ -10,9 +10,10 @@ import java.util.List;
 public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
   private static RepositorioMiembroDeComunidad instancia = null;
-
+  RepositorioParServicioRol repositorioParServicioRol;
   private RepositorioMiembroDeComunidad() {
     tx = entityManager().getTransaction();
+    repositorioParServicioRol = new RepositorioParServicioRol();
   }
 
   public static  RepositorioMiembroDeComunidad getInstancia() {

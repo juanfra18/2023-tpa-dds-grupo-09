@@ -1,6 +1,6 @@
 package domain.Personas;
 
-import domain.Persistencia.Persistente;
+import persistence.Persistente;
 import domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +18,7 @@ public class ParServicioRol extends Persistente {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    public ParServicioRol(Servicio servicio, Rol rol) {
-        this.servicio = servicio;
-        this.rol = rol;
-    }
+    public ParServicioRol() {}
 
     public void cambiarRol(){
         if(this.rol == Rol.OBSERVADOR)

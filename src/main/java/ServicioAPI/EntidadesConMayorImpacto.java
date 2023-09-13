@@ -1,4 +1,4 @@
-package domain.Rankings;
+package ServicioAPI;
 
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
@@ -46,7 +46,7 @@ Se deberá implementar el servicio que tuviera asignado el grupo
                 cantIncidentesNoResueltos[entidades.indexOf(entidadConIncidente.get())]++;
                 //No se consideran como en el primer ranking 2 incidentes con mas de 24 horas de diferencia como 2 incidentes distintos
 
-                List<Comunidad> comunidadesAfectadas = comunidades.stream().filter(comunidad -> comunidad.reportaronIncidente(incidente)).toList();
+                List<Comunidad> comunidadesAfectadas = comunidades.stream().filter(comunidad -> comunidad.incidenteEsDeComunidad(incidente)).toList();
                 List<MiembroDeComunidad> MiembrosRepetidos = comunidadesAfectadas.stream().flatMap(comunidad -> comunidad.getMiembros().stream()).toList();
                 List<MiembroDeComunidad> MiembrosDeComunidadesAfectados = null;
                 for(MiembroDeComunidad miembroDeComunidad:MiembrosRepetidos)
@@ -72,4 +72,6 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] promedioAux) {
 
     }
+
+
 }

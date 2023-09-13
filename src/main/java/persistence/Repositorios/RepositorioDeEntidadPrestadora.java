@@ -1,8 +1,6 @@
-package domain.Persistencia.Repositorios;
+package persistence.Repositorios;
 
 import domain.Entidades.*;
-import domain.Notificaciones.*;
-import domain.Personas.Comunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
@@ -12,23 +10,24 @@ import services.Localizacion.Provincia;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepositorioDeOrganismosDeControl implements WithSimplePersistenceUnit {
+public class RepositorioDeEntidadPrestadora implements WithSimplePersistenceUnit {
     private EntityTransaction tx;
-    private static RepositorioDeOrganismosDeControl instancia = null;
+    private static RepositorioDeEntidadPrestadora instancia = null;
 
-    private RepositorioDeOrganismosDeControl() {
+    private RepositorioDeEntidadPrestadora() {
         tx = entityManager().getTransaction();
     }
 
-    public static  RepositorioDeOrganismosDeControl getInstancia() {
+    public static  RepositorioDeEntidadPrestadora getInstancia() {
         if (instancia == null) {
-            instancia = new RepositorioDeOrganismosDeControl();
+            instancia = new RepositorioDeEntidadPrestadora();
         }
         return instancia;
     }
 
     public static void main(String[] args) {
-        RepositorioDeOrganismosDeControl repo = new RepositorioDeOrganismosDeControl();
+        RepositorioDeEntidadPrestadora repo = new RepositorioDeEntidadPrestadora();
+        EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
 
         Provincia jujuy = new Provincia();
         jujuy.setId(38);
@@ -52,47 +51,42 @@ public class RepositorioDeOrganismosDeControl implements WithSimplePersistenceUn
         entidad.setNombre("Mitre");
         entidad.agregarEstablecimiento(establecimiento);
 
-        EntidadPrestadora entidadPrestadora = new EntidadPrestadora();
         entidadPrestadora.setNombre("Diegomaster");
         entidadPrestadora.setPersonaMail("Rizzler@callme.com");
         entidadPrestadora.agregarEntidad(entidad);
 
-        OrganismoDeControl organismoDeControl = new OrganismoDeControl();
-        organismoDeControl.setNombre("Paolopoli");
-        organismoDeControl.setPersonaMail("jfranpali@mujereslover");
-        organismoDeControl.agregarEntidadPrestadora(entidadPrestadora);
 
-        repo.agregar(organismoDeControl);
+        repo.agregar(entidadPrestadora);
 
-        organismoDeControl.setNombre("Xx__messilovers__xX");
+        entidadPrestadora.setNombre("Xx__messilovers__xX");
 
-        repo.modificar(organismoDeControl);
+        repo.modificar(entidadPrestadora);
 
-        System.out.println(repo.buscar(organismoDeControl.getId()).getNombre());
+        System.out.println(repo.buscar(entidadPrestadora.getId()).getNombre());
 
         System.out.println(repo.buscarTodos().size());
 
         //repo.eliminar(comunidad);
     }
-    public void agregar(OrganismoDeControl organismoDeControl) {
+    public void agregar(EntidadPrestadora entidadPrestadora) {
         this.tx.begin();
-        entityManager().persist(organismoDeControl);
+        entityManager().persist(entidadPrestadora);
         this.tx.commit();
     }
-    public void modificar(OrganismoDeControl organismoDeControl) {
+    public void modificar(EntidadPrestadora entidadPrestadora) {
         this.tx.begin();
-        entityManager().merge(organismoDeControl);
+        entityManager().merge(entidadPrestadora);
         this.tx.commit();
     }
-    public void eliminar(OrganismoDeControl organismoDeControl) {
+    public void eliminar(EntidadPrestadora entidadPrestadora) {
         this.tx.begin();
-        entityManager().remove(organismoDeControl);
+        entityManager().remove(entidadPrestadora);
         this.tx.commit();
     }
-    public OrganismoDeControl buscar(long id){
-        return entityManager().find(OrganismoDeControl.class, id);
+    public EntidadPrestadora buscar(long id){
+        return entityManager().find(EntidadPrestadora.class, id);
     }
-    public List<OrganismoDeControl> buscarTodos(){
-        return entityManager().createQuery("from OrganismoDeControl", OrganismoDeControl.class).getResultList();
+    public List<EntidadPrestadora> buscarTodos(){
+        return entityManager().createQuery("from EntidadPrestadora", EntidadPrestadora.class).getResultList();
     }
 }
