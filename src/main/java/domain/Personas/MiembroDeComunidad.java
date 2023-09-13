@@ -54,6 +54,7 @@ public class MiembroDeComunidad extends Persistente {
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(); //para que se persiste automaticamente
+       // this.repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
     }
 
     public void agregarProvincia(Provincia provincia) {
@@ -92,9 +93,9 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
-        RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
+        repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
         repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
-        comunidad.guardarIncidente(reporteDeIncidente, repositorioDeIncidentes);
+        comunidad.guardarIncidente(reporteDeIncidente);
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {

@@ -5,6 +5,7 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.OrganismoDeControl;
 import domain.Incidentes.EstadoIncidente;
+import domain.Incidentes.Incidente;
 import domain.Incidentes.Posicion;
 import domain.Incidentes.ReporteDeIncidente;
 import domain.Notificaciones.*;
@@ -35,27 +36,26 @@ public class CargaDeDatos {
     SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
     ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
     private List<Entidad> entidades;
-    private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
-    private RepositorioComunidad repositorioComunidad = new RepositorioComunidad();
-    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = new RepositorioMiembroDeComunidad();
-    private RepositorioEntidad repositorioEntidad = new RepositorioEntidad();
-    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
-    private RepositorioDeUsuarios repositorioDeUsuarios = new RepositorioDeUsuarios();
-    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = new RepositorioDeOrganismosDeControl();
-    private RepositorioDeMunicipios repositorioDeMunicipios = new RepositorioDeMunicipios();
-    private RepositorioProvincias repositorioProvincias = new RepositorioProvincias();
-    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = new RepositorioDeEntidadPrestadora();
-    private RepositorioDeEstablecimientos repositorioDeEstablecimientos = new RepositorioDeEstablecimientos();
-    private RepositorioPosicion repositorioPosicion = new RepositorioPosicion();
-    private RepositorioServicio repositorioServicio = new RepositorioServicio();
+    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+    private RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
+    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+    private RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
+    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+    private RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+    private RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
+    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
+    private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
+    private RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
+    private RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
     private RepositorioDeEmpresas repositorioDeEmpresas = new RepositorioDeEmpresas();
-    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = new RepositorioDeReceptoresDeNotificaciones();
+    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
 
     private Municipio yavi = new Municipio();
     private Provincia jujuy = new Provincia();
     private ListadoDeProvincias listadoDeProvincias;
-    private Servicio banioHombres;
-    private Servicio banioMujeres;
+    private Servicio banioUnisex;
     private Entidad lineaMitre;
     private Establecimiento estacionRetiro;
     private MiembroDeComunidad pablo;
@@ -68,22 +68,8 @@ public class CargaDeDatos {
     private MedioDeComunicacion wpp = new ViaWPP();
     private FormaDeNotificar cuandoSuceden = new CuandoSuceden();
     private FormaDeNotificar sinApuro = new SinApuros();
-
-    private FormaDeNotificar cuandoSuceden;
-    private FormaDeNotificar sinApuro;
-
-    @BeforeEach
-    public void init() {
-        repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-        entidades = new ArrayList<>();
-        repositorioDeEmpresas = new RepositorioDeEmpresas();
-        emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
-        comunidad = new Comunidad("Los+Capos", emisorDeNotificaciones);
-        comunidad2 = new Comunidad("Los+Piolas", emisorDeNotificaciones);
-        private Usuario usuarioPablo = new Usuario();
-        private ReporteDeIncidente incidenteBanioLineaMitre = new ReporteDeIncidente();;
-
-
+    private Usuario usuarioPablo = new Usuario();
+    private ReporteDeIncidente incidenteBanioLineaMitre;
 
         @Test
         public void testBD(){
@@ -99,7 +85,7 @@ public class CargaDeDatos {
             empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
 
-            banioHombres = repositorioServicio.buscar(5);
+            banioUnisex = repositorioServicio.buscar(5);
             lineaMitre = repositorioEntidad.buscar(3);
             estacionRetiro = repositorioDeEstablecimientos.buscar(4);
 
@@ -109,11 +95,9 @@ public class CargaDeDatos {
             comunidad = new Comunidad();
             comunidad.setNombre("Los+Capos");
             comunidad.setEmisorDeNotificaciones(emisorDeNotificaciones);
-            comunidad.setRepositorioComunidad(new RepositorioComunidad());
             comunidad2 = new Comunidad();
             comunidad2.setNombre("Los+Piolas");
             comunidad2.setEmisorDeNotificaciones(emisorDeNotificaciones);
-            comunidad2.setRepositorioComunidad(new RepositorioComunidad());
 
             repositorioComunidad.agregar(comunidad);
             repositorioComunidad.agregar(comunidad2);
@@ -123,7 +107,6 @@ public class CargaDeDatos {
             pablo = new MiembroDeComunidad();
             pablo.setNombre("pablo");
             pablo.setApellido("perez");
-            pablo.setRepositorioDeReportesDeIncidentes(new RepositorioDeReportesDeIncidentes());
             pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
             pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
             pablo.getReceptorDeNotificaciones().setMail("hola@mail.net");
@@ -132,8 +115,7 @@ public class CargaDeDatos {
             yavi = repositorioDeMunicipios.buscar(386273);
 
             pablo.agregarMunicipio(yavi);
-            pablo.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
-            pablo.agregarServicioDeInteres(banioMujeres, Rol.valueOf("OBSERVADOR"));
+            pablo.agregarServicioDeInteres(banioUnisex, Rol.valueOf("AFECTADO"));
 
             pablo.unirseAComunidad(repositorioComunidad.buscar(9));
             pablo.unirseAComunidad(repositorioComunidad.buscar(10));
@@ -153,7 +135,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
             incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
@@ -164,7 +146,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,45,30));
             incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
@@ -175,7 +157,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,45,30));
             incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
@@ -186,7 +168,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,50,30));
             incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
@@ -197,7 +179,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,10,45,30));
             incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
@@ -208,7 +190,7 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,11,0,30));
             incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
@@ -219,14 +201,11 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
             incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,12,0,30));
             incidenteBanioLineaMitre.setObservaciones("El baño sigue mojado");
 
             pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-            incidenteBanioMujer = new ReporteDeIncidente("ABIERTO", LocalDateTime.of(2023,8,23,10,15,30),maria,lineaRoca, estacionTolosa,banioMujeres,"Se robaron el inodoro");
-            maria.informarFuncionamiento(incidenteBanioMujer,maria.getComunidades().get(0));
 
 /*
             incidenteBanioLineaMitre.setDenunciante(pablo);

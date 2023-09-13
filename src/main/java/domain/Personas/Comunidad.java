@@ -30,10 +30,14 @@ public class Comunidad extends Persistente {
     private EmisorDeNotificaciones emisorDeNotificaciones;
     @Transient
     private RepositorioComunidad repositorioComunidad;
+    @Transient
+    private RepositorioDeIncidentes repositorioDeIncidentes;
 
     public Comunidad() {
         this.miembros = new ArrayList<>();
         this.reportesDeLaComunidad = new ArrayList<>();
+        //this.repositorioComunidad = RepositorioComunidad.getInstancia();
+        //this.repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);
@@ -50,7 +54,8 @@ public class Comunidad extends Persistente {
     public boolean incidenteEsDeComunidad(Incidente incidente) {
         return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeApertura().contains(r));
     }
-    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente, RepositorioDeIncidentes repositorioDeIncidentes) {
+    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente) {
+        repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
         List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
         List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
 
@@ -105,7 +110,7 @@ public class Comunidad extends Persistente {
             }
         }
         this.reportesDeLaComunidad.add(reporteDeIncidente);
-
+        repositorioComunidad = RepositorioComunidad.getInstancia();
         repositorioComunidad.agregar(this);
     }
     public List<Incidente> incidentesAbiertos(List<Incidente> incidentes){
