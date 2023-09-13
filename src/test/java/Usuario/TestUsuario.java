@@ -20,7 +20,7 @@ public class TestUsuario {
     }
     @BeforeEach //deben ser 1 repositorio distinto en cada test
     public void init2(){
-        repo = new RepositorioDeUsuarios();
+        repo = RepositorioDeUsuarios.getInstancia();
         repo.agregarUsername(usuario1);
     }
 

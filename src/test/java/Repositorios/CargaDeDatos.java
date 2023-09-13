@@ -6,12 +6,12 @@ import domain.Entidades.Establecimiento;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.Posicion;
 import domain.Incidentes.ReporteDeIncidente;
-import domain.Notificaciones.EmisorDeNotificaciones;
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
+import domain.Notificaciones.*;
 import domain.Persistencia.Repositorios.*;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
+import domain.Personas.Rol;
+import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +19,12 @@ import org.mockito.Mock;
 import services.APIs.Georef.AdapterServicioGeo;
 import services.Localizacion.Municipio;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CargaDeDatos {
     private List<Entidad> entidades;
@@ -69,7 +73,7 @@ public class CargaDeDatos {
 
     @BeforeEach
     public void init() {
-        repositorioDeIncidentes = new RepositorioDeIncidentes();
+        repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
         entidades = new ArrayList<>();
         repositorioDeEmpresas = new RepositorioDeEmpresas();
         emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
@@ -169,7 +173,7 @@ public class CargaDeDatos {
         incidenteBanioHombre = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,26,10,14,30),pablo,lineaMitre, estacionPinamar,banioHombres,"Se rompíó el dispenser de jabón del baño de hombres");
         pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
 
-        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO",LocalDateTime.of(2023,8,23,10,15,30),maria,lineaRoca, estacionTolosa,banioMujeres,"Se robaron el inodoro");
+        incidenteBanioMujer = new ReporteDeIncidente("ABIERTO", LocalDateTime.of(2023,8,23,10,15,30),maria,lineaRoca, estacionTolosa,banioMujeres,"Se robaron el inodoro");
         maria.informarFuncionamiento(incidenteBanioMujer,maria.getComunidades().get(0));
 
         incidenteBanioMujer = new ReporteDeIncidente("CERRADO",LocalDateTime.of(2023,8,23,19,20,30),julieta,lineaRoca, estacionTolosa,banioMujeres,"Devolvieron el inodoro");

@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class RepositorioDeEmpresas {
 
-    public RepositorioDeEmpresas() {}
+    public RepositorioDeEmpresas() {} //TODO Singleton
     public static void main(String[] args) {
 
         List<OrganismoDeControl> empresas;
@@ -25,7 +25,7 @@ public class RepositorioDeEmpresas {
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
 
-        RepositorioDeOrganismosDeControl repositorioDeOrganismos = new RepositorioDeOrganismosDeControl();
+        RepositorioDeOrganismosDeControl repositorioDeOrganismos = RepositorioDeOrganismosDeControl.getInstancia();
         empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
         empresas.forEach(e -> repositorioDeOrganismos.agregar(e));
     }

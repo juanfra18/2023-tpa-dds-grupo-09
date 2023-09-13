@@ -10,14 +10,22 @@ import java.util.List;
 
 public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia(); // TODO se debe instanciar tambien en el getInstancia?
+  private static RepositorioDeMunicipios instancia = null;
 
-  public RepositorioDeMunicipios(){
-    this.tx = entityManager().getTransaction();
+  private RepositorioDeMunicipios() {
+    tx = entityManager().getTransaction();
+  }
+
+  public static  RepositorioDeMunicipios getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioDeMunicipios();
+    }
+    return instancia;
   }
 
   public static void main(String[] args) {
-    RepositorioProvincias repositorioProvincias = new RepositorioProvincias();
+    RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
     RepositorioDeMunicipios repositorioDeMunicipios = new RepositorioDeMunicipios();
 
     repositorioProvincias.buscarTodos().forEach(

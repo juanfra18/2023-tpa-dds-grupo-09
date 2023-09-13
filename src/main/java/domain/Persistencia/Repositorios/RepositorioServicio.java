@@ -8,8 +8,17 @@ import java.util.List;
 
 public class RepositorioServicio implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  public RepositorioServicio(){
-    this.tx = entityManager().getTransaction();
+  private static RepositorioServicio instancia = null;
+
+  private RepositorioServicio() {
+    tx = entityManager().getTransaction();
+  }
+
+  public static  RepositorioServicio getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioServicio();
+    }
+    return instancia;
   }
 
   public static void main(String[] args) {

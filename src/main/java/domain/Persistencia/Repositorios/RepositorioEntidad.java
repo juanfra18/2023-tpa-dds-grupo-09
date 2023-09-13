@@ -17,8 +17,16 @@ import java.util.List;
 
 public class RepositorioEntidad implements WithSimplePersistenceUnit {
     private EntityTransaction tx;
-    public RepositorioEntidad(){
-        this.tx = entityManager().getTransaction();
+    private static RepositorioEntidad instancia = null;
+
+    private RepositorioEntidad() {
+        tx = entityManager().getTransaction();
+    }
+    public static  RepositorioEntidad getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioEntidad();
+        }
+        return instancia;
     }
 
     public static void main(String[] args) {

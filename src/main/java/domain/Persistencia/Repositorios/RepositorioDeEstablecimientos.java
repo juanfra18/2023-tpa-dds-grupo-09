@@ -15,10 +15,17 @@ import java.util.List;
 
 public class RepositorioDeEstablecimientos implements WithSimplePersistenceUnit {
     private EntityTransaction tx;
-    public RepositorioDeEstablecimientos(){
-        this.tx = entityManager().getTransaction();
-    }
+    private static RepositorioDeEstablecimientos instancia = null;
 
+    private RepositorioDeEstablecimientos() {
+        tx = entityManager().getTransaction();
+    }
+    public static  RepositorioDeEstablecimientos getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDeEstablecimientos();
+        }
+        return instancia;
+    }
     public static void main(String[] args) {
         RepositorioDeEstablecimientos repo = new RepositorioDeEstablecimientos();
         Establecimiento estacionYavi = new Establecimiento();

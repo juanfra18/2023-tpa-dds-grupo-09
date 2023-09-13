@@ -11,9 +11,18 @@ import java.util.List;
 public class RepositorioDeUsuarios implements WithSimplePersistenceUnit { // Ver como usar el agregar UsernameTODO
     private List<Usuario> usuarios;
     private EntityTransaction tx;
-    public RepositorioDeUsuarios(){
-        this.tx = entityManager().getTransaction();
+    private static RepositorioDeUsuarios instancia = null;
+
+    private RepositorioDeUsuarios() {
+        tx = entityManager().getTransaction();
         usuarios = new ArrayList<>();
+    }
+
+    public static  RepositorioDeUsuarios getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDeUsuarios();
+        }
+        return instancia;
     }
     public static void main(String[] args){
 

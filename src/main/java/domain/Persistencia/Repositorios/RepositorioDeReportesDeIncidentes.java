@@ -23,22 +23,30 @@ import java.util.List;
 
 @Getter
 public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceUnit {
-    private EntityTransaction tx;
-    @Getter
-    private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
-    //nose si es correcto instanciarlo asi...
 
-    public RepositorioDeReportesDeIncidentes() {
-        this.tx = entityManager().getTransaction();
+    private EntityTransaction tx;
+    private static RepositorioDeReportesDeIncidentes instancia = null;
+    @Getter
+    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia(); //TODO nose si es correcto instanciarlo asi...
+
+
+    private RepositorioDeReportesDeIncidentes() {
+        tx = entityManager().getTransaction();
+    }
+    public static  RepositorioDeReportesDeIncidentes getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDeReportesDeIncidentes();
+        }
+        return instancia;
     }
 
     public static void main(String[] args) {
         RepositorioDeReportesDeIncidentes repo = new RepositorioDeReportesDeIncidentes();
         ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
 
-        Provincia jujuy = new RepositorioProvincias().buscar(38);
+        Provincia jujuy = RepositorioProvincias.getInstancia().buscar(38);
 
-        Municipio Yavi = new RepositorioDeMunicipios().buscar(386273);
+        Municipio Yavi = RepositorioDeMunicipios.getInstancia().buscar(386273);
 
         FormaDeNotificar formaDeNotificar = new CuandoSuceden();
         MedioDeComunicacion medioDeComunicacion = new ViaMail();
@@ -48,15 +56,15 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
         receptorDeNotificaciones.cambiarFormaDeNotificar(formaDeNotificar);
         receptorDeNotificaciones.cambiarMedioDeComunicacion(medioDeComunicacion);
 
-        MiembroDeComunidad miembroDeComunidad = new RepositorioMiembroDeComunidad().buscar(1L);
+        MiembroDeComunidad miembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia().buscar(1L);
 
-        Servicio banio = new RepositorioServicio().buscar(16L);
+        Servicio banio = RepositorioServicio.getInstancia().buscar(16L);
 
-        RepositorioDeEstablecimientos repositorioDeEstablecimientos = new RepositorioDeEstablecimientos();
+        RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
 
         Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(15L);
 
-        RepositorioEntidad repositorioEntidad = new RepositorioEntidad();
+        RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
 
         Entidad entidad = repositorioEntidad.buscar(30L);
 

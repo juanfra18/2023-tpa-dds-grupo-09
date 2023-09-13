@@ -11,12 +11,19 @@ import java.util.List;
 
 public class RepositorioProvincias implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia(); //TODO igual que municipios
+  private static RepositorioProvincias instancia = null;
 
-  public RepositorioProvincias(){
+  private RepositorioProvincias(){
     this.tx = entityManager().getTransaction();
   }
 
+  public static  RepositorioProvincias getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioProvincias();
+    }
+    return instancia;
+  }
   public static void main(String[] args) {
     ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
     RepositorioProvincias repositorioProvincias = new RepositorioProvincias();

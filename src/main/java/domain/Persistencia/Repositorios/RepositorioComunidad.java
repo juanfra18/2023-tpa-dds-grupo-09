@@ -8,11 +8,20 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class RepositorioComunidad implements WithSimplePersistenceUnit {
+
   private EntityTransaction tx;
-  public RepositorioComunidad(){
-    this.tx = entityManager().getTransaction();
+  private static RepositorioComunidad instancia = null;
+
+  private RepositorioComunidad() {
+    tx = entityManager().getTransaction();
   }
 
+  public static  RepositorioComunidad getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioComunidad();
+    }
+    return instancia;
+  }
   public static void main(String[] args) {
     RepositorioComunidad repo = new RepositorioComunidad();
     Comunidad comunidad = new Comunidad();

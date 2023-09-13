@@ -14,8 +14,17 @@ import java.util.List;
 
 public class RepositorioDeOrganismosDeControl implements WithSimplePersistenceUnit {
     private EntityTransaction tx;
-    public RepositorioDeOrganismosDeControl(){
-        this.tx = entityManager().getTransaction();
+    private static RepositorioDeOrganismosDeControl instancia = null;
+
+    private RepositorioDeOrganismosDeControl() {
+        tx = entityManager().getTransaction();
+    }
+
+    public static  RepositorioDeOrganismosDeControl getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDeOrganismosDeControl();
+        }
+        return instancia;
     }
 
     public static void main(String[] args) {

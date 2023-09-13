@@ -9,16 +9,24 @@ import java.util.List;
 
 public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  public RepositorioMiembroDeComunidad(){
-     this.tx = entityManager().getTransaction();
+  private static RepositorioMiembroDeComunidad instancia = null;
+
+  private RepositorioMiembroDeComunidad() {
+    tx = entityManager().getTransaction();
   }
 
+  public static  RepositorioMiembroDeComunidad getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioMiembroDeComunidad();
+    }
+    return instancia;
+  }
   public static void main(String[] args) {
     RepositorioMiembroDeComunidad repo = new RepositorioMiembroDeComunidad();
 
     FormaDeNotificar formaDeNotificar = new CuandoSuceden();
     MedioDeComunicacion medioDeComunicacion = new ViaMail();
-    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
 
 
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();

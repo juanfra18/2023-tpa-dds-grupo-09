@@ -10,17 +10,24 @@ import java.util.List;
 
 public class RepositorioDeReceptoresDeNotificaciones implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
+  private static RepositorioDeReceptoresDeNotificaciones instancia = null;
 
-  public RepositorioDeReceptoresDeNotificaciones(){
-    this.tx = entityManager().getTransaction();
+  private RepositorioDeReceptoresDeNotificaciones() {
+    tx = entityManager().getTransaction();
+  }
+  public static  RepositorioDeReceptoresDeNotificaciones getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioDeReceptoresDeNotificaciones();
+    }
+    return instancia;
   }
 
   public static void main(String[] args) {
-    RepositorioMiembroDeComunidad repo = new RepositorioMiembroDeComunidad();
+    RepositorioMiembroDeComunidad repo = RepositorioMiembroDeComunidad.getInstancia();
 
     FormaDeNotificar formaDeNotificar = new CuandoSuceden();
     MedioDeComunicacion medioDeComunicacion = new ViaMail();
-    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
 
 
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();

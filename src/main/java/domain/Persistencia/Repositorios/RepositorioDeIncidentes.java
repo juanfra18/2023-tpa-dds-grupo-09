@@ -20,20 +20,27 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
-  private List<Incidente> incidentes;
+  private List<Incidente> incidentes; //TODO no se está usando
   private EntityTransaction tx;
+  private static RepositorioDeIncidentes instancia = null;
 
-  public RepositorioDeIncidentes() {
-    this.tx = entityManager().getTransaction();
+  private RepositorioDeIncidentes() {
+    tx = entityManager().getTransaction();
+  }
+  public static  RepositorioDeIncidentes getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioDeIncidentes();
+    }
+    return instancia;
   }
 
   public static void main(String[] args) { // Se pasa por parametro o se instancian
-    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = new RepositorioDeReportesDeIncidentes();
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
     ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
     ReporteDeIncidente reporteDeIncidente2 = new ReporteDeIncidente();
     ReporteDeIncidente reporteDeIncidente3 = new ReporteDeIncidente();
     ReporteDeIncidente reporteDeIncidente4 = new ReporteDeIncidente();
-    RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = new RepositorioMiembroDeComunidad();
+    RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
 
 
     Provincia jujuy = new Provincia();
