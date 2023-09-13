@@ -24,7 +24,7 @@ public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
   private static RepositorioDeIncidentes instancia = null;
 
-  private RepositorioDeIncidentes() {
+  public RepositorioDeIncidentes() {
     tx = entityManager().getTransaction();
   }
   public static  RepositorioDeIncidentes getInstancia() {

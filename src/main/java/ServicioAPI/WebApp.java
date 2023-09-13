@@ -12,6 +12,7 @@ public class WebApp {
     Javalin app = Javalin.create().start(port);
     app.post("/ranking",
         new ProcesarDatosController(repoEntidad, repoIncidente, repoComunidad)); //cuando haga el post que ya devuelva, un solo controller
+
   }
 }
 

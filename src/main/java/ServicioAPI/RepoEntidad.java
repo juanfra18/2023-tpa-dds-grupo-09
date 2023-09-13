@@ -4,6 +4,7 @@ import domain.Entidades.Entidad;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class RepoEntidad {
 
@@ -16,7 +17,9 @@ public class RepoEntidad {
   public void add(Entidad entidad) {
     this.entidades.add(entidad);
   }
-
+  public void addAll(List<Entidad> entidades) {
+    this.entidades.addAll(entidades);
+  }
   public void remove(Entidad entidad) {
     this.entidades = this.entidades.stream().filter(
         x -> !x.getId().equals(

@@ -1,18 +1,21 @@
 package ServicioAPI;
 
+import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
+import services.Archivos.SistemaDeArchivos;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class EntidadesConMayorImpacto {
     /* Servicio 3: cálculo de ranking de impacto de incidentes
-Este servicio permite calcular el ranking semanal previsto en la entrega anterior con el criterio de mayor grado de impacto de las problemáticas considerando
-que algunas comunidades tienen mayor cantidad de miembros y por lo tanto les afecta de mayor medida el no funcionamiento de ese servicio.
-Para cada entidad se calcula su nivel de impacto considerando la sumatoria de tiempos de resolución de incidentes + la cantidad de incidentes no resueltos
+Este servicio permite calcular el ranking semanal previsto en la entrega anterior con el criterio de mayor
+ grado de impacto de las problemáticas considerando que algunas comunidades tienen mayor cantidad de miembros
+ y por lo tanto les afecta de mayor medida el no funcionamiento de ese servicio.
+Para cada entidad se calcula su nivel de impacto considerando la sumatoria de tiempos de resolución de incidentes +
+la cantidad de incidentes no resueltos
 multiplicado por un coeficiente de incidentes no resueltos (CNF), expresado en la siguiente ecuación
 
 Σ (t resolución de incidente) + Cantidad de incidentes no resueltos * CNF
@@ -35,7 +38,7 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         final int CNF = 10;
         int[] cantMiembrosAfectados = new int[entidades.size()];
 
-        for(Incidente incidente: incidentes) //Buscamos la primer entidad con ese incidete
+        for(Incidente incidente: incidentes) //Buscamos la primer entidad con ese incidente
         {
             Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
             if(incidente.cerrado())
@@ -69,9 +72,29 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
-    protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] promedioAux) {
+    protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] contadorAux) {
 
     }
 
+    public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
+        int[] contadorAux = new int[entidades.size()];
+        List<Entidad> entidadesOrdenadas = new ArrayList<>();
 
+        contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
+        entidadesOrdenadas = ordenarEntidades(entidades,contadorAux);
+        generarRanking(entidadesOrdenadas,entidades,contadorAux);
+    }
+
+    protected List<Entidad> ordenarEntidades(List<Entidad> entidades, int[] auxiliar){
+        List<Entidad> entidadesOrdenadas = new ArrayList<>(entidades);
+        Collections.sort(entidadesOrdenadas, new Comparator<Entidad>() {
+            @Override
+            public int compare(Entidad entidad1, Entidad entidad2) {
+                int index1 = entidades.indexOf(entidad1);
+                int index2 = entidades.indexOf(entidad2);
+                return Integer.compare(auxiliar[index2], auxiliar[index1]);
+            }
+        });
+        return entidadesOrdenadas;
+    }
 }

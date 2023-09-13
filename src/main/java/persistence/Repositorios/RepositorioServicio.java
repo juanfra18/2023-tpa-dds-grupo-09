@@ -10,7 +10,7 @@ public class RepositorioServicio implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
   private static RepositorioServicio instancia = null;
 
-  private RepositorioServicio() {
+  public RepositorioServicio() {
     tx = entityManager().getTransaction();
   }
 

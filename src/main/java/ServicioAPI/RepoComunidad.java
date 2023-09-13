@@ -5,6 +5,7 @@ import domain.Personas.Comunidad;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class RepoComunidad {
 
@@ -17,7 +18,7 @@ public class RepoComunidad {
   public void add(Comunidad comunidad) {
     this.comunidades.add(comunidad);
   }
-
+  public void addAll(List<Comunidad> comunidades) { this.comunidades.addAll(comunidades);  }
   public void remove(Comunidad comunidad) {
     this.comunidades = this.comunidades.stream().filter(
         x -> !x.getId().equals(
@@ -38,4 +39,6 @@ public class RepoComunidad {
   public Collection<Comunidad> all() {
     return this.comunidades;
   }
+
+
 }

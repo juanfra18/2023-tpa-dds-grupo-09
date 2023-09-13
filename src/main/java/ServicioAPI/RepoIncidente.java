@@ -4,6 +4,7 @@ import domain.Incidentes.Incidente;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class RepoIncidente {
 
@@ -16,7 +17,7 @@ public class RepoIncidente {
   public void add(Incidente incidente) {
     this.incidentes.add(incidente);
   }
-
+  public void addAll(List<Incidente> incidentes) {this.incidentes.addAll(incidentes);}
   public void remove(Incidente incidente) {
     this.incidentes = this.incidentes.stream().filter(
         x -> !x.getId().equals(
@@ -37,4 +38,6 @@ public class RepoIncidente {
   public Collection<Incidente> all() {
     return this.incidentes;
   }
+
+
 }

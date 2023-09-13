@@ -2,8 +2,13 @@ package ServicioAPI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import domain.Entidades.Entidad;
+import domain.Incidentes.Incidente;
+import domain.Personas.Comunidad;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
+import java.util.List;
 
 public class ProcesarDatosController implements Handler {
 
@@ -18,10 +23,20 @@ public class ProcesarDatosController implements Handler {
   }
 
   @Override
-  public void handle(Context ctx) throws Exception { //TODO hacer que reciba el JSON del body del request y de ahí saque la lista de cada cosa y lo añade a los repos (ver ejemplo del seminario)
+  public void handle(Context ctx) throws Exception {
     String requestBody = ctx.body();
     Gson gson = new Gson();
-    JsonObject jsonObject = gson.fromJson(requestBody, Gson.class);
+    JsonRequest request = gson.fromJson(requestBody, JsonRequest.class);
+
+    List<Entidad> entidades = request.getEntidades();
+    List<Incidente> incidentes = request.getIncidentes();
+    List<Comunidad> comunidades = request.getComunidades();
+
+    repoEntidad.addAll(entidades);
+    repoIncidente.addAll(incidentes);
+    repoComunidad.addAll(comunidades);
+
+    ctx.status(200).json("Datos procesados con éxito");
   }
 }
 
@@ -34,3 +49,7 @@ public class ProcesarDatosController implements Handler {
     ctx.result("Producto eliminado correctamente");
   }
 */
+
+
+
+
