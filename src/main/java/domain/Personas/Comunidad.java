@@ -64,25 +64,7 @@ public class Comunidad extends Persistente {
             Incidente incidente = new Incidente();
             incidente.agregarReporteDeApertura(reporteDeIncidente);
             repositorioDeIncidentes.agregar(incidente);
-        } else {/*{
-            boolean agregado = false;
-            for (Incidente incidente : incidentesSobreLaMismaProblematica) {
-                if (this.incidenteEsDeComunidad(incidente) && (!agregado)) {
-                    if (reporteDeIncidente.esDeCierre() && (this.reportesDeLaComunidad.stream().anyMatch(r -> !incidente.getReportesDeCierre().contains(r)))) {
-                        incidente.agregarReporteDeCierre(reporteDeIncidente);
-                        agregado = true;
-                    } else{
-                        incidente.agregarReporteDeApertura(reporteDeIncidente);
-                        agregado = true;
-                    }
-                }
-            }
-            if (!agregado) { //en principio siempre acá es de apertura
-                Incidente incidente = new Incidente();
-                incidente.agregarReporteDeApertura(reporteDeIncidente);
-                repositorioDeIncidentes.agregar(incidente);
-            }
-            */
+        } else {
             boolean agregado = false;
             for (Incidente incidente : incidentesSobreLaMismaProblematica) {
                 if (this.incidenteEsDeComunidad(incidente) && !agregado && !this.cerroIncidente(incidente)) {

@@ -12,6 +12,7 @@ import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+import persistence.Repositorios.RepositorioEntidad;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
@@ -117,28 +118,27 @@ public class MiembroDeComunidad extends Persistente {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado, List<Incidente> incidentes) {
-        List<Incidente> incidentesDeMisComunidades = new ArrayList<>();
-        this.comunidades.forEach(comunidad -> incidentesDeMisComunidades.addAll(comunidad.getIncidentesDeComunidad(incidentes)));
+    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
+        RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+        List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
 
-        List<Incidente> incidentesDeEstadoSeleccionado = new ArrayList<>();
-        incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
+        //Se queda con los incidentes que pertenezcan por lo menos a una de sus comunidades
+        //Estos incidentes no estaran repetidos, seran unicos
+        List<Incidente> incidentesDeMisComunidades = incidentes.stream().filter(incidente -> this.comunidades.stream().anyMatch(comunidad -> comunidad.incidenteEsDeComunidad(incidente))).toList();
 
-        List<Incidente> incidentesUnicos = new ArrayList<>();
+        List<Incidente> incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
 
-        for(Incidente incidente : incidentesDeEstadoSeleccionado){
-            if(!incidentesUnicos.stream().anyMatch(i -> i.igualito(incidente) && !i.equals(incidente)))
-                incidentesUnicos.add(incidente);
-        }
-        return incidentesUnicos;
+        System.out.println(incidentesDeMisComunidades.size());
+        System.out.println(incidentesDeEstadoSeleccionado.size());
+        return incidentesDeEstadoSeleccionado;
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesAbiertos(List<Incidente> incidentes) {
-        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, incidentes);
+    public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {
+        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesCerrados(List<Incidente> incidentes) {
-        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, incidentes);
+    public List<Incidente> solicitarInformacionDeIncidentesCerrados() {
+        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
     }
 
     public boolean afectadoPor(Incidente incidente) {

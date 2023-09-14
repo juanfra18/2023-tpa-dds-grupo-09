@@ -1,10 +1,34 @@
 package Personas;
 
+import domain.Entidades.Entidad;
+import domain.Entidades.Establecimiento;
+import domain.Entidades.TipoEntidad;
+import domain.Entidades.TipoEstablecimiento;
+import domain.Notificaciones.CuandoSuceden;
+import domain.Notificaciones.FormaDeNotificar;
+import domain.Notificaciones.MedioDeComunicacion;
+import domain.Notificaciones.ViaMail;
+import domain.Personas.MiembroDeComunidad;
+import domain.Personas.ParServicioRol;
+import domain.Personas.Rol;
+import domain.Servicios.Banio;
+import domain.Servicios.Servicio;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import services.APIs.Georef.AdapterServicioGeo;
+import services.Localizacion.Municipio;
+
+import java.io.IOException;
+
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class TestInteresesMiembro {
-  /*
   @Mock
   private AdapterServicioGeo servicioGeo;
   private MiembroDeComunidad miembro;
@@ -17,38 +41,59 @@ public class TestInteresesMiembro {
   private Establecimiento estacionPinamar;
   private Entidad lineaMitre;
   private Entidad lineaRoca;
-  private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
-  private FormaDeNotificar cuandoSuceden;
-  private MedioDeComunicacion mail;
+  private FormaDeNotificar cuandoSuceden = new CuandoSuceden();
+  private MedioDeComunicacion mail = new ViaMail();
   @BeforeEach
-  public void init() throws IOException {
-    miembro = new MiembroDeComunidad("perez", "jose", "perezjose@gmail.com","123456789", cuandoSuceden, mail,repositorioDeIncidentes);
+  public void init(){
+    miembro = new MiembroDeComunidad();
+    miembro.setNombre("jose");
+    miembro.setApellido("perez");
+    miembro.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
+    miembro.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
+    miembro.getReceptorDeNotificaciones().setMail("perezjose@gmail.com");
+    miembro.getReceptorDeNotificaciones().setTelefono("123456789");
+
     MockitoAnnotations.openMocks(this);
     servicioGeo = mock(AdapterServicioGeo.class);
     when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
     when(servicioGeo.obtenerMunicipio("Pinamar")).thenReturn(pinamar);
 
-    banioHombres = new Banio("CABALLEROS");
-    banioMujeres = new Banio("DAMAS");
+    banioHombres = new Banio();
+    banioHombres.setTipo("CABALLEROS");
+    banioMujeres = new Banio();
+    banioMujeres.setTipo("DAMAS");
 
     miembro.agregarMunicipio(pinamar);
     miembro.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
 
-    lineaMitre = new Entidad("Linea Mitre","FERROCARRIL");
+    lineaMitre = new Entidad();
+    lineaMitre.setNombre("Linea Mitre");
+    lineaMitre.setTipoEntidad(TipoEntidad.FERROCARRIL);
 
-    estacionRetiro = new Establecimiento("Retiro","ESTACION", generalAlvarado);
+    estacionRetiro = new Establecimiento();
+    estacionRetiro.setNombre("Retiro");
+    estacionRetiro.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+    estacionRetiro.setLocalizacion(generalAlvarado);
     estacionRetiro.agregarServicio(banioHombres);
 
-    estacionPinamar = new Establecimiento("Pinamar", "ESTACION", pinamar);
+    estacionPinamar = new Establecimiento();
+    estacionPinamar.setNombre("Pinamar");
+    estacionPinamar.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+    estacionPinamar.setLocalizacion(pinamar);
     estacionPinamar.agregarServicio(banioHombres);
 
     lineaMitre.agregarEstablecimiento(estacionRetiro);
     lineaMitre.agregarEstablecimiento(estacionPinamar);
 
-    lineaRoca = new Entidad("Linea Roca","FERROCARRIL");
+    lineaRoca = new Entidad();
+    lineaRoca.setNombre("Linea Roca");
+    lineaRoca.setTipoEntidad(TipoEntidad.FERROCARRIL);
     lineaRoca.agregarEstablecimiento(estacionTolosa);
 
-    estacionTolosa = new Establecimiento("Tolosa","ESTACION", generalAlvarado);
+    estacionTolosa = new Establecimiento();
+    estacionTolosa.setNombre("Tolosa");
+    estacionTolosa.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+    estacionTolosa.setLocalizacion(generalAlvarado);
     estacionTolosa.agregarServicio(banioMujeres);
   }
 
@@ -85,8 +130,6 @@ public class TestInteresesMiembro {
     miembro.cambiarRolSobreServicio(banioHombres);
     Assertions.assertEquals("OBSERVADOR",banioYrol.getRol().toString());
   }
-
-   */
 }
 
 

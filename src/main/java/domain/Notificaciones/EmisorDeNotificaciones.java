@@ -3,6 +3,7 @@ package domain.Notificaciones;
 import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Entidades.EntidadPrestadora;
+import domain.Entidades.OrganismoDeControl;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.ReporteDeIncidente;
 import persistence.Repositorios.RepositorioDeEntidadPrestadora;
@@ -12,6 +13,7 @@ import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import domain.Rankings.EntidadesQueSolucionanMasLento;
+import persistence.Repositorios.RepositorioEntidad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,21 +45,24 @@ public class EmisorDeNotificaciones {
   } //un main llama a esto cada cierto tiempo
 
 
-  public void generarRankings (RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora, RepositorioDeIncidentes repositorioDeIncidentes, RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl)
+  public void generarRankings ()
   {
+    RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+    RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
+    RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+
+    List<OrganismoDeControl> organismosDeControl = repositorioDeOrganismosDeControl.buscarTodos();
     List<EntidadPrestadora> entidadesPrestadoras = repositorioDeEntidadPrestadora.buscarTodos();
-    List<Entidad> entidades = new ArrayList<>();
-    entidadesPrestadoras.forEach(entidadPrestadora -> entidades.addAll(entidadPrestadora.getEntidades()));
-
-
+    List<Entidad> entidades = repositorioEntidad.buscarTodos();
     List<Incidente> incidentesDeEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
 
     this.entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,incidentesDeEstaSemana);
     this.entidadesQueSolucionanMasLento.armarRanking(entidades,incidentesDeEstaSemana);
 
 
-    repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
-    repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
+    organismosDeControl.forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
+    organismosDeControl.forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));
 
     entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_1,"INFORME SEMANAL: Entidades que resuelven mas lento"));
     entidadesPrestadoras.forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_2,"INFORME SEMANAL: Entidades con mayor cantidad de incidentes"));

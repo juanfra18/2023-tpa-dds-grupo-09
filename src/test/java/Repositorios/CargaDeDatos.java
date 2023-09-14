@@ -12,9 +12,12 @@ import domain.Notificaciones.*;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
 import domain.Personas.Rol;
+import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
+import domain.Rankings.EntidadesQueSolucionanMasLento;
 import domain.Servicios.*;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import persistence.Repositorios.*;
 import services.APIs.Georef.ServicioGeoref;
@@ -31,10 +34,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CargaDeDatos {
-    List<OrganismoDeControl> empresas;
-    CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
-    SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-    ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+    private List<OrganismoDeControl> empresas;
+    private CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+    private SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+    private ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
     private List<Entidad> entidades;
     private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
@@ -70,6 +73,8 @@ public class CargaDeDatos {
     private FormaDeNotificar sinApuro = new SinApuros();
     private Usuario usuarioPablo = new Usuario();
     private ReporteDeIncidente incidenteBanioLineaMitre;
+    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
+    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
 
         @Test
         public void testBD(){
@@ -130,6 +135,21 @@ public class CargaDeDatos {
             repositorioMiembroDeComunidad.agregar(pablo);
 
             //miembro de comunidad reporta incidentes
+
+            ReporteDeIncidente incidenteBanioLineaMitre1 = new ReporteDeIncidente();
+            incidenteBanioLineaMitre1.setDenunciante(pablo);
+            incidenteBanioLineaMitre1.setClasificacion(EstadoIncidente.ABIERTO);
+            incidenteBanioLineaMitre1.setEntidad(lineaMitre);
+            incidenteBanioLineaMitre1.setEstablecimiento(estacionRetiro);
+            incidenteBanioLineaMitre1.setServicio(banioUnisex);
+            incidenteBanioLineaMitre1.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
+            incidenteBanioLineaMitre1.setObservaciones("Baño inundado, todo el piso mojado");
+
+            pablo.informarFuncionamiento(incidenteBanioLineaMitre1,pablo.getComunidades().get(0));
+
+
+
+            /*
             incidenteBanioLineaMitre = new ReporteDeIncidente();
             incidenteBanioLineaMitre.setDenunciante(pablo);
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
@@ -202,33 +222,106 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setEntidad(lineaMitre);
             incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
             incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,12,0,30));
-            incidenteBanioLineaMitre.setObservaciones("El baño sigue mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-/*
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,20,30,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
-
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioHombres);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,20,30,30));
+            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,45,30));
             incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
             pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-*/
+             */
 
             Assertions.assertTrue(true);
         }
+
+        @Test
+        public void rankingSolucionanMasLento() {
+            entidadesQueSolucionanMasLento.armarRanking(repositorioEntidad.buscarTodos(),repositorioDeIncidentes.getIncidentesEstaSemana());
+        }
+
+        @Test
+        public void rankingMayorCantidadDeIncidentes() {
+            entidadesConMayorCantidadDeIncidentes.armarRanking(repositorioEntidad.buscarTodos(),repositorioDeIncidentes.getIncidentesEstaSemana());
+        }
+
+        @Test
+        public void solicitarInformacionDeIncidentesAbiertos(){
+            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
+            Incidente incidente = repositorioDeIncidentes.buscar(15);
+            System.out.println(incidente.getReportesDeCierre().size());
+
+           /* List<Incidente> incidentesAbiertos = pablito.solicitarInformacionDeIncidentesAbiertos();
+            if(!incidentesAbiertos.isEmpty())
+            {
+                for (Incidente incidente : incidentesAbiertos){
+                    System.out.println(incidente.mensaje());
+                }
+            }
+            Assertions.assertEquals(1,incidentesAbiertos.size());
+
+            */
+        }
+        @Test
+        public void solicitarInformacionDeIncidentesCerrados(){
+            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
+            List<Incidente> incidentesCerrados = pablito.solicitarInformacionDeIncidentesCerrados();
+            if(!incidentesCerrados.isEmpty())
+            {
+                for (Incidente incidente : incidentesCerrados){
+                    System.out.println(incidente.mensaje());
+                }
+            }
+        }
+
+    @Test
+    public void recibirInformacion() {
+        emisorDeNotificaciones.generarRankings();
     }
+    @Test
+    public void IncidentesDeLaSemana(){
+        Assertions.assertEquals(2,repositorioDeIncidentes.getIncidentesEstaSemana().size());
+        List<Incidente> i = repositorioDeIncidentes.getIncidentesEstaSemana();
+        for(Incidente incidente : i)
+        {
+            System.out.println(incidente.mensaje());
+        }
+
+    }
+
+/*
+    @Test
+    public void ReportarUnIncidente(){
+        pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
+
+        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getReportesDeApertura().get(0).getObservaciones());
+        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getServicio());
+        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
+
+        pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(1));
+
+        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getReportesDeApertura().get(0).getObservaciones());
+        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getServicio());
+        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
+    }
+
+    @Test
+    public void DistanciasCercanas(){
+        posicion1 = new Posicion("100,100");
+        posicion2 = new Posicion("50,50");
+        Assertions.assertTrue(posicion1.distancia(posicion2) <= Config.DISTANCIA_MINIMA);
+    }
+
+    @Test
+    public void peticionDeRevision(){
+        List<Comunidad> comunidades = new ArrayList<>();
+        EmisorDeNotificaciones nuevoEmisor = EmisorDeNotificaciones.getInstancia();
+        pablo = mock(MiembroDeComunidad.class);
+        julieta = mock(MiembroDeComunidad.class);
+        maria = mock(MiembroDeComunidad.class);
+        Comunidad comunidadMock = new Comunidad("Los+Mockeados", nuevoEmisor);
+        when(pablo.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        when(julieta.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        when(maria.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
+        comunidadMock.agregarMiembro(pablo); comunidadMock.agregarMiembro(julieta); comunidadMock.agregarMiembro(maria);
+        comunidades.add(comunidadMock);
+        nuevoEmisor.solicitarRevisionDeIncidente(comunidades); //no se me ocurre como mockear la posicion, puse que devuelva true a la solicitud en miembro y manda el mail
+    }
+    */
+}

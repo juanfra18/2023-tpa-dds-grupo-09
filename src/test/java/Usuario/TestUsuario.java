@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestUsuario {
-    RepositorioDeUsuarios repo;
+    static RepositorioDeUsuarios repo;
     static Usuario usuario1;
 
     @BeforeAll
@@ -17,9 +17,6 @@ public class TestUsuario {
         usuario1 = new Usuario();
         usuario1.setUsername("pedrito");
         usuario1.cambiarContrasenia("HolaMundo@3");
-    }
-    @BeforeEach //deben ser 1 repositorio distinto en cada test
-    public void init2(){
         repo = RepositorioDeUsuarios.getInstancia();
         repo.agregarUsername(usuario1);
     }
@@ -36,7 +33,9 @@ public class TestUsuario {
         Usuario usuario2 = new Usuario();
         usuario2.setUsername("jorge");
         usuario2.cambiarContrasenia("HolaMundo@3");
-        Assertions.assertDoesNotThrow(() -> repo.agregarUsername(usuario2));
+        Assertions.assertDoesNotThrow(() -> {
+            repo.agregarUsername(usuario2);
+        });
     }
     @Test
     public void testRepositorioFalla() throws RegistroDeUsuarioException { //falla ya que ambos usernames son iguales
