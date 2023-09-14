@@ -73,7 +73,14 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     }
 
     protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] contadorAux) {
-
+        JsonResponse respuestaEntidades=new JsonResponse();
+        for (Entidad entidad : entidadesOrdenadas){
+            EntidadRanking e = new EntidadRanking();
+            e.setNombre(entidad.getNombre());
+            e.setTipo(entidad.getTipoEntidad().toString());
+            e.setNivelImpacto(contadorAux[entidades.indexOf(entidad)]);
+            respuestaEntidades.entidades.add(e);
+        }
     }
 
     public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
