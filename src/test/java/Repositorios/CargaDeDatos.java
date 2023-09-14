@@ -52,7 +52,7 @@ public class CargaDeDatos {
     private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
     private RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
     private RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
-    private RepositorioDeEmpresas repositorioDeEmpresas = new RepositorioDeEmpresas();
+    private RepositorioDeEmpresas repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
     private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
 
     private Municipio yavi = new Municipio();

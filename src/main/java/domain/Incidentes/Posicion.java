@@ -14,7 +14,7 @@ public class Posicion extends Persistente {
     private double latitud;
     @Column(name = "longitud")
     private double longitud;
-    public Posicion() {} //Revisar TODO
+    public Posicion() {}
     public double distancia(Posicion posicion) {
         return Math.sqrt(Math.pow(this.latitud-posicion.getLatitud(), 2)+Math.pow(this.longitud-posicion.getLongitud(), 2));
     }

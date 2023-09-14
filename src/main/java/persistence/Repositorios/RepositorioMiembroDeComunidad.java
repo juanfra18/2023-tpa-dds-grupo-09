@@ -13,7 +13,7 @@ public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit 
   RepositorioParServicioRol repositorioParServicioRol;
   private RepositorioMiembroDeComunidad() {
     tx = entityManager().getTransaction();
-    repositorioParServicioRol = new RepositorioParServicioRol();
+    repositorioParServicioRol = RepositorioParServicioRol.getInstancia();
   }
 
   public static  RepositorioMiembroDeComunidad getInstancia() {

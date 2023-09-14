@@ -20,11 +20,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class RepositorioDeIncidentes implements WithSimplePersistenceUnit {
-  private List<Incidente> incidentes; //TODO no se está usando
   private EntityTransaction tx;
   private static RepositorioDeIncidentes instancia = null;
 
-  public RepositorioDeIncidentes() {
+  private RepositorioDeIncidentes() {
     tx = entityManager().getTransaction();
   }
   public static  RepositorioDeIncidentes getInstancia() {

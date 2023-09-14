@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia(); // TODO se debe instanciar tambien en el getInstancia?
+  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
   private static RepositorioDeMunicipios instancia = null;
 
   private RepositorioDeMunicipios() {

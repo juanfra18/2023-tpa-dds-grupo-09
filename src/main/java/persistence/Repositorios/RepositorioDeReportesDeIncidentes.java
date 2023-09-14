@@ -14,7 +14,7 @@ public class RepositorioDeReportesDeIncidentes implements WithSimplePersistenceU
     private EntityTransaction tx;
     private static RepositorioDeReportesDeIncidentes instancia = null;
     @Getter
-    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia(); //TODO nose si es correcto instanciarlo asi...
+    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
 
 
     private RepositorioDeReportesDeIncidentes() {

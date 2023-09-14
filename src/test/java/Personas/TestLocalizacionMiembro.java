@@ -23,7 +23,7 @@ public class TestLocalizacionMiembro {
   private MiembroDeComunidad miembro;
   private String provincia = "Buenos Aires";
   private String municipio = "General Alvarado";
-  private RepositorioDeIncidentes repositorioDeIncidentes = new RepositorioDeIncidentes();
+  private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
   private FormaDeNotificar cuandoSuceden;
   private MedioDeComunicacion mail;
 

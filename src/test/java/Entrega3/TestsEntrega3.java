@@ -97,7 +97,7 @@ public class TestsEntrega3 {
 
       entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
         entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
-        repositorioDeIncidentes = new RepositorioDeIncidentes();
+        repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
         entidades = new ArrayList<>();
 
         comunidad = new Comunidad();

@@ -10,16 +10,23 @@ import java.util.List;
 
 public class RepositorioParServicioRol implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
+  private static RepositorioParServicioRol instancia = null;
+  private RepositorioParServicioRol() {
+    tx = entityManager().getTransaction();
+  }
 
-  public RepositorioParServicioRol(){
-    this.tx = entityManager().getTransaction();
+  public static  RepositorioParServicioRol getInstancia() {
+    if (instancia == null) {
+      instancia = new RepositorioParServicioRol();
+    }
+    return instancia;
   }
 
   public static void main(String[] args) {
     RepositorioParServicioRol repositorioParServicioRol = new RepositorioParServicioRol();
     Banio banio = new Banio();
     banio.setTipo("CABALLEROS");
-    RepositorioServicio repositorioServicio = new RepositorioServicio();
+    RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
     repositorioServicio.agregar(banio);
     Banio banio2 = new Banio();
     banio2.setTipo("CABALLEROS");

@@ -12,7 +12,16 @@ import java.util.List;
 @Getter
 public class RepositorioDeEmpresas {
 
-    public RepositorioDeEmpresas() {} //TODO Singleton
+    private static RepositorioDeEmpresas instancia = null;
+
+    private RepositorioDeEmpresas() {}
+
+    public static  RepositorioDeEmpresas getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioDeEmpresas();
+        }
+        return instancia;
+    }
     public static void main(String[] args) {
 
         List<OrganismoDeControl> empresas;

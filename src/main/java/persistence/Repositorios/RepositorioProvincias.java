@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RepositorioProvincias implements WithSimplePersistenceUnit {
   private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia(); //TODO igual que municipios
+  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
   private static RepositorioProvincias instancia = null;
 
   private RepositorioProvincias(){
