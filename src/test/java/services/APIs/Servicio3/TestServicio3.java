@@ -244,7 +244,7 @@ public class TestServicio3 {
         RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
         RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
 
-        Servicio3JSON servicio3JSON= Servicio3JSON.instancia();
+        Servicio3JSON servicio3JSON = Servicio3JSON.instancia();
         List<Entidad> respuesta = servicio3JSON.obtenerRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana(),repositorioComunidad.buscarTodos());
         respuesta.forEach(r -> System.out.println(r.getNombre()));
     }
