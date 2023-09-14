@@ -63,7 +63,7 @@ public class TestServicio3 {
     private FormaDeNotificar cuandoSuceden;
     private FormaDeNotificar sinApuro;
 
-    @BeforeEach
+    @Test
     public void init() {
 
         repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
@@ -239,9 +239,13 @@ public class TestServicio3 {
 
 
     @Test
-    public void rankingSolucionanMasLento() {
+    public void ranking() {
+        RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
+        RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+        RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+
         Servicio3JSON servicio3JSON= Servicio3JSON.instancia();
-        List<Entidad> respuesta = servicio3JSON.obtenerRanking(entidades, repositorioDeIncidentes.getIncidentesEstaSemana(),repositorioComunidad.buscarTodos());
+        List<Entidad> respuesta = servicio3JSON.obtenerRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana(),repositorioComunidad.buscarTodos());
         respuesta.forEach(r -> System.out.println(r.getNombre()));
     }
 
