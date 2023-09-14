@@ -72,6 +72,7 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
+    /*
     protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] contadorAux) {
         JsonResponse respuestaEntidades=new JsonResponse();
         for (Entidad entidad : entidadesOrdenadas){
@@ -81,15 +82,15 @@ Se deberá implementar el servicio que tuviera asignado el grupo
             e.setNivelImpacto(contadorAux[entidades.indexOf(entidad)]);
             respuestaEntidades.entidades.add(e);
         }
-    }
+    }*/
 
-    public void armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
+    public List<Entidad> armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
         int[] contadorAux = new int[entidades.size()];
         List<Entidad> entidadesOrdenadas = new ArrayList<>();
 
         contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
-        entidadesOrdenadas = ordenarEntidades(entidades,contadorAux);
-        generarRanking(entidadesOrdenadas,entidades,contadorAux);
+        return ordenarEntidades(entidades,contadorAux);
+        //generarRanking(entidadesOrdenadas,entidades,contadorAux);
     }
 
     protected List<Entidad> ordenarEntidades(List<Entidad> entidades, int[] auxiliar){

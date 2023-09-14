@@ -37,8 +37,10 @@ public class ProcesarDatosController implements Handler {
     repoComunidad.addAll(comunidades);
 
     EntidadesConMayorImpacto ranking = new EntidadesConMayorImpacto();
-    ranking.armarRanking(entidades,incidentes,comunidades);
+    JsonResponse jsonResponse = new JsonResponse();
+    jsonResponse.setEntidades(ranking.armarRanking(entidades,incidentes,comunidades));
 
+    ctx.result(gson.toJson(jsonResponse));
     ctx.status(200).json("Datos procesados con éxito");
   }
 }

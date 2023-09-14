@@ -8,5 +8,5 @@ import retrofit2.http.POST;
 
 public interface Servicio3 {
     @POST("/ranking")
-    Call<JsonResponse> enviarDatosRanking(@Body JsonRequest jsonRequest);
+    Call<JsonResponse> enviarDatosRanking(@Body String jsonRequest);
 }

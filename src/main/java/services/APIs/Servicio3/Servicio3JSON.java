@@ -3,22 +3,19 @@ package services.APIs.Servicio3;
 import Config.Config;
 import ServicioAPI.JsonRequest;
 import ServicioAPI.JsonResponse;
+import com.google.gson.Gson;
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
 import domain.Personas.Comunidad;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import services.APIs.Georef.NoSePudoConectarConAPI;
-import services.Localizacion.ListadoDeProvincias;
-
-
 import java.io.IOException;
 import java.util.List;
 
-public class Servicio3JSON {
+public class Servicio3JSON implements Servicio3Adapter{
     private static Servicio3JSON instancia = null;
     private static final String urlApi = Config.URL_APIS3;
     private Retrofit retrofit;
@@ -38,23 +35,22 @@ public class Servicio3JSON {
         return instancia;
     }
 
-    public JsonResponse  obtenerRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades) {
+    public List<Entidad>  obtenerRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades) {
         JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.setEntidades(entidades);
         jsonRequest.setIncidentes(incidentes);
         jsonRequest.setComunidades(comunidades);
+        Gson gson = new Gson();
 
         try {
-            Call<JsonResponse> requestRanking = servicio3.enviarDatosRanking(jsonRequest);
+            Call<JsonResponse> requestRanking = servicio3.enviarDatosRanking(gson.toJson(jsonRequest));
             Response<JsonResponse> responseRanking = requestRanking.execute();
-            return responseRanking.body();
+            return responseRanking.body().getEntidades();
         }
         catch (IOException e)
         {
             throw new NoSePudoConectarConAPI("No se pudo conectar con la API Servicio3");
-        }}
-
-
-
+        }
+    }
 }
 
