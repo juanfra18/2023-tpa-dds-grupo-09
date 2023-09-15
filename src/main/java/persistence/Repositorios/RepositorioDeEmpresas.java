@@ -13,7 +13,6 @@ import java.util.List;
 public class RepositorioDeEmpresas {
 
     private static RepositorioDeEmpresas instancia = null;
-
     private RepositorioDeEmpresas() {}
 
     public static  RepositorioDeEmpresas getInstancia() {

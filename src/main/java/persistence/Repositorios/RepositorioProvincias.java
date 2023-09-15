@@ -34,11 +34,6 @@ public class RepositorioProvincias implements WithSimplePersistenceUnit {
     entityManager().persist(provincia);
     this.tx.commit();
   }
-  public void modificar(Provincia provincia) {
-    this.tx.begin();
-    entityManager().merge(provincia);
-    this.tx.commit();
-  }
   public void eliminar(Provincia provincia) {
     this.tx.begin();
     entityManager().remove(provincia);

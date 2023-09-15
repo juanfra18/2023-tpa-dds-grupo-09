@@ -7,70 +7,18 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class RepositorioMiembroDeComunidad implements WithSimplePersistenceUnit {
-  private EntityTransaction tx;
+public class RepositorioMiembroDeComunidad extends RepositorioGenerico<MiembroDeComunidad> {
   private static RepositorioMiembroDeComunidad instancia = null;
   RepositorioParServicioRol repositorioParServicioRol;
+
   private RepositorioMiembroDeComunidad() {
-    tx = entityManager().getTransaction();
+    super(MiembroDeComunidad.class);
     repositorioParServicioRol = RepositorioParServicioRol.getInstancia();
   }
-
-  public static  RepositorioMiembroDeComunidad getInstancia() {
+  public static RepositorioMiembroDeComunidad getInstancia() {
     if (instancia == null) {
       instancia = new RepositorioMiembroDeComunidad();
     }
     return instancia;
-  }
-  public static void main(String[] args) {
-    RepositorioMiembroDeComunidad repo = new RepositorioMiembroDeComunidad();
-
-    FormaDeNotificar formaDeNotificar = new CuandoSuceden();
-    MedioDeComunicacion medioDeComunicacion = new ViaMail();
-    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-
-
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-    miembroDeComunidad.setNombre("pablo");
-    miembroDeComunidad.setApellido("perez");
-    miembroDeComunidad.setRepositorioDeReportesDeIncidentes(repositorioDeReportesDeIncidentes);
-    miembroDeComunidad.getReceptorDeNotificaciones().cambiarFormaDeNotificar(formaDeNotificar);
-    miembroDeComunidad.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(medioDeComunicacion);
-    miembroDeComunidad.getReceptorDeNotificaciones().setMail("hola@mail.net");
-    miembroDeComunidad.getReceptorDeNotificaciones().setTelefono("+1333333453");
-
-    repo.agregar(miembroDeComunidad);
-
-    miembroDeComunidad.setApellido("fernandez");
-
-    repo.modificar(miembroDeComunidad);
-
-    System.out.println(repo.buscar(miembroDeComunidad.getId()).getNombre());
-
-    //repo.eliminar(miembroDeComunidad);
-
-    repo.buscarTodos().forEach(m -> System.out.println(m.getApellido()));
-  }
-
-  public void agregar(MiembroDeComunidad miembroDeComunidad) {
-    this.tx.begin();
-    entityManager().persist(miembroDeComunidad);
-    this.tx.commit();
-  }
-  public void modificar(MiembroDeComunidad miembroDeComunidad) {
-    this.tx.begin();
-    entityManager().merge(miembroDeComunidad);
-    this.tx.commit();
-  }
-  public void eliminar(MiembroDeComunidad miembroDeComunidad) {
-    this.tx.begin();
-    entityManager().remove(miembroDeComunidad);
-    this.tx.commit();
-  }
-  public MiembroDeComunidad buscar(long id){
-    return entityManager().find(MiembroDeComunidad.class, id);
-  }
-  public List<MiembroDeComunidad> buscarTodos(){
-    return entityManager().createQuery("from MiembroDeComunidad", MiembroDeComunidad.class).getResultList();
   }
 }
