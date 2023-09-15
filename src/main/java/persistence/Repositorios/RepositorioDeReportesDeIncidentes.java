@@ -2,11 +2,8 @@ package persistence.Repositorios;
 
 
 import domain.Incidentes.ReporteDeIncidente;
-import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import lombok.Getter;
 
-import javax.persistence.EntityTransaction;
-import java.util.List;
 
 @Getter
 public class RepositorioDeReportesDeIncidentes extends RepositorioGenerico<ReporteDeIncidente> {

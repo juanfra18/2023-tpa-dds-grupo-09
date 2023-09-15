@@ -1,11 +1,9 @@
 package ServicioAPI;
 
-import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
 import domain.Personas.Comunidad;
 import domain.Personas.MiembroDeComunidad;
-import services.Archivos.SistemaDeArchivos;
 
 import java.util.*;
 
@@ -72,25 +70,10 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
-    /*
-    protected void generarRanking(List<Entidad> entidadesOrdenadas, List<Entidad> entidades, int[] contadorAux) {
-        JsonResponse respuestaEntidades=new JsonResponse();
-        for (Entidad entidad : entidadesOrdenadas){
-            EntidadRanking e = new EntidadRanking();
-            e.setNombre(entidad.getNombre());
-            e.setTipo(entidad.getTipoEntidad().toString());
-            e.setNivelImpacto(contadorAux[entidades.indexOf(entidad)]);
-            respuestaEntidades.entidades.add(e);
-        }
-    }*/
-
     public List<Entidad> armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
-        int[] contadorAux = new int[entidades.size()];
-        List<Entidad> entidadesOrdenadas = new ArrayList<>();
-
+        int[] contadorAux;
         contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
         return ordenarEntidades(entidades,contadorAux);
-        //generarRanking(entidadesOrdenadas,entidades,contadorAux);
     }
 
     protected List<Entidad> ordenarEntidades(List<Entidad> entidades, int[] auxiliar){

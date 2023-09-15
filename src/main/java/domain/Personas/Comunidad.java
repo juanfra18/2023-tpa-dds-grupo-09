@@ -10,7 +10,6 @@ import lombok.Setter;
 import persistence.Repositorios.RepositorioDeIncidentes;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 

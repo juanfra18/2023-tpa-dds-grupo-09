@@ -2,9 +2,6 @@ package persistence.Repositorios;
 
 import domain.Seguridad.RegistroDeUsuarioException;
 import domain.Usuario.Usuario;
-import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-
-import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 

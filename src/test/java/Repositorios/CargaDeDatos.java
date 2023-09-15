@@ -17,7 +17,6 @@ import domain.Rankings.EntidadesQueSolucionanMasLento;
 import domain.Servicios.*;
 import domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import persistence.Repositorios.*;
 import services.APIs.Georef.ServicioGeoref;
@@ -26,13 +25,9 @@ import services.Archivos.SistemaDeArchivos;
 import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
-
-import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CargaDeDatos {
     private List<OrganismoDeControl> empresas;

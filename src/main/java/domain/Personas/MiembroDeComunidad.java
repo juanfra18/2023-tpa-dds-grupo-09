@@ -29,7 +29,8 @@ public class MiembroDeComunidad extends Persistente {
     private String nombre;
     @ManyToMany
     private List<Entidad> entidadesDeInteres;
-    @Transient
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "miembro_id", referencedColumnName = "id")
     private List<ParServicioRol> serviciosDeInteres;
     @ManyToMany
     private List<Provincia> provincias;

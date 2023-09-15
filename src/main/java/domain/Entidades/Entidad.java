@@ -41,9 +41,4 @@ public class Entidad extends Persistente {
         return Objects.equals(nombre, otro.nombre)
             && Objects.equals(tipoEntidad, otro.tipoEntidad);
     }
-
-    public Integer numeroDeIncidentes(List<ReporteDeIncidente> incidentes){
-        return incidentes.stream().filter(
-            incidente->incidente.getEntidad().igualito(this)).toList().size();
-    }
 }
