@@ -1,0 +1,231 @@
+---------------------------URL--------------------------
+
+https://editor.swagger.io
+
+
+
+
+---------------------------CODIGO--------------------------
+
+openapi: 3.0.3
+info:
+  title: API de agencia de viajes MoonTravels.
+  description: Esta API se encarga de manejar la el repositorio del Servicio 3 (entidades con mayor impacto)
+  version: 1.0.0
+servers:
+- url: https://localhost:8080/
+tags:
+- name: Listado de entidades con mayor impacto
+  description: Maneja la información de las entidades
+
+paths:
+  /:
+    post:
+      tags:
+      - entidades
+      summary: Agregar una entidad para evaluar su impacto
+      parameters:
+      - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyEntidad'
+        required: true
+      responses:
+        200:
+          description: (OK) La información de la entidad se guardó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoEntidadPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  
+  /{idEntidad}:
+    get:
+      tags:
+      - entidades
+      summary: Obtiene la infomación de la base de datos de una entidad.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idEntidad
+        in: path
+        description: Identificador de la entidad a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información de la entidad se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoEntidadesGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /actualiza/{idEntidad}:
+    put:
+      tags:
+      - entidades
+      summary: Actualiza la informacion de una entidad en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idEntidad
+        in: path
+        description: Identificador de la entidad a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BodyEntidadesPut'
+        
+      responses:
+        200:
+          description: (OK) La información de la entidad se actualizó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoEntidadPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /elimina/{idEntidad}:
+    delete:
+      tags:
+        - entidad
+      summary: Elimina logicamente a una entidad.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idEntidad
+        in: path
+        description: Identificador de la entidad a obtener
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: (OK) La entiad se eliminó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoEntidadPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+components:
+  responses:
+    
+    Unauthorized:
+      description: (Unauthorized) No hay autorización para llamar al servicio
+    
+    NotFound:
+      description: (NotFound) No se encontró la información requerida 
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      
+    ServerError:
+      description: Error en servidor
+        
+
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticacion en API.
+      required: true
+      schema:
+        type: object
+    
+
+  schemas:
+    BodyEntidad:
+      type: string
+      properties:
+        entidades:
+          type: string
+          description: Identificador de la entidad
+        incidentes:
+          type: string
+          description: Nombre de la entidad
+        comunidades:
+          type: string
+          description: Comunidades relacionadas
+
+  
+    ExitoEntidadPost:
+      type: string
+      properties:
+        respuesta:
+          type: string
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria
+        entidad: 
+          type: string
+          enum: [999]
+          description: Lista de entidades
+          
+          
+    ExitoEntidadesGet:
+      type: string
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria
+        entidades:
+          type: string
+          description: Identificador de la entidad
+        incidentes:
+          type: string
+          description: Nombre de la entidad
+        comunidades:
+          type: string
+          description: Comunidades relacionadas
+          
+    BodyEntidadesPut:
+      type: string
+      properties:
+        entidades:
+          type: string
+          description: Identificador de la entidad
+        incidentes:
+          type: string
+          description: Nombre de la entidad
+        comunidades:
+          type: string
+          description: Comunidades relacionadas
+       
+          
