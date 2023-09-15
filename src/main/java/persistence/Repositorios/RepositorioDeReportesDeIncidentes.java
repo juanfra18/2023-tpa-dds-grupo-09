@@ -12,9 +12,6 @@ import java.util.List;
 public class RepositorioDeReportesDeIncidentes extends RepositorioGenerico<ReporteDeIncidente> {
 
     private static RepositorioDeReportesDeIncidentes instancia = null;
-    @Getter
-    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-
 
     private RepositorioDeReportesDeIncidentes() {
         super(ReporteDeIncidente.class);

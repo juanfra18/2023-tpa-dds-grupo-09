@@ -27,6 +27,7 @@ import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
+import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -75,9 +76,9 @@ public class CargaDeDatos {
     private ReporteDeIncidente incidenteBanioLineaMitre;
     private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
     private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
-
         @Test
         public void testBD(){
+
             //Se cargan las provincias y municipios
             listadoDeProvincias = servicioGeoref.listadoDeProvincias();
 
@@ -244,30 +245,15 @@ public class CargaDeDatos {
         @Test
         public void solicitarInformacionDeIncidentesAbiertos(){
             MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
-            Incidente incidente = repositorioDeIncidentes.buscar(15);
-            System.out.println(incidente.getReportesDeCierre().size());
 
-           /* List<Incidente> incidentesAbiertos = pablito.solicitarInformacionDeIncidentesAbiertos();
-            if(!incidentesAbiertos.isEmpty())
-            {
-                for (Incidente incidente : incidentesAbiertos){
-                    System.out.println(incidente.mensaje());
-                }
-            }
-            Assertions.assertEquals(1,incidentesAbiertos.size());
+            Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO).size());
 
-            */
         }
         @Test
         public void solicitarInformacionDeIncidentesCerrados(){
             MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
-            List<Incidente> incidentesCerrados = pablito.solicitarInformacionDeIncidentesCerrados();
-            if(!incidentesCerrados.isEmpty())
-            {
-                for (Incidente incidente : incidentesCerrados){
-                    System.out.println(incidente.mensaje());
-                }
-            }
+
+            Assertions.assertEquals(0,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
         }
 
     @Test
