@@ -4,6 +4,7 @@ import Config.Config;
 import ServicioAPI.JsonRequest;
 import ServicioAPI.JsonResponse;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
 import domain.Personas.Comunidad;
@@ -13,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import services.APIs.Georef.NoSePudoConectarConAPI;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Servicio3JSON implements Servicio3Adapter{
@@ -22,9 +24,9 @@ public class Servicio3JSON implements Servicio3Adapter{
     private Servicio3 servicio3;
     private Servicio3JSON() {
         this.retrofit = new Retrofit.Builder()
-                .baseUrl(urlApi)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            .baseUrl(urlApi)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
         this.servicio3 = this.retrofit.create(Servicio3.class);
     }
 
@@ -40,7 +42,10 @@ public class Servicio3JSON implements Servicio3Adapter{
         jsonRequest.setEntidades(entidades);
         jsonRequest.setIncidentes(incidentes);
         jsonRequest.setComunidades(comunidades);
-        Gson gson = new Gson();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter());
+        Gson gson = gsonBuilder.create();
 
         try {
             Call<JsonResponse> requestRanking = servicio3.enviarDatosRanking(gson.toJson(jsonRequest));
@@ -53,4 +58,3 @@ public class Servicio3JSON implements Servicio3Adapter{
         }
     }
 }
-

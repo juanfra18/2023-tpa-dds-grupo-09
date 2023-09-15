@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,43 +24,44 @@ public class Incidente extends Persistente {
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
     @OneToMany(cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "incidente_id")
-    private List<ReporteDeIncidente> reportesDeApertura;
-    @OneToMany(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "incidente_id",referencedColumnName = "id")
-    private List<ReporteDeIncidente> reportesDeCierre;
+    private List<ReporteDeIncidente> reportes;
 
     public Incidente() {
-        this.reportesDeApertura = new ArrayList<>();
-        this.reportesDeCierre = new ArrayList<>();
+        this.reportes = new ArrayList<>();
     }
-
+    public List<ReporteDeIncidente> getReportesDeApertura(){
+        return this.reportes.stream().filter(r -> !r.esDeCierre()).toList();
+    }
+    public List<ReporteDeIncidente> getReportesDeCierre(){
+        return this.reportes.stream().filter(r -> r.esDeCierre()).toList();
+    }
     public ReporteDeIncidente primeraApertura(){
-        return this.reportesDeApertura.get(0);
+        return this.getReportesDeApertura().get(0);
     }
     public ReporteDeIncidente primerCierre(){
-        return this.reportesDeCierre.get(0);
+        return this.getReportesDeCierre().get(0);
     }
     public void agregarReporteDeApertura(ReporteDeIncidente reporteDeIncidente){
         // Se asume que los reportes están en orden cronológico
-        if (this.reportesDeApertura.isEmpty()) {
+        if (this.getReportesDeApertura().isEmpty()) {
             this.establecimiento = reporteDeIncidente.getEstablecimiento();
             this.servicio = reporteDeIncidente.getServicio();
         }
-        this.reportesDeApertura.add(reporteDeIncidente);
+        this.reportes.add(reporteDeIncidente);
     }
     public void agregarReporteDeCierre(ReporteDeIncidente reporteDeIncidente){
-        this.reportesDeCierre.add(reporteDeIncidente);
+        this.reportes.add(reporteDeIncidente);
     }
 
     public boolean cerrado(){
-        return !(this.reportesDeCierre.isEmpty());
+        return !(this.getReportesDeCierre().isEmpty());
     }
     public boolean tieneEstado(EstadoIncidente estadoIncidente){
         return (this.cerrado() && estadoIncidente == EstadoIncidente.CERRADO) || (!this.cerrado() && estadoIncidente == EstadoIncidente.ABIERTO);
     }
     public Long tiempoDeCierre(){
-        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.reportesDeCierre.get(0).getFechaYhora());
+        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.getReportesDeCierre().get(0).getFechaYhora());
     } //lo hacemos en minutos y dsp se pasa a horas y minutos en el ranking
 
     public boolean igualito(Incidente incidente) {
@@ -78,9 +78,9 @@ public class Incidente extends Persistente {
 
     public Integer diasAbierto(){
         int dias = 1; //de base ya estuvo abierto ese mismo dia
-        for(ReporteDeIncidente reporteDeIncidente: reportesDeApertura)
+        for(ReporteDeIncidente reporteDeIncidente: this.getReportesDeApertura())
         {   //se fija si hay reportes que ocurrieron luego de 24 horas y que hayan sido anteriores al primer cierre
-            reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
+            List<ReporteDeIncidente> reportesDeApertura = this.getReportesDeApertura().stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
             if(!reportesDeApertura.isEmpty()) dias++;
         }
         return dias;

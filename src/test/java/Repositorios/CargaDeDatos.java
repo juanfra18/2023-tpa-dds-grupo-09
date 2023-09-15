@@ -137,20 +137,17 @@ public class CargaDeDatos {
 
             //miembro de comunidad reporta incidentes
 
-            ReporteDeIncidente incidenteBanioLineaMitre1 = new ReporteDeIncidente();
-            incidenteBanioLineaMitre1.setDenunciante(pablo);
-            incidenteBanioLineaMitre1.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre1.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre1.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre1.setServicio(banioUnisex);
-            incidenteBanioLineaMitre1.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
-            incidenteBanioLineaMitre1.setObservaciones("Baño inundado, todo el piso mojado");
+            incidenteBanioLineaMitre = new ReporteDeIncidente();
+            incidenteBanioLineaMitre.setDenunciante(pablo);
+            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+            incidenteBanioLineaMitre.setEntidad(lineaMitre);
+            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+            incidenteBanioLineaMitre.setServicio(banioUnisex);
+            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
+            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre1,pablo.getComunidades().get(0));
+            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
-
-
-            /*
             incidenteBanioLineaMitre = new ReporteDeIncidente();
             incidenteBanioLineaMitre.setDenunciante(pablo);
             incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
@@ -227,7 +224,6 @@ public class CargaDeDatos {
             incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
             pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-             */
 
             Assertions.assertTrue(true);
         }
@@ -253,7 +249,7 @@ public class CargaDeDatos {
         public void solicitarInformacionDeIncidentesCerrados(){
             MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
 
-            Assertions.assertEquals(0,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
+            Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
         }
 
     @Test
@@ -263,11 +259,9 @@ public class CargaDeDatos {
     @Test
     public void IncidentesDeLaSemana(){
         Assertions.assertEquals(2,repositorioDeIncidentes.getIncidentesEstaSemana().size());
-        List<Incidente> i = repositorioDeIncidentes.getIncidentesEstaSemana();
-        for(Incidente incidente : i)
-        {
-            System.out.println(incidente.mensaje());
-        }
+        List<Incidente> incidentesEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
+
+        Assertions.assertEquals(2,incidentesEstaSemana.size());
 
     }
 

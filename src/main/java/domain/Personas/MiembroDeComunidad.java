@@ -12,7 +12,6 @@ import domain.Servicios.Servicio;
 import domain.Usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
-import persistence.Repositorios.RepositorioEntidad;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
