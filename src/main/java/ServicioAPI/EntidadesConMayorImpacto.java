@@ -1,5 +1,6 @@
 package ServicioAPI;
 
+import Config.Config;
 import domain.Entidades.Entidad;
 import domain.Incidentes.Incidente;
 import domain.Personas.Comunidad;
@@ -33,7 +34,7 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         int[] tiempoDeResolucion = new int[entidades.size()];
         int[] cantIncidentesNoResueltos = new int[entidades.size()];
         int[] impactoDeIncidentes = new int[entidades.size()];
-        final int CNF = 10;
+        int CNF = Config.CNF_API;
         int[] cantMiembrosAfectados = new int[entidades.size()];
 
         for(Incidente incidente: incidentes) //Buscamos la primer entidad con ese incidente
