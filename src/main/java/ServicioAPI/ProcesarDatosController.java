@@ -1,25 +1,17 @@
 package ServicioAPI;
 
+import ServicioAPI.domain.APIComunidad;
+import ServicioAPI.domain.APIEntidad;
+import ServicioAPI.domain.APIIncidente;
 import com.google.gson.Gson;
-import domain.Entidades.Entidad;
-import domain.Incidentes.Incidente;
-import domain.Personas.Comunidad;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
 import java.util.List;
 
 public class ProcesarDatosController implements Handler {
-
-  private RepoEntidad repoEntidad;
-  private RepoIncidente repoIncidente;
-  private RepoComunidad repoComunidad;
-
-  public ProcesarDatosController(RepoEntidad repoEntidad, RepoIncidente repoIncidente, RepoComunidad repoComunidad){
+  public ProcesarDatosController(){
     super();
-    this.repoEntidad = repoEntidad;
-    this.repoIncidente = repoIncidente;
-    this.repoComunidad = repoComunidad;
   }
 
   @Override
@@ -28,19 +20,14 @@ public class ProcesarDatosController implements Handler {
     Gson gson = new Gson();
     JsonRequest request = gson.fromJson(requestBody, JsonRequest.class);
 
-    List<Entidad> entidades = request.getEntidades();
-    List<Incidente> incidentes = request.getIncidentes();
-    List<Comunidad> comunidades = request.getComunidades();
-
-    repoEntidad.addAll(entidades);
-    repoIncidente.addAll(incidentes);
-    repoComunidad.addAll(comunidades);
+    List<APIEntidad> entidades = request.getEntidades();
+    List<APIIncidente> incidentes = request.getIncidentes();
+    List<APIComunidad> comunidades = request.getComunidades();
 
     EntidadesConMayorImpacto ranking = new EntidadesConMayorImpacto();
     JsonResponse jsonResponse = new JsonResponse();
     jsonResponse.setEntidades(ranking.armarRanking(entidades,incidentes,comunidades));
 
-    ctx.result(gson.toJson(jsonResponse));
-    ctx.status(200).json("Datos procesados con éxito");
+    ctx.status(200).result("Datos procesados con éxito").json(gson.toJson(jsonResponse));
   }
 }

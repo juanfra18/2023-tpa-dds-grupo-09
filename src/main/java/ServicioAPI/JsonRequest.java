@@ -1,8 +1,8 @@
 package ServicioAPI;
 
-import domain.Entidades.Entidad;
-import domain.Incidentes.Incidente;
-import domain.Personas.Comunidad;
+import ServicioAPI.domain.APIComunidad;
+import ServicioAPI.domain.APIEntidad;
+import ServicioAPI.domain.APIIncidente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 public class JsonRequest {
-    private List<Entidad> entidades;
-    private List<Incidente> incidentes;
-    private List<Comunidad> comunidades;
+    private List<APIEntidad> entidades;
+    private List<APIIncidente> incidentes;
+    private List<APIComunidad> comunidades;
 
     public JsonRequest() {
         this.entidades = new ArrayList<>();

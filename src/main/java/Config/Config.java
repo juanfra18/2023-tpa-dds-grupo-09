@@ -10,5 +10,4 @@ public class Config {
   public static final String RANKING_2 = "resources/ranking2.csv";
   public static final String RANKING_3 = "resources/ranking3.csv";
   public static final double DISTANCIA_MINIMA = 100;
-  public static final int CNF_API = 10;
 }

@@ -1,6 +1,6 @@
 package ServicioAPI;
 
-import domain.Entidades.Entidad;
+import ServicioAPI.domain.APIEntidad;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public class JsonResponse {
-    List<Entidad> entidades;
+    List<APIEntidad> entidades;
 }

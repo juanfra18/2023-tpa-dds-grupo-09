@@ -1,10 +1,7 @@
 package ServicioAPI;
 
-import Config.Config;
-import domain.Entidades.Entidad;
-import domain.Incidentes.Incidente;
-import domain.Personas.Comunidad;
-import domain.Personas.MiembroDeComunidad;
+import ServicioAPI.Config.Config;
+import ServicioAPI.domain.*;
 
 import java.util.*;
 
@@ -30,16 +27,16 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     // total = nivelDeImpacto * cantMiembros (miembros.afectados.size())
     // total -> Armas el ranking
 
-    protected int[] obtenerValoresPorEntidad(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades) {
+    protected int[] obtenerValoresPorEntidad(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades) {
         int[] tiempoDeResolucion = new int[entidades.size()];
         int[] cantIncidentesNoResueltos = new int[entidades.size()];
         int[] impactoDeIncidentes = new int[entidades.size()];
         int CNF = Config.CNF_API;
         int[] cantMiembrosAfectados = new int[entidades.size()];
 
-        for(Incidente incidente: incidentes) //Buscamos la primer entidad con ese incidente
+        for(APIIncidente incidente: incidentes) //Buscamos la primer entidad con ese incidente
         {
-            Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
+            Optional<APIEntidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
             if(incidente.cerrado())
             {
                 tiempoDeResolucion[entidades.indexOf(entidadConIncidente.get())] += incidente.tiempoDeCierre(); //se acumula el tiempo de resolucion de incidentes en minutos
@@ -48,10 +45,10 @@ Se deberá implementar el servicio que tuviera asignado el grupo
                 cantIncidentesNoResueltos[entidades.indexOf(entidadConIncidente.get())]++;
                 //No se consideran como en el primer ranking 2 incidentes con mas de 24 horas de diferencia como 2 incidentes distintos
 
-                List<Comunidad> comunidadesAfectadas = comunidades.stream().filter(comunidad -> comunidad.incidenteEsDeComunidad(incidente)).toList();
-                List<MiembroDeComunidad> MiembrosRepetidos = comunidadesAfectadas.stream().flatMap(comunidad -> comunidad.getMiembros().stream()).toList();
-                List<MiembroDeComunidad> MiembrosDeComunidadesAfectados = null;
-                for(MiembroDeComunidad miembroDeComunidad:MiembrosRepetidos)
+                List<APIComunidad> comunidadesAfectadas = comunidades.stream().filter(comunidad -> comunidad.incidenteEsDeComunidad(incidente)).toList();
+                List<APIMiembroDeComunidad> MiembrosRepetidos = comunidadesAfectadas.stream().flatMap(comunidad -> comunidad.getMiembros().stream()).toList();
+                List<APIMiembroDeComunidad> MiembrosDeComunidadesAfectados = null;
+                for(APIMiembroDeComunidad miembroDeComunidad: MiembrosRepetidos)
                 {
                     if(!MiembrosDeComunidadesAfectados.contains(miembroDeComunidad) && miembroDeComunidad.afectadoPor(incidente)) //A cada uno de los miemmbros lo agrega a las comunidades afectadas
                     {
@@ -71,17 +68,17 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
-    public List<Entidad> armarRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades){
+    public List<APIEntidad> armarRanking(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades){
         int[] contadorAux;
         contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
         return ordenarEntidades(entidades,contadorAux);
     }
 
-    protected List<Entidad> ordenarEntidades(List<Entidad> entidades, int[] auxiliar){
-        List<Entidad> entidadesOrdenadas = new ArrayList<>(entidades);
-        Collections.sort(entidadesOrdenadas, new Comparator<Entidad>() {
+    protected List<APIEntidad> ordenarEntidades(List<APIEntidad> entidades, int[] auxiliar){
+        List<APIEntidad> entidadesOrdenadas = new ArrayList<>(entidades);
+        Collections.sort(entidadesOrdenadas, new Comparator<APIEntidad>() {
             @Override
-            public int compare(Entidad entidad1, Entidad entidad2) {
+            public int compare(APIEntidad entidad1, APIEntidad entidad2) {
                 int index1 = entidades.indexOf(entidad1);
                 int index2 = entidades.indexOf(entidad2);
                 return Integer.compare(auxiliar[index2], auxiliar[index1]);
