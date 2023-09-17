@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProcesarDatosController implements Handler {
@@ -26,7 +27,8 @@ public class ProcesarDatosController implements Handler {
 
     EntidadesConMayorImpacto ranking = new EntidadesConMayorImpacto();
     JsonResponse jsonResponse = new JsonResponse();
-    jsonResponse.setEntidades(ranking.armarRanking(entidades,incidentes,comunidades));
+    List<APIEntidad> entidadesProcesadas = ranking.armarRanking(entidades,incidentes,comunidades);
+    jsonResponse.setEntidades(entidadesProcesadas);
 
     ctx.status(200).result("Datos procesados con éxito").json(gson.toJson(jsonResponse));
   }

@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import services.APIs.Georef.NoSePudoConectarConAPI;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Servicio3JSON implements Servicio3Adapter{
@@ -38,6 +39,7 @@ public class Servicio3JSON implements Servicio3Adapter{
     }
 
     public List<Entidad>  obtenerRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades) {
+        /*
         JsonRequest jsonRequest = new JsonRequest();
         jsonRequest.setEntidades(entidades);
         jsonRequest.setIncidentes(incidentes);
@@ -55,6 +57,7 @@ public class Servicio3JSON implements Servicio3Adapter{
         catch (IOException e)
         {
             throw new NoSePudoConectarConAPI("No se pudo conectar con la API Servicio3");
-        }
+        }*/
+        return new ArrayList<>();
     }
 }

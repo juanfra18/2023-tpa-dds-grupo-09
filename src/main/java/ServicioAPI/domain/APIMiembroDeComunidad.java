@@ -1,9 +1,10 @@
 package ServicioAPI.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
+@Setter
 @Getter
 public class APIMiembroDeComunidad extends APIGenerica{
   private List<APIServicio> serviciosQueAfectan;

@@ -34,25 +34,31 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         int CNF = Config.CNF_API;
         int[] cantMiembrosAfectados = new int[entidades.size()];
 
-        for(APIIncidente incidente: incidentes) //Buscamos la primer entidad con ese incidente
+        for(APIIncidente incidente: incidentes)
         {
-            Optional<APIEntidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
-            if(incidente.cerrado())
-            {
-                tiempoDeResolucion[entidades.indexOf(entidadConIncidente.get())] += incidente.tiempoDeCierre(); //se acumula el tiempo de resolucion de incidentes en minutos
-            }
-            else{
-                cantIncidentesNoResueltos[entidades.indexOf(entidadConIncidente.get())]++;
-                //No se consideran como en el primer ranking 2 incidentes con mas de 24 horas de diferencia como 2 incidentes distintos
-
+            //Buscamos la primer entidad con ese incidente:
+            Optional<APIEntidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().stream().anyMatch(establecimiento -> establecimiento.getId() == incidente.getEstablecimiento().getId())).findFirst();
+            if (entidadConIncidente.isPresent()) {
+                if(incidente.cerrado())
+                {
+                    tiempoDeResolucion[entidades.indexOf(entidadConIncidente.get())] += incidente.tiempoDeCierre(); //se acumula el tiempo de resolucion de incidentes en minutos
+                    //System.out.println(incidente.tiempoDeCierre());
+                }
+                else{
+                    //System.out.println(1);
+                    cantIncidentesNoResueltos[entidades.indexOf(entidadConIncidente.get())]++;
+                    //No se consideran como en el primer ranking 2 incidentes con mas de 24 horas de diferencia como 2 incidentes distintos
+                }
                 List<APIComunidad> comunidadesAfectadas = comunidades.stream().filter(comunidad -> comunidad.incidenteEsDeComunidad(incidente)).toList();
+                //System.out.println(comunidadesAfectadas.size());
                 List<APIMiembroDeComunidad> MiembrosRepetidos = comunidadesAfectadas.stream().flatMap(comunidad -> comunidad.getMiembros().stream()).toList();
-                List<APIMiembroDeComunidad> MiembrosDeComunidadesAfectados = null;
+                List<APIMiembroDeComunidad> MiembrosDeComunidadesAfectados = new ArrayList<>();
                 for(APIMiembroDeComunidad miembroDeComunidad: MiembrosRepetidos)
                 {
-                    if(!MiembrosDeComunidadesAfectados.contains(miembroDeComunidad) && miembroDeComunidad.afectadoPor(incidente)) //A cada uno de los miemmbros lo agrega a las comunidades afectadas
+                    if(!MiembrosDeComunidadesAfectados.stream().anyMatch(m -> miembroDeComunidad.getId() == m.getId()) && miembroDeComunidad.afectadoPor(incidente)) //A cada uno de los miemmbros lo agrega a las comunidades afectadas
                     {
                         MiembrosDeComunidadesAfectados.add(miembroDeComunidad);
+                        //System.out.println("hola");
                     }
                 }
 
@@ -63,6 +69,11 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         for(int i = 0; i < entidades.size();i++) //Σ (t resolución de incidente) + Cantidad de incidentes no resueltos * CNF * cantMiembros (miembros.afectados.size())
         {
             impactoDeIncidentes[i] = (tiempoDeResolucion[i] + cantIncidentesNoResueltos[i] * CNF) * cantMiembrosAfectados[i];
+            /*
+            System.out.println("Tiempo resolución: " + tiempoDeResolucion[i]);
+            System.out.println("Cantidad incidentes no resueltos: " + cantIncidentesNoResueltos[i]);
+            System.out.println("Cantidad de miembros afectados: " + cantMiembrosAfectados[i]);
+             */
         }
 
         return impactoDeIncidentes;
