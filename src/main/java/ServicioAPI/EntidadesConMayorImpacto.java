@@ -79,13 +79,13 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
-    public List<APIEntidad> armarRanking(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades){
+    public List<Long> armarRanking(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades){
         int[] contadorAux;
         contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
         return ordenarEntidades(entidades,contadorAux);
     }
 
-    protected List<APIEntidad> ordenarEntidades(List<APIEntidad> entidades, int[] auxiliar){
+    protected List<Long> ordenarEntidades(List<APIEntidad> entidades, int[] auxiliar){
         List<APIEntidad> entidadesOrdenadas = new ArrayList<>(entidades);
         Collections.sort(entidadesOrdenadas, new Comparator<APIEntidad>() {
             @Override
@@ -95,6 +95,8 @@ Se deberá implementar el servicio que tuviera asignado el grupo
                 return Integer.compare(auxiliar[index2], auxiliar[index1]);
             }
         });
-        return entidadesOrdenadas;
+        List<Long> returnValue = new ArrayList<>();
+        entidadesOrdenadas.forEach(e -> returnValue.add(e.getId()));
+        return returnValue;
     }
 }

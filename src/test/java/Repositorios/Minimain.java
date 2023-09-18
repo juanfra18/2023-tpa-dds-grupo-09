@@ -4,24 +4,28 @@ import domain.Entidades.Entidad;
 import domain.Entidades.Establecimiento;
 import domain.Entidades.TipoEntidad;
 import domain.Entidades.TipoEstablecimiento;
-import domain.Notificaciones.CuandoSuceden;
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
-import domain.Notificaciones.ViaMail;
+import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import persistence.Repositorios.RepositorioDeMunicipios;
 import persistence.Repositorios.RepositorioEntidad;
+import persistence.Repositorios.RepositorioMiembroDeComunidad;
+import persistence.Repositorios.RepositorioProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
 import javax.persistence.EntityTransaction;
+
 
 public class Minimain implements WithSimplePersistenceUnit {
 
@@ -35,61 +39,71 @@ public class Minimain implements WithSimplePersistenceUnit {
     private MedioDeComunicacion mail = new ViaMail();
     private EntityTransaction tx;
     private RepositorioEntidad repositorioLineaMitre;
+    private RepositorioDeMunicipios repositorioDeMunicipios;
+    private RepositorioProvincias repositorioProvincias;
+    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad;
 
     @Before
     public void init() {
-        tx = entityManager().getTransaction();
-        tx.begin();
+        this.tx = entityManager().getTransaction();
+        this.tx.begin();
 
-        miembro = new MiembroDeComunidad();
-        miembro.setNombre("jose");
-        miembro.setApellido("perez");
-        miembro.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
-        miembro.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
-        miembro.getReceptorDeNotificaciones().setMail("perezjose@gmail.com");
-        miembro.getReceptorDeNotificaciones().setTelefono("123456789");
+        this.miembro = new MiembroDeComunidad();
+        this.miembro.setNombre("jose");
+        this.miembro.setApellido("perez");
+        this.miembro.setReceptorDeNotificaciones(new ReceptorDeNotificaciones());
+        this.miembro.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
+        this.miembro.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
+        this.miembro.getReceptorDeNotificaciones().setMail("perezjose@gmail.com");
+        this.miembro.getReceptorDeNotificaciones().setTelefono("123456789");
 
-        banioHombres = new Banio();
-        banioHombres.setTipo("CABALLEROS");
+        this.banioHombres = new Banio();
+        this.banioHombres.setTipo("CABALLEROS");
 
-        buenosAires = new Provincia();
-        buenosAires.setNombre("Buenos Aires");
-        buenosAires.setId(1);
+        this.buenosAires = new Provincia();
+        this.buenosAires.setNombre("Buenos Aires");
+        this.buenosAires.setId(1);
 
-        generalAlvarado = new Municipio();
-        generalAlvarado.setProvincia(buenosAires);
-        generalAlvarado.setNombre("General Alvarado");
-        generalAlvarado.setId(2);
+        this.generalAlvarado = new Municipio();
+        this.generalAlvarado.setProvincia(buenosAires);
+        this.generalAlvarado.setNombre("General Alvarado");
+        this.generalAlvarado.setId(2);
 
-        estacionRetiro = new Establecimiento();
-        estacionRetiro.setNombre("Retiro");
-        estacionRetiro.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
-        estacionRetiro.setLocalizacion(generalAlvarado);
-        estacionRetiro.agregarServicio(banioHombres);
+        this.estacionRetiro = new Establecimiento();
+        this.estacionRetiro.setNombre("Retiro");
+        this.estacionRetiro.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+        this.estacionRetiro.setLocalizacion(generalAlvarado);
+        this.estacionRetiro.agregarServicio(banioHombres);
 
-        lineaMitre = new Entidad();
-        lineaMitre.setNombre("Linea Mitre");
-        lineaMitre.setTipoEntidad(TipoEntidad.FERROCARRIL);
-        lineaMitre.agregarEstablecimiento(estacionRetiro);
+        this.lineaMitre = new Entidad();
+        this.lineaMitre.setNombre("Linea Mitre");
+        this.lineaMitre.setTipoEntidad(TipoEntidad.FERROCARRIL);
+        this.lineaMitre.agregarEstablecimiento(estacionRetiro);
 
-        repositorioLineaMitre = RepositorioEntidad.getInstancia();
+        this.repositorioLineaMitre = RepositorioEntidad.getInstancia();
+        this.repositorioProvincias = RepositorioProvincias.getInstancia();
+        this.repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+        this.repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
     }
 
     @Test
     public void cargaBasica() {
         try {
-            repositorioLineaMitre.agregar(lineaMitre);
+            this.repositorioProvincias.agregar(buenosAires);
+            this.repositorioDeMunicipios.agregar(generalAlvarado);
+            this.repositorioLineaMitre.agregar(lineaMitre);
+            this.repositorioMiembroDeComunidad.agregar(miembro);
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            tx.rollback();
+            this.tx.rollback();
         }
     }
 
-    @AfterEach
+    @After
     public void finish() {
-        tx.commit();
+        this.tx.commit();
     }
 }
 

@@ -11,6 +11,6 @@ public class APIComunidad extends APIGenerica{
   private List<APIMiembroDeComunidad> miembros;
 
   public boolean incidenteEsDeComunidad(APIIncidente incidente) {
-    return incidentes.stream().anyMatch(i -> i.getId() == incidente.getId()); //TODO ver si con contains basta
+    return incidentes.stream().anyMatch(i -> i.getId() == incidente.getId());
   }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public class JsonResponse {
-    List<APIEntidad> entidades;
+    List<Long> entidades;
 }

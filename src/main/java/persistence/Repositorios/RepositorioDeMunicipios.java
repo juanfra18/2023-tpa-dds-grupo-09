@@ -33,14 +33,10 @@ public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
   }
 
   public void agregar(Municipio municipio) {
-    this.tx.begin();
     entityManager().persist(municipio);
-    this.tx.commit();
   }
   public void eliminar(Municipio municipio) {
-    this.tx.begin();
     entityManager().remove(municipio);
-    this.tx.commit();
   }
   public Municipio buscar(int id){
     return entityManager().find(Municipio.class, id);

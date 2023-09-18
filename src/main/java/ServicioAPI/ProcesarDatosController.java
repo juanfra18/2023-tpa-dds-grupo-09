@@ -27,7 +27,7 @@ public class ProcesarDatosController implements Handler {
 
     EntidadesConMayorImpacto ranking = new EntidadesConMayorImpacto();
     JsonResponse jsonResponse = new JsonResponse();
-    List<APIEntidad> entidadesProcesadas = ranking.armarRanking(entidades,incidentes,comunidades);
+    List<Long> entidadesProcesadas = ranking.armarRanking(entidades,incidentes,comunidades);
     jsonResponse.setEntidades(entidadesProcesadas);
 
     ctx.status(200).result("Datos procesados con éxito").json(gson.toJson(jsonResponse));

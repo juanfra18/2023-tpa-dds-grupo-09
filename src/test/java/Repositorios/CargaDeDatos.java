@@ -16,7 +16,12 @@ import domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import domain.Rankings.EntidadesQueSolucionanMasLento;
 import domain.Servicios.*;
 import domain.Usuario.Usuario;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import persistence.Repositorios.*;
 import services.APIs.Georef.ServicioGeoref;
@@ -25,34 +30,36 @@ import services.Archivos.SistemaDeArchivos;
 import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
+
+import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-public class CargaDeDatos {
+public class CargaDeDatos implements WithSimplePersistenceUnit {
     private List<OrganismoDeControl> empresas;
-    private CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
-    private SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-    private ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+    private CargadorDeDatos cargadorDeDatos;
+    private SistemaDeArchivos sistemaDeArchivos;
+    private ServicioGeoref servicioGeoref;
     private List<Entidad> entidades;
-    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-    private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
-    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-    private RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
-    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-    private RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
-    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
-    private RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
-    private RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
-    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
-    private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
-    private RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
-    private RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
-    private RepositorioDeEmpresas repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
-    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
+    private RepositorioDeIncidentes repositorioDeIncidentes;
+    private RepositorioComunidad repositorioComunidad;
+    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad;
+    private RepositorioEntidad repositorioEntidad;
+    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes;
+    private RepositorioDeUsuarios repositorioDeUsuarios;
+    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl;
+    private RepositorioDeMunicipios repositorioDeMunicipios;
+    private RepositorioProvincias repositorioProvincias;
+    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora;
+    private RepositorioDeEstablecimientos repositorioDeEstablecimientos;
+    private RepositorioPosicion repositorioPosicion;
+    private RepositorioServicio repositorioServicio;
+    private RepositorioDeEmpresas repositorioDeEmpresas;
+    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones;
 
-    private Municipio yavi = new Municipio();
-    private Provincia jujuy = new Provincia();
+    private Municipio yavi;
+    private Provincia jujuy;
     private ListadoDeProvincias listadoDeProvincias;
     private Servicio banioUnisex;
     private Entidad lineaMitre;
@@ -63,32 +70,80 @@ public class CargaDeDatos {
     private EmisorDeNotificaciones emisorDeNotificaciones;
     private Posicion posicion1;
     private Posicion posicion2;
-    private MedioDeComunicacion mail = new ViaMail(); //Ver si que hay que mockear
-    private MedioDeComunicacion wpp = new ViaWPP();
-    private FormaDeNotificar cuandoSuceden = new CuandoSuceden();
-    private FormaDeNotificar sinApuro = new SinApuros();
-    private Usuario usuarioPablo = new Usuario();
+    private MedioDeComunicacion mail; //Ver si que hay que mockear
+    private MedioDeComunicacion wpp;
+    private FormaDeNotificar cuandoSuceden;
+    private FormaDeNotificar sinApuro;
+    private Usuario usuarioPablo;
     private ReporteDeIncidente incidenteBanioLineaMitre;
-    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
-    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
-        @Test
-        public void testBD(){
+    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
+    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes;
+    private EntityTransaction tx;
+    @BeforeEach
+    public void before() {
+
+        this.tx = entityManager().getTransaction();
+        this.tx.begin();
+
+        this.cargadorDeDatos = new CargadorDeDatos();
+        this.sistemaDeArchivos = new SistemaDeArchivos();
+        this.servicioGeoref = ServicioGeoref.instancia();
+        this.repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+        this.repositorioComunidad = RepositorioComunidad.getInstancia();
+        this.repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+        this.repositorioEntidad = RepositorioEntidad.getInstancia();
+        this.repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+        this.repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
+        this.repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+        this.repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+        this.repositorioProvincias = RepositorioProvincias.getInstancia();
+        this.repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
+        this.repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
+        this.repositorioPosicion = RepositorioPosicion.getInstancia();
+        this.repositorioServicio = RepositorioServicio.getInstancia();
+        this.repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
+        this.repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
+        this.yavi = new Municipio();
+        this.jujuy = new Provincia();
+        this.mail = new ViaMail();
+        this.wpp = new ViaWPP();
+        this.cuandoSuceden = new CuandoSuceden();
+        this.sinApuro = new SinApuros();
+        this.usuarioPablo = new Usuario();
+        this.entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
+        this.entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
+    }
+    @AfterEach
+    public void after() {
+        this.tx.commit();
+    }
+    @Test
+    public void testBD() {
+        try {
+            this.metodoBD();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            this.tx.rollback();
+        }
+    }
+        public void metodoBD(){
 
             //Se cargan las provincias y municipios
-            listadoDeProvincias = servicioGeoref.listadoDeProvincias();
+            this.listadoDeProvincias = this.servicioGeoref.listadoDeProvincias();
 
-            listadoDeProvincias.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
-            repositorioProvincias.buscarTodos().forEach(
-                    provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
-                            getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
+            this.listadoDeProvincias.getProvincias().forEach(provincia -> this.repositorioProvincias.agregar(provincia));
+            this.repositorioProvincias.buscarTodos().forEach(
+                    provincia -> this.servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
+                            getMunicipios().forEach(municipio -> this.repositorioDeMunicipios.agregar(municipio)));
 
             //Se cargan las empresas
-            empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
-            empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
+            this.empresas = this.cargadorDeDatos.cargaDeDatosMASIVA(this.sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), this.servicioGeoref);
+            this.empresas.forEach(e -> this.repositorioDeOrganismosDeControl.agregar(e));
 
-            banioUnisex = repositorioServicio.buscar(5);
-            lineaMitre = repositorioEntidad.buscar(3);
-            estacionRetiro = repositorioDeEstablecimientos.buscar(4);
+            this.banioUnisex = this.repositorioServicio.buscarTodos().stream().filter(s -> s.getTipo().equals(TipoBanio.UNISEX)).findFirst().get();
+            lineaMitre = repositorioEntidad.buscarTodos().stream().filter(e -> e.getNombre().equals("Linea Mitre")).findFirst().get();
+            estacionRetiro = repositorioDeEstablecimientos.buscarTodos().stream().filter(est -> est.getNombre().equals("Linea Roca")).findFirst().get();
 
             //Se cargan las comunidades
             emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
