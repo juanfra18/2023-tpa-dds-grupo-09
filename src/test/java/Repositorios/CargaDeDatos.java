@@ -116,6 +116,7 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     @AfterEach
     public void after() {
         this.tx.commit();
+        this.tx.rollback();
     }
     @Test
     public void testBD() {
