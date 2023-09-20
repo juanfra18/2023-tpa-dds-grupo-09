@@ -1,19 +1,13 @@
 package persistence.Repositorios;
 
-import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import services.APIs.Georef.ServicioGeoref;
 import services.Localizacion.Municipio;
 
-import javax.persistence.EntityTransaction;
-import java.util.List;
 
-public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
-  private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+public class RepositorioDeMunicipios extends RepositorioGenerico<Municipio> {
   private static RepositorioDeMunicipios instancia = null;
 
   private RepositorioDeMunicipios() {
-    tx = entityManager().getTransaction();
+    super(Municipio.class);
   }
 
   public static  RepositorioDeMunicipios getInstancia() {
@@ -22,28 +16,4 @@ public class RepositorioDeMunicipios implements WithSimplePersistenceUnit {
     }
     return instancia;
   }
-
-  public static void main(String[] args) {
-    RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
-    RepositorioDeMunicipios repositorioDeMunicipios = new RepositorioDeMunicipios();
-
-    repositorioProvincias.buscarTodos().forEach(
-        provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
-            getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
-  }
-
-  public void agregar(Municipio municipio) {
-    entityManager().persist(municipio);
-  }
-  public void eliminar(Municipio municipio) {
-    entityManager().remove(municipio);
-  }
-  public Municipio buscar(int id){
-    return entityManager().find(Municipio.class, id);
-  }
-
-  public List<Municipio> buscarTodos(){
-    return entityManager().createQuery("from Municipio", Municipio.class).getResultList();
-  }
-
 }

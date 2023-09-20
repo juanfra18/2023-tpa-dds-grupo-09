@@ -1,99 +1,72 @@
 package persistence;
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.TipoEntidad;
-import domain.Entidades.TipoEstablecimiento;
+import Config.Config;
+import domain.Entidades.*;
 import domain.Notificaciones.*;
 import domain.Personas.MiembroDeComunidad;
 import domain.Servicios.Banio;
 import domain.Servicios.Servicio;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-import persistence.Repositorios.RepositorioDeMunicipios;
-import persistence.Repositorios.RepositorioEntidad;
-import persistence.Repositorios.RepositorioMiembroDeComunidad;
-import persistence.Repositorios.RepositorioProvincias;
+import io.github.flbulgarelli.jpa.extras.test.PersistenceTest;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import persistence.Repositorios.*;
+import services.APIs.Georef.ServicioGeoref;
+import services.Archivos.CargadorDeDatos;
+import services.Archivos.SistemaDeArchivos;
+import services.Localizacion.ListadoDeMunicipios;
+import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Minimain implements WithSimplePersistenceUnit {
-    public static void main(String[] args)  {
-        MiembroDeComunidad miembro;
-        Municipio generalAlvarado;
-        Provincia buenosAires;
-        Servicio banioHombres;
-        Establecimiento estacionRetiro;
-        Entidad lineaMitre;
-        FormaDeNotificar cuandoSuceden = new CuandoSuceden();
-        MedioDeComunicacion mail = new ViaMail();
-        RepositorioEntidad repositorioLineaMitre;
-        RepositorioDeMunicipios repositorioDeMunicipios;
-        RepositorioProvincias repositorioProvincias;
-        RepositorioMiembroDeComunidad repositorioMiembroDeComunidad;
+    public static void main(String[] args) {
 
-        miembro = new MiembroDeComunidad();
-        miembro.setNombre("jose");
-        miembro.setApellido("perez");
-        miembro.setReceptorDeNotificaciones(new ReceptorDeNotificaciones());
-        miembro.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
-        miembro.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
-        miembro.getReceptorDeNotificaciones().setMail("perezjose@gmail.com");
-        miembro.getReceptorDeNotificaciones().setTelefono("123456789");
+        EntityManager em = getEntityManager();
+        EntityTransaction tx = em.getTransaction();
 
-        banioHombres = new Banio();
-        banioHombres.setTipo("CABALLEROS");
+        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+        CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
+        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
+        RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
+        RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+        RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+        ListadoDeProvincias listadoDeProvincias;
+        List<OrganismoDeControl> empresas;
 
-        buenosAires = new Provincia();
-        buenosAires.setNombre("Buenos Aires");
-        buenosAires.setId(1);
 
-        generalAlvarado = new Municipio();
-        generalAlvarado.setProvincia(buenosAires);
-        generalAlvarado.setNombre("General Alvarado");
-        generalAlvarado.setId(2);
+        //Se cargan las provincias y municipios
+        listadoDeProvincias = servicioGeoref.listadoDeProvincias();
 
-        estacionRetiro = new Establecimiento();
-        estacionRetiro.setNombre("Retiro");
-        estacionRetiro.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
-        estacionRetiro.setLocalizacion(generalAlvarado);
-        estacionRetiro.agregarServicio(banioHombres);
+        //Se cargan las empresas
+        empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
 
-        lineaMitre = new Entidad();
-        lineaMitre.setNombre("Linea Mitre");
-        lineaMitre.setTipoEntidad(TipoEntidad.FERROCARRIL);
-        lineaMitre.agregarEstablecimiento(estacionRetiro);
 
-        repositorioLineaMitre = RepositorioEntidad.getInstancia();
-        repositorioProvincias = RepositorioProvincias.getInstancia();
-        repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
-        repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("simple-persistence-unit");
-        EntityManager em = emf.createEntityManager();
-
-try {
-        em.getTransaction().begin();
-
-        repositorioProvincias.agregar(buenosAires);
-        repositorioDeMunicipios.agregar(generalAlvarado);
-        repositorioLineaMitre.agregar(lineaMitre);
-        repositorioMiembroDeComunidad.agregar(miembro);
-
-        em.getTransaction().commit();
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            em.getTransaction().rollback();
+        try {
+            tx.begin();
+            listadoDeProvincias.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
+            tx.commit();
         }
-        finally {
+     catch (Exception e) {
+        if (tx != null && tx.isActive()) {
+            tx.rollback();
+        }
+        e.printStackTrace();
+    } finally {
             em.close();
         }
     }
+
+    public static EntityManager getEntityManager() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("simple-persistence-unit");
+        return emf.createEntityManager();
+    }
 }
+
+
 

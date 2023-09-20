@@ -1,20 +1,14 @@
 package persistence.Repositorios;
 
-import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import services.APIs.Georef.ServicioGeoref;
-import services.Localizacion.ListadoDeProvincias;
 import services.Localizacion.Provincia;
 
-import javax.persistence.EntityTransaction;
-import java.util.List;
 
-public class RepositorioProvincias implements WithSimplePersistenceUnit {
-  private EntityTransaction tx;
-  static ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+
+public class RepositorioProvincias extends RepositorioGenerico<Provincia>{
   private static RepositorioProvincias instancia = null;
 
   private RepositorioProvincias(){
-    this.tx = entityManager().getTransaction();
+    super(Provincia.class);
   }
 
   public static  RepositorioProvincias getInstancia() {
@@ -22,24 +16,5 @@ public class RepositorioProvincias implements WithSimplePersistenceUnit {
       instancia = new RepositorioProvincias();
     }
     return instancia;
-  }
-  public static void main(String[] args) {
-    ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
-    RepositorioProvincias repositorioProvincias = new RepositorioProvincias();
-    listadoDeProvinciasArgentinas.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
-  }
-
-  public void agregar(Provincia provincia) {
-    entityManager().persist(provincia);
-  }
-  public void eliminar(Provincia provincia) {
-    entityManager().remove(provincia);
-  }
-  public Provincia buscar(int id){
-    return entityManager().find(Provincia.class, id);
-  }
-
-  public List<Provincia> buscarTodos(){
-    return entityManager().createQuery("from Provincia", Provincia.class).getResultList();
   }
 }
