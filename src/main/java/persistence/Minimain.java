@@ -18,7 +18,8 @@ import services.Localizacion.Municipio;
 import services.Localizacion.Provincia;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class Minimain implements WithSimplePersistenceUnit {
@@ -35,14 +36,7 @@ public class Minimain implements WithSimplePersistenceUnit {
         RepositorioDeMunicipios repositorioDeMunicipios;
         RepositorioProvincias repositorioProvincias;
         RepositorioMiembroDeComunidad repositorioMiembroDeComunidad;
-        EntityTransaction tx;
 
-        EntityManager em =
-        tx = entityManager().getTransaction();
-
-        tx.begin();
-
-try {
         miembro = new MiembroDeComunidad();
         miembro.setNombre("jose");
         miembro.setApellido("perez");
@@ -80,19 +74,25 @@ try {
         repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
         repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("simple-persistence-unit");
+        EntityManager em = emf.createEntityManager();
+
+try {
+        em.getTransaction().begin();
 
         repositorioProvincias.agregar(buenosAires);
         repositorioDeMunicipios.agregar(generalAlvarado);
         repositorioLineaMitre.agregar(lineaMitre);
         repositorioMiembroDeComunidad.agregar(miembro);
 
-        tx.commit();
+        em.getTransaction().commit();
         } catch (Exception e) {
 
             e.printStackTrace();
-
-            tx.rollback();
-
+            em.getTransaction().rollback();
+        }
+        finally {
+            em.close();
         }
     }
 }
