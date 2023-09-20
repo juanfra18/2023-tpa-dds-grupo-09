@@ -1,9 +1,7 @@
 package Repositorios;
 
 import Config.Config;
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.OrganismoDeControl;
+import domain.Entidades.*;
 import domain.Incidentes.EstadoIncidente;
 import domain.Incidentes.Incidente;
 import domain.Incidentes.Posicion;
@@ -38,32 +36,34 @@ import java.util.List;
 
 public class CargaDeDatos implements WithSimplePersistenceUnit {
     private List<OrganismoDeControl> empresas;
-    private CargadorDeDatos cargadorDeDatos;
-    private SistemaDeArchivos sistemaDeArchivos;
-    private ServicioGeoref servicioGeoref;
     private List<Entidad> entidades;
-    private RepositorioDeIncidentes repositorioDeIncidentes;
-    private RepositorioComunidad repositorioComunidad;
-    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad;
-    private RepositorioEntidad repositorioEntidad;
-    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes;
-    private RepositorioDeUsuarios repositorioDeUsuarios;
-    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl;
-    private RepositorioDeMunicipios repositorioDeMunicipios;
-    private RepositorioProvincias repositorioProvincias;
-    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora;
-    private RepositorioDeEstablecimientos repositorioDeEstablecimientos;
-    private RepositorioPosicion repositorioPosicion;
-    private RepositorioServicio repositorioServicio;
-    private RepositorioDeEmpresas repositorioDeEmpresas;
-    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones;
+    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+    private RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
+    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+    private RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
+    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+    private RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+    private RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
+    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
+    private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
+    private RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
+    private RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
+    private RepositorioDeEmpresas repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
+    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
 
-    private Municipio yavi;
-    private Provincia jujuy;
+    private Municipio yavi = new Municipio();
+    private Provincia jujuy = new Provincia();
     private ListadoDeProvincias listadoDeProvincias;
     private Servicio banioUnisex;
+    private Servicio escaleraMecanica;
     private Entidad lineaMitre;
+    private Entidad lineaRoca;
+    private EntidadPrestadora trenesArgentinos;
+    private OrganismoDeControl CNRT;
     private Establecimiento estacionRetiro;
+    private Establecimiento estacionVicenteLopez;
     private MiembroDeComunidad pablo;
     private Comunidad comunidad;
     private Comunidad comunidad2;
@@ -76,8 +76,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     private FormaDeNotificar sinApuro;
     private Usuario usuarioPablo;
     private ReporteDeIncidente incidenteBanioLineaMitre;
-    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento;
-    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes;
+    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
+    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
     private EntityTransaction tx;
     @BeforeEach
     public void before() {
@@ -85,39 +85,200 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         this.tx = entityManager().getTransaction();
         this.tx.begin();
 
-        this.cargadorDeDatos = new CargadorDeDatos();
-        this.sistemaDeArchivos = new SistemaDeArchivos();
-        this.servicioGeoref = ServicioGeoref.instancia();
-        this.repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-        this.repositorioComunidad = RepositorioComunidad.getInstancia();
-        this.repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-        this.repositorioEntidad = RepositorioEntidad.getInstancia();
-        this.repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-        this.repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
-        this.repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
-        this.repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
-        this.repositorioProvincias = RepositorioProvincias.getInstancia();
-        this.repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
-        this.repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
-        this.repositorioPosicion = RepositorioPosicion.getInstancia();
-        this.repositorioServicio = RepositorioServicio.getInstancia();
-        this.repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
-        this.repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
-        this.yavi = new Municipio();
-        this.jujuy = new Provincia();
-        this.mail = new ViaMail();
-        this.wpp = new ViaWPP();
-        this.cuandoSuceden = new CuandoSuceden();
-        this.sinApuro = new SinApuros();
-        this.usuarioPablo = new Usuario();
-        this.entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
-        this.entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
+        jujuy = new Provincia();
+        yavi = new Municipio();
+        banioUnisex = new Banio();
+        escaleraMecanica = new Elevacion();
+        estacionRetiro = new Establecimiento();
+        estacionVicenteLopez = new Establecimiento();
+        lineaMitre = new Entidad();
+        lineaRoca = new Entidad();
+        trenesArgentinos = new EntidadPrestadora();
+        CNRT = new OrganismoDeControl();
+        comunidad = new Comunidad();
+        comunidad2 = new Comunidad();
+        pablo = new MiembroDeComunidad();
+        usuarioPablo = new Usuario();
+
+        //Cargo provincia
+        jujuy.setId(38);
+        jujuy.setNombre("Jujuy");
+        repositorioProvincias.agregar(jujuy);
+
+        //Cargo municipio
+        yavi.setId(386273);
+        yavi.setNombre("Yavi");
+        yavi.setProvincia(jujuy);
+        repositorioDeMunicipios.agregar(yavi);
+
+        //Cargo Servicio
+        banioUnisex.setTipo("UNISEX");
+        escaleraMecanica.setTipo("ESCALERAS_MECANICAS");
+
+
+        //Cargo Establecimiento
+        estacionRetiro.setLocalizacion(yavi);
+        estacionRetiro.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+        estacionRetiro.setNombre("Retiro");
+        estacionRetiro.agregarServicio(banioUnisex);
+        estacionVicenteLopez.setLocalizacion(yavi);
+        estacionVicenteLopez.setTipoEstablecimiento(TipoEstablecimiento.ESTACION);
+        estacionVicenteLopez.setNombre("Vicente Lopez");
+        estacionRetiro.agregarServicio(escaleraMecanica);
+        repositorioDeEstablecimientos.agregar(estacionRetiro);
+        repositorioDeEstablecimientos.agregar(estacionVicenteLopez);
+
+        //Cargo Entidad
+        lineaMitre.setTipoEntidad(TipoEntidad.FERROCARRIL.FERROCARRIL);
+        lineaMitre.setNombre("Linea Mitre");
+        lineaMitre.agregarEstablecimiento(estacionRetiro);
+        lineaRoca.setTipoEntidad(TipoEntidad.FERROCARRIL.FERROCARRIL);
+        lineaRoca.setNombre("Linea Roca");
+        lineaRoca.agregarEstablecimiento(estacionVicenteLopez);
+        repositorioEntidad.agregar(lineaMitre);
+        repositorioEntidad.agregar(lineaRoca);
+
+        //Cargo Entidad Prestadora
+        trenesArgentinos.setNombre("Trenes Argentinos");
+        trenesArgentinos.setPersonaMail("fanDeTrenes@gmail.com");
+        trenesArgentinos.agregarEntidad(lineaMitre);
+        trenesArgentinos.agregarEntidad(lineaRoca);
+        repositorioDeEntidadPrestadora.agregar(trenesArgentinos);
+
+        //Cargo Organismos de Control
+        CNRT.setNombre("CNRT");
+        CNRT.setPersonaMail("encargadoCNRT@gmail.com");
+        CNRT.agregarEntidadPrestadora(trenesArgentinos);
+        repositorioDeOrganismosDeControl.agregar(CNRT);
+
+        //Cargo Comunidades
+        emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
+
+        comunidad.setNombre("Los+Capos");
+        comunidad.setEmisorDeNotificaciones(emisorDeNotificaciones);
+        comunidad2.setNombre("Los+Piolas");
+        comunidad2.setEmisorDeNotificaciones(emisorDeNotificaciones);
+
+        repositorioComunidad.agregar(comunidad);
+        repositorioComunidad.agregar(comunidad2);
+
+        //Cargo Miembros de Comunidad
+        pablo.setNombre("pablo");
+        pablo.setApellido("perez");
+        pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
+        pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
+        pablo.getReceptorDeNotificaciones().setMail("hola@mail.net");
+        pablo.getReceptorDeNotificaciones().setTelefono("+1333333453");
+
+        pablo.agregarMunicipio(yavi);
+        pablo.agregarServicioDeInteres(banioUnisex, Rol.valueOf("AFECTADO"));
+
+        pablo.unirseAComunidad(comunidad);
+        pablo.unirseAComunidad(comunidad2);
+
+        pablo.agregarEntidadDeInteres(lineaMitre);
+
+        usuarioPablo.setUsername("xPablox");
+        usuarioPablo.cambiarContrasenia("pablitoElMa$Cap@DeT@d@s");
+
+        pablo.setUsuario(usuarioPablo);
+
+        repositorioMiembroDeComunidad.agregar(pablo);
+
+        //Cargo los Reportes de Incidentes
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,30,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,30,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,45,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,45,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,50,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,23,10,45,30));
+        incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,23,11,0,30));
+        incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+
+        incidenteBanioLineaMitre = new ReporteDeIncidente();
+        incidenteBanioLineaMitre.setDenunciante(pablo);
+        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
+        incidenteBanioLineaMitre.setEntidad(lineaMitre);
+        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
+        incidenteBanioLineaMitre.setServicio(banioUnisex);
+        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,45,30));
+        incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
+
+        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
     }
     @AfterEach
     public void after() {
-        this.tx.commit();
         this.tx.rollback();
     }
+
     @Test
     public void testBD() {
         try {
@@ -130,151 +291,7 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     }
         public void metodoBD(){
 
-            //Se cargan las provincias y municipios
-            this.listadoDeProvincias = this.servicioGeoref.listadoDeProvincias();
 
-            this.listadoDeProvincias.getProvincias().forEach(provincia -> this.repositorioProvincias.agregar(provincia));
-            this.repositorioProvincias.buscarTodos().forEach(
-                    provincia -> this.servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
-                            getMunicipios().forEach(municipio -> this.repositorioDeMunicipios.agregar(municipio)));
-
-            //Se cargan las empresas
-            this.empresas = this.cargadorDeDatos.cargaDeDatosMASIVA(this.sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), this.servicioGeoref);
-            this.empresas.forEach(e -> this.repositorioDeOrganismosDeControl.agregar(e));
-
-            this.banioUnisex = this.repositorioServicio.buscarTodos().stream().filter(s -> s.getTipo().equals(TipoBanio.UNISEX)).findFirst().get();
-            lineaMitre = repositorioEntidad.buscarTodos().stream().filter(e -> e.getNombre().equals("Linea Mitre")).findFirst().get();
-            estacionRetiro = repositorioDeEstablecimientos.buscarTodos().stream().filter(est -> est.getNombre().equals("Linea Roca")).findFirst().get();
-
-            //Se cargan las comunidades
-            emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
-
-            comunidad = new Comunidad();
-            comunidad.setNombre("Los+Capos");
-            comunidad.setEmisorDeNotificaciones(emisorDeNotificaciones);
-            comunidad2 = new Comunidad();
-            comunidad2.setNombre("Los+Piolas");
-            comunidad2.setEmisorDeNotificaciones(emisorDeNotificaciones);
-
-            repositorioComunidad.agregar(comunidad);
-            repositorioComunidad.agregar(comunidad2);
-
-            //Se cargan los miembros de comunidad
-
-            pablo = new MiembroDeComunidad();
-            pablo.setNombre("pablo");
-            pablo.setApellido("perez");
-            pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
-            pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
-            pablo.getReceptorDeNotificaciones().setMail("hola@mail.net");
-            pablo.getReceptorDeNotificaciones().setTelefono("+1333333453");
-
-            yavi = repositorioDeMunicipios.buscar(386273);
-
-            pablo.agregarMunicipio(yavi);
-            pablo.agregarServicioDeInteres(banioUnisex, Rol.valueOf("AFECTADO"));
-
-            pablo.unirseAComunidad(repositorioComunidad.buscar(9));
-            pablo.unirseAComunidad(repositorioComunidad.buscar(10));
-
-            pablo.agregarEntidadDeInteres(lineaMitre);
-
-            usuarioPablo.setUsername("xPablox");
-            usuarioPablo.cambiarContrasenia("pablitoElMa$Cap@DeT@d@s");
-
-            pablo.setUsuario(usuarioPablo);
-
-            repositorioMiembroDeComunidad.agregar(pablo);
-
-            //miembro de comunidad reporta incidentes
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,45,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,45,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.CERRADO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,50,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,10,45,30));
-            incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,11,0,30));
-            incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
-
-            incidenteBanioLineaMitre = new ReporteDeIncidente();
-            incidenteBanioLineaMitre.setDenunciante(pablo);
-            incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-            incidenteBanioLineaMitre.setEntidad(lineaMitre);
-            incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-            incidenteBanioLineaMitre.setServicio(banioUnisex);
-            incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,45,30));
-            incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-            pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
             Assertions.assertTrue(true);
         }
@@ -291,14 +308,14 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
 
         @Test
         public void solicitarInformacionDeIncidentesAbiertos(){
-            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
+            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscarTodos().get(0);
 
             Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO).size());
 
         }
         @Test
         public void solicitarInformacionDeIncidentesCerrados(){
-            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscar(11);
+            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscarTodos().get(0);
 
             Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
         }
