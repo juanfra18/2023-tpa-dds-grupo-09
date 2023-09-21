@@ -34,21 +34,21 @@ public class Minimain implements WithSimplePersistenceUnit {
         RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
         RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
         List<OrganismoDeControl> empresas;
-        ListadoDeProvincias listadoDeProvincias = servicioGeoref.listadoDeProvincias();
+        ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
 
         try {
             em.getTransaction().begin();
 
             //Se cargan las provincias
-            listadoDeProvincias.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
+            listadoDeProvinciasArgentinas.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
 
             //Se cargan los municipios
             repositorioProvincias.buscarTodos().forEach(
                 provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
                     getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
 
-            //Se cargan las empresas => HAY UN PROBLEMA ACA
+            //Se cargan las empresas
             empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
 

@@ -1,8 +1,8 @@
 package services.Archivos;
 
 import domain.Entidades.*;
-import persistence.Repositorios.RepositorioServicio;
 import domain.Servicios.*;
+import persistence.Repositorios.RepositorioDeMunicipios;
 import services.APIs.Georef.AdapterServicioGeo;
 
 import java.util.*;
@@ -10,6 +10,7 @@ import java.util.*;
 public class CargadorDeDatos {
   public List<OrganismoDeControl> cargaDeDatosMASIVA(List<String[]> listaCSV, AdapterServicioGeo servicioGeo){
     Map<String, OrganismoDeControl> organismosMap = new HashMap<>();
+    RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
 
     for (String[] elemento : listaCSV) {
       String organismoNombre = elemento[0];
@@ -34,7 +35,7 @@ public class CargadorDeDatos {
 
       Establecimiento posibleEstablecimiento = new Establecimiento();
       posibleEstablecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf(establecimientoTipo));
-      posibleEstablecimiento.setLocalizacion(servicioGeo.obtenerMunicipio(establecimientoLocalizacion));
+      posibleEstablecimiento.setLocalizacion(repositorioDeMunicipios.buscar(servicioGeo.obtenerMunicipio(establecimientoLocalizacion).getId()));
       posibleEstablecimiento.setNombre(establecimientoNombre);
 
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl());
