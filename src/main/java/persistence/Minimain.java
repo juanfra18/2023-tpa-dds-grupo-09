@@ -26,45 +26,38 @@ import java.util.List;
 
 public class Minimain implements WithSimplePersistenceUnit {
     public static void main(String[] args) {
-
-        EntityManager em = getEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
+        EntityManager em = EntityManagerSingleton.getInstance();
         CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
         SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
-        RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
+        ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
         RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+        RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
         RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
-        ListadoDeProvincias listadoDeProvincias;
         List<OrganismoDeControl> empresas;
-
-
-        //Se cargan las provincias y municipios
-        listadoDeProvincias = servicioGeoref.listadoDeProvincias();
-
-        //Se cargan las empresas
-        empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
+        ListadoDeProvincias listadoDeProvincias = servicioGeoref.listadoDeProvincias();
 
 
         try {
-            tx.begin();
+            em.getTransaction().begin();
+
+            //Se cargan las provincias
             listadoDeProvincias.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
-            tx.commit();
-        }
-     catch (Exception e) {
-        if (tx != null && tx.isActive()) {
-            tx.rollback();
-        }
-        e.printStackTrace();
-    } finally {
+
+            //Se cargan los municipios
+            repositorioProvincias.buscarTodos().forEach(
+                provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
+                    getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
+
+            //Se cargan las empresas => HAY UN PROBLEMA ACA
+            empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
+            empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
             em.close();
         }
-    }
-
-    public static EntityManager getEntityManager() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("simple-persistence-unit");
-        return emf.createEntityManager();
     }
 }
 
