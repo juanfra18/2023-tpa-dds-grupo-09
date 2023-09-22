@@ -19,17 +19,12 @@ public class ProcesarDatosController implements Handler {
     Gson gson = new Gson();
     JsonRequest request = gson.fromJson(requestBody, JsonRequest.class);
 
-    List<APIEntidad> entidades = request.getEntidades();
-    List<APIIncidente> incidentes = request.getIncidentes();
-    List<APIComunidad> comunidades = request.getComunidades();
-
-    System.out.println(request.getCNF());
-
     EntidadesConMayorImpacto ranking = new EntidadesConMayorImpacto();
+    List<Long> entidadesProcesadas = ranking.armarRanking(request.getEntidades(),request.getIncidentes(),request.getComunidades(),request.getCNF());
+
     JsonResponse jsonResponse = new JsonResponse();
-    List<Long> entidadesProcesadas = ranking.armarRanking(entidades,incidentes,comunidades,request.getCNF());
     jsonResponse.setEntidades(entidadesProcesadas);
 
-    ctx.status(200).result("Datos procesados con éxito").json(gson.toJson(jsonResponse));
+    ctx.status(200).result("(OK) Datos procesados con éxito").json(gson.toJson(jsonResponse));
   }
 }
