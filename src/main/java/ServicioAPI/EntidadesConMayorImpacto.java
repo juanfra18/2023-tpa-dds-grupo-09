@@ -1,6 +1,6 @@
 package ServicioAPI;
 
-import ServicioAPI.Config.Config;
+
 import ServicioAPI.domain.*;
 
 import java.util.*;
@@ -27,11 +27,10 @@ Se deberá implementar el servicio que tuviera asignado el grupo
     // total = nivelDeImpacto * cantMiembros (miembros.afectados.size())
     // total -> Armas el ranking
 
-    protected int[] obtenerValoresPorEntidad(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades) {
+    protected int[] obtenerValoresPorEntidad(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades, Integer CNF) {
         int[] tiempoDeResolucion = new int[entidades.size()];
         int[] cantIncidentesNoResueltos = new int[entidades.size()];
         int[] impactoDeIncidentes = new int[entidades.size()];
-        int CNF = Config.CNF_API;
         int[] cantMiembrosAfectados = new int[entidades.size()];
 
         for(APIIncidente incidente: incidentes)
@@ -79,9 +78,9 @@ Se deberá implementar el servicio que tuviera asignado el grupo
         return impactoDeIncidentes;
     }
 
-    public List<Long> armarRanking(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades){
+    public List<Long> armarRanking(List<APIEntidad> entidades, List<APIIncidente> incidentes, List<APIComunidad> comunidades, Integer CNF){
         int[] contadorAux;
-        contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades);
+        contadorAux = obtenerValoresPorEntidad(entidades,incidentes,comunidades,CNF);
         return ordenarEntidades(entidades,contadorAux);
     }
 

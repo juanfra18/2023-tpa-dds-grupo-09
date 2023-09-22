@@ -15,6 +15,7 @@ public class JsonRequest {
     private List<APIEntidad> entidades;
     private List<APIIncidente> incidentes;
     private List<APIComunidad> comunidades;
+    private Integer CNF;
 
     public JsonRequest() {
         this.entidades = new ArrayList<>();

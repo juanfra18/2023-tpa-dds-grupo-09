@@ -1,6 +1,5 @@
 package ServicioAPI;
 
-import ServicioAPI.domain.APIEntidad;
 import lombok.Getter;
 import lombok.Setter;
 

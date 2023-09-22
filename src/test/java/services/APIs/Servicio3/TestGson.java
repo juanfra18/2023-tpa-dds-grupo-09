@@ -3,12 +3,10 @@ package services.APIs.Servicio3;
 import ServicioAPI.JsonRequest;
 import ServicioAPI.domain.*;
 import com.google.gson.Gson;
-import domain.Entidades.Entidad;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TestGson {
@@ -126,6 +124,7 @@ public class TestGson {
     jsonRequest.setIncidentes(incidentes);
     jsonRequest.setComunidades(comunidades);
     jsonRequest.setEntidades(entidades);
+    jsonRequest.setCNF(50);
 
     System.out.println(gson.toJson(jsonRequest));
   }
