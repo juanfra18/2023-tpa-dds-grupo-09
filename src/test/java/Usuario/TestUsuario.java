@@ -1,11 +1,10 @@
 package Usuario;
 
-import domain.Seguridad.RegistroDeUsuarioException;
-import persistence.Repositorios.RepositorioDeUsuarios;
-import domain.Usuario.Usuario;
+import models.domain.Seguridad.RegistroDeUsuarioException;
+import models.persistence.Repositorios.RepositorioDeUsuarios;
+import models.domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestUsuario {

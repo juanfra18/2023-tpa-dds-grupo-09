@@ -1,17 +1,17 @@
 package services.Archivos.CSV;
 
-import Config.Config;
-import domain.Entidades.Entidad;
-import domain.Entidades.EntidadPrestadora;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.OrganismoDeControl;
-import domain.Servicios.Servicio;
+import models.Config.Config;
+import models.domain.Entidades.Entidad;
+import models.domain.Entidades.EntidadPrestadora;
+import models.domain.Entidades.Establecimiento;
+import models.domain.Entidades.OrganismoDeControl;
+import models.domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import services.APIs.Georef.ServicioGeoref;
-import services.Archivos.CargadorDeDatos;
-import services.Archivos.SistemaDeArchivos;
+import models.services.APIs.Georef.ServicioGeoref;
+import models.services.Archivos.CargadorDeDatos;
+import models.services.Archivos.SistemaDeArchivos;
 
 import java.util.ArrayList;
 import java.util.List;

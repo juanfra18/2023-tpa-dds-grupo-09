@@ -1,7 +1,11 @@
 package services.APIs.Georef;
 
+import models.services.APIs.Georef.ServicioGeoref;
+import models.services.Localizacion.ListadoDeMunicipios;
+import models.services.Localizacion.ListadoDeProvincias;
+import models.services.Localizacion.Municipio;
+import models.services.Localizacion.Provincia;
 import org.junit.jupiter.api.BeforeAll;
-import services.Localizacion.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Optional;

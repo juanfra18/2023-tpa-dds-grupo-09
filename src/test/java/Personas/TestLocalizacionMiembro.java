@@ -1,17 +1,17 @@
 package Personas;
 
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
-import domain.Personas.MiembroDeComunidad;
+import models.domain.Notificaciones.FormaDeNotificar;
+import models.domain.Notificaciones.MedioDeComunicacion;
+import models.domain.Personas.MiembroDeComunidad;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import persistence.Repositorios.RepositorioDeIncidentes;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.Localizacion.Municipio;
-import services.Localizacion.Provincia;
+import models.persistence.Repositorios.RepositorioDeIncidentes;
+import models.services.APIs.Georef.AdapterServicioGeo;
+import models.services.Localizacion.Municipio;
+import models.services.Localizacion.Provincia;
 
 
 import static org.mockito.Mockito.mock;

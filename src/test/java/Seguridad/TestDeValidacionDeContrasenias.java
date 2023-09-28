@@ -1,8 +1,8 @@
 package Seguridad;
 
-import domain.Seguridad.RegistroDeUsuarioException;
-import domain.Seguridad.ValidadorDeContrasenias;
-import domain.Usuario.Usuario;
+import models.domain.Seguridad.RegistroDeUsuarioException;
+import models.domain.Seguridad.ValidadorDeContrasenias;
+import models.domain.Usuario.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

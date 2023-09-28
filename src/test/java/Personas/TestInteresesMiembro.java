@@ -1,26 +1,26 @@
 package Personas;
 
-import domain.Entidades.Entidad;
-import domain.Entidades.Establecimiento;
-import domain.Entidades.TipoEntidad;
-import domain.Entidades.TipoEstablecimiento;
-import domain.Notificaciones.CuandoSuceden;
-import domain.Notificaciones.FormaDeNotificar;
-import domain.Notificaciones.MedioDeComunicacion;
-import domain.Notificaciones.ViaMail;
-import domain.Personas.MiembroDeComunidad;
-import domain.Personas.ParServicioRol;
-import domain.Personas.Rol;
-import domain.Servicios.Banio;
-import domain.Servicios.Servicio;
+import models.domain.Entidades.Entidad;
+import models.domain.Entidades.Establecimiento;
+import models.domain.Entidades.TipoEntidad;
+import models.domain.Entidades.TipoEstablecimiento;
+import models.domain.Notificaciones.CuandoSuceden;
+import models.domain.Notificaciones.FormaDeNotificar;
+import models.domain.Notificaciones.MedioDeComunicacion;
+import models.domain.Notificaciones.ViaMail;
+import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Personas.ParServicioRol;
+import models.domain.Personas.Rol;
+import models.domain.Servicios.Banio;
+import models.domain.Servicios.Servicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import services.APIs.Georef.AdapterServicioGeo;
-import services.Localizacion.Municipio;
+import models.services.APIs.Georef.AdapterServicioGeo;
+import models.services.Localizacion.Municipio;
 
 import java.io.IOException;
 
