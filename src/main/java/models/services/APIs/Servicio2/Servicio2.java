@@ -6,7 +6,7 @@ import models.domain.Personas.MiembroDeComunidad;
 public class Servicio2 implements Servicio2Adapter{
   @Override
   public void enviarDatosGradoDeConfianzaComunidad(Comunidad comunidad) {
-
+    //prueba
   }
 
   @Override
