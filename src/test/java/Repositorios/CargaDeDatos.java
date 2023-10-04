@@ -307,9 +307,7 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         @Test
         public void solicitarInformacionDeIncidentesAbiertos(){
             MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscarTodos().get(0);
-
             Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO).size());
-
         }
         @Test
         public void solicitarInformacionDeIncidentesCerrados(){

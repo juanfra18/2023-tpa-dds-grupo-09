@@ -19,6 +19,11 @@ public class Usuario extends Persistente {
     private String contrasenia;
     @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
+    @Getter
+    @ManyToOne
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    private Rol rol;
+
   public Usuario() throws RegistroDeUsuarioException {
       this.validador = new ValidadorDeContrasenias();
     }
