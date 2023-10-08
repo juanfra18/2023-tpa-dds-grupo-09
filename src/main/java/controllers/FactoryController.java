@@ -7,7 +7,10 @@ public class FactoryController {
     switch (nombre) {
       case "rankings": controller = new RankingsController(); break;
       case "menuPrincipal": controller = new MenuPrincipalController(); break;
-      case "perfil": controller = new PerfilController();break;
+      case "perfil": controller = new UsuariosController();break;
+      case "reporteDeIncidente": controller = new ReporteDeIncidenteController();break;
+      case "incidentes": controller = new IncidentesController();break;
+      case "empresas": controller = new EmpresasController();break;
     }
     return controller;
   }

@@ -8,7 +8,7 @@ import server.utils.ICrudViewsHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PerfilController extends ControllerGenerico implements ICrudViewsHandler {
+public class ReporteDeIncidenteController extends ControllerGenerico implements ICrudViewsHandler {
   @Override
   public void index(Context context) {
     Map<String, Object> model = new HashMap<>();
@@ -16,6 +16,8 @@ public class PerfilController extends ControllerGenerico implements ICrudViewsHa
     boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
+    //String estado = context.pathParam("estado");
+    boolean abierto = false;
 
     if(usuarioLogueado != null) //deberia ser == pero para probar lo cambie
     {
@@ -36,11 +38,22 @@ public class PerfilController extends ControllerGenerico implements ICrudViewsHa
     }
 
  */
+   /* if(estado.equals("abierto"))
+    {
+      abierto = true;
+    }
+    else
+    {
+      abierto = false;
+    }
+
+    */
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    context.render("PerfilUsuario.hbs", model);
+   // model.put("abierto",abierto); //Pasando el string tuve problemas para hacer los if en hbs (no funcionaban)
+    context.render("ReporteDeIncidente.hbs", model);
   }
 
   @Override
