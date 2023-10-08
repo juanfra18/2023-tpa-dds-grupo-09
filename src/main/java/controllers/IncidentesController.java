@@ -28,11 +28,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
 
-    if(usuarioLogueado != null) //deberia ser == pero para probar lo cambie
-    {
-      throw new AccesoDenegadoExcepcion();
-    }
-
   /*  if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;

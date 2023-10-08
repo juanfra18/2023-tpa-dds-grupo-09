@@ -14,13 +14,13 @@ public class Servicio3JSON implements Servicio3Adapter{
     private static Servicio3JSON instancia = null;
     private static final String urlApi = Config.URL_APIS3;
     private Retrofit retrofit;
-    private Servicio3 servicio3;
+    private Servicio3Mensajes servicio3Mensajes;
     private Servicio3JSON() {
         this.retrofit = new Retrofit.Builder()
             .baseUrl(urlApi)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-        this.servicio3 = this.retrofit.create(Servicio3.class);
+        this.servicio3Mensajes = this.retrofit.create(Servicio3Mensajes.class);
     }
 
     public static Servicio3JSON instancia(){

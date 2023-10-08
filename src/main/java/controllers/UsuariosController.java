@@ -21,11 +21,6 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean usuarioEmpresa = false;
     boolean administrador = false;
 
-    if(usuarioLogueado != null) //deberia ser == pero para probar lo cambie
-    {
-      throw new AccesoDenegadoExcepcion();
-    }
-
     /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;

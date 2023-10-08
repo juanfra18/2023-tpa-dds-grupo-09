@@ -30,6 +30,8 @@ public class MiembroDeComunidad extends Persistente {
     private String apellido;
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "puntosDeConfianza")
+    private Long puntosDeConfianza;
     @ManyToMany
     private List<Entidad> entidadesDeInteres;
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})

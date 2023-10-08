@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head> <!--Contenedor de metadata y otras cosas como el titulo-->
+    {{#block "head"}}
+    {{/block}}
+</head>
+
+<body id="body">
+<header id="main-header">
+    <a id="logo-header" href="#">
+        <span class="site-name">Serviño</span>
+        <span class="site-desc">Servicios/ Comunidades / Confianza</span>
+    </a>
+
+
+    <nav>
+        <ul>
+            <li class="nav-item"><a href="menu">Inicio</a></li>
+            {{#if usuarioBasico}}
+            <li class="nav-item"><a href="incidentes">Mis Incidentes</a></li>
+            <li class="nav-item"><a href="sugerenciasDeRevision">Sugerencias de Revisión</a></li>
+            {{/if}}
+            <li class="nav-item"><a href="perfil"><img src="./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
+        </ul>
+    </nav>
+</header>
+<div id="content">
+    {{#block "contenido"}}
+    {{/block}}
+</div>
+
+</body>
+
+</html>

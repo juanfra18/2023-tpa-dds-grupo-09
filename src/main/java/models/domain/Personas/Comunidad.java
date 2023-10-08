@@ -20,6 +20,8 @@ import java.util.List;
 public class Comunidad extends Persistente {
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "gradosDeConfianza")
+    private String gradosDeConfianza;
     @ManyToMany(mappedBy = "comunidades")
     private List<MiembroDeComunidad> miembros;
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.REMOVE})
