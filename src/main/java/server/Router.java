@@ -18,6 +18,7 @@ public class Router {
       get("reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::index);
       //deberia ser un post no?
       get("/sugerenciasDeRevision", ctx -> ctx.render("SugerenciasDeRevisionDeIncidentes.hbs"));
+      get("comunidades", ((ComunidadesController) FactoryController.controller("comunidades"))::index);
     });
   }
 }

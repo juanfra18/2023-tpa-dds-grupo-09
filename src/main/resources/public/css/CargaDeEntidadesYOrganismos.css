@@ -38,8 +38,6 @@
     border-radius: 50%; /* convierte el círculo en un círculo perfecto */
     overflow: hidden; /* oculta el contenido fuera del círculo */
     text-align: center; /* centra el contenido horizontalmente */
-    border-style:solid;
-    border-width: 2px;
     margin-top: 20px;
 }
 

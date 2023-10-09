@@ -1,45 +1,37 @@
 @import url(https://fonts.google.com/specimen/Oswald);
 #body{
-	font-family: 'Oswald', sans-serif;
-	margin: 0;
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
     padding: 0;
     display:flex;
     justify-content: center;
-    height: auto;
+    align-items: center;
+    min-height: 700px;
     background-color: #ffd59e;
     background-size: cover;
     background-attachment: fixed;
-	color: #130101;
 }
 
 #base{
-    display:flex;
-    min-width: 900px;
-    margin-top: 120px;
-    flex-direction: column; /*para que el texto quede centrado y en distintos renglones*/
-    padding: 10px;
+    width: 90%;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
-    box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
 }
 
-#base img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 2.5%;
-	margin-bottom: 2%;
+#inputGroupSelect01{
+    max-width: 200px;
 }
 
-#base h2{
-	text-align: center;
-	margin-bottom: 5%;
-	font-weight: bold;
-}
-
-#base p{
-	margin-bottom: 2%;
-	margin-left: 5%;
+.tarjetaComunidad{
+    margin: 40px;
+    min-height: 150px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.45);
+    text-align: left;
 }
 
 #main-header {
@@ -104,11 +96,3 @@ nav ul li a {
 nav ul li a:hover {
 	background: #73caf2cc;
 }
-
-#fotoDePerfil{
-    width: 100px;
-    height: 100px;
-}
-
-
-

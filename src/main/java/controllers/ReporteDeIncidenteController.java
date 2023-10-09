@@ -16,7 +16,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
-    //String estado = context.pathParam("estado");
+    String estado = context.pathParam("estado");
     boolean abierto = false;
 
     /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
@@ -33,7 +33,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     }
 
  */
-   /* if(estado.equals("abierto"))
+    if(estado.equals("abierto"))
     {
       abierto = true;
     }
@@ -42,12 +42,12 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       abierto = false;
     }
 
-    */
+
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-   // model.put("abierto",abierto); //Pasando el string tuve problemas para hacer los if en hbs (no funcionaban)
+    model.put("abierto",abierto); //Pasando el string tuve problemas para hacer los if en hbs (no funcionaban)
     context.render("ReporteDeIncidente.hbs", model);
   }
 

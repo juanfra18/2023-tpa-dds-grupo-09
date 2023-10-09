@@ -15,9 +15,9 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
   public void index(Context context) {
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context);
-    boolean usuarioBasico = true;
+    boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
-    boolean administrador = false;
+    boolean administrador = true;
 
 
 /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)

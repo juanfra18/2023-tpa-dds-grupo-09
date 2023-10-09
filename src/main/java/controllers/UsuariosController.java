@@ -1,7 +1,10 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Notificaciones.ReceptorDeNotificaciones;
+import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.Usuario;
+import models.persistence.Repositorios.RepositorioComunidad;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
@@ -20,6 +23,10 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
+    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
+    Usuario uu = new Usuario();
+    ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
+    RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
 
     /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
@@ -35,10 +42,12 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     }
 
  */
+    //miembroDeComunidad = TODO obtener el miembro de comunidad a partir del usuario
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
+    model.put("miembroDeComunidad",miembroDeComunidad);
     context.render("PerfilUsuario.hbs", model);
   }
 

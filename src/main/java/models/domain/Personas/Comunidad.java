@@ -99,4 +99,8 @@ public class Comunidad extends Persistente {
     public List<Incidente> incidentesAbiertos(List<Incidente> incidentes){
         return this.getIncidentesDeComunidad(incidentes).stream().filter(i -> !i.cerrado()).toList();
     }
+
+    public int cantidadMiembros(){
+        return  this.miembros.size();
+    }
 }

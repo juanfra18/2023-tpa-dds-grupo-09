@@ -4,6 +4,8 @@ import models.Config.Config;
 import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
+import models.domain.Personas.Comunidad;
+import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeMunicipios;
 import models.persistence.Repositorios.RepositorioDeOrganismosDeControl;
 import models.persistence.Repositorios.RepositorioProvincias;
@@ -28,6 +30,7 @@ public class Minimain implements WithSimplePersistenceUnit {
         List<OrganismoDeControl> empresas;
         ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
+        RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
 
         try {
             em.getTransaction().begin();
@@ -43,6 +46,14 @@ public class Minimain implements WithSimplePersistenceUnit {
             //Se cargan las empresas
             empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
+            Comunidad c1 = new Comunidad();
+            c1.setNombre("CASAAA");
+            c1.setGradosDeConfianza("12");
+            Comunidad c2 = new Comunidad();
+            c2.setNombre("CASAAasdasdasdA");
+            c2.setGradosDeConfianza("13");
+            repositorioComunidad.agregar(c1);
+            repositorioComunidad.agregar(c2);
 
             em.getTransaction().commit();
         } catch (Exception e) {
