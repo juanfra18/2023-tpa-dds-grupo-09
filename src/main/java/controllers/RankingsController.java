@@ -2,6 +2,7 @@ package controllers;
 
 
 import io.javalin.http.Context;
+import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.services.Archivos.SistemaDeArchivos;
 import server.exceptions.AccesoDenegadoExcepcion;
@@ -25,16 +26,11 @@ public class RankingsController extends ControllerGenerico implements ICrudViews
   public void index(Context context) {
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context);
-    boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
 
 
-    /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
-    {
-      usuarioBasico = true;
-    }
-    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
       usuarioEmpresa = true;
     }
@@ -43,14 +39,12 @@ public class RankingsController extends ControllerGenerico implements ICrudViews
       administrador = true;
     }
 
- */
 
     filasR1 = sistemaDeArchivos.csvALista("resources/ranking1.csv");
     filasR2 = sistemaDeArchivos.csvALista("resources/ranking2.csv");
 
     model.put("filasR1",filasR1);
     model.put("filasR2",filasR2);
-    model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     context.render("Rankings.hbs", model);

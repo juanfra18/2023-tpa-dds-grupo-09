@@ -3,13 +3,19 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.Repositorios.RepositorioComunidad;
+import models.persistence.Repositorios.RepositorioDeUsuarios;
+import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
 import server.exceptions.AccesoDenegadoExcepcion;
+import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UsuariosController extends ControllerGenerico implements ICrudViewsHandler {
   @Override
@@ -20,15 +26,14 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
   public void show(Context context) {
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context);
-    boolean usuarioBasico = true;
+    boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-    Usuario uu = new Usuario();
-    ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
-    RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    Optional<MiembroDeComunidad> posibleMiembro = Optional.of(new MiembroDeComunidad());
+    List<MiembroDeComunidad> miembrosDeComunidadDelSistema;
+    RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
 
-    /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
     }
@@ -41,13 +46,19 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
       administrador = true;
     }
 
- */
-    //miembroDeComunidad = TODO obtener el miembro de comunidad a partir del usuario
+    miembrosDeComunidadDelSistema = repositorioMiembroDeComunidad.buscarTodos();
+
+    if(!miembrosDeComunidadDelSistema.isEmpty())
+    {
+    posibleMiembro = miembrosDeComunidadDelSistema.stream().
+          filter(miembro -> miembro.getUsuario().getId().equals(Long.parseLong(SessionHandler.getUserID(context)))).findFirst();
+    }
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("miembroDeComunidad",miembroDeComunidad);
+    if(posibleMiembro.isPresent())
+      model.put("miembroDeComunidad",posibleMiembro.get());
     context.render("PerfilUsuario.hbs", model);
   }
 

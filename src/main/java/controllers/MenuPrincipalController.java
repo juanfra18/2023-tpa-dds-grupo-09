@@ -17,10 +17,9 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
     Usuario usuarioLogueado = super.usuarioLogueado(context);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
-    boolean administrador = true;
+    boolean administrador = false;
 
-
-/*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
     }
@@ -33,7 +32,6 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
       administrador = true;
     }
 
- */
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);

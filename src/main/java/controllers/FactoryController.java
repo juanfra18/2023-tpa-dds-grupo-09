@@ -12,6 +12,7 @@ public class FactoryController {
       case "incidentes": controller = new IncidentesController();break;
       case "empresas": controller = new EmpresasController();break;
       case "comunidades": controller = new ComunidadesController();break;
+      case "inicioDeSesion": controller = new InicioDeSesionController();break;
     }
     return controller;
   }

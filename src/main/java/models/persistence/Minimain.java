@@ -5,10 +5,11 @@ import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import models.domain.Personas.Comunidad;
-import models.persistence.Repositorios.RepositorioComunidad;
-import models.persistence.Repositorios.RepositorioDeMunicipios;
-import models.persistence.Repositorios.RepositorioDeOrganismosDeControl;
-import models.persistence.Repositorios.RepositorioProvincias;
+import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Usuario.Rol;
+import models.domain.Usuario.TipoRol;
+import models.domain.Usuario.Usuario;
+import models.persistence.Repositorios.*;
 import models.services.APIs.Georef.ServicioGeoref;
 import models.services.Archivos.CargadorDeDatos;
 import models.services.Archivos.SistemaDeArchivos;
@@ -30,7 +31,6 @@ public class Minimain implements WithSimplePersistenceUnit {
         List<OrganismoDeControl> empresas;
         ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
-        RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
 
         try {
             em.getTransaction().begin();
@@ -46,15 +46,41 @@ public class Minimain implements WithSimplePersistenceUnit {
             //Se cargan las empresas
             empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
-            Comunidad c1 = new Comunidad();
-            c1.setNombre("CASAAA");
-            c1.setGradosDeConfianza("12");
-            Comunidad c2 = new Comunidad();
-            c2.setNombre("CASAAasdasdasdA");
-            c2.setGradosDeConfianza("13");
-            repositorioComunidad.agregar(c1);
-            repositorioComunidad.agregar(c2);
 
+            //PARA PROBAR LA PAGINA WEB
+
+            RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
+            RepositorioRoles repositorioRoles = RepositorioRoles.getInstancia();
+            Usuario u1 = new Usuario();
+            Usuario u2 = new Usuario();
+            u1.setUsername("messi10");
+            u2.setUsername("kuni9");
+            u1.cambiarContrasenia("LaCasaEnElLag@");
+            u2.cambiarContrasenia("LaCasaEnElLag@");
+
+            Rol admin = new Rol();
+            admin.setNombre("administrador");
+            admin.setTipo(TipoRol.ADMINISTRADOR);
+            Rol basico = new Rol();
+            basico.setNombre("basico");
+            basico.setTipo(TipoRol.USUARIO_BASICO);
+
+            repositorioRoles.agregar(admin);
+            repositorioRoles.agregar(basico);
+
+            u1.setRol(admin);
+            u2.setRol(basico);
+
+            repositorioDeUsuarios.agregar(u1);
+            repositorioDeUsuarios.agregar(u2);
+
+            RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+            MiembroDeComunidad mi = new MiembroDeComunidad();
+            mi.setApellido("Messi");
+            mi.setNombre("Leo");
+            mi.setUsuario(u1);
+
+            repositorioMiembroDeComunidad.agregar(mi);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
