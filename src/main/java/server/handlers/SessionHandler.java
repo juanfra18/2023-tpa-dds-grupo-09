@@ -17,6 +17,9 @@ public class SessionHandler {
   public static String getUserID(Context ctx) {
     return ctx.cookie("usuario_id");
   }
+  public static String getTipoRol(Context ctx) {
+    return ctx.cookie("tipo_rol");
+  }
 
   public static void endSession(Context ctx) {
     ctx.removeCookie("usuario_id");
