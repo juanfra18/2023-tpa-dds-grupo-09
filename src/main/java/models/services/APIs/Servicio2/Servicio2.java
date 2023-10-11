@@ -1,19 +1,26 @@
 package models.services.APIs.Servicio2;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import models.Config.Config;
 import models.domain.Incidentes.Incidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
+import models.services.APIs.Georef.NoSePudoConectarConAPI;
 import models.services.APIs.Servicio2.clases.S2Comunidad;
 import models.services.APIs.Servicio2.clases.S2Incidente;
 import models.services.APIs.Servicio2.clases.S2Servicio;
 import models.services.APIs.Servicio2.clases.S2Usuario;
 import models.services.APIs.Servicio3.Servicio3Mensajes;
 import models.services.APIs.Servicio3.Servicio3JSON;
+import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,56 +44,57 @@ public class Servicio2 implements Servicio2Adapter {
     return instancia;
   }
   @Override
-  public void enviarDatosGradoDeConfianzaComunidad(Comunidad comunidad, List<Incidente> incidentes) {
+  public Long obtenerGradoDeConfianzaComunidad(Comunidad comunidad, List<Incidente> incidentes) {
     S2JsonRequestComunidad request = new S2JsonRequestComunidad();
-    S2Comunidad minicomunidad = new S2Comunidad();
 
-    List<S2Usuario> miembros = new ArrayList<>();
-
-    for (MiembroDeComunidad miembroDeComunidad : comunidad.getMiembros()) {
-      miembros.add(new S2Usuario(miembroDeComunidad));
-    }
-
-    minicomunidad.setGradoDeConfianza(comunidad.getGradosDeConfianza());
-    minicomunidad.setMiembros(miembros);
-
-    request.setComunidad(minicomunidad);
+    request.setComunidad(new S2Comunidad(comunidad));
 
     List<S2Incidente> incidentesDeComunidad = new ArrayList<>();
 
-    for (Incidente incidenteDeComunidad : comunidad.getIncidentesDeComunidad(incidentes)){
-      S2Incidente incidente = new S2Incidente();
-
-      incidente.setId(incidenteDeComunidad.getId());
-
-      S2Servicio servicio = new S2Servicio();
-      servicio.setId(incidenteDeComunidad.getServicio().getId());
-      incidente.setServicioAfectado(servicio);
-
-      incidente.setUsuarioReportador(new S2Usuario(incidenteDeComunidad.primeraApertura().getDenunciante()));
-
-      incidente.setFechaApertura(incidenteDeComunidad.primeraApertura().getFechaYhora().toString().substring(0,23)+"Z");
-
-      incidente.setFechaCierre(incidenteDeComunidad.primerCierre().getFechaYhora().toString().substring(0,23)+"Z");
-
-      incidente.setUsuarioAnalizador(new S2Usuario(incidenteDeComunidad.primerCierre().getDenunciante()));
-
-      incidentesDeComunidad.add(incidente);
-    }
-
-    //TODO que se haga eso en incidente
+    comunidad.getIncidentesDeComunidad(incidentes).forEach(i -> incidentesDeComunidad.add(new S2Incidente(i)));
 
     request.setIncidentes(incidentesDeComunidad);
 
-    //TODO hacer el request
+    Gson gson = new Gson();
+
+    try {
+      Call<String> requestEnviarDatosGradoDeConfianzaComunidad = servicio2Mensajes.enviarDatosGradoDeConfianzaComunidad(gson.toJson(request));
+      Response<String> response = requestEnviarDatosGradoDeConfianzaComunidad.execute();
+      S2JsonResponseComunidad jsonResponse = gson.fromJson(response.body(), S2JsonResponseComunidad.class);
+      comunidad.setGradosDeConfianza(jsonResponse.getComunidad().getGradoDeConfianza());
+      return jsonResponse.getNuevoPuntaje();
+    }
+    catch (IOException e)
+    {
+        throw new NoSePudoConectarConAPI("No se pudo conectar con la API Servicio2");
+    }
 
   }
 
   @Override
-  public void enviarDatosGradoDeConfianzaMiembroDeComunidad(MiembroDeComunidad miembroDeComunidad) {
+  public Long obtenerGradoDeConfianzaMiembroDeComunidad(MiembroDeComunidad miembroDeComunidad, List<Incidente> incidentes) {
+    S2JsonRequestUsuario request = new S2JsonRequestUsuario();
 
-  }
-  public static void main(String[] args) {
-    System.out.println(LocalDateTime.now().toString().substring(0,23)+"Z");
+    request.setUsuario(new S2Usuario(miembroDeComunidad));
+
+    List<S2Incidente> incidentesRequest = new ArrayList<>();
+
+    incidentes.forEach(i -> incidentesRequest.add(new S2Incidente(i)));
+
+    request.setIncidentes(incidentesRequest);
+
+    Gson gson = new Gson();
+
+    try {
+      Call<String> requestEnviarDatosGradoDeConfianzaMiembroDeComunidad = servicio2Mensajes.enviarDatosGradoDeConfianzaMiembroDeComunidad(gson.toJson(request));
+      Response<String> response = requestEnviarDatosGradoDeConfianzaMiembroDeComunidad.execute();
+      S2JsonResponseUsuario jsonResponse = gson.fromJson(response.body(), S2JsonResponseUsuario.class);
+      miembroDeComunidad.setPuntosDeConfianza(jsonResponse.getNuevoPuntaje());
+      return jsonResponse.getNuevoPuntaje();
+    }
+    catch (IOException e)
+    {
+      throw new NoSePudoConectarConAPI("No se pudo conectar con la API Servicio2");
+    }
   }
 }

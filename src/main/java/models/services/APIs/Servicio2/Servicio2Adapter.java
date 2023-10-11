@@ -7,6 +7,6 @@ import models.domain.Personas.MiembroDeComunidad;
 import java.util.List;
 
 public interface Servicio2Adapter {
-  void enviarDatosGradoDeConfianzaComunidad(Comunidad comunidad, List<Incidente> incidentes);
-  void enviarDatosGradoDeConfianzaMiembroDeComunidad(MiembroDeComunidad miembroDeComunidad);
+  Long obtenerGradoDeConfianzaComunidad(Comunidad comunidad, List<Incidente> incidentes);
+  Long obtenerGradoDeConfianzaMiembroDeComunidad(MiembroDeComunidad miembroDeComunidad, List<Incidente> incidentes);
 }

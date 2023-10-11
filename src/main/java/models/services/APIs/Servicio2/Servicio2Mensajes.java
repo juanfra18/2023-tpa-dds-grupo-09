@@ -6,7 +6,7 @@ import retrofit2.http.POST;
 
 public interface Servicio2Mensajes {
     @POST("/gradoDeConfianza/comunidad")
-    Call<Integer> enviarDatosGradoDeConfianzaComunidad(@Body String jsonRequest);
+    Call<String> enviarDatosGradoDeConfianzaComunidad(@Body String jsonRequest);
     @POST("/gradoDeConfianza/usuario")
-    Call<Integer> enviarDatosGradoDeConfianzaMiembroDeComunidad(@Body String jsonRequest);
+    Call<String> enviarDatosGradoDeConfianzaMiembroDeComunidad(@Body String jsonRequest);
 }

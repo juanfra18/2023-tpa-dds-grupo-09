@@ -1,7 +1,11 @@
 package models.services.APIs.Servicio3;
 
 
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
 public interface Servicio3Mensajes {
-/*    @POST("/ranking")
-    Call<JsonResponse> enviarDatosRanking(@Body String jsonRequest);*/
+    @POST("/")
+    Call<String> enviarDatosRanking(@Body String jsonRequest);
 }
