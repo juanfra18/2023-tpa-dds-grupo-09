@@ -10,10 +10,10 @@ import server.handlers.SessionHandler;
 public class AutenticacionMiddleware {
   public static void apply(JavalinConfig config) {
     config.accessManager(((handler, context, routeRoles) -> {
-      TipoRol userRole = TipoRol.valueOf(SessionHandler.getTipoRol(context));
 
-      if(context.path() != "/inicioDeSesion") {
+      if(!context.path().equals("/inicioDeSesion")) {
         if (SessionHandler.checkSession(context)) {
+          TipoRol userRole = TipoRol.valueOf(SessionHandler.getTipoRol(context));
           if (routeRoles.size() == 0 || routeRoles.contains(userRole)) {
             handler.handle(context);
           } else {

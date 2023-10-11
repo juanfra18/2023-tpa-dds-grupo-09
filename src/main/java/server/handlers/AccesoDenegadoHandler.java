@@ -7,7 +7,7 @@ public class AccesoDenegadoHandler implements IHandler{
   @Override
   public void setHandle(Javalin app) {
     app.exception(AccesoDenegadoExcepcion.class, (e, context) -> {
-      context.redirect("/inicioDeSesion");  //TODO hacer mensaje JavaScript que diga que no tenés acceso
+      context.render("/403.hbs");  //TODO hacer mensaje JavaScript que diga que no tenés acceso
     });
   }
 }

@@ -2,12 +2,14 @@ package server;
 
 import controllers.*;
 import models.domain.Usuario.TipoRol;
+import server.handlers.SessionHandler;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Router {
   public static void init() {
     Server.app().routes(() -> {
+      post("/cerrarSesion", ctx -> {SessionHandler.endSession(ctx); ctx.status(200);});
       get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index, TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
       get("/menu", ((MenuPrincipalController) FactoryController.controller("menuPrincipal"))::index);
       get("/inicioDeSesion", ctx -> ctx.render("inicioDeSesion.hbs"));

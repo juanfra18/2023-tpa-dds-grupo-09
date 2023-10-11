@@ -4,6 +4,7 @@ import io.javalin.http.Context;
 import models.domain.Usuario.Usuario;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
 import server.exceptions.AccesoDenegadoExcepcion;
+import server.exceptions.SesionNoIniciadaExcepcion;
 import server.handlers.SessionHandler;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class InicioDeSesionController {
     }
     else
     {
-      throw new AccesoDenegadoExcepcion();
+      throw new SesionNoIniciadaExcepcion();
     }
   }
 }
