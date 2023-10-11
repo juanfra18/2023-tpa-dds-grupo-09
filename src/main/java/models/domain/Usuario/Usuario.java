@@ -15,11 +15,13 @@ public class Usuario extends Persistente {
     @Getter
     @Setter
     private String username;
+    @Getter
     @Column(name = "password")
     private String contrasenia;
     @Transient
     private ValidadorDeContrasenias validador = new ValidadorDeContrasenias();
     @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "rol_id", referencedColumnName = "id")
     private Rol rol;

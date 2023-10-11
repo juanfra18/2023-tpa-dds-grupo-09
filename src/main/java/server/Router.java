@@ -1,16 +1,17 @@
 package server;
 
 import controllers.*;
+import models.domain.Usuario.TipoRol;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Router {
   public static void init() {
     Server.app().routes(() -> {
-      get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index);//,TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
+      get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index, TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
       get("/menu", ((MenuPrincipalController) FactoryController.controller("menuPrincipal"))::index);
-      get("/inicioDeSesion", ctx -> ctx.render("InicioDeSesion.hbs"));
-      get("/", ctx -> ctx.render("InicioDeSesion.hbs"));
+      get("/inicioDeSesion", ctx -> ctx.render("inicioDeSesion.hbs"));
+      post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
       get("perfil",((UsuariosController) FactoryController.controller("perfil"))::show);
       get("incidentes",((IncidentesController) FactoryController.controller("incidentes"))::index);
       get("cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::index);
