@@ -3,59 +3,48 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
+import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
 import server.utils.ICrudViewsHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.EntityManager;
+import java.util.*;
 
 public class ComunidadesController extends ControllerGenerico implements ICrudViewsHandler {
+  RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
   @Override
   public void index(Context context) {
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context);
-    boolean usuarioBasico = true;
-    boolean usuarioEmpresa = false;
+    boolean usuarioBasico = false;
     boolean administrador = false;
-    boolean yaPertenece = false;
-    List<Comunidad> usuarioComunidades = new ArrayList<>();
-    List<Comunidad> comunidadesParaUnirse = new ArrayList<>();
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-    RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
-    List<Comunidad> finalUsuarioComunidades = usuarioComunidades;
+    List<Comunidad> usuarioComunidades ;
+    List<Comunidad> comunidades = new ArrayList<>();
 
-    /*if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
+    String id = context.pathParam("id");
+
+    miembroDeComunidad = this.miembroDelUsuario(id);
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
-      //miembroDeComunidad = TODO OBTENER EL MIEMBRO DE COMUNIDAD DESDE EL USUARIO
       usuarioComunidades = miembroDeComunidad.getComunidades();
-      comunidadesParaUnirse = repositorioComunidad.buscarTodos().stream().filter(comunidad -> !finalUsuarioComunidades.contains(comunidad)).toList();
-    }
-    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
-    {
-      usuarioEmpresa = true;
-      //miembroDeComunidad = TODO OBTENER EL MIEMBRO DE COMUNIDAD DESDE EL USUARIO
-      usuarioComunidades = miembroDeComunidad.getComunidades();
-      //este usuario tiene comunidades?
-      comunidadesParaUnirse = repositorioComunidad.buscarTodos().stream().filter(comunidad -> !finalUsuarioComunidades.contains(comunidad)).toList();
-
+      comunidades = repositorioComunidad.buscarTodos().stream().filter(comunidad -> !usuarioComunidades.contains(comunidad)).toList();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
     {
       administrador = true;
-      usuarioComunidades = repositorioComunidad.buscarTodos();
-      //el administrador puede ver todas las comunidades pero no puede unirse
-      finalUsuarioComunidades = repositorioComunidades.buscarTodos();
+      comunidades = repositorioComunidad.buscarTodos();
     }
-     */
 
     model.put("usuarioBasico",usuarioBasico);
-    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("usuarioEmpresa",false);
     model.put("administrador",administrador);
-    model.put("comunidades",comunidadesParaUnirse);
+    model.put("comunidades",comunidades);
+    model.put("usuario_id",usuarioLogueado.getId());
     context.render("UnirseComunidad.hbs", model);
   }
 
@@ -81,11 +70,45 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
 
   @Override
   public void update(Context context) {
+    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String comunidadId = context.pathParam("id");
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
 
+    comunidad.agregarMiembro(miembroDeComunidad);
+    miembroDeComunidad.agregarComunidad(comunidad);
+
+    try {
+      em.getTransaction().begin();
+      repositorioComunidad.agregar(comunidad);
+      em.getTransaction().commit();
+      context.redirect("/comunidades/"+ usuarioLogueado.getId());
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
   }
 
   @Override
   public void delete(Context context) {
+    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    String comunidadId = context.pathParam("id");
+    EntityManager em = EntityManagerSingleton.getInstance();
+    try {
+      em.getTransaction().begin();
+      Comunidad comunidadAEliminar = repositorioComunidad.buscar(Long.parseLong(comunidadId));
 
+      comunidadAEliminar.getMiembros().forEach(miembroDeComunidad -> miembroDeComunidad.abandonarComunidad(comunidadAEliminar));
+
+      repositorioComunidad.eliminar(comunidadAEliminar);
+      em.getTransaction().commit();
+      context.redirect("/comunidades/"+ usuarioLogueado.getId());
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
   }
 }

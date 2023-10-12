@@ -1,0 +1,34 @@
+{{> templates/base }}
+{{#partial "head"}}
+    <head> <!--Contenedor de metadata y otras cosas como el titulo-->
+        <meta charset="utf-8"> <!--Definir los caracteres a utilizar-->
+        <link rel = "stylesheet" href = "css/AdministracionUsuarios.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <title>Administracion de Usuarios</title>
+{{/partial}}
+{{> templates/base }}
+
+{{#partial "contenido"}}
+        <div id="base">
+            <h1>USUARIOS</h1>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+            {{#each miembros}}
+                <div class="col">
+                    <div class="tarjetaUsuario d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2>{{this.usuario.username}}
+                            <h4>{{this.nombre}}</h4>
+                            <h4>{{this.apellido}}</h4>
+                            <h4>{{this.usuario.rol.nombre}}</h4>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-ver-perfil" data-user-id="{{this.usuario.id}}">Ver Perfil</button>
+                        <button type="button" class="btn btn-secondary btn-eliminar" data-miembro-id="{{this.id}}">Eliminar</button>
+                    </div>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+        <script src="js/EliminarUsuarios.js"></script>
+        <script src="js/AdministrarUsuarios.js"></script>
+{{/partial}}
+{{> templates/base }}

@@ -36,6 +36,7 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
+    model.put("usuario_id",usuarioLogueado.getId().toString());
     context.render("MenuPrincipal.hbs", model);
   }
 

@@ -148,6 +148,14 @@ public class MiembroDeComunidad extends Persistente {
         boolean tieneRolAfectado = this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().igualito(incidente.getServicio()));
         return this.tieneInteres(incidente.getServicio(), incidente.getEstablecimiento()) && tieneRolAfectado;
     }
+
+    public void agregarComunidad(Comunidad comunidad) {
+        this.comunidades.add(comunidad);
+    }
+
+  public void abandonarComunidad(Comunidad comunidadAEliminar) {
+        this.comunidades.remove(comunidadAEliminar);
+  }
 }
 
 

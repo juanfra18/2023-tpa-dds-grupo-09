@@ -28,5 +28,13 @@ public class InicioDeSesionController {
       throw new SesionNoIniciadaExcepcion();
     }
   }
+
+  public void verificarSesion(Context context){
+    if(SessionHandler.checkSession(context))
+      context.redirect("/menu");
+    else{
+      context.render("inicioDeSesion.hbs");
+    }
+  }
 }
 

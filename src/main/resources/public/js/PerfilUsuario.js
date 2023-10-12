@@ -1,5 +1,4 @@
 document.getElementById('cerrarSesion').addEventListener('click', function() {
-    console.log("CLICK CLICK CLICK\n");
     // Realizar una solicitud al servidor para cerrar la sesión
     fetch('/cerrarSesion', {
         method: 'POST'
@@ -14,3 +13,4 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
         }
     });
 });
+
