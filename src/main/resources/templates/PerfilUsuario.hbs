@@ -21,7 +21,7 @@
                 <p>Cantidad de incidentes revisados: </p>
                 <p>Mis comunidades:
                   {{#each miembroDeComunidad.comunidades}}
-                    {{this.nombre}}{{#unless @last}}, {{/unless}}
+                    <a href="/comunidades/informacion/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
                   {{/each}}
                 </p>
                  <button type="button" class="btn btn-secondary" id="cerrarSesion">Cerrar Sesion</button>
