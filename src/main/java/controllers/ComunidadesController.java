@@ -44,13 +44,41 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("usuarioEmpresa",false);
     model.put("administrador",administrador);
     model.put("comunidades",comunidades);
-    model.put("usuario_id",usuarioLogueado.getId());
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("UnirseComunidad.hbs", model);
   }
 
   @Override
   public void show(Context context) {
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+    String id = context.pathParam("id");
+    Comunidad comunidad = new Comunidad();
+    comunidad = repositorioComunidad.buscar(Long.parseLong(id));
 
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("comunidad",comunidad);
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
+    context.render("PerfilComunidad.hbs", model);
   }
 
   @Override

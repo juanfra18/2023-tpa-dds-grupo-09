@@ -47,7 +47,7 @@ public class RankingsController extends ControllerGenerico implements ICrudViews
     model.put("filasR2",filasR2);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("usuario_id",usuarioLogueado.getId().toString());
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("Rankings.hbs", model);
   }
 

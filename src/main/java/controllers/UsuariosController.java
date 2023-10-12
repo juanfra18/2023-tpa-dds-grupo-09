@@ -35,7 +35,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     }
     model.put("administrador",administrador);
     model.put("miembros",miembrosDeComunidadDelSistema);
-    model.put("usuario_id",usuarioLogueado.getId().toString());
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("AdministracionUsuarios.hbs", model);
   }
 
@@ -49,7 +49,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
     String id = context.pathParam("id");
 
-    miembroDeComunidad = this.miembroDelUsuario(id);
+    miembroDeComunidad = repositorioMiembroDeComunidad.buscar(Long.parseLong(id));
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
@@ -68,7 +68,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("miembroDeComunidad",miembroDeComunidad);
-    model.put("usuario_id",usuarioLogueado.getId().toString());
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("PerfilUsuario.hbs", model);
   }
 

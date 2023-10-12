@@ -1,33 +1,11 @@
 {{> templates/base }}
-{{#partial "head"}}
-        <meta charset="utf-8"> <!--Definir los caracteres a utilizar-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+{{#partial "tituloYcss"}}
         <link rel = "stylesheet" href = "css/SugerenciasDeRevisionDeIncidentes.css">
         <title>Sugerencia de revisión de incidentes</title>
 {{/partial}}
 {{> templates/base }}
 
-    <body id="body">
-        <header id="main-header">
-            <a id="logo-header" href="#">
-                <span class="site-name">Serviño</span>
-                <span class="site-desc">Servicios/ Comunidades / Confianza</span>
-            </a>
-
-
-            <nav>
-                <ul>
-                    <li class="nav-item"><a href="menu">Inicio</a></li>
-                    {{#if usuarioBasico}}
-                    <li class="nav-item"><a href="incidentes">Mis Incidentes</a></li>
-                    <li class="nav-item"><a href="sugerenciasDeRevision">Sugerencias de Revisión</a></li>
-                    {{/if}}
-                    <li class="nav-item"><a href="perfil"><img src="./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
-                </ul>
-            </nav>
-        </header>
-
-
+ {{#partial "contenido"}}
         <div id="base">
             <h1>Solicitudes de Revisión Activas</h1>
             <div class="tarjetaRevision">
@@ -63,6 +41,5 @@
                 </ul>
             </div>
         </div>
-    </body>
-
-</html>
+{{/partial}}
+{{> templates/base }}

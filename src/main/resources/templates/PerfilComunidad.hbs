@@ -1,0 +1,22 @@
+{{> templates/base }}
+{{#partial "tituloYcss"}}
+        <link rel = "stylesheet" href = "/css/PerfilComunidad.css">
+        <title>Perfil Comunidad</title>
+ {{/partial}}
+ {{> templates/base }}
+
+ {{#partial "contenido"}}
+        <div id="base">
+            <div class="informacion">
+                <h2>{{comunidad.nombre}}</h2>
+                <p>Miembros:
+                <ul>
+                  {{#each comunidad.miembros}}
+                    <li><a href="/perfil/{{this.id}}">{{this.usuario.username}}</li>
+                  {{/each}}
+                 <ul>
+                </p>
+            </div>
+        </div>
+{{/partial}}
+{{> templates/base }}
