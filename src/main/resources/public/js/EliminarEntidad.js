@@ -2,8 +2,9 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
     button.addEventListener('click', function() {
         var organismoId = this.getAttribute('data-organismo-id');
         var entidadPrestadoraId = this.getAttribute('data-entidadPrestadora-id');
+        var entidadId = this.getAttribute('data-entidad-id');
         // Realizar una solicitud al servidor para eliminar el usuario
-        fetch('/organismosDeControl/' + organismoId + '/entidadesPrestadoras/eliminar/' + entidadPrestadoraId, {
+        fetch('/organismosDeControl/' + organismoId + '/entidadesPrestadoras/' + entidadPrestadoraId + '/entidades/eliminar/' + entidadId, {
             method: 'POST'
         })
         .then(response => {
