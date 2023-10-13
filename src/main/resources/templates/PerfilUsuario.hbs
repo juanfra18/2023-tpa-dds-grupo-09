@@ -21,10 +21,12 @@
                 <p>Cantidad de incidentes revisados: </p>
                 <p>Mis comunidades:
                   {{#each miembroDeComunidad.comunidades}}
-                    <a href="/comunidades/informacion/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
+                    <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
                   {{/each}}
                 </p>
+                {{#if miPerfil}}
                  <button type="button" class="btn btn-secondary" id="cerrarSesion">Cerrar Sesion</button>
+                 {{/if}}
             </div>
         </div>
         <script src="/js/PerfilUsuario.js"></script>

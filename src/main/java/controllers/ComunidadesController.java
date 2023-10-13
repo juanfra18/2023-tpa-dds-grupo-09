@@ -23,10 +23,8 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     List<Comunidad> usuarioComunidades ;
     List<Comunidad> comunidades = new ArrayList<>();
 
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
-    String id = context.pathParam("id");
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
 
-    miembroDeComunidad = this.miembroDelUsuario(id);
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
@@ -44,7 +42,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("usuarioEmpresa",false);
     model.put("administrador",administrador);
     model.put("comunidades",comunidades);
-    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
+    model.put("miembro_id",miembroDeComunidad.getId());
     context.render("UnirseComunidad.hbs", model);
   }
 

@@ -48,6 +48,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean administrador = false;
     MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
     String id = context.pathParam("id");
+    boolean miPerfil = false;
 
     miembroDeComunidad = repositorioMiembroDeComunidad.buscar(Long.parseLong(id));
 
@@ -64,11 +65,18 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
       administrador = true;
     }
 
+    if(miembroDeComunidad.getId().equals(this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId()))
+        miPerfil = true;
+    //Como se compara directamente en handlebars dentro de un if?
+
+
+
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("miembroDeComunidad",miembroDeComunidad);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
+    model.put("miPerfil", miPerfil);
     context.render("PerfilUsuario.hbs", model);
   }
 

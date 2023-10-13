@@ -1,6 +1,6 @@
 {{> templates/base }}
 {{#partial "tituloYcss"}}
-        <link rel = "stylesheet" href = "/css/UnirseComunidad.css">
+        <link rel = "stylesheet" href = "css/UnirseComunidad.css">
         <title>Comunidades</title>
  {{/partial}}
  {{> templates/base }}
@@ -21,13 +21,13 @@
                             {{else}}
                             <button type="button" class="btn btn-secondary btn-eliminar" data-comunidad-id="{{this.id}}">Eliminar</button>
                             {{/if}}
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/informacion/{{this.id}}'">Informacion</button>
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
                         </div>
                     </div>
                 {{/each}}
                 </div>
         </div>
-        <script src="/js/EliminarComunidad.js"></script>
-        <script src="/js/UnirseAComunidad.js"></script>
+        <script src="js/EliminarComunidad.js"></script>
+        <script src="js/UnirseAComunidad.js"></script>
 {{/partial}}
 {{> templates/base }}

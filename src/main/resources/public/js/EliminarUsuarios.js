@@ -3,7 +3,7 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
         var miembroId = this.getAttribute('data-miembro-id');
 
         // Realizar una solicitud al servidor para eliminar el usuario
-        fetch('/administrarUsuarios/eliminarUsuario/' + miembroId, {
+        fetch('/usuarios/eliminar/' + miembroId, {
             method: 'POST'
         })
         .then(response => {
