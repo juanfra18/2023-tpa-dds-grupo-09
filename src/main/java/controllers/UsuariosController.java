@@ -106,16 +106,18 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     String miembroId = context.pathParam("id");
     EntityManager em = EntityManagerSingleton.getInstance();
 
-      try {
-        em.getTransaction().begin();
-        MiembroDeComunidad miembroDeComunidadAEliminar = repositorioMiembroDeComunidad.buscar(Long.parseLong(miembroId));
-        repositorioMiembroDeComunidad.eliminar(miembroDeComunidadAEliminar);
-        em.getTransaction().commit();
-        context.redirect("/administrarUsuarios");
-      } catch (Exception e) {
-        em.getTransaction().rollback();
-      } finally {
-        em.close();
-      }
+    try {
+      em.getTransaction().begin();
+      MiembroDeComunidad miembroDeComunidadAEliminar = repositorioMiembroDeComunidad.buscar(Long.parseLong(miembroId));
+      repositorioMiembroDeComunidad.eliminar(miembroDeComunidadAEliminar);
+      em.getTransaction().commit();
+      if (usuarioLogueado.getId()==Long.parseLong(miembroId))
+      { context.redirect("/inicioDeSesion"); }
+      else context.redirect("/usuarios");
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
   }
 }
