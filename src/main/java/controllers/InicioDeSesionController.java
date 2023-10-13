@@ -33,7 +33,7 @@ public class InicioDeSesionController {
     if(SessionHandler.checkSession(context))
       context.redirect("/menu");
     else{
-      context.render("inicioDeSesion.hbs");
+      context.render("InicioDeSesion.hbs");
     }
   }
 }

@@ -12,6 +12,7 @@ public class Router {
       post("/cerrarSesion", ctx -> {SessionHandler.endSession(ctx); ctx.status(200);});
       get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index, TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
       get("/menu", ((MenuPrincipalController) FactoryController.controller("menuPrincipal"))::index);
+      get("/", ctx -> ctx.redirect("/menu"));
       get("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::verificarSesion);
       post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
       get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);

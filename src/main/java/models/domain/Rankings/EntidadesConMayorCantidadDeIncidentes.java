@@ -27,13 +27,11 @@ public class EntidadesConMayorCantidadDeIncidentes extends Tierlist{
         y seguir recorriendo
          */
 
-
         for(Incidente incidente : incidentes) {
             Optional<Entidad> entidadConIncidente = entidades.stream().filter(entidad -> entidad.getEstablecimientos().contains(incidente.getEstablecimiento())).findFirst();
             int cantidadDiasAbierto = incidente.diasAbierto();
             contadorAux[entidades.indexOf(entidadConIncidente.get())] += cantidadDiasAbierto;
         }
-
         return contadorAux;
     }
 

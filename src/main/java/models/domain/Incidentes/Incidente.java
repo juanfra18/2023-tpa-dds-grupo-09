@@ -40,7 +40,7 @@ public class Incidente extends Persistente {
         return this.getReportesDeApertura().get(0);
     }
     public ReporteDeIncidente primerCierre(){
-        return this.getReportesDeCierre().get(0);
+             return this.getReportesDeCierre().get(0);
     }
     public void agregarReporteDeApertura(ReporteDeIncidente reporteDeIncidente){
         // Se asume que los reportes están en orden cronológico
@@ -78,10 +78,16 @@ public class Incidente extends Persistente {
 
     public Integer diasAbierto(){
         int dias = 1; //de base ya estuvo abierto ese mismo dia
-        for(ReporteDeIncidente reporteDeIncidente: this.getReportesDeApertura())
+        List<ReporteDeIncidente> reportesDeApertura = this.getReportesDeApertura();
+        for(ReporteDeIncidente reporteDeIncidente: reportesDeApertura)
         {   //se fija si hay reportes que ocurrieron luego de 24 horas y que hayan sido anteriores al primer cierre
-            List<ReporteDeIncidente> reportesDeApertura = this.getReportesDeApertura().stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
+            //si no fue cerrado no se valida contra el de cierre
+
+            if(this.cerrado()) reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
+            else reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente)).toList();
+
             if(!reportesDeApertura.isEmpty()) dias++;
+
         }
         return dias;
     }
