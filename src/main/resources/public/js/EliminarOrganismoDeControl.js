@@ -1,16 +1,17 @@
-document.querySelectorAll('.btn-unirse').forEach(button => {
+document.querySelectorAll('.btn-eliminar').forEach(button => {
     button.addEventListener('click', function() {
-        var comunidadId = this.getAttribute('data-comunidad-id');
+        var organismoId = this.getAttribute('data-organismo-id');
+
         // Realizar una solicitud al servidor para eliminar el usuario
-        fetch('/comunidades/unirseAComunidad/' + comunidadId, {
+        fetch('/organismosDeControl/eliminar/' + organismoId, {
             method: 'POST'
         })
         .then(response => {
             if (response.ok) {
                 // Usuario eliminado con éxito, puedes actualizar la interfaz o redirigir si es necesario
-                console.log('Union a comunidad con éxito');
+                console.log('Organismo de Control eliminado con éxito');
             } else {
-                console.error('Error al unirse a comunidad');
+                console.error('Error al eliminar Organismo de Control');
             }
         });
     });

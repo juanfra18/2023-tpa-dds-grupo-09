@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="organismoDeControl")
 public class OrganismoDeControl extends Persistente {
-  @OneToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @OneToMany (cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
   @JoinColumn(name="organismodecontrol_id",referencedColumnName = "id")
   private List<EntidadPrestadora> entidadesPrestadoras;
   @Column(name = "nombre")
@@ -36,5 +36,13 @@ public class OrganismoDeControl extends Persistente {
 
   public void recibirInforme(String ruta,String asunto){
     this.viaMail.recibirArchivos(ruta,asunto,this.personaMail);
+  }
+
+  public int cantidadEntidadesPrestadoras(){
+    return this.entidadesPrestadoras.size();
+  }
+
+  public void eliminarEntidadPrestadora(EntidadPrestadora entidadPrestadora) {
+    this.entidadesPrestadoras.remove(entidadPrestadora);
   }
 }

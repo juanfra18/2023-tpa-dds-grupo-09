@@ -40,4 +40,11 @@ public class Entidad extends Persistente {
         return Objects.equals(nombre, otro.nombre)
             && Objects.equals(tipoEntidad, otro.tipoEntidad);
     }
+
+    public int cantidadEstablecimientos(){
+        return this.establecimientos.size();
+    }
+    public String tipo(){
+        return this.tipoEntidad.toString();
+    }
 }

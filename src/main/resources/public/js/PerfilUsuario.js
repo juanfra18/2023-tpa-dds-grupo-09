@@ -5,7 +5,6 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
     })
     .then(response => {
         if (response.ok) {
-            // La sesión se cerró exitosamente, redirigir al usuario a la página de inicio de sesión
             window.location.href = '/inicioDeSesion'; // Cambia a la URL que desees
         } else {
             // Hubo un error al cerrar la sesión

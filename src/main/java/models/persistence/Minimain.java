@@ -1,6 +1,7 @@
 package models.persistence;
 
 import models.Config.Config;
+import models.domain.Entidades.Entidad;
 import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
@@ -79,11 +80,13 @@ public class Minimain implements WithSimplePersistenceUnit {
             mi.setApellido("Messi");
             mi.setNombre("Leo");
             mi.setUsuario(u1);
+            mi.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0));
 
             MiembroDeComunidad mi2 = new MiembroDeComunidad();
             mi2.setApellido("Kun");
             mi2.setNombre("Aguero");
             mi2.setUsuario(u2);
+            mi2.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(1));
 
             repositorioMiembroDeComunidad.agregar(mi);
             repositorioMiembroDeComunidad.agregar(mi2);
@@ -93,8 +96,6 @@ public class Minimain implements WithSimplePersistenceUnit {
 
             Comunidad c2 = new Comunidad();
             c2.setNombre("seleccionArg");
-
-            System.out.println("LALALALALLA"+c2.getMiembros().size());
 
             RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
             repositorioComunidad.agregar(c1);

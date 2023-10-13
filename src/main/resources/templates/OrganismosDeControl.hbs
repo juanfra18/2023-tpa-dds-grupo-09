@@ -1,0 +1,32 @@
+{{> templates/base }}
+{{#partial "tituloYcss"}}
+        <link rel = "stylesheet" href = "css/OrganismosDeControl.css">
+        <title>Organismos De Control</title>
+ {{/partial}}
+ {{> templates/base }}
+
+ {{#partial "contenido"}}
+        <div id="base">
+            <h1>ORGANISMOS</h1>
+                <div class="row row-cols-1 g-4">
+                {{#each organismos}}
+                    <div class="col">
+                        <div class="tarjetaOrganismo d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2>{{this.nombre}}</h2>
+                                <h4>Contacto: {{this.personaMail}}</h4>
+                                <h4>EntidadesPrestadoras: {{this.cantidadEntidadesPrestadoras}}</h4>
+                            </div>
+
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/organismosDeControl/{{this.id}}/entidadesPrestadoras'">EntidadesPrestadoras</button>
+                            {{#if administrador}}
+                            <button type="button" class="btn btn-secondary btn-eliminar" data-organismo-id="{{this.id}}">Eliminar</button>
+                            {{/if}}
+                            </div>
+                    </div>
+                {{/each}}
+                </div>
+        </div>
+        <script src="js/EliminarOrganismoDeControl.js"></script>
+{{/partial}}
+{{> templates/base }}

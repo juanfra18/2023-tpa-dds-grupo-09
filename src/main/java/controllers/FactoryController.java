@@ -13,6 +13,11 @@ public class FactoryController {
       case "empresas": controller = new EmpresasController();break;
       case "comunidades": controller = new ComunidadesController();break;
       case "inicioDeSesion": controller = new InicioDeSesionController();break;
+      case "organismos": controller = new OrganismosDeControlController();break;
+      case "entidadesPrestadoras": controller = new EntidadesPrestadorasController();break;
+      case "entidades": controller = new EntidadesController();break;
+      case "establecimientos": controller = new EstablecimientosController();break;
+      case "servicios": controller = new ServiciosController();break;
     }
     return controller;
   }

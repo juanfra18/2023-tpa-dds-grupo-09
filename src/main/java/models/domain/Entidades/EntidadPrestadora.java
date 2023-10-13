@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "entidadPrestadora")
 public class EntidadPrestadora extends Persistente {
-  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
   @JoinColumn(name="entidadprestadora_id")
   private List<Entidad> entidades;
   @Column(name = "nombre")
@@ -48,5 +48,13 @@ public class EntidadPrestadora extends Persistente {
 
   public void recibirInforme(String ruta,String asunto){
     this.viaMail.recibirArchivos(ruta,asunto,this.personaMail);
+  }
+
+  public int cantidadEntidades(){
+    return this.entidades.size();
+  }
+
+  public void eliminarEntidad(Entidad entidadAEliminar) {
+    this.entidades.remove(entidadAEliminar);
   }
 }
