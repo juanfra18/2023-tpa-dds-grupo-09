@@ -8,19 +8,16 @@ import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
-import models.persistence.Repositorios.RepositorioDeMunicipios;
 import models.persistence.Repositorios.RepositorioDeOrganismosDeControl;
-import models.persistence.Repositorios.RepositorioProvincias;
 import models.services.APIs.Georef.ServicioGeoref;
 import models.services.Archivos.CargadorDeDatos;
 import models.services.Archivos.SistemaDeArchivos;
-import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +47,22 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
     RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
     List<OrganismoDeControl> empresas;
 
-    Path rutaCSV = Paths.get(Config.ARCHIVO_CSV_RECIBIDO + archivoCSV.filename());
+    String rutaCSV= "resources/datos.csv";
+    File archivo = new File(rutaCSV);
 
-    empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(rutaCSV.toString()), servicioGeoref);
+    try (InputStream input = archivoCSV.content();
+         OutputStream output = new FileOutputStream(archivo)) {
+      Files.copy(input, archivo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      System.out.println("Archivo guardado con éxito.");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
 
     try {
       em.getTransaction().begin();
+      empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(rutaCSV.toString()), servicioGeoref);
       empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
       em.getTransaction().commit();
     } catch (Exception e) {
@@ -63,6 +70,7 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
     } finally {
       em.close();
     }
+    context.redirect("/cargarEmpresas");
   }
 
   @Override
@@ -72,8 +80,9 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
 
   @Override
   public void update(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -98,6 +107,7 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
     model.put("administrador",administrador);
     model.put("miembro_id",miembroDeComunidad.getId());
     context.render("CargaDeEntidadesYOrganismos.hbs", model);
+    em.close();
   }
 
   @Override

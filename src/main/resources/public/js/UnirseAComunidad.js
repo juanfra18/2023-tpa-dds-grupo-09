@@ -7,7 +7,6 @@ document.querySelectorAll('.btn-unirse').forEach(button => {
         })
         .then(response => {
             if (response.ok) {
-                // Usuario eliminado con éxito, puedes actualizar la interfaz o redirigir si es necesario
                 console.log('Union a comunidad con éxito');
             } else {
                 console.error('Error al unirse a comunidad');

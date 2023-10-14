@@ -23,8 +23,9 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
   RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean administrador = false;
 
     List<MiembroDeComunidad> miembrosDeComunidadDelSistema = repositorioMiembroDeComunidad.buscarTodos();
@@ -37,12 +38,14 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("miembros",miembrosDeComunidadDelSistema);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("AdministracionUsuarios.hbs", model);
+    em.close();
   }
 
   @Override
   public void show(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -78,6 +81,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     model.put("miPerfil", miPerfil);
     context.render("PerfilUsuario.hbs", model);
+    em.close();
   }
 
   @Override
@@ -102,9 +106,9 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String miembroId = context.pathParam("id");
     EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String miembroId = context.pathParam("id");
 
     try {
       em.getTransaction().begin();

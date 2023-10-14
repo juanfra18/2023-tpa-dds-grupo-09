@@ -27,8 +27,9 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
 
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -60,6 +61,7 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
     model.put("organismo_id",Long.parseLong(organismo_id));
     model.put("entidadPrestadora_id",Long.parseLong(entidadPrestadora_id));
     context.render("Entidades.hbs", model);
+    em.close();
   }
 
   @Override

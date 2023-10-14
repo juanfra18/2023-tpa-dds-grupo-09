@@ -25,8 +25,9 @@ public class EstablecimientosController extends ControllerGenerico implements IC
   RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
       Map<String, Object> model = new HashMap<>();
-      Usuario usuarioLogueado = super.usuarioLogueado(context);
+      Usuario usuarioLogueado = super.usuarioLogueado(context,em);
       boolean usuarioBasico = false;
       boolean usuarioEmpresa = false;
       boolean administrador = false;
@@ -60,6 +61,7 @@ public class EstablecimientosController extends ControllerGenerico implements IC
       model.put("entidadPrestadora_id",entidadPrestadoraId);
       model.put("entidad_id",entidadId);
       context.render("Establecimientos.hbs", model);
+    em.close();
   }
 
   @Override

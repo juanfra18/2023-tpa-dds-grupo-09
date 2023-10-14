@@ -5,11 +5,13 @@ import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.Usuario;
+import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +21,9 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
 
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -48,7 +51,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
       //el administrador puede ver todos los incidentes
     }
    */
-
+    em.close();
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);

@@ -2,17 +2,20 @@ package controllers;
 
 import io.javalin.http.Context;
 import models.domain.Usuario.Usuario;
+import models.persistence.EntityManagerSingleton;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ReporteDeIncidenteController extends ControllerGenerico implements ICrudViewsHandler {
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = true;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -43,7 +46,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     }
 
 
-
+    em.close();
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);

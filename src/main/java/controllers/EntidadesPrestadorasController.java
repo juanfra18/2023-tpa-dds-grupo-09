@@ -23,8 +23,9 @@ public class EntidadesPrestadorasController extends ControllerGenerico implement
   RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -53,6 +54,7 @@ public class EntidadesPrestadorasController extends ControllerGenerico implement
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("organismo_id",organismoDeControl.getId());
     context.render("EntidadesPrestadoras.hbs", model);
+    em.close();
   }
 
   @Override

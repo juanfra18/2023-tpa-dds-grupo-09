@@ -7,9 +7,11 @@ import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Servicios.Servicio;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
+import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeEstablecimientos;
 import server.utils.ICrudViewsHandler;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +20,9 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
   RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -55,6 +58,7 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
     model.put("entidadPrestadora_id",entidadPrestadoraId);
     model.put("entidad_id",entidadId);
     context.render("Servicios.hbs", model);
+    em.close();
 
   }
 

@@ -16,8 +16,9 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
   RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context, em);
     boolean usuarioBasico = false;
     boolean administrador = false;
     List<Comunidad> usuarioComunidades ;
@@ -44,12 +45,14 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("comunidades",comunidades);
     model.put("miembro_id",miembroDeComunidad.getId());
     context.render("UnirseComunidad.hbs", model);
+    em.close();
   }
 
   @Override
   public void show(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -77,6 +80,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("comunidad",comunidad);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("PerfilComunidad.hbs", model);
+    em.close();
   }
 
   @Override
@@ -96,10 +100,10 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
 
   @Override
   public void update(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     String comunidadId = context.pathParam("id");
-    EntityManager em = EntityManagerSingleton.getInstance();
     Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
 
     comunidad.agregarMiembro(miembroDeComunidad);
@@ -109,19 +113,19 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
       em.getTransaction().begin();
       repositorioComunidad.agregar(comunidad);
       em.getTransaction().commit();
-      context.redirect("/comunidades/"+ usuarioLogueado.getId());
     } catch (Exception e) {
       em.getTransaction().rollback();
     } finally {
       em.close();
     }
+    context.redirect("/menu");
   }
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String comunidadId = context.pathParam("id");
     EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String comunidadId = context.pathParam("id");
     try {
       em.getTransaction().begin();
       Comunidad comunidadAEliminar = repositorioComunidad.buscar(Long.parseLong(comunidadId));

@@ -3,9 +3,11 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
+import models.persistence.EntityManagerSingleton;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +15,9 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
 
   @Override
   public void index(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
+    Usuario usuarioLogueado = super.usuarioLogueado(context, em);
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -32,12 +35,12 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
       administrador = true;
     }
 
-
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     context.render("MenuPrincipal.hbs", model);
+    em.close();
   }
 
   @Override
