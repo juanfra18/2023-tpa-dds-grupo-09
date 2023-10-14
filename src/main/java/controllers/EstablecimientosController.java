@@ -89,43 +89,6 @@ public class EstablecimientosController extends ControllerGenerico implements IC
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String entidadPrestadoraId = context.pathParam("idEP");
-    String organismoId = context.pathParam("idO");
-    String entidadId = context.pathParam("idE");
-    String establecimientoId = context.pathParam("idES");
-    EntityManager em = EntityManagerSingleton.getInstance();
-    try {
-      em.getTransaction().begin();
-      Establecimiento establecimientoAEliminar = repositorioDeEstablecimientos.buscar(Long.parseLong(establecimientoId));
 
-
-      //Desvincularla de entidad, reportes e incidentes
-      repositorioEntidad.buscar(Long.parseLong(entidadId)).eliminarEstablecimiento(establecimientoAEliminar);
-
-      RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-      List<ReporteDeIncidente> reportesAEliminar = repositorioDeReportesDeIncidentes.buscarTodos().stream().filter(reporteDeIncidente -> reporteDeIncidente.getEstablecimiento().equals(establecimientoAEliminar)).toList();
-
-      RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-      List<Incidente> incidentesAEliminar = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.getEstablecimiento().equals(establecimientoAEliminar)).toList();
-
-      //Desvincular reportes de comunidades
-      RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
-      repositorioComunidad.buscarTodos().stream().forEach(comunidad -> comunidad.eliminarReportesAEliminar(reportesAEliminar));
-
-      incidentesAEliminar.forEach(incidente -> repositorioDeIncidentes.eliminar(incidente));
-
-
-     // reportesAEliminar.forEach(reporte -> repositorioDeReportesDeIncidentes.eliminar(reporte));
-
-
-      repositorioDeEstablecimientos.eliminar(establecimientoAEliminar);
-      em.getTransaction().commit();
-      context.redirect("/organismosDeControl/"+organismoId+"/entidadesPrestadoras/" + entidadPrestadoraId + "/entidades/" + entidadId + "/establecimientos");
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
   }
 }

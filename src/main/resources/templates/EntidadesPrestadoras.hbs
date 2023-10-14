@@ -17,16 +17,11 @@
                                 <h4>Contacto: {{this.personaMail}}</h4>
                                 <h4>Entidades: {{this.cantidadEntidades}}</h4>
                             </div>
-
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='/organismosDeControl/{{organismo_id}}/entidadesPrestadoras/{{this.id}}/entidades'">Entidades</button>
-                            {{#if administrador}}
-                            <button type="button" class="btn btn-secondary btn-eliminar" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{this.id}}">Eliminar</button>
-                            {{/if}}
                             </div>
                     </div>
                 {{/each}}
                 </div>
         </div>
-        <script src="/js/EliminarEntidadPrestadora.js"></script>
 {{/partial}}
 {{> templates/base }}

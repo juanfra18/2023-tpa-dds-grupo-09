@@ -89,31 +89,6 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String entidadPrestadoraId = context.pathParam("idEP");
-    String organismoId = context.pathParam("idO");
-    String entidadId = context.pathParam("idE");
-    EntityManager em = EntityManagerSingleton.getInstance();
-    try {
-      em.getTransaction().begin();
-      Entidad entidadAEliminar = repositorioEntidad.buscar(Long.parseLong(entidadId));
-      List<Entidad> entidadesAEliminar = new ArrayList<>();
-      entidadesAEliminar.add(entidadAEliminar);
 
-      //Desvincularla de miembros
-      RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-      repositorioMiembroDeComunidad.buscarTodos().forEach(miembroDeComunidad -> miembroDeComunidad.perderInteres(entidadesAEliminar));
-
-      //Desvincularla de entidad prestadora
-      repositorioDeEntidadPrestadora.buscar(Long.parseLong(entidadPrestadoraId)).eliminarEntidad(entidadAEliminar);
-
-     repositorioEntidad.eliminar(entidadAEliminar);
-      em.getTransaction().commit();
-      context.redirect("/organismosDeControl/"+organismoId+"/entidadesPrestadoras/" + entidadPrestadoraId + "/entidades");
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
   }
 }

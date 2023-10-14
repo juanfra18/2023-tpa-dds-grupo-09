@@ -80,29 +80,6 @@ public class OrganismosDeControlController extends ControllerGenerico implements
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String organismoId = context.pathParam("id");
-    EntityManager em = EntityManagerSingleton.getInstance();
-    try {
-      em.getTransaction().begin();
-      OrganismoDeControl organismoAEliminar = repositorioDeOrganismosDeControl.buscar(Long.parseLong(organismoId));
-      List<Entidad> entidadesAEliminar = new ArrayList<>();
 
-      for(EntidadPrestadora entidadPrestadora:organismoAEliminar.getEntidadesPrestadoras())
-      {
-        entidadesAEliminar.addAll(entidadPrestadora.getEntidades());
-      }
-
-      RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-      repositorioMiembroDeComunidad.buscarTodos().forEach(miembroDeComunidad -> miembroDeComunidad.perderInteres(entidadesAEliminar));
-
-      repositorioDeOrganismosDeControl.eliminar(organismoAEliminar);
-      em.getTransaction().commit();
-      context.redirect("/organismosDeControl");
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
   }
 }

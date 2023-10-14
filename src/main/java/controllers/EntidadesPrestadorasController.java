@@ -82,29 +82,6 @@ public class EntidadesPrestadorasController extends ControllerGenerico implement
 
   @Override
   public void delete(Context context) {
-    Usuario usuarioLogueado = super.usuarioLogueado(context);
-    String entidadPrestadoraId = context.pathParam("idEP");
-    String organismoId = context.pathParam("idO");
-    EntityManager em = EntityManagerSingleton.getInstance();
-    try {
-      em.getTransaction().begin();
-      EntidadPrestadora entidadPrestadoraAEliminar = repositorioDeEntidadPrestadora.buscar(Long.parseLong(entidadPrestadoraId));
-      List<Entidad> entidadesAEliminar = entidadPrestadoraAEliminar.getEntidades();
 
-      //Desvincularla de miembros
-      RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-      repositorioMiembroDeComunidad.buscarTodos().forEach(miembroDeComunidad -> miembroDeComunidad.perderInteres(entidadesAEliminar));
-
-      //Desvincularla de organismosDeControl
-      repositorioDeOrganismosDeControl.buscar(Long.parseLong(organismoId)).eliminarEntidadPrestadora(entidadPrestadoraAEliminar);
-
-      repositorioDeEntidadPrestadora.eliminar(entidadPrestadoraAEliminar);
-      em.getTransaction().commit();
-      context.redirect("/organismosDeControl/"+organismoId+"/entidadesPrestadoras");
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
   }
 }

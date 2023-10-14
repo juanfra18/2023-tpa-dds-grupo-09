@@ -30,13 +30,9 @@ public class Router {
       get("/usuarios",((UsuariosController) FactoryController.controller("usuarios"))::index, TipoRol.ADMINISTRADOR);
       post("/usuarios/eliminar/{id}",((UsuariosController) FactoryController.controller("usuarios"))::delete, TipoRol.ADMINISTRADOR);
       get("/organismosDeControl",((OrganismosDeControlController) FactoryController.controller("organismos"))::index);
-      post("/organismosDeControl/eliminar/{id}",((OrganismosDeControlController) FactoryController.controller("organismos"))::delete,TipoRol.ADMINISTRADOR);
       get("/organismosDeControl/{id}/entidadesPrestadoras",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::index);
-      post("/organismosDeControl/{idO}/entidadesPrestadoras/eliminar/{idEP}",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::delete,TipoRol.ADMINISTRADOR);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades", ((EntidadesController) FactoryController.controller("entidades"))::index);
-      post("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/eliminar/{idE}",((EntidadesController) FactoryController.controller("entidades"))::delete,TipoRol.ADMINISTRADOR);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::index);
-      post("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/eliminar/{idES}",((EstablecimientosController) FactoryController.controller("establecimientos"))::delete, TipoRol.ADMINISTRADOR);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::index);
     });
   }
