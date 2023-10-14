@@ -68,8 +68,14 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
       administrador = true;
     }
 
-    if(miembroDeComunidad.getId().equals(this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId()))
-        miPerfil = true;
+    if(miembroDeComunidad.getId().equals(this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId())) { // Si mi ID es del usuario loguado
+      miPerfil = true; //Muestrame mi perfil
+    }
+    else if (miembroDeComunidad.getId() != this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId() && !administrador) { // Si no soy admin y no es mi perfil
+      throw new AccesoDenegadoExcepcion();
+    }
+
+
     //Como se compara directamente en handlebars dentro de un if?
 
 
