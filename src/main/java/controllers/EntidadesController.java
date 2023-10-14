@@ -89,7 +89,6 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
 
   @Override
   public void delete(Context context) {
-    System.out.println("MOMOMOMOMOMOM\n\n\n\n\n");
     Usuario usuarioLogueado = super.usuarioLogueado(context);
     String entidadPrestadoraId = context.pathParam("idEP");
     String organismoId = context.pathParam("idO");

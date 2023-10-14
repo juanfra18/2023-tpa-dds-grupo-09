@@ -9,6 +9,7 @@ public class Elevacion extends Servicio{
     @Enumerated(EnumType.STRING)
     private TipoElevacion tipoElevacion;
 
+
     @Override
     public void setTipo(String tipo) {
          tipoElevacion = TipoElevacion.valueOf(tipo);

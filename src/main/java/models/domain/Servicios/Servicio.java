@@ -12,6 +12,17 @@ public abstract class Servicio extends Persistente {
   public abstract boolean estaActivo();
   public abstract String getTipo();
 
+  public String nombre(){
+    return this.getClass().getSimpleName();
+  }
+
+  public String estado(){
+    if(estaActivo())
+      return "En funcionamiento";
+    else
+      return "Deshabilitado";
+  }
+
   public abstract void setTipo(String tipo);
   public boolean igualito(Servicio servicio) {
     if (this == servicio) {
@@ -24,6 +35,5 @@ public abstract class Servicio extends Persistente {
     return Objects.equals(getTipo(),otro.getTipo())
         && Objects.equals(getClass(),otro.getClass());
   }
-
 }
 

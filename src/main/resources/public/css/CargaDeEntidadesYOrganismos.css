@@ -15,9 +15,10 @@
 }
 
 #base{
+    margin-top:40px;
     position: relative;
     max-width: 1000px;
-    min-width: 800px;
+    min-width: 1200px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
@@ -29,9 +30,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -270%);
-    width: 16%; /* ajusta el tamaño del círculo */
-    height: 27%; /* ajusta el tamaño del círculo */
+    transform: translate(-50%, -240%);
+    width: 10%; /* ajusta el tamaño del círculo */
+    height: 40%; /* ajusta el tamaño del círculo */
     background-color: #ffd59e;
     background-position-x: 90%;
     box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.27);
@@ -42,8 +43,8 @@
 }
 
 #empresaImage {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 130%;
+    max-height: 130%;
     object-fit: contain; /* Ajusta la imagen dentro del círculo sin distorsionarla */
     position: absolute;
     top: 0;

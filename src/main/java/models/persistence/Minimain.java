@@ -45,8 +45,8 @@ public class Minimain implements WithSimplePersistenceUnit {
                     getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
 
             //Se cargan las empresas
-            empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
-            empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
+            //empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
+            //empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
 
             //PARA PROBAR LA PAGINA WEB
 
@@ -80,13 +80,13 @@ public class Minimain implements WithSimplePersistenceUnit {
             mi.setApellido("Messi");
             mi.setNombre("Leo");
             mi.setUsuario(u1);
-            mi.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0));
+          //  mi.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0));
 
             MiembroDeComunidad mi2 = new MiembroDeComunidad();
             mi2.setApellido("Kun");
             mi2.setNombre("Aguero");
             mi2.setUsuario(u2);
-            mi2.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(1));
+           // mi2.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(1));
 
             repositorioMiembroDeComunidad.agregar(mi);
             repositorioMiembroDeComunidad.agregar(mi2);

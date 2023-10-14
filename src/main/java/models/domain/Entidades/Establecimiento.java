@@ -58,5 +58,11 @@ public class Establecimiento extends Persistente {
         && Objects.equals(localizacion.getId(),otro.localizacion.getId());
   }
 
+  public String tipo(){
+    return this.tipoEstablecimiento.toString();
+  }
+  public int cantidadServicios(){
+    return this.servicios.size();
+  }
 
 }

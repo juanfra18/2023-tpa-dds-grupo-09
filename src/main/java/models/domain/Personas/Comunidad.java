@@ -103,4 +103,14 @@ public class Comunidad extends Persistente {
     public int cantidadMiembros(){
         return  this.miembros.size();
     }
+
+    public void eliminarReportesAEliminar(List<ReporteDeIncidente> reportesAEliminar) {
+        for (ReporteDeIncidente reporteDeIncidente:reportesAEliminar)
+        {
+            if(this.reportesDeLaComunidad.contains(reporteDeIncidente))
+            {
+                reportesDeLaComunidad.remove(reportesAEliminar);
+            }
+        }
+    }
 }

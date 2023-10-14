@@ -17,8 +17,8 @@ public class Router {
       post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
       get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);
       get("/incidentes",((IncidentesController) FactoryController.controller("incidentes"))::index);
-      get("/cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::index);
-      //TODO
+      get("/cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
+      post("/cargarEmpresas",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
       get("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::index);
       //TODO
       get("/sugerenciasDeRevision", ctx -> ctx.render("SugerenciasDeRevisionDeIncidentes.hbs"));
@@ -35,6 +35,9 @@ public class Router {
       post("/organismosDeControl/{idO}/entidadesPrestadoras/eliminar/{idEP}",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::delete,TipoRol.ADMINISTRADOR);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades", ((EntidadesController) FactoryController.controller("entidades"))::index);
       post("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/eliminar/{idE}",((EntidadesController) FactoryController.controller("entidades"))::delete,TipoRol.ADMINISTRADOR);
+      get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::index);
+      post("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/eliminar/{idES}",((EstablecimientosController) FactoryController.controller("establecimientos"))::delete, TipoRol.ADMINISTRADOR);
+      get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::index);
     });
   }
 }
