@@ -18,6 +18,7 @@ public class FactoryController {
       case "entidades": controller = new EntidadesController();break;
       case "establecimientos": controller = new EstablecimientosController();break;
       case "servicios": controller = new ServiciosController();break;
+      case "interes": controller = new InteresController();break;
     }
     return controller;
   }

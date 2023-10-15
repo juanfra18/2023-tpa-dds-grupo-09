@@ -30,11 +30,13 @@ public class Router {
       get("/comunidades/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::show);
       get("/usuarios",((UsuariosController) FactoryController.controller("usuarios"))::index, TipoRol.ADMINISTRADOR);
       post("/usuarios/eliminar/{id}",((UsuariosController) FactoryController.controller("usuarios"))::delete, TipoRol.ADMINISTRADOR);
+      post("usuarios/interes/entidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::update,TipoRol.USUARIO_BASICO);
       get("/organismosDeControl",((OrganismosDeControlController) FactoryController.controller("organismos"))::index);
       get("/organismosDeControl/{id}/entidadesPrestadoras",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades", ((EntidadesController) FactoryController.controller("entidades"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::index);
+      get("/interesEntidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
     });
   }
 }

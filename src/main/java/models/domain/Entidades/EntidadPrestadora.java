@@ -53,8 +53,4 @@ public class EntidadPrestadora extends Persistente {
   public int cantidadEntidades(){
     return this.entidades.size();
   }
-
-  public void eliminarEntidad(Entidad entidadAEliminar) {
-    this.entidades.remove(entidadAEliminar);
-  }
 }

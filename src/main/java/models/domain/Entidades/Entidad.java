@@ -48,7 +48,4 @@ public class Entidad extends Persistente {
         return this.tipoEntidad.toString();
     }
 
-  public void eliminarEstablecimiento(Establecimiento establecimientoAEliminar) {
-        this.establecimientos.remove(establecimientoAEliminar);
-  }
 }

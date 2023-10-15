@@ -157,8 +157,8 @@ public class MiembroDeComunidad extends Persistente {
         this.comunidades.remove(comunidadAEliminar);
   }
 
-  public void perderInteres(List<Entidad> entidadesAEliminar) {
-        this.entidadesDeInteres.removeAll(entidadesAEliminar);
+  public boolean esEntidadDeInteres(Entidad entidad){
+        return entidadesDeInteres.contains(entidad);
   }
 }
 

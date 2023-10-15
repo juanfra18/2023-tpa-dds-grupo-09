@@ -41,8 +41,4 @@ public class OrganismoDeControl extends Persistente {
   public int cantidadEntidadesPrestadoras(){
     return this.entidadesPrestadoras.size();
   }
-
-  public void eliminarEntidadPrestadora(EntidadPrestadora entidadPrestadora) {
-    this.entidadesPrestadoras.remove(entidadPrestadora);
-  }
 }

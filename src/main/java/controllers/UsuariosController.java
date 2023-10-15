@@ -1,6 +1,7 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Entidades.Entidad;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
@@ -8,6 +9,7 @@ import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
+import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.handlers.SessionHandler;
@@ -21,6 +23,7 @@ import java.util.Optional;
 
 public class UsuariosController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+  RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
   @Override
   public void index(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
@@ -107,7 +110,20 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
   @Override
   public void update(Context context) {
-
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String entidadId = context.pathParam("id");
+    try {
+      em.getTransaction().begin();
+      Entidad nuevaEntidadInteres = repositorioEntidad.buscar(Long.parseLong(entidadId));
+      miembroDeComunidad.agregarEntidadDeInteres(nuevaEntidadInteres);
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
   }
 
   @Override
