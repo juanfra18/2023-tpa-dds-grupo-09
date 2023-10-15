@@ -5,6 +5,8 @@
 {{/partial}}
 {{> templates/base }}
 
+{{#partial "contenido"}}
+
     <body id="body">
         <header id="main-header">
             <a id="logo-header" href="#">
@@ -37,7 +39,7 @@
                             <select class="form-select" name = "comunidad" id="inputGroupSelect01">
                                 <option selected>Seleccionar...</option>
                                 {{#each comunidades}}
-                                  <option value="{{this.getNombre()}}">{{this.getNombre()}}</option>
+                                  <option value="{{this.id}}">{{this.nombre}}</option>
                                 {{/each}}
                             </select>
                         </div>
@@ -45,10 +47,10 @@
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Entidad</label>
-                                <select class="form-select" name "entidad" id="inputGroupSelect01">
+                                <select class="form-select" name="entidad" id="inputGroupSelect01">
                                     <option selected>Seleccionar...</option>
                                     {{#each entidades}}
-                                        <option value="{{this.getNombre()}}">{{this.getNombre()}}</option>
+                                        <option value="{{this.id}}">{{this.nombre}}</option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -83,27 +85,14 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                <label class="input-group-text" for="inputGroupSelect01">Estado</label>
-                                <select class="form-select" id="inputGroupSelect01">
-                                    {{#if abierto}}
-                                        <option value="abierto" selected>Abierto</option>
-                                        <option value="cerrado" disabled>Cerrado</option>
-                                    {{else}}
-                                        <option value="abierto" disabled>Abierto</option>
-                                        <option value="cerrado" selected>Cerrado</option>
-                                    {{/if}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group mb-3">
                                 <span class="input-group-text">Observaciones</span>
                                 <textarea class="form-control" name="observaciones" rows="3"></textarea>
                             </div>
                         </div>
-                            <button type="button" class="btn btn-secondary inicioSesion">Enviar</button>
+                            <button type="button" class="btn btn-secondary btn-cargarReporte" data-estado={{estado}} >Enviar</button>
                 </form>
             </div>
     </body>
 
-</html>
+{{/partial}}
+{{> templates/base }}
