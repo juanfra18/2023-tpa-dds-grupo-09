@@ -5,12 +5,13 @@ document.querySelectorAll('.btn-unirse').forEach(button => {
         fetch('/comunidades/unirseAComunidad/' + comunidadId, {
             method: 'POST'
         })
-        .then(response => {
-            if (response.ok) {
-                console.log('Union a comunidad con éxito');
-            } else {
-                console.error('Error al unirse a comunidad');
-            }
-        });
+          .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/comunidades';
+                        console.log('Union a comunidad con éxito');
+                    } else {
+                        console.error('Error al unirse a comunidad');
+                    }
+                });
     });
 });

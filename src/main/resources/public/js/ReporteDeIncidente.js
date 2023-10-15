@@ -14,24 +14,6 @@ button.addEventListener('click', function() {
         });
     });
 
-inputGroupSelect01.addEventListener('change', () => {
-        const entidadSeleccionada = inputGroupSelect01.value; // Obtiene la entidad seleccionada
-        const entidad = entidades.find(e => e.nombre === entidadSeleccionada); // Busca la entidad en la lista de entidades
-
-        // Obtener la lista de establecimientos de la entidad seleccionada
-        const establecimientosEntidad = entidad.establecimientos;
-
-        // Limpiar el segundo select
-        inputGroupSelect02.innerHTML = '';
-
-        // Agregar opciones al segundo select
-        establecimientosEntidad.forEach(establecimiento => {
-            const option = document.createElement('option');
-            option.value = establecimiento.nombre;
-            option.textContent = establecimiento.nombre;
-            inputGroupSelect02.appendChild(option);
-        });
-});
 
 inputGroupSelect02.addEventListener('change', () => {
         const entidadSeleccionada = inputGroupSelect01.value;

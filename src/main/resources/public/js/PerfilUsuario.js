@@ -5,9 +5,8 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
     })
     .then(response => {
         if (response.ok) {
-            window.location.href = '/inicioDeSesion'; // Cambia a la URL que desees
+            window.location.href = '/inicioDeSesion';
         } else {
-            // Hubo un error al cerrar la sesión
             console.error('Error al cerrar sesión');
         }
     });

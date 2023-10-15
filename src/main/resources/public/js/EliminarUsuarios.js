@@ -10,7 +10,7 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
                     .then(response => {
                         console.log(response);
                         if (response.ok) {
-                            // Usuario eliminado con éxito, puedes actualizar la interfaz o redirigir si es necesario
+                            window.location.href = 'usuarios';
                             console.log('Usuario eliminado con éxito');
                         } else {
                             console.error('Error al eliminar usuario');

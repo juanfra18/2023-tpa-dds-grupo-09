@@ -5,6 +5,7 @@ import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
@@ -18,6 +19,16 @@ import java.util.Map;
 public class ReporteDeIncidenteController extends ControllerGenerico implements ICrudViewsHandler {
   @Override
   public void index(Context context) {
+
+  }
+
+  @Override
+  public void show(Context context) {
+
+  }
+
+  @Override
+  public void create(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
@@ -30,7 +41,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
 
-    /*    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
     }
@@ -43,7 +54,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       administrador = true;
     }
 
- */
+
     if(estado.equals("abierto"))
     {
       abierto = true;
@@ -61,17 +72,13 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     model.put("comunidades", miembroDeComunidad.getComunidades());
     model.put("entidades", repositorioEntidad.buscarTodos());
     model.put("establecimientos", repositorioDeEstablecimientos.buscarTodos());
+    model.put("miembro_id",miembroDeComunidad.getId());
     context.render("ReporteDeIncidente.hbs", model);
   }
 
-  @Override
-  public void show(Context context) {
-
-  }
 
   @Override
-  public void create(Context context) {
-
+  public void save(Context context) {
     String estado = context.pathParam("estado"); //TODO Eliminar del formulario el estado
     String entidad = context.formParam("entidad");
     String comunidad = context.formParam("comunidad");
@@ -114,12 +121,6 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     }
 
     context.redirect("/menu"); //TODO hace falta hbs?
-  }
-
-
-  @Override
-  public void save(Context context) {
-
   }
 
   @Override

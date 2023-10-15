@@ -118,7 +118,6 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     } finally {
       em.close();
     }
-    context.redirect("/menu");
   }
 
   @Override

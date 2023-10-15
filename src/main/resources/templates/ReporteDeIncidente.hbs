@@ -6,28 +6,6 @@
 {{> templates/base }}
 
 {{#partial "contenido"}}
-
-    <body id="body">
-        <header id="main-header">
-            <a id="logo-header" href="#">
-                <span class="site-name">Serviño</span>
-                <span class="site-desc">Servicios/ Comunidades</span>
-            </a>
-
-
-            <nav>
-                <ul>
-                    <li class="nav-item"><a href="/menu">Inicio</a></li>
-                    {{#if usuarioBasico}}
-                    <li class="nav-item"><a href="/incidentes">Mis Incidentes</a></li>
-                    <li class="nav-item"><a href="/sugerenciasDeRevision">Sugerencias de Revisión</a></li>
-                    {{/if}}
-                    <li class="nav-item"><a href="/perfil"><img src="/./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
-
-                </ul>
-            </nav>
-        </header>
-
         <div id="base">
             <div class="circulo">
                 <img src="/./images/reporteImage.png" alt="userImage" id="reporteImage" width="100" height="100">
@@ -50,7 +28,7 @@
                                 <select class="form-select input-field" name="entidad" id="inputGroupSelect01">
                                     <option selected>Seleccionar...</option>
                                     {{#each entidades}}
-                                        <option value="{{this.id}}">{{this.nombre}}</option>
+                                        <option value="{{this.nombre}}">{{this.nombre}}</option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -85,8 +63,7 @@
                             <button disabled type="button" class="btn btn-secondary btn-cargarReporte" data-estado="{{estado}}" >Enviar</button>
                 </form>
             </div>
-    <script src="js/ReporteDeIncidente.js"></script>
-    </body>
-
+    <script src="/js/ReporteDeIncidente.js"></script>
+    <script src="/js/EstablecimientosDeEntidad.js"></script>
 {{/partial}}
 {{> templates/base }}
