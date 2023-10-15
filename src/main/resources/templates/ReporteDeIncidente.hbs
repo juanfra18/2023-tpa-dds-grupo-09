@@ -35,8 +35,8 @@
                 <form id="incidente">
                     <div class="form-group">
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01">Comunidad</label>
-                            <select class="form-select" name = "comunidad" id="inputGroupSelect01">
+                            <label class="input-group-text" for="inputGroupSelect">Comunidad</label>
+                            <select class="form-select input-field" name="comunidad" id="inputGroupSelect">
                                 <option selected>Seleccionar...</option>
                                 {{#each comunidades}}
                                   <option value="{{this.id}}">{{this.nombre}}</option>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Entidad</label>
-                                <select class="form-select" name="entidad" id="inputGroupSelect01">
+                                <select class="form-select input-field" name="entidad" id="inputGroupSelect01">
                                     <option selected>Seleccionar...</option>
                                     {{#each entidades}}
                                         <option value="{{this.id}}">{{this.nombre}}</option>
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect02">Establecimiento</label>
-                                <select class="form-select" name = "establecimiento" id="inputGroupSelect02">
+                                <select class="form-select input-field" name="establecimiento" id="inputGroupSelect02">
                                     <!-- Se genera en js-->
                                 </select>
                             </div>
@@ -66,25 +66,26 @@
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect03">Servicio</label>
-                                <select class="form-select" name = "servicio" id="inputGroupSelect03">
+                                <select class="form-select input-field" name="servicio" id="inputGroupSelect03">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Fecha y Hora</span>
-                                <input type="datetime-local" class="form-control" name = "fechaYhora" id="fechaYhoraInput">
+                                <input type="datetime-local" class="form-control input-field" name="fechaYhora" id="fechaYhoraInput">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Observaciones</span>
-                                <textarea class="form-control" name="observaciones" rows="3"></textarea>
+                                <textarea class="form-control input-field" name="observaciones" rows="3"></textarea>
                             </div>
                         </div>
-                            <button type="button" class="btn btn-secondary btn-cargarReporte" data-estado="{{estado}}" >Enviar</button>
+                            <button disabled type="button" class="btn btn-secondary btn-cargarReporte" data-estado="{{estado}}" >Enviar</button>
                 </form>
             </div>
+    <script src="js/ReporteDeIncidente.js"></script>
     </body>
 
 {{/partial}}

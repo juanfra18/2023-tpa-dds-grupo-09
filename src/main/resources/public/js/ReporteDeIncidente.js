@@ -56,3 +56,28 @@ inputGroupSelect02.addEventListener('change', () => {
         });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const inputFields = document.querySelectorAll(".input-field");
+    const enviarButton = document.querySelector(".btn-cargarReporte");
+
+    // Verifica si todos los campos tienen valores
+    function checkFields() {
+        let allFieldsFilled = true;
+        inputFields.forEach(function (field) {
+            if (!field.value) {
+                allFieldsFilled = false;
+            }
+        });
+
+        if (allFieldsFilled) {
+            enviarButton.removeAttribute("disabled");
+        } else {
+            enviarButton.setAttribute("disabled", "disabled");
+        }
+    }
+
+    // Escucha eventos de cambio en los campos
+    inputFields.forEach(function (field) {
+        field.addEventListener("input", checkFields);
+    });
+});
