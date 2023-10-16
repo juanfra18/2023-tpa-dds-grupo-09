@@ -67,16 +67,7 @@ public class EstablecimientosController extends ControllerGenerico implements IC
 
   @Override
   public void show(Context context) {
-    EntityManager em = EntityManagerSingleton.getInstance();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    String entidadId = context.pathParam("idE");
 
-    Entidad entidad = repositorioEntidad.buscar(Long.parseLong(entidadId));
-    List<Establecimiento> establecimientos = entidad.getEstablecimientos();
-    Gson gson = new Gson();
-    String establecimientosJson = gson.toJson(establecimientos);
-    em.close();
-    context.result(establecimientosJson).contentType("application/json").status(200);
   }
 
   @Override
@@ -102,5 +93,18 @@ public class EstablecimientosController extends ControllerGenerico implements IC
   @Override
   public void delete(Context context) {
 
+  }
+
+  public void obtenerEstablecimientos(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String entidadId = context.pathParam("idE");
+
+    Entidad entidad = repositorioEntidad.buscar(Long.parseLong(entidadId));
+    List<Establecimiento> establecimientos = entidad.getEstablecimientos();
+    Gson gson = new Gson();
+    String establecimientosJson = gson.toJson(establecimientos);
+    em.close();
+    context.result(establecimientosJson).contentType("application/json").status(200);
   }
 }

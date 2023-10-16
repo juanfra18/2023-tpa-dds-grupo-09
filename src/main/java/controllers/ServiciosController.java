@@ -59,6 +59,7 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
     model.put("organismo_id",organismoId);
     model.put("entidadPrestadora_id",entidadPrestadoraId);
     model.put("entidad_id",entidadId);
+    model.put("establecimiento_id",establecimientoId);
     context.render("Servicios.hbs", model);
     em.close();
 
@@ -66,20 +67,7 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
 
   @Override
   public void show(Context context){
-    EntityManager em = EntityManagerSingleton.getInstance();
-    Map<String, Object> model = new HashMap<>();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    String entidadId = context.pathParam("idE");
-    String establecimientoId = context.pathParam("idES");
-    Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(Long.parseLong(establecimientoId));
-    List<Servicio> servicios = establecimiento.getServicios();
 
-    Gson gson = new Gson();
-    String serviciosJson = gson.toJson(servicios);
-    em.close();
-    System. out. println("--------------------------------------------------------------");
-    System. out. println(serviciosJson);
-    context.result(serviciosJson).contentType("application/json").status(200);
   }
 
   @Override
@@ -105,5 +93,19 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
   @Override
   public void delete(Context context) {
 
+  }
+
+  public void obtenerServicios(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String entidadId = context.pathParam("idE");
+    String establecimientoId = context.pathParam("idES");
+    Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(Long.parseLong(establecimientoId));
+    List<Servicio> servicios = establecimiento.getServicios();
+    Gson gson = new Gson();
+    String serviciosJson = gson.toJson(servicios);
+    em.close();
+    context.result(serviciosJson).contentType("application/json").status(200);
   }
 }

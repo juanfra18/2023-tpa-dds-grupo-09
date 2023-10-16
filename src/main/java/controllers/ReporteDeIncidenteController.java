@@ -36,7 +36,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     boolean usuarioEmpresa = false;
     boolean administrador = false;
     String estado = context.pathParam("estado");
-    boolean abierto = false;
+
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
@@ -54,20 +54,9 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       administrador = true;
     }
 
-
-    if(estado.equals("abierto"))
-    {
-      abierto = true;
-    }
-    else
-    {
-      abierto = false;
-    }
-
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("abierto",abierto); //Pasando el string tuve problemas para hacer los if en hbs (no funcionaban)
     model.put("estado",estado);
     model.put("comunidades", miembroDeComunidad.getComunidades());
     model.put("entidades", repositorioEntidad.buscarTodos());
@@ -79,7 +68,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
 
   @Override
   public void save(Context context) {
-    String estado = context.pathParam("estado"); //TODO Eliminar del formulario el estado
+    String estado = context.pathParam("estado");
     String entidad = context.formParam("entidad");
     String comunidad = context.formParam("comunidad");
     String observaciones = context.formParam("observaciones");
@@ -95,6 +84,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     RepositorioServicio repositorioServicio=RepositorioServicio.getInstancia();
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
     RepositorioComunidad repositorioComunidad=RepositorioComunidad.getInstancia();
+
     ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
     reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf(estado));
     reporteDeIncidente.setDenunciante(miembroDeComunidad);
@@ -105,22 +95,19 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     reporteDeIncidente.setEstablecimiento(repositorioDeEstablecimientos.buscar(Long.parseLong(establecimiento)));
 
     RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-    comunidad1= repositorioComunidad.buscar(Long.parseLong(comunidad));
+    comunidad1 = repositorioComunidad.buscar(Long.parseLong(comunidad));
 
     try {
       entityManager.getTransaction().begin();
+      miembroDeComunidad.informarFuncionamiento(reporteDeIncidente,comunidad1);
       repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
-      if(comunidad1.getNombre().equals(comunidad)) {
-        comunidad1.guardarIncidente(reporteDeIncidente);
-      }
       entityManager.getTransaction().commit();
     } catch (Exception e) {
       entityManager.getTransaction().rollback();
     } finally {
       entityManager.close();
     }
-
-    context.redirect("/menu"); //TODO hace falta hbs?
+    context.redirect("/reportarIncidente/"+estado);
   }
 
   @Override

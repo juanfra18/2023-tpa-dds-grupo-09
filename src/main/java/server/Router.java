@@ -20,7 +20,6 @@ public class Router {
       get("/cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
       post("/cargarEmpresas",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
       get("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::create);
-      //TODO
       post("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::save);
       get("/sugerenciasDeRevision", ctx -> ctx.render("SugerenciasDeRevisionDeIncidentes.hbs"));
      //TODO
@@ -37,13 +36,15 @@ public class Router {
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::index);
       get("/interesEntidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
-      get("entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::show,TipoRol.USUARIO_BASICO);
-      get("entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::show,TipoRol.USUARIO_BASICO);
+      get("/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::obtenerEstablecimientos,TipoRol.USUARIO_BASICO);
+      get("/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::obtenerServicios,TipoRol.USUARIO_BASICO);
       get("/intereses",((InteresController) FactoryController.controller("interes"))::index,TipoRol.USUARIO_BASICO);
       get("/intereses/entidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
+      //get("/intereses/servicio/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresServicio,TipoRol.USUARIO_BASICO);
       post("/intereses/entidad/agregar/{id}",((InteresController) FactoryController.controller("interes"))::agregarEntidad,TipoRol.USUARIO_BASICO);
       post("/intereses/entidad/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarEntidad,TipoRol.USUARIO_BASICO);
-
+     // post("/intereses/servicio/agregar/{id}",((InteresController) FactoryController.controller("interes"))::agregarServicio,TipoRol.USUARIO_BASICO);
+      //post("/intereses/servicio/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarServicio,TipoRol.USUARIO_BASICO);
     });
   }
 }

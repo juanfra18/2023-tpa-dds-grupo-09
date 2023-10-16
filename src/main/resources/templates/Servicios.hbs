@@ -17,10 +17,14 @@
                                 <h4>Tipo: {{this.getTipo}}</h4>
                                 <h4>Estado: {{this.estado}}</h4>
                             </div>
+                            {{#if usuarioBasico}}
+                                <button type="button" class="btn btn-secondary btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{entidad_id}}" data-establecimiento-id="{{establecimiento_id}}" data-servicio-id="{{this.id}}">De mi Interes</button>
+                            {{/if}}
                         </div>
                     </div>
                 {{/each}}
                 </div>
         </div>
+        <script src="/js/NuevoServicioDeInteres.js"></script>
 {{/partial}}
 {{> templates/base }}

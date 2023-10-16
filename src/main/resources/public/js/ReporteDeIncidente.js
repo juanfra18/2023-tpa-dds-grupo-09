@@ -1,11 +1,11 @@
-document.querySelector('.btn-cargarReporte').addEventListener('click', function() {
+document.querySelector('.btn-cargarReporte').addEventListener('submit', function() {
     var estado = this.getAttribute('data-estado');
     fetch('/reportarIncidente/' + estado, {
         method: 'POST'
     })
     .then(response => {
         if (response.ok) {
-            window.alert('Reporte creado con éxito');
+
         } else {
             window.alert('Error al crear reporte');
         }
@@ -47,7 +47,10 @@ inputGroupSelect02.addEventListener('change', () => {
         .then(servicios => {
             // Limpiar el tercer select
             inputGroupSelect03.innerHTML = '';
-
+            const option1 = document.createElement('option');
+                            option1.value=-1;
+                            option1.textContent = "Seleccionar...";
+                            inputGroupSelect03.appendChild(option1);
             // Agregar opciones al tercer select
             servicios.forEach(servicio => {
                 const option = document.createElement('option');

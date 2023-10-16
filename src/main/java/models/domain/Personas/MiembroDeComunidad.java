@@ -97,8 +97,8 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
-        repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-        repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
+        //repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+        //repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
         comunidad.guardarIncidente(reporteDeIncidente);
     }
 
