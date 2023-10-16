@@ -37,6 +37,9 @@ public class Router {
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::index);
       get("/interesEntidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
+      get("entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::show,TipoRol.USUARIO_BASICO);
+      get("entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::show,TipoRol.USUARIO_BASICO);
+
     });
   }
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.gson.Gson;
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
 import models.domain.Entidades.Establecimiento;
@@ -9,6 +10,7 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeEstablecimientos;
+import models.persistence.Repositorios.RepositorioEntidad;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -63,8 +65,21 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
   }
 
   @Override
-  public void show(Context context) {
+  public void show(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String entidadId = context.pathParam("idE");
+    String establecimientoId = context.pathParam("idES");
+    Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(Long.parseLong(establecimientoId));
+    List<Servicio> servicios = establecimiento.getServicios();
 
+    Gson gson = new Gson();
+    String serviciosJson = gson.toJson(servicios);
+    em.close();
+    System. out. println("--------------------------------------------------------------");
+    System. out. println(serviciosJson);
+    context.result(serviciosJson).contentType("application/json").status(200);
   }
 
   @Override

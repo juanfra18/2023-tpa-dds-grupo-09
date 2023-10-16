@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.gson.Gson;
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
 import models.domain.Entidades.EntidadPrestadora;
@@ -25,7 +26,7 @@ public class EstablecimientosController extends ControllerGenerico implements IC
   RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
   @Override
   public void index(Context context) {
-    EntityManager em = EntityManagerSingleton.getInstance();
+      EntityManager em = EntityManagerSingleton.getInstance();
       Map<String, Object> model = new HashMap<>();
       Usuario usuarioLogueado = super.usuarioLogueado(context,em);
       boolean usuarioBasico = false;
@@ -66,7 +67,16 @@ public class EstablecimientosController extends ControllerGenerico implements IC
 
   @Override
   public void show(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String entidadId = context.pathParam("idE");
 
+    Entidad entidad = repositorioEntidad.buscar(Long.parseLong(entidadId));
+    List<Establecimiento> establecimientos = entidad.getEstablecimientos();
+    Gson gson = new Gson();
+    String establecimientosJson = gson.toJson(establecimientos);
+    em.close();
+    context.result(establecimientosJson).contentType("application/json").status(200);
   }
 
   @Override

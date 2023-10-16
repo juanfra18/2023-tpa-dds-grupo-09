@@ -28,7 +28,7 @@
                                 <select class="form-select input-field" name="entidad" id="inputGroupSelect01">
                                     <option selected>Seleccionar...</option>
                                     {{#each entidades}}
-                                        <option value="{{this.nombre}}">{{this.nombre}}</option>
+                                        <option value="{{this.id}}">{{this.nombre}}</option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -64,6 +64,5 @@
                 </form>
             </div>
     <script src="/js/ReporteDeIncidente.js"></script>
-    <script src="/js/EstablecimientosDeEntidad.js"></script>
 {{/partial}}
 {{> templates/base }}
