@@ -26,6 +26,14 @@ public class Banio extends Servicio{
     public String getTipo(){
         return "Banio " + String.valueOf(tipoBanio);
     }
+    public String tipoNombre(){
+        switch (tipoBanio){
+            case CABALLEROS: return "Caballeros";
+            case DAMAS: return "Damas";
+            case UNISEX: return "Unisex";
+        }
+        return null;
+    }
 
 
     public boolean igualito(Servicio banio) {

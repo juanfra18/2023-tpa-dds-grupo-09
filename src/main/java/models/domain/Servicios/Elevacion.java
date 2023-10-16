@@ -21,6 +21,14 @@ public class Elevacion extends Servicio{
     public String getTipo(){
         return String.valueOf(tipoElevacion);
     }
+
+    public String tipoNombre(){
+        switch (tipoElevacion){
+            case ASCENSOR: return "Ascensor";
+            case ESCALERAS_MECANICAS: return "Escaleras Mecanicas";
+        }
+        return null;
+    }
     public Elevacion() {}
     public boolean igualito(Elevacion elevacion) {
         if (this == elevacion) {

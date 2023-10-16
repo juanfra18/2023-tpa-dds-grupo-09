@@ -32,37 +32,22 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    boolean usuarioBasico = true;
-    boolean usuarioEmpresa = false;
-    boolean administrador = false;
+
     String estado = context.pathParam("estado");
 
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
 
-    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
-    {
-      usuarioBasico = true;
-    }
-    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
-    {
-      usuarioEmpresa = true;
-    }
-    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
-    {
-      administrador = true;
-    }
 
-    model.put("usuarioBasico",usuarioBasico);
-    model.put("usuarioEmpresa",usuarioEmpresa);
-    model.put("administrador",administrador);
+    model.put("usuarioBasico",true);
     model.put("estado",estado);
     model.put("comunidades", miembroDeComunidad.getComunidades());
     model.put("entidades", repositorioEntidad.buscarTodos());
     model.put("establecimientos", repositorioDeEstablecimientos.buscarTodos());
     model.put("miembro_id",miembroDeComunidad.getId());
     context.render("ReporteDeIncidente.hbs", model);
+    em.close();
   }
 
 

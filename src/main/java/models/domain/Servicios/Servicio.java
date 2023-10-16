@@ -11,6 +11,7 @@ import java.util.Objects;
 public abstract class Servicio extends Persistente {
   public abstract boolean estaActivo();
   public abstract String getTipo();
+  public abstract String tipoNombre();
 
   public String nombre(){
     return this.getClass().getSimpleName();

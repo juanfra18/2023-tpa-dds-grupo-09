@@ -1,33 +1,52 @@
 {{> templates/base }}
 {{#partial "tituloYcss"}}
-    <link rel = "stylesheet" href = "css/ConsultaDeIncidentes.css">
+    <link rel = "stylesheet" href = "/css/ConsultaDeIncidentes.css">
     <title>Consulta de Incidentes</title>
 {{/partial}}
 {{> templates/base }}
 
 {{#partial "contenido"}}
     <div id="base">
-        <div class="input-group mb-3">
-            <label class="input-group-text" for="inputGroupSelect01">Seleccione Estado de Incidentes</label>
-            <select class="form-select" id="inputGroupSelect01">
-                <option selected>Seleccionar...</option>
-                <option value="abierto">Abierto</option>
-                <option value="cerrado">Cerrado</option>
-            </select>
-        </div>
+     <h1>INCIDENTES</h1>
+     {{#unless administrador}}
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Seleccione Estado de Incidentes</label>
+                <select class="form-select" id="inputGroupSelect01">
+                    <option
+                    {{#unless seleccion}}
+                    selected
+                    {{/unless}}>Seleccionar...</option>
+                    <option
+                    {{#if abierto}}
+                    selected
+                    {{/if}}
+                    value="ABIERTO">Abierto</option>
+                    <option
+                    {{#if cerrado}}
+                    selected
+                    {{/if}}
+                    value="CERRADO">Cerrado</option>
+                </select>
+            </div>
+     {{/unless}}
         <div class="row row-cols-1 row-cols-md-2 g-4">
         {{#each incidentes}}
             <div class="col">
                 <div class="tarjetaIncidente">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{this.entidad}}</li>
-                        <li class="list-group-item">{{this.establecimiento}}</li>
-                        <li class="list-group-item">{{this.servicio}}</li>
+                        <li class="list-group-item">{{this.establecimiento.nombre}}</li>
+                        <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
+                        {{#if this.cerrado}}
+                        <li class="list-group-item">Cerrado</li>
+                        {{else}}
+                        <li class="list-group-item">Abierto</li>
+                        {{/if}}
                     </ul>
                 </div>
             </div>
         {{/each}}
         </div>
     </div>
+    <script src="/js/EstadoIncidentes.js"></script>
 {{/partial}}
 {{> templates/base }}
