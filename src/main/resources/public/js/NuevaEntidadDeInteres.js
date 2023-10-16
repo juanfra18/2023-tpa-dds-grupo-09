@@ -4,11 +4,11 @@ document.querySelectorAll('.btn-nuevo-interes').forEach(button => {
         var entidadPrestadoraId = this.getAttribute('data-entidadPrestadora-id');
         var entidadId = this.getAttribute('data-entidad-id');
 
-        fetch('/interesEntidad/' + entidadId)
+        fetch('/intereses/entidad/' + entidadId)
             .then(response => response.json())
             .then(interes => {
                 if (!interes) {
-                    fetch('/usuarios/interes/entidad/' + entidadId, {
+                    fetch('/intereses/entidad/agregar/' + entidadId, {
                         method: 'POST'
                     })
                     .then(response => {

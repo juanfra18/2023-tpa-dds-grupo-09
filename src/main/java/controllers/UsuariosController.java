@@ -110,20 +110,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
   @Override
   public void update(Context context) {
-    EntityManager em = EntityManagerSingleton.getInstance();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
-    String entidadId = context.pathParam("id");
-    try {
-      em.getTransaction().begin();
-      Entidad nuevaEntidadInteres = repositorioEntidad.buscar(Long.parseLong(entidadId));
-      miembroDeComunidad.agregarEntidadDeInteres(nuevaEntidadInteres);
-      em.getTransaction().commit();
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
+
   }
 
   @Override

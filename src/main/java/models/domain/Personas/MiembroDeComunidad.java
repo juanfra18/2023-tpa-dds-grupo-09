@@ -160,6 +160,10 @@ public class MiembroDeComunidad extends Persistente {
   public boolean esEntidadDeInteres(Entidad entidad){
         return entidadesDeInteres.contains(entidad);
   }
+
+  public void eliminarEntidadDeInteres(Entidad entidadAEliminar) {
+        entidadesDeInteres.remove(entidadAEliminar);
+  }
 }
 
 

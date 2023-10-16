@@ -39,6 +39,10 @@ public class Router {
       get("/interesEntidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
       get("entidades/{idE}/establecimientos",((EstablecimientosController) FactoryController.controller("establecimientos"))::show,TipoRol.USUARIO_BASICO);
       get("entidades/{idE}/establecimientos/{idES}/servicios",((ServiciosController) FactoryController.controller("servicios"))::show,TipoRol.USUARIO_BASICO);
+      get("/intereses",((InteresController) FactoryController.controller("interes"))::index,TipoRol.USUARIO_BASICO);
+      get("/intereses/entidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
+      post("/intereses/entidad/agregar/{id}",((InteresController) FactoryController.controller("interes"))::agregarEntidad,TipoRol.USUARIO_BASICO);
+      post("/intereses/entidad/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarEntidad,TipoRol.USUARIO_BASICO);
 
     });
   }
