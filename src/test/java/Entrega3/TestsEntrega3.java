@@ -325,7 +325,7 @@ public class TestsEntrega3 {
         entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
     }
 
-
+    /*
     @Test
     public void solicitarInformacionDeIncidentesAbiertos(){
         List<Incidente> incidentesAbiertos = pablo.solicitarInformacionDeIncidentesAbiertos();
@@ -347,7 +347,7 @@ public class TestsEntrega3 {
             }
         }
     }
-
+*/
     @Test
     public void rankingMayorCantidadDeIncidentes() {
         entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());

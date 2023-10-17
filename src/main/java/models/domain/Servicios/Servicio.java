@@ -9,6 +9,8 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
 public abstract class Servicio extends Persistente {
+  protected String nombre;
+  protected String tipoNombre;
   public abstract boolean estaActivo();
   public abstract String getTipo();
   public abstract String tipoNombre();

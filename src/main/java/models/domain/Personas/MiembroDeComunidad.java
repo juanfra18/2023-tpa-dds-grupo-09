@@ -96,12 +96,6 @@ public class MiembroDeComunidad extends Persistente {
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
 
-    public void informarFuncionamiento(ReporteDeIncidente reporteDeIncidente, Comunidad comunidad) {//no nos importa donde se crea el reporte
-        //repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-        //repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
-        comunidad.guardarIncidente(reporteDeIncidente);
-    }
-
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
         if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
             this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);
@@ -121,10 +115,7 @@ public class MiembroDeComunidad extends Persistente {
             this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
-    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado) {
-        RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-        List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
-
+    public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado, List<Incidente> incidentes) {
         //Se queda con los incidentes que pertenezcan por lo menos a una de sus comunidades
         //Estos incidentes no estaran repetidos, seran unicos
         List<Incidente> incidentesDeMisComunidades = incidentes.stream().filter(incidente -> this.comunidades.stream().anyMatch(comunidad -> comunidad.incidenteEsDeComunidad(incidente))).toList();
@@ -136,12 +127,12 @@ public class MiembroDeComunidad extends Persistente {
         return incidentesDeEstadoSeleccionado;
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesAbiertos() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO);
+    public List<Incidente> solicitarInformacionDeIncidentesAbiertos(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, incidentes);
     }
 
-    public List<Incidente> solicitarInformacionDeIncidentesCerrados() {
-        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO);
+    public List<Incidente> solicitarInformacionDeIncidentesCerrados(List<Incidente> incidentes) {
+        return obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, incidentes);
     }
 
     public boolean afectadoPor(Incidente incidente) {

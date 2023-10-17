@@ -3,6 +3,7 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
+import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
@@ -11,6 +12,7 @@ import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
 import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
+import org.jetbrains.annotations.NotNull;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
@@ -133,4 +135,30 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
       em.close();
     }
   }
+
+    public void abandonarComunidad(Context context) {
+      EntityManager em = EntityManagerSingleton.getInstance();
+      Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+      MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+      String id = context.pathParam("id");
+
+      RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+
+      Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(id));
+
+      miembroDeComunidad.abandonarComunidad(comunidad);
+
+      try {
+        em.getTransaction().begin();
+        repositorioComunidad.agregar(comunidad);
+        //update de miembro?
+        em.getTransaction().commit();
+      }
+      catch (Exception e){
+        em.getTransaction().rollback();
+      }
+      finally {
+        em.close();
+      }
+    }
 }

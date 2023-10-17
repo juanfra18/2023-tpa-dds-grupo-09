@@ -2,6 +2,7 @@ package controllers;
 
 import io.javalin.http.Context;
 import models.domain.Incidentes.EstadoIncidente;
+import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
@@ -14,6 +15,7 @@ import server.utils.ICrudViewsHandler;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReporteDeIncidenteController extends ControllerGenerico implements ICrudViewsHandler {
@@ -84,7 +86,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
 
     try {
       entityManager.getTransaction().begin();
-      miembroDeComunidad.informarFuncionamiento(reporteDeIncidente,comunidad1);
+      this.guardarIncidenteComunidad(comunidad1, reporteDeIncidente, repositorioComunidad);
       repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
       entityManager.getTransaction().commit();
     } catch (Exception e) {
@@ -109,4 +111,46 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
   public void delete(Context context) {
 
   }
+
+  public void guardarIncidenteComunidad(Comunidad comunidad, ReporteDeIncidente reporteDeIncidente, RepositorioComunidad repositorioComunidad) {
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
+    List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
+
+    if (incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
+    {
+      Incidente incidente = new Incidente();
+      incidente.agregarReporteDeApertura(reporteDeIncidente);
+      repositorioDeIncidentes.agregar(incidente);
+    } else {
+      boolean agregado = false;
+      for (Incidente incidente : incidentesSobreLaMismaProblematica) {
+        if (comunidad.incidenteEsDeComunidad(incidente) && !agregado && !comunidad.cerroIncidente(incidente)) {
+          if(reporteDeIncidente.esDeCierre())
+          {
+            incidente.agregarReporteDeCierre(reporteDeIncidente);
+            agregado = true;
+          }
+          else if(!reporteDeIncidente.esDeCierre())
+          {
+            incidente.agregarReporteDeApertura(reporteDeIncidente); //lo agrego, va a haber mas de un reporte de apertura de esta comunidad
+            agregado = true;
+          }
+        }
+        else if(!comunidad.incidenteEsDeComunidad(incidente) && !agregado) //primer incidente no abierto por la comunidad
+        {
+          incidente.agregarReporteDeApertura(reporteDeIncidente);
+          agregado = true;
+        }
+      }
+      if (!agregado) { //en principio siempre acá es de apertura
+        Incidente incidente = new Incidente();
+        incidente.agregarReporteDeApertura(reporteDeIncidente);
+        repositorioDeIncidentes.agregar(incidente);
+      }
+    }
+    comunidad.agregarReporte(reporteDeIncidente);
+    repositorioComunidad.agregar(comunidad);
+  }
+
 }

@@ -9,10 +9,10 @@ public class Elevacion extends Servicio{
     @Enumerated(EnumType.STRING)
     private TipoElevacion tipoElevacion;
 
-
     @Override
     public void setTipo(String tipo) {
-         tipoElevacion = TipoElevacion.valueOf(tipo);
+        tipoElevacion = TipoElevacion.valueOf(tipo);
+        tipoNombre = this.tipoNombre();
     }
     public boolean estaActivo() {
         //TODO
@@ -29,7 +29,9 @@ public class Elevacion extends Servicio{
         }
         return null;
     }
-    public Elevacion() {}
+    public Elevacion() {
+        this.nombre = this.nombre();
+    }
     public boolean igualito(Elevacion elevacion) {
         if (this == elevacion) {
             return true;

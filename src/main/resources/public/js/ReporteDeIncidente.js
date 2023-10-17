@@ -55,7 +55,7 @@ inputGroupSelect02.addEventListener('change', () => {
             servicios.forEach(servicio => {
                 const option = document.createElement('option');
                 option.value = servicio.id;
-                option.textContent = 'id servicio: ' + servicio.id;
+                option.textContent = servicio.nombre + ' ' + servicio.tipoNombre;
                 inputGroupSelect03.appendChild(option);
             });
         });

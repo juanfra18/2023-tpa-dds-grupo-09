@@ -55,46 +55,8 @@ public class Comunidad extends Persistente {
     public boolean incidenteEsDeComunidad(Incidente incidente) {
         return this.reportesDeLaComunidad.stream().anyMatch(r -> incidente.getReportesDeApertura().contains(r));
     }
-    public void guardarIncidente(ReporteDeIncidente reporteDeIncidente) {
-        repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-        List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
-        List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
-
-        if (incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
-        {
-            Incidente incidente = new Incidente();
-            incidente.agregarReporteDeApertura(reporteDeIncidente);
-            repositorioDeIncidentes.agregar(incidente);
-        } else {
-            boolean agregado = false;
-            for (Incidente incidente : incidentesSobreLaMismaProblematica) {
-                if (this.incidenteEsDeComunidad(incidente) && !agregado && !this.cerroIncidente(incidente)) {
-                    if(reporteDeIncidente.esDeCierre())
-                    {
-                        incidente.agregarReporteDeCierre(reporteDeIncidente);
-                        agregado = true;
-                    }
-                    else if(!reporteDeIncidente.esDeCierre())
-                    {
-                        incidente.agregarReporteDeApertura(reporteDeIncidente); //lo agrego, va a haber mas de un reporte de apertura de esta comunidad
-                        agregado = true;
-                    }
-                }
-                else if(!this.incidenteEsDeComunidad(incidente) && !agregado) //primer incidente no abierto por la comunidad
-                {
-                    incidente.agregarReporteDeApertura(reporteDeIncidente);
-                    agregado = true;
-                }
-            }
-            if (!agregado) { //en principio siempre acá es de apertura
-                Incidente incidente = new Incidente();
-                incidente.agregarReporteDeApertura(reporteDeIncidente);
-                repositorioDeIncidentes.agregar(incidente);
-            }
-        }
+    public void agregarReporte(ReporteDeIncidente reporteDeIncidente){
         this.reportesDeLaComunidad.add(reporteDeIncidente);
-        repositorioComunidad = RepositorioComunidad.getInstancia();
-        repositorioComunidad.agregar(this);
     }
     public List<Incidente> incidentesAbiertos(List<Incidente> incidentes){
         return this.getIncidentesDeComunidad(incidentes).stream().filter(i -> !i.cerrado()).toList();

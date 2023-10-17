@@ -76,12 +76,12 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado));
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
       usuarioEmpresa = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado));
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
       //TODO revisar si el usuario empresa busca asi los incidentes
     }
     boolean abierto = false;
@@ -117,12 +117,12 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado));
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
       usuarioEmpresa = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado));
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
       //TODO revisar si el usuario empresa busca asi los incidentes
     }
 

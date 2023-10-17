@@ -14,7 +14,9 @@ public class Banio extends Servicio{
     @Setter
     private TipoBanio tipoBanio;
 
-    public Banio () {};
+    public Banio () {
+        this.nombre = this.nombre();
+    };
     public boolean estaActivo() {
         //TODO
         return true;
@@ -22,6 +24,7 @@ public class Banio extends Servicio{
     @Override
     public void setTipo(String tipo) {
         tipoBanio = TipoBanio.valueOf(tipo);
+        tipoNombre = this.tipoNombre();
     }
     public String getTipo(){
         return "Banio " + String.valueOf(tipoBanio);

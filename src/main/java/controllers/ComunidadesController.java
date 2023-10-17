@@ -7,6 +7,7 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
+import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -53,6 +54,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
@@ -73,12 +75,18 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
       administrador = true;
     }
 
+    boolean miComunidad = false;
+
+    if (miembroDeComunidad.getComunidades().contains(comunidad)) {
+      miComunidad = true;
+    }
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("comunidad",comunidad);
-    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
+    model.put("miembro_id",miembroDeComunidad.getId().toString());
+    model.put("miComunidad",miComunidad);
     context.render("PerfilComunidad.hbs", model);
     em.close();
   }

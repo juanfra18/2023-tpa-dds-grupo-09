@@ -1,17 +1,34 @@
 package server.handlers;
 
 import io.javalin.http.Context;
+import models.Config.Config;
 import models.domain.Usuario.Usuario;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
 public class SessionHandler {
+  private static Long tiempoVencimientoSegundos = Config.TIMEOUT;
 
   public static void createSession(Context context, long id, String tipoRol ){
-    context.cookie("usuario_id",String.valueOf(id));
-    context.cookie("tipo_rol", tipoRol);
+    Long fechaDeVencimiento = System.currentTimeMillis() + (tiempoVencimientoSegundos * 1000);
+
+    context.cookie("usuario_id",String.valueOf(id), tiempoVencimientoSegundos.intValue());
+    context.cookie("tipo_rol", tipoRol, tiempoVencimientoSegundos.intValue());
+    context.cookie("vencimiento", String.valueOf(fechaDeVencimiento), tiempoVencimientoSegundos.intValue());
+  }
+  public static void updateSession(Context context) {
+    context.cookie("usuario_id", String.valueOf(context.cookie("usuario_id")), tiempoVencimientoSegundos.intValue());
+    context.cookie("tipo_rol", String.valueOf(context.cookie("tipo_rol")), tiempoVencimientoSegundos.intValue());
+    context.cookie("vencimiento", String.valueOf(tiempoVencimientoSegundos*1000+System.currentTimeMillis()), tiempoVencimientoSegundos.intValue());
   }
 
   public static boolean checkSession(Context ctx) {
-    return ctx.cookie("usuario_id") != null;
+    String fechaDeVencimiento = ctx.cookie("vencimiento");
+    //String fechaDeVencimiento = "123";
+    return (ctx.cookie("usuario_id") != null) &&
+            !(Long.parseLong(fechaDeVencimiento) < System.currentTimeMillis());
   }
 
   public static String getUserID(Context ctx) {
@@ -24,5 +41,6 @@ public class SessionHandler {
   public static void endSession(Context ctx) {
     ctx.removeCookie("usuario_id");
     ctx.removeCookie("tipo_rol");
+    ctx.removeCookie("vencimiento");
   }
 }

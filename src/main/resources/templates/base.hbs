@@ -29,7 +29,9 @@
             {{#unless administrador}}
             <li class="nav-item"><a href="/incidentes">Mis Incidentes</a></li>
             {{/unless}}
+            {{#if administrador}}
             <li class="nav-item"><a href="/incidentes">Incidentes</a></li>
+            {{/if}}
             <li class="nav-item"><a href="/perfil/{{miembro_id}}"><img src="/./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
         </ul>
     </nav>

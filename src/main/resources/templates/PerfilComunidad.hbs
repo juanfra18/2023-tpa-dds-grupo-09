@@ -9,6 +9,9 @@
         <div id="base">
             <div class="informacion">
                 <h2>{{comunidad.nombre}}</h2>
+                {{#if miComunidad}}
+                <button type="button" class="btn btn-secondary" id="abandonarComunidad" data-comunidad-id="{{comunidad.id}}">Abandonar Comunidad</button>
+                {{/if}}
                 <p>Miembros:
                 <ul>
                   {{#each comunidad.miembros}}
@@ -18,5 +21,6 @@
                 </p>
             </div>
         </div>
+        <script src="/js/AbandonarComunidad.js"></script>
 {{/partial}}
 {{> templates/base }}
