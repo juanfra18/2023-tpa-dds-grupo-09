@@ -167,4 +167,24 @@ public class InteresController extends ControllerGenerico implements ICrudViewsH
       em.close();
     }
   }
+
+  public void cambiarRol(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String servicioId = context.pathParam("id");
+    String rol = context.pathParam("rol");
+
+    try {
+      em.getTransaction().begin();
+      ParServicioRol parServicioRolAModificar = repositorioParServicioRol.buscar(Long.parseLong(servicioId));
+      miembroDeComunidad.cambiarRolSobreServicio(parServicioRolAModificar.getServicio());
+      //En una relacion OneToMany no elimina la fila hibernate con tan solo quitarlo de la lista del miebro de comunidad
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+  }
 }

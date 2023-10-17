@@ -35,6 +35,7 @@
                                 <h4>Rol: {{this.rol}}</h4>
                                 <h4>Estado: {{this.servicio.estado}}</h4>
                             </div>
+                            <button type="button" class="btn btn-secondary btn-cambiar-rol" data-servicio-id="{{this.id}}">Cambiar Rol</button>
                             <button type="button" class="btn btn-secondary btn-eliminar-servicioInteres" data-servicio-id="{{this.id}}">Eliminar</button>
                       </div>
                     </div>
@@ -43,5 +44,6 @@
         </div>
         <script src="/js/EliminarEntidadDeInteres.js"></script>
         <script src="/js/EliminarServicioDeInteres.js"></script>
+        <script src="/js/CambiarRol.js"></script>
 {{/partial}}
 {{> templates/base }}
