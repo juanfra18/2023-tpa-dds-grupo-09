@@ -1,8 +1,8 @@
-document.querySelectorAll('.btn-eliminar-entidadInteres').forEach(button => {
+document.querySelectorAll('.btn-eliminar-servicioInteres').forEach(button => {
     button.addEventListener('click', function() {
-        var entidadId = this.getAttribute('data-entidad-id');
+        var servicioId = this.getAttribute('data-servicio-id');
 
-                    fetch('/intereses/entidad/eliminar/' + entidadId, {
+                    fetch('/intereses/servicio/eliminar/' + servicioId, {
                         method: 'POST'
                     })
                     .then(response => {

@@ -31,16 +31,17 @@
                         <div class="tarjeta d-flex justify-content-between align-items-center">
                             <div>
                                 <h2>{{this.servicio.nombre}}</h2>
-                                <h4>Tipo: {{this.servicio.getTipo}}</h4>
+                                <h4>Tipo: {{this.servicio.tipoNombre}}</h4>
                                 <h4>Rol: {{this.rol}}</h4>
                                 <h4>Estado: {{this.servicio.estado}}</h4>
                             </div>
-                            <button type="button" class="btn btn-secondary" data-servicio-id="{{this.id}}">Eliminar</button>
+                            <button type="button" class="btn btn-secondary btn-eliminar-servicioInteres" data-servicio-id="{{this.id}}">Eliminar</button>
                       </div>
                     </div>
                 {{/each}}
                 </div>
         </div>
         <script src="/js/EliminarEntidadDeInteres.js"></script>
+        <script src="/js/EliminarServicioDeInteres.js"></script>
 {{/partial}}
 {{> templates/base }}

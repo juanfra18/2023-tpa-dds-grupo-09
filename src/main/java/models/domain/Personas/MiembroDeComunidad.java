@@ -164,6 +164,14 @@ public class MiembroDeComunidad extends Persistente {
   public void eliminarEntidadDeInteres(Entidad entidadAEliminar) {
         entidadesDeInteres.remove(entidadAEliminar);
   }
+
+  public boolean esServicioDeInteres(Servicio servicio) {
+      return this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().equals(servicio));
+  }
+
+  public void eliminarServicioDeInteres(ParServicioRol parServicioRol) {
+      this.serviciosDeInteres.remove(parServicioRol);
+    }
 }
 
 
