@@ -16,6 +16,7 @@
                 <p>Apellido: {{miembroDeComunidad.apellido}}</p>
                 <p>Mail: {{miembroDeComunidad.receptorDeNotificaciones.mail}}</p>
                 <p>Telefono: {{miembroDeComunidad.receptorDeNotificaciones.telefono}}</p>
+                {{#unless administrador}}
                 <p>Cantidad de incidentes reportados: </p>
                 <p>Cantidad de incidentes cerrados: </p>
                 <p>Cantidad de incidentes revisados: </p>
@@ -24,6 +25,7 @@
                     <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
                   {{/each}}
                 </p>
+                {{/unless}}
                 {{#if miPerfil}}
                  <button type="button" class="btn btn-secondary" id="cerrarSesion">Cerrar Sesion</button>
                  {{/if}}
