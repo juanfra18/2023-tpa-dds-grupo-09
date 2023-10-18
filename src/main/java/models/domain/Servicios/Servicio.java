@@ -1,5 +1,8 @@
 package models.domain.Servicios;
 
+import lombok.Getter;
+import lombok.Setter;
+import models.domain.Entidades.Establecimiento;
 import models.persistence.Persistente;
 
 import javax.persistence.*;
@@ -11,6 +14,10 @@ import java.util.Objects;
 public abstract class Servicio extends Persistente {
   protected String nombre;
   protected String tipoNombre;
+  @Setter
+  @Getter
+  @Transient
+  protected Establecimiento establecimiento;
   public abstract boolean estaActivo();
   public abstract String getTipo();
   public abstract String tipoNombre();

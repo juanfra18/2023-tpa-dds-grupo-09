@@ -2,6 +2,7 @@ package controllers;
 
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
+import models.domain.Entidades.Establecimiento;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Personas.ParServicioRol;
 import models.domain.Personas.Rol;
@@ -9,6 +10,7 @@ import models.domain.Servicios.Servicio;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
+import models.persistence.Repositorios.RepositorioDeEstablecimientos;
 import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioParServicioRol;
 import models.persistence.Repositorios.RepositorioServicio;
@@ -55,10 +57,23 @@ public class InteresController extends ControllerGenerico implements ICrudViewsH
     boolean usuarioEmpresa = false;
     boolean administrador = false;
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
 
     List<Entidad> entidades = miembroDeComunidad.getEntidadesDeInteres();
 
     List<ParServicioRol> servicios = miembroDeComunidad.getServiciosDeInteres();
+
+    Long establecimientoDeServicioId;
+    Establecimiento establecimientoDeServicio;
+
+    for(ParServicioRol parServicioRol:servicios)
+    {
+        establecimientoDeServicioId = repositorioServicio.establecimientoDeServicio(parServicioRol.getServicio().getId());
+
+        establecimientoDeServicio = repositorioDeEstablecimientos.buscar(establecimientoDeServicioId);
+        parServicioRol.getServicio().setEstablecimiento(establecimientoDeServicio);
+
+    }
 
 
     model.put("usuarioBasico",true);
