@@ -91,7 +91,7 @@ public class MiembroDeComunidad extends Persistente {
 
     public boolean tieneInteres(Servicio servicio, Establecimiento establecimiento) {
         boolean coincideEstablecimiento = this.entidadesDeInteres.stream().anyMatch(entidad -> entidad.getEstablecimientos().contains(establecimiento));
-        boolean coincideLocalizacion = this.municipios.stream().anyMatch(municipio -> establecimiento.getLocalizacion() == municipio);
+        boolean coincideLocalizacion = true;//this.municipios.stream().anyMatch(municipio -> establecimiento.getLocalizacion() == municipio);
         boolean coincideServicio = this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().equals(servicio));
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }

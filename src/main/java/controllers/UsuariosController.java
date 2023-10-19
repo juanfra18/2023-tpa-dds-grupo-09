@@ -2,16 +2,14 @@ package controllers;
 
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
+import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
-import models.persistence.Repositorios.RepositorioComunidad;
-import models.persistence.Repositorios.RepositorioDeUsuarios;
-import models.persistence.Repositorios.RepositorioEntidad;
-import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
+import models.persistence.Repositorios.*;
 import org.jetbrains.annotations.NotNull;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.handlers.SessionHandler;
@@ -83,12 +81,17 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
     //Como se compara directamente en handlebars dentro de un if?
 
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    Integer incidentesAbiertos = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, repositorioDeIncidentes.buscarTodos()).size();
+    Integer incidentesCerrados = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, repositorioDeIncidentes.buscarTodos()).size();
 
 
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("miembroDeComunidad",miembroDeComunidad);
+    model.put("incidentesAbiertos", incidentesAbiertos);
+    model.put("incidentesCerrados", incidentesCerrados);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
     model.put("miPerfil", miPerfil);
     context.render("PerfilUsuario.hbs", model);

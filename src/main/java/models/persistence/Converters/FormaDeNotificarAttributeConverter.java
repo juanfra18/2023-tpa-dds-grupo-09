@@ -16,8 +16,8 @@ public class FormaDeNotificarAttributeConverter implements AttributeConverter<Fo
       return null;
 
     switch (formaDeNotificar.getClass().getName()) {
-      case "models.Notificaciones.domain.CuandoSuceden": nombreForma = "cuandoSuceden"; break;
-      case "models.Notificaciones.domain.SinApuros": nombreForma = "sinApuros"; break;
+      case "models.domain.Notificaciones.CuandoSuceden": nombreForma = "cuandoSuceden"; break;
+      case "models.domain.Notificaciones.SinApuros": nombreForma = "sinApuros"; break;
     }
 
     return nombreForma;

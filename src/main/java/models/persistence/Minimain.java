@@ -5,6 +5,10 @@ import models.domain.Entidades.Entidad;
 import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
+import models.domain.Notificaciones.CuandoSuceden;
+import models.domain.Notificaciones.FormaDeNotificar;
+import models.domain.Notificaciones.ReceptorDeNotificaciones;
+import models.domain.Notificaciones.ViaMail;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.Rol;
@@ -85,6 +89,14 @@ public class Minimain implements WithSimplePersistenceUnit {
             MiembroDeComunidad mi2 = new MiembroDeComunidad();
             mi2.setApellido("Kun");
             mi2.setNombre("Aguero");
+
+            ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
+            receptorDeNotificaciones.setMail("juanpaoli@gmail.com");
+            receptorDeNotificaciones.setTelefono("01144444444");
+            receptorDeNotificaciones.cambiarFormaDeNotificar(new CuandoSuceden());
+            receptorDeNotificaciones.cambiarMedioDeComunicacion(new ViaMail());
+
+            mi2.setReceptorDeNotificaciones(receptorDeNotificaciones);
             mi2.setUsuario(u2);
            // mi2.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(1));
 

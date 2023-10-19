@@ -17,9 +17,8 @@
                 <p>Mail: {{miembroDeComunidad.receptorDeNotificaciones.mail}}</p>
                 <p>Telefono: {{miembroDeComunidad.receptorDeNotificaciones.telefono}}</p>
                 {{#unless administrador}}
-                <p>Cantidad de incidentes reportados: </p>
-                <p>Cantidad de incidentes cerrados: </p>
-                <p>Cantidad de incidentes revisados: </p>
+                <p>Cantidad de incidentes reportados: {{incidentesAbiertos}}</p>
+                <p>Cantidad de incidentes cerrados: {{incidentesCerrados}}</p>
                 <p>Mis comunidades:
                   {{#each miembroDeComunidad.comunidades}}
                     <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
