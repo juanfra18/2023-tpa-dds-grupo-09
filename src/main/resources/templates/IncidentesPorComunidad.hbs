@@ -1,0 +1,47 @@
+{{> templates/base }}
+{{#partial "tituloYcss"}}
+    <link rel = "stylesheet" href = "/css/IncidentesPorComunidad.css">
+    <title>Incidentes por Comunidad</title>
+{{/partial}}
+{{> templates/base }}
+
+{{#partial "contenido"}}
+    <div id="base">
+     <h1>INCIDENTES</h1>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">Seleccione Comunidad</label>
+                <select class="form-select" id="inputGroupSelect01">
+                {{#if seleccion}}
+                    <option selected value = {{comunidadSeleccionada.id}}>{{comunidadSeleccionada.nombre}}</option>
+                {{else}}
+                    <option selected>Seleccionar...</option>
+                {{/if}}
+                {{#each comunidades}}
+                     <option value = {{this.id}}>{{this.nombre}}</option>
+                {{/each}}
+                </select>
+            </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+        {{#each incidentes}}
+            <div class="col">
+                <div class="tarjetaIncidente">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{this.establecimiento.nombre}}</li>
+                        <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
+                        {{#if this.cerrado}}
+                        <li class="list-group-item">Cerrado</li>
+                        {{else}}
+                        <li class="list-group-item">Abierto</li>
+                        {{/if}}
+                    </ul>
+                    {{#if usuarioBasico}}
+                    <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                    {{/if}}
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+    <script src="/js/IncidentesPorComunidad.js"></script>
+{{/partial}}
+{{> templates/base }}

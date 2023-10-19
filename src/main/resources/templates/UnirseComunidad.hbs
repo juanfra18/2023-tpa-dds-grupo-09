@@ -19,6 +19,7 @@
                             {{#if usuarioBasico}}
                             <button type="button" class="btn btn-secondary btn-unirse" data-comunidad-id="{{this.id}}">Unirme</button>
                             {{else}}
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/incidentes/' + {{this.id}}">Incidentes</button>
                             <button type="button" class="btn btn-secondary btn-eliminar" data-comunidad-id="{{this.id}}">Eliminar</button>
                             {{/if}}
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>

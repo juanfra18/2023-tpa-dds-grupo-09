@@ -1,6 +1,7 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.ReporteDeIncidente;
@@ -10,6 +11,7 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
+import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -153,4 +155,46 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     repositorioComunidad.agregar(comunidad);
   }
 
+  public void cerrarIncidente(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    String incidenteId = context.pathParam("idI");
+    Incidente incidente =  repositorioDeIncidentes.buscar(Long.parseLong(incidenteId));
+
+    RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    String comunidadId = context.pathParam("idC");
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
+
+
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+
+    if(!comunidad.cerroIncidente(incidente)) {
+      ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
+      reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("CERRADO"));
+      reporteDeIncidente.setDenunciante(miembroDeComunidad);
+      reporteDeIncidente.setEntidad(incidente.primeraApertura().getEntidad());
+      reporteDeIncidente.setObservaciones("");
+      reporteDeIncidente.setServicio(incidente.getServicio());
+      reporteDeIncidente.setFechaYhora(LocalDateTime.now());
+      reporteDeIncidente.setEstablecimiento(incidente.getEstablecimiento());
+
+      try {
+        em.getTransaction().begin();
+        this.guardarIncidenteComunidad(comunidad, reporteDeIncidente, repositorioComunidad);
+        repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
+        em.getTransaction().commit();
+      } catch (Exception e) {
+        em.getTransaction().rollback();
+      } finally {
+        em.close();
+      }
+      context.redirect("/comunidades/incidentes/" + comunidadId);
+      //TODO
+    }
+    else {
+      context.status(404);
+    }
+  }
 }

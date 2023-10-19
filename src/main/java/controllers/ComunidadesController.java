@@ -1,12 +1,14 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Incidentes.Incidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
+import models.persistence.Repositorios.RepositorioDeIncidentes;
 import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
@@ -85,7 +87,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("comunidad",comunidad);
-    model.put("miembro_id",miembroDeComunidad.getId().toString());
+    model.put("miembro_id",miembroDeComunidad.getId());
     model.put("miComunidad",miComunidad);
     context.render("PerfilComunidad.hbs", model);
     em.close();
@@ -147,5 +149,82 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     } finally {
       em.close();
     }
+  }
+
+  public void incidentesDeComunidad(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String comunidadId = context.pathParam("id");
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    List<Comunidad> comunidadesDelMiembro = miembroDeComunidad.getComunidades().stream().filter(comunidad1 -> !comunidad1.equals(comunidad)).toList();
+
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    List<Incidente> incidentesDeComunidad = repositorioDeIncidentes.buscarTodos().
+        stream().filter(incidente -> comunidad.incidenteEsDeComunidad(incidente) &&
+            !comunidad.cerroIncidente(incidente)).toList();
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("miembro_id",miembroDeComunidad.getId());
+    model.put("seleccion",true);
+    model.put("comunidadSeleccionada",comunidad);
+    model.put("comunidades",comunidadesDelMiembro);
+    model.put("incidentes",incidentesDeComunidad);
+    context.render("IncidentesPorComunidad.hbs", model);
+    em.close();
+  }
+
+  public void incidentes(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    List<Comunidad> comunidadesDelMiembro = miembroDeComunidad.getComunidades();
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("miembro_id",miembroDeComunidad.getId());
+    model.put("comunidades", comunidadesDelMiembro);
+    model.put("seleccion",false);
+    context.render("IncidentesPorComunidad.hbs", model);
+    em.close();
   }
 }
