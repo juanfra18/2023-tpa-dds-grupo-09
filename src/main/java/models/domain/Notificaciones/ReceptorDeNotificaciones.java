@@ -31,9 +31,9 @@ public class ReceptorDeNotificaciones extends Persistente {
   private String getDestinatario(){
     String destinatario = null;
 
-    switch (this.medioDeComunicacion.getClass().getName()){
-      case "ViaMail" : destinatario = this.mail;
-      case "ViaWPP" : destinatario = this.telefono;
+    switch (this.medioDeComunicacion.getClass().getSimpleName()){
+      case "ViaMail" : destinatario = this.mail; break;
+      case "ViaWPP" : destinatario = this.telefono; break;
     }
     return destinatario;
   }

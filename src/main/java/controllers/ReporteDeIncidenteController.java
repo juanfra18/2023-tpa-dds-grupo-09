@@ -175,7 +175,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf("CERRADO"));
       reporteDeIncidente.setDenunciante(miembroDeComunidad);
       reporteDeIncidente.setEntidad(incidente.primeraApertura().getEntidad());
-      reporteDeIncidente.setObservaciones("");
+      reporteDeIncidente.setObservaciones("CERRADO");
       reporteDeIncidente.setServicio(incidente.getServicio());
       reporteDeIncidente.setFechaYhora(LocalDateTime.now());
       reporteDeIncidente.setEstablecimiento(incidente.getEstablecimiento());
