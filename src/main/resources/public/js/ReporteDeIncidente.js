@@ -19,6 +19,8 @@ const inputGroupSelect03 = document.getElementById('inputGroupSelect03');
 inputGroupSelect01.addEventListener('change', () => {
     const entidadSeleccionadaId = inputGroupSelect01.value;
 
+    if(entidadSeleccionadaId!="Seleccionar..."){
+
     fetch('/entidades/' + entidadSeleccionadaId + '/establecimientos')
         .then(response => response.json())
         .then(establecimientos => {
@@ -35,7 +37,11 @@ inputGroupSelect01.addEventListener('change', () => {
                 option.textContent = establecimiento.nombre;
                 inputGroupSelect02.appendChild(option);
             });
-        });
+        });}
+        else{
+            inputGroupSelect02.innerHTML = '';
+            inputGroupSelect03.innerHTML = '';
+        }
 });
 
 inputGroupSelect02.addEventListener('change', () => {
@@ -59,7 +65,11 @@ inputGroupSelect02.addEventListener('change', () => {
                 inputGroupSelect03.appendChild(option);
             });
         });
-}});
+}
+else{
+    inputGroupSelect03.innerHTML = '';
+}
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const inputFields = document.querySelectorAll(".input-field");
@@ -69,11 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function checkFields() {
         let allFieldsFilled = true;
         inputFields.forEach(function (field) {
-            if (!field.value) {
+        console.log('value: ' + field.value);
+            if (!field.value || field.value=="Seleccionar..." || field.value=="-1"){
                 allFieldsFilled = false;
             }
         });
-
         if (allFieldsFilled) {
             enviarButton.removeAttribute("disabled");
         } else {
