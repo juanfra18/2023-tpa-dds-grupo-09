@@ -66,10 +66,13 @@ public class Minimain implements WithSimplePersistenceUnit {
             RepositorioRoles repositorioRoles = RepositorioRoles.getInstancia();
             Usuario u1 = new Usuario();
             Usuario u2 = new Usuario();
+            Usuario u3 = new Usuario();
             u1.setUsername("messi10");
             u2.setUsername("kuni9");
+            u3.setUsername("dibu23");
             u1.cambiarContrasenia("LaCasaEnElLag@");
             u2.cambiarContrasenia("LaCasaEnElLag@");
+            u3.cambiarContrasenia("LaCasaEnElLag@");
 
             Rol admin = new Rol();
             admin.setNombre("administrador");
@@ -83,33 +86,44 @@ public class Minimain implements WithSimplePersistenceUnit {
 
             u1.setRol(admin);
             u2.setRol(basico);
+            u3.setRol(basico);
 
             repositorioDeUsuarios.agregar(u1);
             repositorioDeUsuarios.agregar(u2);
+            repositorioDeUsuarios.agregar(u3);
 
             RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
             MiembroDeComunidad mi = new MiembroDeComunidad();
             mi.setApellido("Messi");
             mi.setNombre("Leo");
             mi.setUsuario(u1);
-          //  mi.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(0));
 
             MiembroDeComunidad mi2 = new MiembroDeComunidad();
             mi2.setApellido("Kun");
             mi2.setNombre("Aguero");
 
+            MiembroDeComunidad mi3 = new MiembroDeComunidad();
+            mi3.setApellido("Emiliano");
+            mi3.setNombre("Martinez");
+
             ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
-            receptorDeNotificaciones.setMail("juanpaoli@gmail.com");
+            receptorDeNotificaciones.setMail("diseniogrupo9@gmail.com");
             receptorDeNotificaciones.setTelefono("01144444444");
             receptorDeNotificaciones.cambiarFormaDeNotificar(new CuandoSuceden());
             receptorDeNotificaciones.cambiarMedioDeComunicacion(new ViaMail());
 
+            mi.setReceptorDeNotificaciones(receptorDeNotificaciones);
+            mi.setUsuario(u1);
+
             mi2.setReceptorDeNotificaciones(receptorDeNotificaciones);
             mi2.setUsuario(u2);
-           // mi2.agregarEntidadDeInteres(repositorioDeOrganismosDeControl.buscarTodos().get(0).getEntidadesPrestadoras().get(0).getEntidades().get(1));
+
+            mi3.setReceptorDeNotificaciones(receptorDeNotificaciones);
+            mi3.setUsuario(u3);
 
             repositorioMiembroDeComunidad.agregar(mi);
             repositorioMiembroDeComunidad.agregar(mi2);
+            repositorioMiembroDeComunidad.agregar(mi3);
 
             Comunidad c1 = new Comunidad();
             c1.setNombre("messistas");
