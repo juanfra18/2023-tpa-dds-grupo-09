@@ -1,45 +1,31 @@
 {{> templates/base }}
 {{#partial "tituloYcss"}}
-        <link rel = "stylesheet" href = "css/SugerenciasDeRevisionDeIncidentes.css">
+        <link rel = "stylesheet" href = "http://localhost:8080/css/SugerenciasDeRevisionDeIncidentes.css">
         <title>Sugerencia de revisión de incidentes</title>
 {{/partial}}
 {{> templates/base }}
 
  {{#partial "contenido"}}
         <div id="base">
-            <h1>Solicitudes de Revisión Activas</h1>
-            <div class="tarjetaRevision">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Entidad1</li>
-                    <li class="list-group-item">Establecimiento1</li>
-                    <li class="list-group-item">Servicio1</li>
-                    <li class="list-group-item">Distancia1</li>
-                </ul>
-            </div>
-            <div class="tarjetaRevision">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Entidad2</li>
-                    <li class="list-group-item">Establecimiento2</li>
-                    <li class="list-group-item">Servicio2</li>
-                    <li class="list-group-item">Distancia2</li>
-                </ul>
-            </div>
-            <div class="tarjetaRevision">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Entidad3</li>
-                    <li class="list-group-item">Establecimiento3</li>
-                    <li class="list-group-item">Servicio3</li>
-                    <li class="list-group-item">Distancia3</li>
-                </ul>
-            </div>
-            <div class="tarjetaRevision">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Entidad4</li>
-                    <li class="list-group-item">Establecimiento4</li>
-                    <li class="list-group-item">Servicio4</li>
-                    <li class="list-group-item">Distancia4</li>
-                </ul>
-            </div>
+            {{#if noHayIncidentes}}
+                <h1>No tenés solicitudes de revisión activas"</h1>
+            {{else}}
+                <h1>Solicitudes de Revisión Activas</h1>
+                <div>
+                    {{#each incidentesCercanos}}
+                        <div class="col">
+                            <div class="tarjetaRevision">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{this.establecimiento.nombre}}</li>
+                                    <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            {{/if}}
+
         </div>
+        <script src="http://localhost:8080/js/SugerenciaDeRevisionDeIncidentes.js"></script>
 {{/partial}}
 {{> templates/base }}

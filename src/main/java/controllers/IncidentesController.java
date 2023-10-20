@@ -2,8 +2,12 @@ package controllers;
 
 import com.google.gson.Gson;
 import io.javalin.http.Context;
+import models.Config.Config;
+import models.domain.Entidades.Entidad;
+import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
+import models.domain.Incidentes.Posicion;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
@@ -12,6 +16,7 @@ import models.persistence.Repositorios.RepositorioDeEstablecimientos;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
 import models.persistence.Repositorios.RepositorioEntidad;
+import models.services.APIs.Servicio3.clases.S3Incidente;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
@@ -133,7 +138,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     context.render("ConsultaDeIncidentes.hbs",model);
     context.status(200);
     em.close();
-
   }
 
   @Override

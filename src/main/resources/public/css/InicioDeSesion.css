@@ -29,7 +29,6 @@
     transform: translate(-50%, -190%);
     width: 32%; /* ajusta el tamaño del círculo */
     height: 36%; /* ajusta el tamaño del círculo */
-    background-image: url(./imagenes/fondo.jpeg);
     background-position-x: 90%;
     box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.7);
     border-radius: 50%; /* convierte el círculo en un círculo perfecto */

@@ -2,9 +2,11 @@ package models.persistence;
 
 import models.Config.Config;
 import models.domain.Entidades.Entidad;
+import models.domain.Entidades.Establecimiento;
 import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
+import models.domain.Incidentes.Posicion;
 import models.domain.Notificaciones.CuandoSuceden;
 import models.domain.Notificaciones.FormaDeNotificar;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
@@ -51,6 +53,12 @@ public class Minimain implements WithSimplePersistenceUnit {
             //Se cargan las empresas
             //empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
             //empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
+
+            Posicion posicion = new Posicion();
+            posicion.setPosicion("-34.6078602,-58.383111");
+
+            RepositorioPosicion.getInstancia().agregar(posicion);
+
 
             //PARA PROBAR LA PAGINA WEB
 
