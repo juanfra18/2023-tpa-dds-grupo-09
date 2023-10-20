@@ -122,8 +122,6 @@ public class MiembroDeComunidad extends Persistente {
 
         List<Incidente> incidentesDeEstadoSeleccionado = incidentesDeMisComunidades.stream().filter(i -> i.tieneEstado(estado)).toList();
 
-        System.out.println(incidentesDeMisComunidades.size());
-        System.out.println(incidentesDeEstadoSeleccionado.size());
         return incidentesDeEstadoSeleccionado;
     }
 

@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head> <!--Contenedor de metadata y otras cosas como el titulo-->
-    <title>403: Forbidden</title>
-</head>
+{{> templates/base }}
+{{#partial "tituloYcss"}}
+    <link rel = "stylesheet" type="text/css" href = "http://localhost:8080/css/403.css">
+    <title> 403: Forbidden</title>
+{{/partial}}
+{{> templates/base }}
 
-<body id="body">
-<header id="main-header">
+{{#partial "contenido"}}
+    <body id="body">
         <h1>No tienes permitido ver este contenido</h1>
-</body>
+    </body>
+{{/partial}}
+{{> templates/base }}
 
-</html>
