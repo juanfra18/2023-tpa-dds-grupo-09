@@ -52,15 +52,19 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
-    MiembroDeComunidad miembroDeComunidad = new MiembroDeComunidad();
     String id = context.pathParam("id");
     boolean miPerfil = false;
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
 
-    miembroDeComunidad = repositorioMiembroDeComunidad.buscar(Long.parseLong(id));
+    MiembroDeComunidad miembroDeComunidad = repositorioMiembroDeComunidad.buscar(Long.parseLong(id));
+    Integer incidentesAbiertos = 0;
+    Integer incidentesCerrados = 0;
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
+      incidentesAbiertos = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueAbiertoPor(miembroDeComunidad)).toList().size();
+      incidentesCerrados = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueCerradoPor(miembroDeComunidad)).toList().size();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
@@ -80,12 +84,6 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
 
     //Como se compara directamente en handlebars dentro de un if?
-
-    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-    Integer incidentesAbiertos = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, repositorioDeIncidentes.buscarTodos()).size();
-    Integer incidentesCerrados = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, repositorioDeIncidentes.buscarTodos()).size();
-
-
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);

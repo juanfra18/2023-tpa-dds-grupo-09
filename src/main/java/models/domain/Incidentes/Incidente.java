@@ -1,6 +1,7 @@
 package models.domain.Incidentes;
 
 import models.domain.Entidades.Establecimiento;
+import models.domain.Personas.MiembroDeComunidad;
 import models.persistence.Persistente;
 import models.domain.Servicios.Servicio;
 import lombok.Getter;
@@ -107,4 +108,13 @@ public class Incidente extends Persistente {
             this.servicio = null;
         }
     }
+
+  public boolean fueAbiertoPor(MiembroDeComunidad miembroDeComunidad) {
+        return !reportes.stream().filter(reporteDeIncidente -> !reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
+  }
+
+  public boolean fueCerradoPor(MiembroDeComunidad miembroDeComunidad) {
+      return !reportes.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
+  }
+
 }
