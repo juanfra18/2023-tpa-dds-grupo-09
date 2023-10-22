@@ -39,22 +39,11 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
 
         List<Incidente> incidentesCercanos= new ArrayList<>();
         List<Incidente> incidentes= miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf("ABIERTO"),
-                repositorioDeIncidentes.getIncidentesEstaSemana());
+                                    repositorioDeIncidentes.getIncidentesEstaSemana());
 
-        for (Incidente incidente:  incidentes){
-            Double distancia;
-            if (incidente.getEstablecimiento().getPosicion()==null){
-                distancia=100000.0;
-            }
-            else distancia = posicionUsuario.calcularDistancia(incidente.getEstablecimiento().getPosicion());
+        incidentesCercanos = incidentes.stream().filter(i->i.getEstablecimiento().getPosicion()!=null&&
+                posicionUsuario.calcularDistancia(i.getEstablecimiento().getPosicion())<=Config.DISTANCIA_MINIMA).toList();
 
-            if (distancia <= Config.DISTANCIA_MINIMA) {
-                Incidente i = new Incidente();
-                i.setEstablecimiento(incidente.getEstablecimiento());
-                i.setServicio(incidente.getServicio());
-                incidentesCercanos.add(i);
-            }
-        }
         boolean noHayIncidentes = incidentesCercanos.isEmpty();
         //Se puede pasarle la url para la referencia del js y el css poniendo la url en el config
         model.put("noHayIncidentes",noHayIncidentes);
