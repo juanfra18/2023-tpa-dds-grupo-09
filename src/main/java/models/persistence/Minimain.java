@@ -13,6 +13,9 @@ import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Notificaciones.ViaMail;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
+import models.domain.Rankings.EntidadesQueSolucionanMasLento;
+import models.domain.Rankings.Tierlist;
 import models.domain.Usuario.Rol;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
@@ -134,7 +137,6 @@ public class Minimain implements WithSimplePersistenceUnit {
             RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
             repositorioComunidad.agregar(c1);
             repositorioComunidad.agregar(c2);
-
 
             em.getTransaction().commit();
         } catch (Exception e) {
