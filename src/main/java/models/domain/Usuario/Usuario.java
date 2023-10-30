@@ -16,6 +16,7 @@ public class Usuario extends Persistente {
     @Setter
     private String username;
     @Getter
+    @Setter
     @Column(name = "password")
     private String contrasenia;
     @Transient

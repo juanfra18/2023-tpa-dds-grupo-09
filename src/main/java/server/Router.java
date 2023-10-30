@@ -12,7 +12,8 @@ public class Router {
       post("/cerrarSesion", ctx -> {SessionHandler.endSession(ctx); ctx.status(200);});
       get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index, TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
       get("/menu", ((MenuPrincipalController) FactoryController.controller("menuPrincipal"))::index);
-      get("/", ctx -> ctx.redirect("/menu"));
+      get("/", ctx -> ctx.render("/LandingPage.hbs"));
+      post("/", ((RegistrarController) FactoryController.controller("registrar"))::registrarUsuario);
       get("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::verificarSesion);
       post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
       get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);
@@ -24,7 +25,6 @@ public class Router {
       post("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::save);
       post("/reportarIncidente/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente);
       get("/sugerenciasDeRevision", ((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::solicitarIncidentes);
-     //TODO
       get("/comunidades", ((ComunidadesController) FactoryController.controller("comunidades"))::index,TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
       get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO);
       get("/comunidades/incidentes/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::incidentesDeComunidad, TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
