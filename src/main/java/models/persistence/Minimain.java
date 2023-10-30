@@ -73,9 +73,9 @@ public class Minimain implements WithSimplePersistenceUnit {
             u1.setUsername("messi10");
             u2.setUsername("kuni9");
             u3.setUsername("dibu23");
-            u1.cambiarContrasenia("LaCasaEnElLag@");
-            u2.cambiarContrasenia("LaCasaEnElLag@");
-            u3.cambiarContrasenia("LaCasaEnElLag@");
+            u1.setContrasenia("LaCasaEnElLag@");
+            u2.setContrasenia("LaCasaEnElLag@");
+            u3.setContrasenia("LaCasaEnElLag@");
 
             Rol admin = new Rol();
             admin.setNombre("administrador");
