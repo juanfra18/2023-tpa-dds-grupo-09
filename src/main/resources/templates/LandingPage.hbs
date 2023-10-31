@@ -18,6 +18,9 @@
                 <div id="medio-arriba">
                     <form action="/" method="post">
                         <h3>¿No tienes una cuenta?</h3>
+                        {{#if hayError}}
+                        <div class="error-box">{{mensajeDeError}}</div>
+                        {{/if}}
                         <div class="form-group">
                              <div class="input-group mb-3">
                                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">

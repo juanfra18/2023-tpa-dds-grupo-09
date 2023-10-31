@@ -8,6 +8,7 @@ public class AppHandlers {
   private IHandler[] handlers = new IHandler[]{
       new AccesoDenegadoHandler(),
       new SesionNoIniciadaHandler(),
+      new RegistroFallidoHandler(),
   };
 
   public static void applyHandlers(Javalin app) {

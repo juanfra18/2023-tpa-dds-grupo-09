@@ -18,10 +18,19 @@ import server.exceptions.UsuarioRepetidoExcepcion;
 import server.handlers.SessionHandler;
 
 import javax.persistence.EntityManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RegistrarController {
 
+  public void index(Context context, String mensajeDeError) {
+    Map<String, Object> model = new HashMap<>();
+
+    model.put("hayError", true);
+    model.put("mensajeDeError", mensajeDeError);
+    context.render("LandingPage.hbs", model);
+  }
   public void registrarUsuario(Context context){
     RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
     RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();

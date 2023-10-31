@@ -78,3 +78,14 @@ footer {
     text-align: center;
     padding: 10px;
 }
+
+.error-box {
+   background-color: #ff0000;
+   color: #fff;
+   padding: 10px;
+   border: 2px solid #cc0000;
+   border-radius: 5px;
+   width: 300px;
+   margin: 10px auto;
+   text-align: center;
+ }
