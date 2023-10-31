@@ -1,4 +1,4 @@
-package models.services.APIs.Servicio2.clases;
+package models.services.APIs.ServicioGradosDeConfianza.clases;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,27 +9,27 @@ import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
-public class S2Incidente {
+public class SGDIncidente {
   private Long id;
   private String fechaApertura;
-  private S2Usuario usuarioReportador;
+  private SGDUsuario usuarioReportador;
   private String fechaCierre;
-  private S2Usuario usuarioAnalizador;
-  private S2Servicio servicioAfectado;
+  private SGDUsuario usuarioAnalizador;
+  private SGDServicio servicioAfectado;
 
-  public S2Incidente(Incidente incidente) {
+  public SGDIncidente(Incidente incidente) {
     this.setId(incidente.getId());
 
-    S2Servicio servicio = new S2Servicio();
+    SGDServicio servicio = new SGDServicio();
     servicio.setId(incidente.getServicio().getId());
     this.setServicioAfectado(servicio);
 
-    this.setUsuarioReportador(new S2Usuario(incidente.primeraApertura().getDenunciante()));
+    this.setUsuarioReportador(new SGDUsuario(incidente.primeraApertura().getDenunciante()));
 
     this.setFechaApertura(incidente.primeraApertura().getFechaYhora().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
 
     this.setFechaCierre(incidente.primerCierre().getFechaYhora().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")));
 
-    this.setUsuarioAnalizador(new S2Usuario(incidente.primerCierre().getDenunciante()));
+    this.setUsuarioAnalizador(new SGDUsuario(incidente.primerCierre().getDenunciante()));
   }
 }
