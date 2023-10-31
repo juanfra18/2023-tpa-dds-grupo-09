@@ -116,7 +116,11 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
 
     List<Incidente> incidentesDeComunidad = comunidad.getIncidentesDeComunidad(repositorioDeIncidentes.buscarTodos());
 
-    incidentesDeComunidad = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado),incidentesDeComunidad);
+    if(EstadoIncidente.valueOf(estado).equals(EstadoIncidente.ABIERTO)) {
+      incidentesDeComunidad = incidentesDeComunidad.stream().filter(incidente -> !comunidad.cerroIncidente(incidente)).toList();
+    }else {
+      incidentesDeComunidad = incidentesDeComunidad.stream().filter(incidente -> comunidad.cerroIncidente(incidente)).toList();
+    }
 
     boolean abierto = false;
     boolean cerrado = false;
