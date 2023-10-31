@@ -19,6 +19,7 @@ public class Router {
       get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);
       get("/incidentes",((IncidentesController) FactoryController.controller("incidentes"))::index);
       get("/incidentes/{estado}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstado,TipoRol.USUARIO_BASICO,TipoRol.USUARIO_EMPRESA);
+      get("/incidentes/{estado}/comunidad/{id}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstadoComunidad,TipoRol.USUARIO_BASICO);
       get("/cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
       post("/cargarEmpresas",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
       get("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::create);

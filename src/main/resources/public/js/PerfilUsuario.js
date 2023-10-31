@@ -1,5 +1,4 @@
 document.getElementById('cerrarSesion').addEventListener('click', function() {
-    // Realizar una solicitud al servidor para cerrar la sesión
     fetch('/cerrarSesion', {
         method: 'POST'
     })

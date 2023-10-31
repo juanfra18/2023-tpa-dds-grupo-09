@@ -3,11 +3,14 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
+import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
+import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
+import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -18,6 +21,7 @@ import java.util.Map;
 
 public class IncidentesController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+  RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
 
   @Override
   public void index(Context context) {
@@ -63,6 +67,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     String estado = context.pathParam("estado");
+    List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
 
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
@@ -71,12 +76,12 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.buscarTodos());
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
       usuarioEmpresa = true;
-      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
+      incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.buscarTodos());
       //TODO revisar si el usuario empresa busca asi los incidentes
     }
     boolean abierto = false;
@@ -92,7 +97,45 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("abierto",abierto);
     model.put("cerrado",cerrado);
-    model.put("seleccion",true);
+    model.put("seleccionEstado",true);
+    model.put("seleccionComunidad",false);
+    model.put("comunidades", comunidades);
+    context.render("ConsultaDeIncidentes.hbs", model);
+    em.close();
+  }
+
+  public void indexEstadoComunidad(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String estado = context.pathParam("estado");
+    String comunidadId = context.pathParam("id");
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
+    List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
+
+    List<Incidente> incidentesDeComunidad = comunidad.getIncidentesDeComunidad(repositorioDeIncidentes.buscarTodos());
+
+    incidentesDeComunidad = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado),incidentesDeComunidad);
+
+    boolean abierto = false;
+    boolean cerrado = false;
+    if(estado.equals("ABIERTO"))
+      abierto = true;
+    else
+      cerrado = true;
+
+    comunidades.remove(comunidad); //para que no aparezca la opcion seleccionada 2 veces
+
+    model.put("usuarioBasico",true);
+    model.put("incidentes",incidentesDeComunidad);
+    model.put("comunidadSeleccionada", comunidad);
+    model.put("miembro_id",miembroDeComunidad.getId());
+    model.put("abierto",abierto);
+    model.put("cerrado",cerrado);
+    model.put("seleccionEstado",true);
+    model.put("seleccionComunidad",true);
+    model.put("comunidades", comunidades);
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }

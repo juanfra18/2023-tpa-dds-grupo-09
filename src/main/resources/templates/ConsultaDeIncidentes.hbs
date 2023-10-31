@@ -13,7 +13,7 @@
                 <label class="input-group-text" for="inputGroupSelect01">Seleccione Estado de Incidentes</label>
                 <select class="form-select" id="inputGroupSelect01">
                     <option
-                    {{#unless seleccion}}
+                    {{#unless seleccionEstado}}
                     selected
                     {{/unless}}>Seleccionar...</option>
                     <option
@@ -29,6 +29,23 @@
                 </select>
             </div>
      {{/unless}}
+     {{#if usuarioBasico}}
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect02">Seleccione una Comunidad</label>
+                <select class="form-select" id="inputGroupSelect02">
+                    <option
+                    {{#unless seleccionComunidad}}
+                    selected
+                    {{/unless}}>Seleccionar...</option>
+                    {{#if seleccionComunidad}}
+                        <option selected value="{{comunidadSeleccionada.id}}">{{comunidadSeleccionada.nombre}}</option>
+                    {{/if}}
+                    {{#each comunidades}}
+                         <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+            </div>
+     {{/if}}
         <div class="row row-cols-1 row-cols-md-2 g-4">
         {{#each incidentes}}
             <div class="col">
@@ -40,6 +57,9 @@
                         <li class="list-group-item">Cerrado</li>
                         {{else}}
                         <li class="list-group-item">Abierto</li>
+                            {{#if seleccionComunidad}}
+                            <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                            {{/if}}
                         {{/if}}
                     </ul>
                 </div>
@@ -47,6 +67,6 @@
         {{/each}}
         </div>
     </div>
-    <script src="/js/EstadoIncidentes.js"></script>
+    <script src="/js/Incidentes.js"></script>
 {{/partial}}
 {{> templates/base }}

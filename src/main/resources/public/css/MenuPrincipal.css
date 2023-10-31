@@ -6,7 +6,7 @@
     justify-content: center;
     min-height: 800px;
     background-color: #ffd59e;
-	  color: #130101;
+	color: #130101;
     background-size: cover;
     background-attachment: fixed;
 }
@@ -88,6 +88,7 @@ nav ul li a {
 nav ul li a:hover {
 	background: #73caf2cc;
 }
+
 #contenedorPrincipal{
     text-align: center;
 }
@@ -236,3 +237,7 @@ nav ul li a:hover {
     transform: translateY(0);
   }
 }
+
+
+
+

@@ -190,8 +190,6 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       } finally {
         em.close();
       }
-      context.redirect("/comunidades/incidentes/" + comunidadId);
-      //TODO
     }
     else {
       context.status(404);
