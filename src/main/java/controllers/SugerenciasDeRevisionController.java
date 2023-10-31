@@ -8,6 +8,7 @@ import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
@@ -22,7 +23,33 @@ import java.util.Map;
 public class SugerenciasDeRevisionController extends ControllerGenerico implements ICrudViewsHandler {
 
     public void solicitarIncidentes(Context context){
-        context.render("SolicitarIncidentes.hbs");
+        EntityManager em = EntityManagerSingleton.getInstance();
+        Map<String, Object> model = new HashMap<>();
+        Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+        boolean usuarioBasico = false;
+        boolean usuarioEmpresa = false;
+        boolean administrador = false;
+        MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+
+        if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+        {
+            usuarioBasico = true;
+        }
+        else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+        {
+            usuarioEmpresa = true;
+        }
+        else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+        {
+            administrador = true;
+        }
+
+        model.put("miembro_id",miembroDeComunidad.getId());
+        model.put("usuarioBasico",usuarioBasico);
+        model.put("usuarioEmpresa",usuarioEmpresa);
+        model.put("administrador",administrador);
+        context.render("SolicitarIncidentes.hbs",model);
+        em.close();
     }
     @Override
     public void index(Context context) {
@@ -34,8 +61,23 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
         Posicion posicionUsuario = new Posicion();
         posicionUsuario.setPosicion(latitud+","+longitud);
         RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-
+        boolean usuarioBasico = false;
+        boolean usuarioEmpresa = false;
+        boolean administrador = false;
         MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+
+        if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+        {
+            usuarioBasico = true;
+        }
+        else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+        {
+            usuarioEmpresa = true;
+        }
+        else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+        {
+            administrador = true;
+        }
 
         List<Incidente> incidentesCercanos= new ArrayList<>();
         List<Incidente> incidentes= miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf("ABIERTO"),
@@ -49,6 +91,9 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
         model.put("noHayIncidentes",noHayIncidentes);
         model.put("incidentesCercanos",incidentesCercanos);
         model.put("miembro_id",miembroDeComunidad.getId());
+        model.put("usuarioBasico",usuarioBasico);
+        model.put("usuarioEmpresa",usuarioEmpresa);
+        model.put("administrador",administrador);
         context.render("SugerenciasDeRevisionDeIncidentes.hbs",model);
         context.status(200);
         em.close();

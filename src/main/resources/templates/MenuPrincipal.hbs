@@ -13,65 +13,6 @@
             </div>
             <div id="contenedorFuncional">
 
-                {{#if usuarioBasico}}
-                <button class="btn-31" onclick="window.location.href = 'reportarIncidente/ABIERTO'">
-                    <span class="text-container">
-                      <span class="text">Reportar incidente</span>
-                    </span>
-                  </button>
-                  <button class="btn-31" onclick="window.location.href = 'comunidades/incidentes'">
-                    <span class="text-container">
-                      <span class="text"> Cerrar incidente
-                    </span>
-                    </span>
-                  </button>
-                  <button class="btn-31" onclick="window.location.href = 'comunidades'">
-                    <span class="text-container">
-                      <span class="text">Unirme a comunidad</span>
-                    </span>
-                  </button>
-                  <button class="btn-31" onclick="window.location.href='organismosDeControl'">
-                    <span class="text-container">
-                       <span class="text">Ver Empresas</span>
-                     </span>
-                  </button>
-                  {{/if}}
-
-                  {{#if usuarioEmpresa}}
-                  <button class="btn-31" onclick="window.location.href='rankings'">
-                    <span class="text-container">
-                      <span class="text">Ver Rankings</span>
-                    </span>
-                  </button>
-                  {{/if}}
-
-                  {{#if administrador}}
-                   <button class="btn-31" onclick="window.location.href='rankings'">
-                     <span class="text-container">
-                       <span class="text">Ver Rankings</span>
-                     </span>
-                   </button>
-                  <button class="btn-31" onclick="window.location.href='usuarios'">
-                     <span class="text-container">
-                        <span class="text">Administrar Usuarios</span>
-                     </span>
-                  </button>
-                  <button class="btn-31" onclick="window.location.href='comunidades'">
-                      <span class="text-container">
-                         <span class="text">Administrar Comunidades</span>
-                      </span>
-                   </button>
-                  <button class="btn-31" onclick="window.location.href='organismosDeControl'">
-                     <span class="text-container">
-                        <span class="text">Administrar Empresas</span>
-                     </span>
-                  </button>
-                  <button class="btn-31">
-                     <span class="text-container" onclick="window.location.href='cargarEmpresas'">
-                        <span class="text">Cargar Empresas</span>
-                     </span>
-                  </button>
-                  {{/if}}
             </div>
 
         </div>

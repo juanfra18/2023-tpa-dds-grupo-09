@@ -21,18 +21,25 @@
 
     <nav>
         <ul>
-            <li class="nav-item"><a href="/menu">Inicio</a></li>
+                <li class="nav-item"><a href="/menu">Inicio</a></li>
             {{#if usuarioBasico}}
-            <li class="nav-item"><a href="/intereses">Mis Intereses</a></li>
-            <li class="nav-item"><a href="/sugerenciasDeRevision">Sugerencias de Revisión</a></li>
+                <li class="nav-item"><a href="/intereses">Mis Intereses</a></li>
+                <li class="nav-item"><a href="/sugerenciasDeRevision">Sugerencias de Revisión</a></li>
+            {{else}}
+                <li class="nav-item"><a href="/rankings">Rankings</a></li>
             {{/if}}
             {{#unless administrador}}
-            <li class="nav-item"><a href="/incidentes">Mis Incidentes</a></li>
+                <li class="nav-item"><a href="/incidentes">Mis Incidentes</a></li>
+            {{/unless}}
+            {{#unless usuarioEmpresa}}
+                <li class="nav-item"><a href="/comunidades">Comunidades</a></li>
+                <li class="nav-item"><a href="/organismosDeControl">Empresas</a></li>
             {{/unless}}
             {{#if administrador}}
-            <li class="nav-item"><a href="/incidentes">Incidentes</a></li>
+                <li class="nav-item"><a href="/incidentes">Incidentes</a></li>
+                <li class="nav-item"><a href="/usuarios">Usuarios</a></li>
             {{/if}}
-            <li class="nav-item"><a href="/perfil/{{miembro_id}}"><img src="/./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
+                <li class="nav-item"><a href="/perfil/{{miembro_id}}"><img src="/./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30"></a></li>
         </ul>
     </nav>
 </header>
