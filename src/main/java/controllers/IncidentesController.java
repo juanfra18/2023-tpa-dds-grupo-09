@@ -97,6 +97,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("abierto",abierto);
     model.put("cerrado",cerrado);
+    model.put("valorEstado", EstadoIncidente.valueOf(estado));
     model.put("seleccionEstado",true);
     model.put("seleccionComunidad",false);
     model.put("comunidades", comunidades);
@@ -137,6 +138,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("abierto",abierto);
     model.put("cerrado",cerrado);
+    model.put("valorEstado", EstadoIncidente.valueOf(estado));
     model.put("seleccionEstado",true);
     model.put("seleccionComunidad",true);
     model.put("comunidades", comunidades);
