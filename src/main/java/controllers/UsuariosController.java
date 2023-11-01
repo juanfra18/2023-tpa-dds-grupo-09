@@ -76,7 +76,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     }
 
     if(miembroDeComunidad.getId().equals(this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId())) { // Si mi ID es del usuario loguado
-      miPerfil = true; //Muestrame mi perfil
+     // miPerfil = true; //Muestrame mi perfil
     }
     else if (miembroDeComunidad.getId() != this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId() && !administrador) { // Si no soy admin y no es mi perfil
       throw new AccesoDenegadoExcepcion();
@@ -91,7 +91,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("incidentesAbiertos", incidentesAbiertos);
     model.put("incidentesCerrados", incidentesCerrados);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
-    model.put("miPerfil", miPerfil);
+    //model.put("miPerfil", miPerfil);
     context.render("PerfilUsuario.hbs", model);
     em.close();
   }

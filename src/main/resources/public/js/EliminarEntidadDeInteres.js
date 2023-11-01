@@ -7,10 +7,9 @@ document.querySelectorAll('.btn-eliminar-entidadInteres').forEach(button => {
                     })
                     .then(response => {
                         if (response.ok) {
-                            window.location.href = '/intereses';
-                            console.log('Interes eliminado con éxito');
+                            window.location.href = '/intereses/entidades';
                         } else {
-                            console.error('Error al eliminar interés');
+                            window.alert('Error al eliminar interés');
                         }
                     });
     });

@@ -6,7 +6,7 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
         if (response.ok) {
             window.location.href = '/';
         } else {
-            console.error('Error al cerrar sesión');
+            window.alert('Error al cerrar sesión');
         }
     });
 });

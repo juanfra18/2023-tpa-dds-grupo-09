@@ -10,9 +10,8 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
                         console.log(response);
                         if (response.ok) {
                             window.location.href = 'usuarios';
-                            console.log('Usuario eliminado con éxito');
                         } else {
-                            console.error('Error al eliminar usuario');
+                            window.alert('Error al eliminar usuario');
                         }
                     });
         } else {

@@ -9,10 +9,9 @@ document.querySelectorAll('.btn-cambiar-rol').forEach(button => {
                         })
                         .then(response => {
                             if (response.ok) {
-                                window.location.href = '/intereses';
-                                console.log('Rol cambiado con éxito');
+                                window.location.href = '/intereses/servicios';
                             } else {
-                                console.error('Error al cambiar el rol');
+                                window.alert('Error al cambiar el rol');
                             }
                         });
                     } else {

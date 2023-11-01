@@ -8,9 +8,8 @@ document.querySelectorAll('.btn-unirse').forEach(button => {
           .then(response => {
                     if (response.ok) {
                         window.location.href = '/comunidades';
-                        console.log('Union a comunidad con éxito');
                     } else {
-                        console.error('Error al unirse a comunidad');
+                        window.alert('Error al unirse a comunidad');
                     }
                 });
     });

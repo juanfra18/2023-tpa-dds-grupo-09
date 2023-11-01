@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InteresController extends ControllerGenerico implements ICrudViewsHandler {
+public class InteresController extends ControllerGenerico{
   RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
   RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
   RepositorioParServicioRol repositorioParServicioRol = RepositorioParServicioRol.getInstancia();
@@ -48,18 +48,27 @@ public class InteresController extends ControllerGenerico implements ICrudViewsH
     em.close();
     context.json(interes);
   }
-  @Override
-  public void index(Context context) {
+
+  public void indexEntidades(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    boolean usuarioBasico = false;
-    boolean usuarioEmpresa = false;
-    boolean administrador = false;
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    List<Entidad> entidades = miembroDeComunidad.getEntidadesDeInteres();
+
+    model.put("usuarioBasico",true);
+    model.put("entidades",entidades);
+    model.put("miembro_id",miembroDeComunidad.getId());
+    context.render("InteresesEntidades.hbs", model);
+    em.close();
+  }
+
+  public void indexServicios(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
-
-    List<Entidad> entidades = miembroDeComunidad.getEntidadesDeInteres();
 
     List<ParServicioRol> servicios = miembroDeComunidad.getServiciosDeInteres();
 
@@ -68,50 +77,18 @@ public class InteresController extends ControllerGenerico implements ICrudViewsH
 
     for(ParServicioRol parServicioRol:servicios)
     {
-        establecimientoDeServicioId = repositorioServicio.establecimientoDeServicio(parServicioRol.getServicio().getId());
+      establecimientoDeServicioId = repositorioServicio.establecimientoDeServicio(parServicioRol.getServicio().getId());
 
-        establecimientoDeServicio = repositorioDeEstablecimientos.buscar(establecimientoDeServicioId);
-        parServicioRol.getServicio().setEstablecimiento(establecimientoDeServicio);
+      establecimientoDeServicio = repositorioDeEstablecimientos.buscar(establecimientoDeServicioId);
+      parServicioRol.getServicio().setEstablecimiento(establecimientoDeServicio);
 
     }
 
-
     model.put("usuarioBasico",true);
-    model.put("entidades",entidades);
     model.put("servicios",servicios);
     model.put("miembro_id",miembroDeComunidad.getId());
-    context.render("Intereses.hbs", model);
+    context.render("InteresesServicios.hbs", model);
     em.close();
-  }
-
-  @Override
-  public void show(Context context) {
-
-  }
-
-  @Override
-  public void create(Context context) {
-
-  }
-
-  @Override
-  public void save(Context context) {
-
-  }
-
-  @Override
-  public void edit(Context context) {
-
-  }
-
-  @Override
-  public void update(Context context) {
-
-  }
-
-  @Override
-  public void delete(Context context) {
-
   }
 
   public void agregarEntidad(Context context) {

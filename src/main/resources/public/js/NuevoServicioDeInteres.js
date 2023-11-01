@@ -19,9 +19,8 @@ document.querySelectorAll('.btn-nuevo-interes').forEach(button => {
                         .then(response => {
                             if (response.ok) {
                                 window.location.href = '/organismosDeControl/' + organismoId + '/entidadesPrestadoras/' + entidadPrestadoraId + '/entidades/' + entidadId + '/establecimientos/' + establecimientoId + '/servicios';
-                                console.log('Nuevo interés con éxito');
                             } else {
-                                console.error('Error al definir nuevo interés');
+                                window.alert('Error al definir nuevo interés');
                             }
                         });
                     } else {

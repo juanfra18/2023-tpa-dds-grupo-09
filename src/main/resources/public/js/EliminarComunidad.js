@@ -10,9 +10,8 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
                 .then(response => {
                     if (response.ok) {
                        window.location.href = '/comunidades'
-                        console.log('Comunidad eliminada con éxito');
                     } else {
-                        console.error('Error al eliminar usuario');
+                        window.alert('Error al eliminar usuario');
                     }
                 });
         }
