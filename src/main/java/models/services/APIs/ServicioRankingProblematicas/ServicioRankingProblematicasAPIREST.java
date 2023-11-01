@@ -1,6 +1,5 @@
 package models.services.APIs.ServicioRankingProblematicas;
 
-import com.google.gson.Gson;
 import models.Config.Config;
 import models.domain.Entidades.Entidad;
 import models.domain.Incidentes.Incidente;
@@ -37,7 +36,7 @@ public class ServicioRankingProblematicasAPIREST implements ServicioRankingProbl
         }
         return instancia;
     }
-
+    @Override
     public List<Entidad>  obtenerRanking(List<Entidad> entidades, List<Incidente> incidentes, List<Comunidad> comunidades, Long CNF) {
         SRPJsonRequest request = new SRPJsonRequest();
 
@@ -55,12 +54,10 @@ public class ServicioRankingProblematicasAPIREST implements ServicioRankingProbl
         request.setComunidades(miniComunidades);
         request.setCNF(CNF);
 
-        Gson gson = new Gson();
-
         try {
-            Call<String> requestRanking = servicioRankingProblematicasMensajes.enviarDatosRanking(gson.toJson(request));
-            Response<String> responseRanking = requestRanking.execute();
-            SRPJsonResponse response = gson.fromJson(responseRanking.body(), SRPJsonResponse.class);
+            Call<SRPJsonResponse> requestRanking = servicioRankingProblematicasMensajes.enviarDatosRanking(request);
+            Response<SRPJsonResponse> responseRanking = requestRanking.execute();
+            SRPJsonResponse response = responseRanking.body();
             List<Entidad> entidadesDevueltas = new ArrayList<>();
             response.getEntidades().forEach(l -> entidadesDevueltas.add(entidades.stream().filter(e -> e.getId().equals(l)).findFirst().get()));
             return entidadesDevueltas;
