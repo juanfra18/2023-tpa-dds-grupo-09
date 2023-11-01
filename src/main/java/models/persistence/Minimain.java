@@ -83,9 +83,13 @@ public class Minimain implements WithSimplePersistenceUnit {
             Rol basico = new Rol();
             basico.setNombre("basico");
             basico.setTipo(TipoRol.USUARIO_BASICO);
+            Rol empresa = new Rol();
+            empresa.setNombre("empresa");
+            empresa.setTipo(TipoRol.USUARIO_EMPRESA);
 
             repositorioRoles.agregar(admin);
             repositorioRoles.agregar(basico);
+            repositorioRoles.agregar(empresa);
 
             u1.setRol(admin);
             u2.setRol(basico);

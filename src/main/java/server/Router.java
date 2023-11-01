@@ -54,6 +54,10 @@ public class Router {
       post("/intereses/servicio/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarServicio,TipoRol.USUARIO_BASICO);
       post("/intereses/servicio/cambiarRol/{id}",((InteresController) FactoryController.controller("interes"))::cambiarRol,TipoRol.USUARIO_BASICO);
       get("/sugerenciasDeRevision/{lat}/{long}",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::index,TipoRol.USUARIO_BASICO);
+      get("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::registrarUsuario);
+      get("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::registrarUsuario);
+      post("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::usuarioOrganismoDeControl);
+      post("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::usuarioEntidadPrestadora);
     });
   }
 }
