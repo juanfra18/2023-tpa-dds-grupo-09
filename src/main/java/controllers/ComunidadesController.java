@@ -133,7 +133,6 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
   @Override
   public void delete(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     String comunidadId = context.pathParam("id");
     try {
       em.getTransaction().begin();
@@ -143,7 +142,6 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
 
       repositorioComunidad.eliminar(comunidadAEliminar);
       em.getTransaction().commit();
-      context.redirect("/comunidades/"+ usuarioLogueado.getId());
     } catch (Exception e) {
       em.getTransaction().rollback();
     } finally {
