@@ -5,16 +5,14 @@ document.querySelectorAll('.btn-nuevo-interes').forEach(button => {
         var entidadId = this.getAttribute('data-entidad-id');
         var establecimientoId = this.getAttribute('data-establecimiento-id');
         var servicioId = this.getAttribute('data-servicio-id');
+        var rol = this.getAttribute('data-rol');
 
         fetch('/intereses/servicio/' + servicioId)
             .then(response => response.json())
             .then(interes => {
                 if (!interes) {
-                    var rol = prompt("¿Cuál es tu rol? (OBSERVADOR/AFECTADO)");
-
-                    if (rol === "OBSERVADOR" || rol === "AFECTADO") {
                         fetch('/intereses/servicio/agregar/' + servicioId + '/' + rol, {
-                            method: 'POST'
+                        method: 'POST'
                         })
                         .then(response => {
                             if (response.ok) {
@@ -23,9 +21,6 @@ document.querySelectorAll('.btn-nuevo-interes').forEach(button => {
                                 window.alert('Error al definir nuevo interés');
                             }
                         });
-                    } else {
-                        window.alert("Por favor, selecciona un rol.");
-                    }
                 } else {
                     window.alert("Ya es de tu interés este servicio");
                 }

@@ -165,7 +165,6 @@ public class InteresController extends ControllerGenerico{
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     String servicioId = context.pathParam("id");
-    String rol = context.pathParam("rol");
 
     try {
       em.getTransaction().begin();
