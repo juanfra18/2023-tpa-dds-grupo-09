@@ -162,14 +162,12 @@ public class InteresController extends ControllerGenerico{
 
   public void cambiarRol(Context context){
     EntityManager em = EntityManagerSingleton.getInstance();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     String servicioId = context.pathParam("id");
 
     try {
       em.getTransaction().begin();
       ParServicioRol parServicioRolAModificar = repositorioParServicioRol.buscar(Long.parseLong(servicioId));
-      miembroDeComunidad.cambiarRolSobreServicio(parServicioRolAModificar.getServicio());
+      parServicioRolAModificar.cambiarRol();
       //En una relacion OneToMany no elimina la fila hibernate con tan solo quitarlo de la lista del miebro de comunidad
       em.getTransaction().commit();
     } catch (Exception e) {
