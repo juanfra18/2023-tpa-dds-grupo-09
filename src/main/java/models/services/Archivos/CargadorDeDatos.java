@@ -17,19 +17,16 @@ public class CargadorDeDatos {
 
     for (String[] elemento : listaCSV) {
       String organismoNombre = elemento[0];
-      String organismoMail = elemento[1];
-      String prestadoraNombre = elemento[2];
-      String prestadoraMail = elemento[3];
-      String entidadNombre = elemento[4];
-      String entidadTipo = elemento[5];
-      String establecimientoNombre = elemento[6];
-      String establecimientoLocalizacion = elemento[7];
-      String establecimientoTipo = elemento[8];
-      String servicioNombre = elemento[9];
-      String servicioTipo = elemento[10];
+      String prestadoraNombre = elemento[1];
+      String entidadNombre = elemento[2];
+      String entidadTipo = elemento[3];
+      String establecimientoNombre = elemento[4];
+      String establecimientoLocalizacion = elemento[5];
+      String establecimientoTipo = elemento[6];
+      String servicioNombre = elemento[7];
+      String servicioTipo = elemento[8];
 
       EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
-        posiblePrestadora.setPersonaMail(prestadoraMail);
         posiblePrestadora.setNombre(prestadoraNombre);
 
       Entidad posibleEntidad = new Entidad();
@@ -42,7 +39,6 @@ public class CargadorDeDatos {
       posibleEstablecimiento.setNombre(establecimientoNombre);
 
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl());
-      organismo.setPersonaMail(organismoMail);
       organismo.setNombre(organismoNombre);
 
       EntidadPrestadora prestadora = obtenerPrestadora(organismo.getEntidadesPrestadoras(), posiblePrestadora);

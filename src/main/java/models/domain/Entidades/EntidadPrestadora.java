@@ -53,4 +53,8 @@ public class EntidadPrestadora extends Persistente {
   public int cantidadEntidades(){
     return this.entidades.size();
   }
+
+  public boolean tieneContacto(){
+    return personaMail != null;
+  }
 }

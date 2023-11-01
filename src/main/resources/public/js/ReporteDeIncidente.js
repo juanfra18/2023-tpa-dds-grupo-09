@@ -1,3 +1,106 @@
+// Objeto para manejar los eventos relacionados con los selects
+const SelectHandler = {
+   init() {
+       this.initSelects();
+       this.initSubmitButton();
+     },
+
+   initSelects() {
+    this.inputSelectEntidad = document.getElementById('selectEntidad');
+    this.inputSelectEstablecimiento = document.getElementById('selectEstablecimiento');
+    this.inputSelectServicio = document.getElementById('selectServicio');
+
+    this.inputSelectEntidad.addEventListener('change', () => this.handleCambioSelectEntidad());
+    this.inputSelectEstablecimiento.addEventListener('change', () => this.handleCambioSelectEstablecimiento());
+  },
+
+  handleCambioSelectEntidad() {
+    const entidadSeleccionadaId = this.inputSelectEntidad.value;
+    if (entidadSeleccionadaId !== "Seleccionar..." && entidadSeleccionadaId !== "-1") {
+
+    fetch('/entidades/' + entidadSeleccionadaId + '/establecimientos')
+        .then(response => response.json())
+        .then(establecimientos => {
+            // Limpiar el segundo select
+            this.clearSelects([this.inputSelectEstablecimiento]);
+            // Agregar opciones al segundo select
+                establecimientos.forEach(establecimiento => {
+                const option = document.createElement('option');
+                option.value = establecimiento.id;
+                option.textContent = establecimiento.nombre;
+                this.inputSelectEstablecimiento.appendChild(option);
+            });
+        });
+    } else {
+      // Restablece los select 2 y 3
+      this.clearSelects([this.inputSelectEstablecimiento, this.inputSelectServicio]);
+    }
+  },
+
+  handleCambioSelectEstablecimiento() {
+    const entidadSeleccionadaId = this.inputSelectEntidad.value;
+    const establecimientoSeleccionadoId = this.inputSelectEstablecimiento.value;
+        if(establecimientoSeleccionadoId!=="-1"){
+        fetch('/entidades/' + entidadSeleccionadaId + '/establecimientos/' + establecimientoSeleccionadoId + '/servicios')
+            .then(response => response.json())
+            .then(servicios => {
+                // Limpiar el tercer select
+                   this.clearSelects([this.inputSelectServicio]);
+                // Agregar opciones al tercer select
+                    servicios.forEach(servicio => {
+                    const option = document.createElement('option');
+                    option.value = servicio.id;
+                    option.textContent = servicio.nombre + ' ' + servicio.tipoNombre;
+                    this.inputSelectServicio.appendChild(option);
+                });
+            });
+    } else {
+      // Restablece el select 3
+      this.clearSelects([this.inputSelectServicio]);
+    }
+  },
+
+  clearSelects(selectElements) {
+    selectElements.forEach(select => {
+      select.innerHTML = '';
+      const option = document.createElement('option');
+      option.value = -1;
+      option.textContent = "Seleccionar...";
+      select.appendChild(option);
+    });
+  },
+
+    initSubmitButton() {
+    const enviarButton = document.querySelector('.btn-cargarReporte');
+    const camposInput = document.querySelectorAll(".input-field");
+
+    // Verifica si todos los campos tienen valores
+    function checkCampos() {
+      let todosLosCamposLlenos = true;
+      camposInput.forEach(function (campo) {
+        console.log('value: ' + campo.value);
+        if (!campo.value || campo.value == "Seleccionar..." || campo.value == "-1") {
+          todosLosCamposLlenos = false;
+        }
+      });
+      if (todosLosCamposLlenos) {
+        enviarButton.removeAttribute("disabled");
+      } else {
+        enviarButton.setAttribute("disabled", "disabled");
+      }
+    }
+    // Escucha eventos de cambio en los campos
+    camposInput.forEach(function (campo) {
+      campo.addEventListener("input", checkCampos);
+    });
+  },
+};
+
+// Inicializa el objeto SelectHandler al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+  SelectHandler.init();
+});
+
 document.querySelector('.btn-cargarReporte').addEventListener('submit', function() {
     var estado = this.getAttribute('data-estado');
     fetch('/reportarIncidente/' + estado, {
@@ -12,87 +115,3 @@ document.querySelector('.btn-cargarReporte').addEventListener('submit', function
     });
 });
 
-const inputGroupSelect01 = document.getElementById('inputGroupSelect01');
-const inputGroupSelect02 = document.getElementById('inputGroupSelect02');
-const inputGroupSelect03 = document.getElementById('inputGroupSelect03');
-
-inputGroupSelect01.addEventListener('change', () => {
-    const entidadSeleccionadaId = inputGroupSelect01.value;
-
-    if(entidadSeleccionadaId!="Seleccionar..."){
-
-    fetch('/entidades/' + entidadSeleccionadaId + '/establecimientos')
-        .then(response => response.json())
-        .then(establecimientos => {
-            // Limpiar el segundo select
-            inputGroupSelect02.innerHTML = '';
-            const option1 = document.createElement('option');
-                            option1.value=-1;
-                            option1.textContent = "Seleccionar...";
-                            inputGroupSelect02.appendChild(option1);
-            // Agregar opciones al segundo select
-            establecimientos.forEach(establecimiento => {
-                const option = document.createElement('option');
-                option.value = establecimiento.id;
-                option.textContent = establecimiento.nombre;
-                inputGroupSelect02.appendChild(option);
-            });
-        });}
-        else{
-            inputGroupSelect02.innerHTML = '';
-            inputGroupSelect03.innerHTML = '';
-        }
-});
-
-inputGroupSelect02.addEventListener('change', () => {
-    const entidadSeleccionadaId = inputGroupSelect01.value;
-    const establecimientoSeleccionadoId = inputGroupSelect02.value;
-    if(establecimientoSeleccionadoId>-1){
-    fetch('/entidades/' + entidadSeleccionadaId + '/establecimientos/' + establecimientoSeleccionadoId + '/servicios')
-        .then(response => response.json())
-        .then(servicios => {
-            // Limpiar el tercer select
-            inputGroupSelect03.innerHTML = '';
-            const option1 = document.createElement('option');
-                            option1.value=-1;
-                            option1.textContent = "Seleccionar...";
-                            inputGroupSelect03.appendChild(option1);
-            // Agregar opciones al tercer select
-            servicios.forEach(servicio => {
-                const option = document.createElement('option');
-                option.value = servicio.id;
-                option.textContent = servicio.nombre + ' ' + servicio.tipoNombre;
-                inputGroupSelect03.appendChild(option);
-            });
-        });
-}
-else{
-    inputGroupSelect03.innerHTML = '';
-}
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const inputFields = document.querySelectorAll(".input-field");
-    const enviarButton = document.querySelector(".btn-cargarReporte");
-
-    // Verifica si todos los campos tienen valores
-    function checkFields() {
-        let allFieldsFilled = true;
-        inputFields.forEach(function (field) {
-        console.log('value: ' + field.value);
-            if (!field.value || field.value=="Seleccionar..." || field.value=="-1"){
-                allFieldsFilled = false;
-            }
-        });
-        if (allFieldsFilled) {
-            enviarButton.removeAttribute("disabled");
-        } else {
-            enviarButton.setAttribute("disabled", "disabled");
-        }
-    }
-
-    // Escucha eventos de cambio en los campos
-    inputFields.forEach(function (field) {
-        field.addEventListener("input", checkFields);
-    });
-});

@@ -41,4 +41,8 @@ public class OrganismoDeControl extends Persistente {
   public int cantidadEntidadesPrestadoras(){
     return this.entidadesPrestadoras.size();
   }
+
+  public boolean tieneContacto(){
+    return personaMail != null;
+  }
 }
