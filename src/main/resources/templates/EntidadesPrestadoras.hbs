@@ -14,7 +14,9 @@
                         <div class="tarjetaEntidadPrestadora d-flex justify-content-between align-items-center">
                             <div>
                                 <h2>{{this.nombre}}</h2>
-                                <h4>Contacto: {{this.personaMail}}</h4>
+                                {{#if this.tieneContacto}}
+                                    <h4>Contacto: {{this.personaMail}}</h4>
+                                {{/if}}
                                 <h4>Entidades: {{this.cantidadEntidades}}</h4>
                             </div>
                             <button type="button" class="btn btn-secondary" onclick="window.location.href='/organismosDeControl/{{organismo_id}}/entidadesPrestadoras/{{this.id}}/entidades'">Entidades</button>
