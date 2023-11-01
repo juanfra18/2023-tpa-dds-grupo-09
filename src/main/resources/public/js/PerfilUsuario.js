@@ -4,7 +4,7 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
     })
     .then(response => {
         if (response.ok) {
-            window.location.href = '/inicioDeSesion';
+            window.location.href = '/';
         } else {
             console.error('Error al cerrar sesión');
         }

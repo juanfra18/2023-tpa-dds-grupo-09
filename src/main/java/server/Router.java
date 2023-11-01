@@ -9,7 +9,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 public class Router {
   public static void init() {
     Server.app().routes(() -> {
-      post("/cerrarSesion", ctx -> {SessionHandler.endSession(ctx); ctx.status(200);});
+      post("/cerrarSesion", ctx -> SessionHandler.endSession(ctx));
       get("/rankings", ((RankingsController) FactoryController.controller("rankings"))::index, TipoRol.USUARIO_EMPRESA,TipoRol.ADMINISTRADOR);
       get("/menu", ((MenuPrincipalController) FactoryController.controller("menuPrincipal"))::index);
       get("/", ctx -> ctx.render("LandingPage.hbs"));

@@ -42,5 +42,6 @@ public class SessionHandler {
     ctx.removeCookie("usuario_id");
     ctx.removeCookie("tipo_rol");
     ctx.removeCookie("vencimiento");
+    ctx.redirect("/");
   }
 }
