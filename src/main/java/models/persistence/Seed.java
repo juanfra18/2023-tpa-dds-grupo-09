@@ -1,21 +1,14 @@
 package models.persistence;
 
-import models.Config.Config;
-import models.domain.Entidades.Entidad;
-import models.domain.Entidades.Establecimiento;
 import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
 import models.domain.Incidentes.Posicion;
 import models.domain.Notificaciones.CuandoSuceden;
-import models.domain.Notificaciones.FormaDeNotificar;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Notificaciones.ViaMail;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
-import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
-import models.domain.Rankings.EntidadesQueSolucionanMasLento;
-import models.domain.Rankings.Tierlist;
 import models.domain.Usuario.Rol;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
@@ -29,7 +22,7 @@ import javax.persistence.*;
 import java.util.List;
 
 
-public class Minimain implements WithSimplePersistenceUnit {
+public class Seed implements WithSimplePersistenceUnit {
     public static void main(String[] args) {
         EntityManager em = EntityManagerSingleton.getInstance();
         CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();

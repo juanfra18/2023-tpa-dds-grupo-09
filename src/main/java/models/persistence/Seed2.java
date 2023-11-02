@@ -12,7 +12,7 @@ import models.persistence.Repositorios.*;
 import javax.persistence.*;
 
 
-public class Minimain2 implements WithSimplePersistenceUnit {
+public class Seed2 implements WithSimplePersistenceUnit {
   public static void main(String[] args) {
     EntityManager em = EntityManagerSingleton.getInstance();
     RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
