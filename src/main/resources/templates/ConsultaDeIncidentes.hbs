@@ -53,11 +53,17 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{this.establecimiento.nombre}}</li>
                         <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
-                        <li class="list-group-item">{{valorEstado}}</li>
+                        <li class="list-group-item">
+                            {{#if abierto}}
+                                <span class="badge text-bg-success">{{valorEstado}}</span>
+                            {{else}}
+                                <span class="badge text-bg-danger">{{valorEstado}}</span>
+                            {{/if}}
+                        </li>
 
                         {{#if abierto}}
                             {{#if seleccionComunidad}}
-                             <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id"{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                             <button type="button" class="btn btn-secondary btn-cerrar-incidente" id="btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                             {{/if}}
                         {{/if}}
                     </ul>

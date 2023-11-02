@@ -1,6 +1,8 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Personas.Comunidad;
+import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
@@ -8,7 +10,10 @@ import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MenuPrincipalController extends ControllerGenerico implements ICrudViewsHandler  {
@@ -22,9 +27,12 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
     boolean usuarioEmpresa = false;
     boolean administrador = false;
 
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    List<Comunidad> usuarioComunidades = new ArrayList<>();
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
+      usuarioComunidades = miembroDeComunidad.getComunidades();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
@@ -34,12 +42,21 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
     {
       administrador = true;
     }
-
-    model.put("usuarioBasico",usuarioBasico);
+    /*model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
-    context.render("MenuPrincipal.hbs", model);
+    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());*/
+    if(administrador || usuarioEmpresa){
+      context.redirect("/incidentes");
+    }
+    if (usuarioBasico){
+      System.out.println(usuarioComunidades);
+      System.out.println(usuarioComunidades.isEmpty());
+      if (!usuarioComunidades.isEmpty()) {
+        context.redirect("/incidentes");
+      }else context.redirect("/comunidades");
+    }
+    //context.render("MenuPrincipal.hbs", model);
     em.close();
   }
 
