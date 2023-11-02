@@ -29,6 +29,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
 
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
@@ -48,7 +49,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
       administrador = true;
       incidentes = repositorioDeIncidentes.buscarTodos();
     }
-
+    model.put("comunidades", comunidades);
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
@@ -145,7 +146,36 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
+  public void indexComunidad(@NotNull Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String comunidadId = context.pathParam("id");
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
+    List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
 
+    List<Incidente> incidentesDeComunidad = comunidad.getIncidentesDeComunidad(repositorioDeIncidentes.buscarTodos());
+
+    boolean abierto = false;
+    boolean cerrado = false;
+
+
+    comunidades.remove(comunidad); //para que no aparezca la opcion seleccionada 2 veces
+
+    model.put("usuarioBasico",true);
+    model.put("incidentes",incidentesDeComunidad);
+    model.put("comunidadSeleccionada", comunidad);
+    model.put("miembro_id",miembroDeComunidad.getId());
+    model.put("abierto",abierto);
+    model.put("cerrado",cerrado);
+    model.put("valorEstado", "Seleccionar...");
+    model.put("seleccionEstado",false);
+    model.put("seleccionComunidad",true);
+    model.put("comunidades", comunidades);
+    context.render("ConsultaDeIncidentes.hbs", model);
+    em.close();
+  }
   @Override
   public void show(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
@@ -203,4 +233,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
   public void delete(Context context) {
 
   }
+
+
 }

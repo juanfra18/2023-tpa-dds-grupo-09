@@ -1,29 +1,66 @@
-inputGroupSelect01.addEventListener('change', () => {
-    var estado = inputGroupSelect01.value;
-    if(estado!="Seleccionar...")
-     fetch('/incidentes/' + estado)
-        .then(response => {
-            if (response.ok) {
-               window.location.href='/incidentes/' + estado;
-            } else {
-                window.alert("Ocurrio un error");
-            }
-        })
-});
+class IncidentHandler {
+  constructor() {
+    this.inputEstado = document.getElementById('inputEstado');
+    this.inputComunidad = document.getElementById('inputComunidad');
 
-inputGroupSelect02.addEventListener('change', () => {
-    var estado = inputGroupSelect01.value;
-    var comunidadId = inputGroupSelect02.value;
-    if(comunidadId!="Seleccionar..." && estado!="Seleccionar...")
-     fetch('/incidentes/' + estado + '/comunidad/' + comunidadId)
-        .then(response => {
-            if (response.ok) {
-               window.location.href='/incidentes/' + estado + '/comunidad/' + comunidadId;
-            } else {
-                window.alert("Ocurrio un error");
-            }
-        })
-});
+    this.inputEstado.addEventListener('change', () => this.handleEstadoChange());
+    this.inputComunidad.addEventListener('change', () => this.handleComunidadChange());
+  }
+
+  handleEstadoChange() {
+    const estado = this.inputEstado.value;
+    const comunidadId = this.inputComunidad.value;
+
+    if (estado !== "Seleccionar...") {
+      let url = '/incidentes/' + estado;
+      if (comunidadId !== "Seleccionar...") {
+        url = '/incidentes/' + estado + '/comunidad/' + comunidadId;
+      }
+      this.fetchA(url);
+    }
+    else{
+    let url = '/incidentes';
+        if (comunidadId !== "Seleccionar...") {
+            url = '/incidentes/comunidad/' + comunidadId;
+        }
+    this.fetchA(url);
+  }
+  }
+
+  handleComunidadChange() {
+    const estado = this.inputEstado.value;
+    const comunidadId = this.inputComunidad.value;
+
+    if (comunidadId !== "Seleccionar...") {
+      let url = '/incidentes/comunidad/' + comunidadId;
+
+      if (estado !== "Seleccionar...") {
+        url = '/incidentes/' + estado + '/comunidad/' + comunidadId;
+      }
+      this.fetchA(url);
+    }
+    else{
+        let url = '/incidentes';
+        if (estado !== "Seleccionar...") {
+            url = '/incidentes/' + estado;
+        }
+        this.fetchA(url);
+  }}
+
+  fetchA(url) {
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          window.location.href = url;
+        } else {
+          window.alert('Ocurrió un error');
+        }
+      });
+  }
+}
+
+// Inicializar el manejador de incidentes
+const incidentHandler = new IncidentHandler();
 
 document.querySelector('.btn-cerrar-incidente').addEventListener('click', function() {
     var incidenteId = this.getAttribute('data-incidente-id');
@@ -32,10 +69,10 @@ document.querySelector('.btn-cerrar-incidente').addEventListener('click', functi
         method: 'POST'
     })
     .then(response => {
-        if (response.ok) {
-            window.location.href='/incidentes/ABIERTO' + '/comunidad/' + comunidadId;
-        } else {
-            window.alert('Error al cerrar incidente');
-        }
+            if (response.ok) {
+                window.location.href='/incidentes/comunidad/' + comunidadId;
+            } else {
+                window.alert('Error al cerrar incidente');
+            }
     });
 });

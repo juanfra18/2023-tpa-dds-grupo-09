@@ -10,8 +10,8 @@
      <h1>INCIDENTES</h1>
      {{#unless administrador}}
             <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect01">Seleccione Estado de Incidentes</label>
-                <select class="form-select" id="inputGroupSelect01">
+                <label class="input-group-text" for="inputEstado">Seleccione Estado de Incidentes</label>
+                <select class="form-select" id="inputEstado">
                     <option
                     {{#unless seleccionEstado}}
                     selected
@@ -31,8 +31,8 @@
      {{/unless}}
      {{#if usuarioBasico}}
             <div class="input-group mb-3">
-                <label class="input-group-text" for="inputGroupSelect02">Seleccione una Comunidad</label>
-                <select class="form-select" id="inputGroupSelect02">
+                <label class="input-group-text" for="inputComunidad">Seleccione una Comunidad</label>
+                <select class="form-select" id="inputComunidad">
                     <option
                     {{#unless seleccionComunidad}}
                     selected
@@ -54,18 +54,18 @@
                         <li class="list-group-item">{{this.establecimiento.nombre}}</li>
                         <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
                         <li class="list-group-item">
-                            {{#if abierto}}
-                                <span class="badge text-bg-success">{{valorEstado}}</span>
+                            {{#if this.cerrado}}
+                                <span class="badge text-bg-danger">CERRADO</span>
                             {{else}}
-                                <span class="badge text-bg-danger">{{valorEstado}}</span>
+                                <span class="badge text-bg-success">ABIERTO</span>
                             {{/if}}
                         </li>
 
-                        {{#if abierto}}
+                        {{#unless this.cerrado}}
                             {{#if seleccionComunidad}}
-                             <button type="button" class="btn btn-secondary btn-cerrar-incidente" id="btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                             <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                             {{/if}}
-                        {{/if}}
+                        {{/unless}}
                     </ul>
                 </div>
             </div>
