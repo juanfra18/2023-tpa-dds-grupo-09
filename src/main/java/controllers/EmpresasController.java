@@ -22,6 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.javalin.http.Context;
+import io.javalin.http.UploadedFile;
+
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 public class EmpresasController extends ControllerGenerico implements ICrudViewsHandler {
 
   @Override
@@ -36,41 +44,51 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
   @Override
   public void create(Context context) {
   }
+@Override
+  public void save(Context ctx) {
+    UploadedFile uploadedFile = ctx.uploadedFile("archivoCSV");
 
-  @Override
-  public void save(Context context) {
+    if (uploadedFile == null) {
+      ctx.status(400).result("No se cargó el archivo");
+      return;
+    }
+
+    Path outputPath = Path.of("resources", uploadedFile.filename());
+
+    // Save the uploaded file to the specified path
+    try (InputStream uploadedFileStream = uploadedFile.content()) {
+      Files.copy(uploadedFileStream, outputPath, StandardCopyOption.REPLACE_EXISTING);
+      System.out.println("Archivo guardado con éxito.");
+
+      processFile(outputPath, ctx);
+
+    } catch (IOException e) {
+      ctx.status(500).result("Error al cargar el archivo");
+      return;
+    }
+  }
+
+  private void processFile(Path filePath, Context ctx) {
     EntityManager em = EntityManagerSingleton.getInstance();
-    UploadedFile archivoCSV = context.uploadedFile("archivoCSV");
     CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
     SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
     ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
     RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
     List<OrganismoDeControl> empresas;
 
-    String rutaCSV= "resources/datos.csv";
-    File archivo = new File(rutaCSV);
-
-    try (InputStream input = archivoCSV.content();
-         OutputStream output = new FileOutputStream(archivo)) {
-      Files.copy(input, archivo.toPath(), StandardCopyOption.REPLACE_EXISTING);
-      System.out.println("Archivo guardado con éxito.");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-
-
     try {
       em.getTransaction().begin();
-      empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(rutaCSV.toString()), servicioGeoref);
+      empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(filePath.toString()), servicioGeoref);
       empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
       em.getTransaction().commit();
     } catch (Exception e) {
       em.getTransaction().rollback();
+      ctx.status(500).result("Error al cargar el archivo");
     } finally {
       em.close();
     }
-    context.redirect("/cargarEmpresas");
+
+    ctx.redirect("/cargarEmpresas");
   }
 
   @Override
