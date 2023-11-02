@@ -113,19 +113,31 @@ public class Minimain implements WithSimplePersistenceUnit {
             mi3.setApellido("Emiliano");
             mi3.setNombre("Martinez");
 
-            ReceptorDeNotificaciones receptorDeNotificaciones = new ReceptorDeNotificaciones();
-            receptorDeNotificaciones.setMail("diseniogrupo9@gmail.com");
-            receptorDeNotificaciones.setTelefono("01144444444");
-            receptorDeNotificaciones.cambiarFormaDeNotificar(new CuandoSuceden());
-            receptorDeNotificaciones.cambiarMedioDeComunicacion(new ViaMail());
+            ReceptorDeNotificaciones receptorDeNotificaciones1 = new ReceptorDeNotificaciones();
+            receptorDeNotificaciones1.setMail("diseniogrupo9@gmail.com");
+            receptorDeNotificaciones1.setTelefono("01144444444");
+            receptorDeNotificaciones1.cambiarFormaDeNotificar(new CuandoSuceden());
+            receptorDeNotificaciones1.cambiarMedioDeComunicacion(new ViaMail());
 
-            mi.setReceptorDeNotificaciones(receptorDeNotificaciones);
+            ReceptorDeNotificaciones receptorDeNotificaciones2 = new ReceptorDeNotificaciones();
+            receptorDeNotificaciones2.setMail("diseniogrupo9@gmail.com");
+            receptorDeNotificaciones2.setTelefono("01121212121");
+            receptorDeNotificaciones2.cambiarFormaDeNotificar(new CuandoSuceden());
+            receptorDeNotificaciones2.cambiarMedioDeComunicacion(new ViaMail());
+
+            ReceptorDeNotificaciones receptorDeNotificaciones3 = new ReceptorDeNotificaciones();
+            receptorDeNotificaciones3.setMail("diseniogrupo9@gmail.com");
+            receptorDeNotificaciones3.setTelefono("01132432424");
+            receptorDeNotificaciones3.cambiarFormaDeNotificar(new CuandoSuceden());
+            receptorDeNotificaciones3.cambiarMedioDeComunicacion(new ViaMail());
+
+            mi.setReceptorDeNotificaciones(receptorDeNotificaciones1);
             mi.setUsuario(u1);
 
-            mi2.setReceptorDeNotificaciones(receptorDeNotificaciones);
+            mi2.setReceptorDeNotificaciones(receptorDeNotificaciones2);
             mi2.setUsuario(u2);
 
-            mi3.setReceptorDeNotificaciones(receptorDeNotificaciones);
+            mi3.setReceptorDeNotificaciones(receptorDeNotificaciones3);
             mi3.setUsuario(u3);
 
             repositorioMiembroDeComunidad.agregar(mi);
