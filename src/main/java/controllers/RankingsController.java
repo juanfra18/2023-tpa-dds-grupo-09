@@ -18,6 +18,7 @@ public class RankingsController extends ControllerGenerico implements ICrudViews
   private SistemaDeArchivos sistemaDeArchivos;
   private List<String[]> filasR1;
   private List<String[]> filasR2;
+  private List<String[]> filasR3;
 
 
   public RankingsController(){
@@ -45,8 +46,10 @@ public class RankingsController extends ControllerGenerico implements ICrudViews
 
     filasR1 = sistemaDeArchivos.csvALista("resources/ranking1.csv");
     filasR2 = sistemaDeArchivos.csvALista("resources/ranking2.csv");
+    filasR3 = sistemaDeArchivos.csvALista("resources/ranking3.csv");
     model.put("filasR1",filasR1);
     model.put("filasR2",filasR2);
+    model.put("filasR3",filasR3);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
