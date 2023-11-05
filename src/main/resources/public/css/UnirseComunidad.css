@@ -11,13 +11,15 @@
     background-attachment: fixed;
 }
 
-#base{
+#base, #base2 {
     width: 90%;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
     text-align: center;
+    margin: 100px auto; /* Ajusta el valor de '100px' para la separación deseada */
 }
+
 
 #inputGroupSelect01{
     max-width: 200px;

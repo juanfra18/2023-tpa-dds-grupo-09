@@ -6,6 +6,7 @@
  {{> templates/base }}
 
  {{#partial "contenido"}}
+ <div class="row">
         <div id="base">
             <h1>COMUNIDADES</h1>
                 <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -28,6 +29,24 @@
                 {{/each}}
                 </div>
         </div>
+         <div id="base2">
+                    <h1>MIS COMUNIDADES</h1>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                        {{#each comunidadesUsuario}}
+                            <div class="col">
+                                <div class="tarjetaComunidad d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h2>{{this.nombre}}</h2>
+                                        <h4>Miembros: {{this.cantidadMiembros}}</h4>
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/incidentes/' + {{this.id}}">Incidentes</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
+                                </div>
+                            </div>
+                        {{/each}}
+                        </div>
+                </div>
+ </div>
         <script src="js/EliminarComunidad.js"></script>
         <script src="js/UnirseAComunidad.js"></script>
 {{/partial}}

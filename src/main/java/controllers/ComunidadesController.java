@@ -9,11 +9,13 @@ import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
-import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ComunidadesController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
@@ -24,8 +26,9 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     Usuario usuarioLogueado = super.usuarioLogueado(context, em);
     boolean usuarioBasico = false;
     boolean administrador = false;
-    List<Comunidad> usuarioComunidades ;
+    List<Comunidad> usuarioComunidades;
     List<Comunidad> comunidades = new ArrayList<>();
+    List<Comunidad> comunidadesUsuario = new ArrayList<>();
 
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
 
@@ -35,6 +38,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
       usuarioBasico = true;
       usuarioComunidades = miembroDeComunidad.getComunidades();
       comunidades = repositorioComunidad.buscarTodos().stream().filter(comunidad -> !usuarioComunidades.contains(comunidad)).toList();
+      comunidadesUsuario = repositorioComunidad.buscarTodos().stream().filter(comunidad -> usuarioComunidades.contains(comunidad)).toList();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
     {
@@ -46,6 +50,7 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("usuarioEmpresa",false);
     model.put("administrador",administrador);
     model.put("comunidades",comunidades);
+    model.put("comunidadesUsuario",comunidadesUsuario);
     model.put("miembro_id",miembroDeComunidad.getId());
     context.render("UnirseComunidad.hbs", model);
     em.close();
