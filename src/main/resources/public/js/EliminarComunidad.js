@@ -4,7 +4,7 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
         var resultado = window.confirm('¿Estás seguro? Esta acción es irreversible');
 
         if (resultado === true) {
-                fetch('/comunidades/eliminarComunidad/' + comunidadId, {
+                fetch('/comunidades/'+ comunidadId + '/eliminar', {
                     method: 'POST'
                 })
                 .then(response => {

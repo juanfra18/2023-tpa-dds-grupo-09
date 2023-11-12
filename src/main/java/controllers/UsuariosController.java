@@ -1,25 +1,22 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.domain.Entidades.Entidad;
-import models.domain.Incidentes.EstadoIncidente;
-import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
-import models.persistence.Repositorios.*;
-import org.jetbrains.annotations.NotNull;
+import models.persistence.Repositorios.RepositorioComunidad;
+import models.persistence.Repositorios.RepositorioDeIncidentes;
+import models.persistence.Repositorios.RepositorioEntidad;
+import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
 import server.exceptions.AccesoDenegadoExcepcion;
-import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class UsuariosController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
@@ -110,7 +107,6 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
   public void edit(Context context) {
 
   }
-
   @Override
   public void update(Context context) {
 
@@ -162,4 +158,27 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
         em.close();
       }
     }
+
+  public void unirseAComunidad(Context context) {
+    RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String comunidadId = context.pathParam("id");
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
+
+    comunidad.agregarMiembro(miembroDeComunidad);
+    miembroDeComunidad.agregarComunidad(comunidad);
+
+    try {
+      em.getTransaction().begin();
+      repositorioComunidad.agregar(comunidad);
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+  }
+
 }

@@ -51,7 +51,8 @@
             <div class="col">
                 <div class="tarjetaIncidente">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{this.establecimiento.nombre}}</li>
+
+                        <li class="list-group-item">{{this.establecimiento.tipo}}: {{this.establecimiento.nombre}}</li>
                         <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
                         <li class="list-group-item">
                             {{#if this.cerrado}}

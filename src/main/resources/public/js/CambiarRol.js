@@ -1,7 +1,7 @@
 document.querySelectorAll('.btn-cambiar-rol').forEach(button => {
     button.addEventListener('click', function() {
         var servicioId = this.getAttribute('data-servicio-id');
-                        fetch('/intereses/servicio/cambiarRol/' + servicioId, {
+                        fetch('/intereses/servicio/'+ servicioId +'/cambiarRol', {
                             method: 'POST'
                         })
                         .then(response => {

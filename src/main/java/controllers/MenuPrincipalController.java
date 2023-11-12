@@ -6,11 +6,9 @@ import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
-import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +51,7 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
       System.out.println(usuarioComunidades);
       System.out.println(usuarioComunidades.isEmpty());
       if (!usuarioComunidades.isEmpty()) {
-        context.redirect("/incidentes");
+        context.redirect("/incidentes/ABIERTO");
       }else context.redirect("/comunidades");
     }
     //context.render("MenuPrincipal.hbs", model);

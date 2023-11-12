@@ -15,7 +15,11 @@
                 <p>Miembros:
                 <ul>
                   {{#each comunidad.miembros}}
+                  {{#if usuarioAdministrador}}
                     <li><a href="/perfil/{{this.id}}">{{this.usuario.username}}</a></li>
+                   {{else}}
+                   <li>{{this.usuario.username}}</li>
+                   {{/if}}
                   {{/each}}
                  <ul>
                 </p>

@@ -8,7 +8,7 @@ document.querySelectorAll('.btn-nuevo-interes').forEach(button => {
             .then(response => response.json())
             .then(interes => {
                 if (!interes) {
-                    fetch('/intereses/entidad/agregar/' + entidadId, {
+                    fetch('/intereses/entidad/'+ entidadId +'/agregar' , {
                         method: 'POST'
                     })
                     .then(response => {

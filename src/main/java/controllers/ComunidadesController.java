@@ -115,24 +115,6 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
 
   @Override
   public void update(Context context) {
-    EntityManager em = EntityManagerSingleton.getInstance();
-    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
-    String comunidadId = context.pathParam("id");
-    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
-
-    comunidad.agregarMiembro(miembroDeComunidad);
-    miembroDeComunidad.agregarComunidad(comunidad);
-
-    try {
-      em.getTransaction().begin();
-      repositorioComunidad.agregar(comunidad);
-      em.getTransaction().commit();
-    } catch (Exception e) {
-      em.getTransaction().rollback();
-    } finally {
-      em.close();
-    }
   }
 
   @Override

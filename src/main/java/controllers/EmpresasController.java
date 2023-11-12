@@ -2,7 +2,6 @@ package controllers;
 
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
-import models.Config.Config;
 import models.domain.Entidades.OrganismoDeControl;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
@@ -15,20 +14,14 @@ import models.services.Archivos.SistemaDeArchivos;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import io.javalin.http.Context;
-import io.javalin.http.UploadedFile;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EmpresasController extends ControllerGenerico implements ICrudViewsHandler {
 
@@ -88,7 +81,7 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
       em.close();
     }
 
-    ctx.redirect("/cargarEmpresas");
+    ctx.redirect("/empresas/cargar");
   }
 
   @Override

@@ -21,22 +21,22 @@ public class Router {
       get("/incidentes/{estado}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstado,TipoRol.USUARIO_BASICO,TipoRol.USUARIO_EMPRESA);
       get("/incidentes/{estado}/comunidad/{id}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstadoComunidad,TipoRol.USUARIO_BASICO);
       get("/incidentes/comunidad/{id}",((IncidentesController) FactoryController.controller("incidentes"))::indexComunidad,TipoRol.USUARIO_BASICO);
-      get("/cargarEmpresas", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
-      post("/cargarEmpresas",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
+      get("/empresas/cargar", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
+      post("/empresas/cargar",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
       get("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::create);
       post("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::save);
-      post("/reportarIncidente/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente);
+      post("/reportarIncidente/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente); /*Se usa??*/
       get("/sugerenciasDeRevision", ((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::solicitarIncidentes);
       get("/comunidades", ((ComunidadesController) FactoryController.controller("comunidades"))::index,TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
       get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO);
       get("/comunidades/incidentes/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::incidentesDeComunidad, TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
-      post("/comunidades/eliminarComunidad/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::delete,TipoRol.ADMINISTRADOR);
-      post("/comunidades/unirseAComunidad/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::update);
+      post("/comunidades/{id}/eliminar",((ComunidadesController) FactoryController.controller("comunidades"))::delete,TipoRol.ADMINISTRADOR);
+      post("/usuarios/unirseAComunidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::unirseAComunidad); /*todo usuariosController*/
       post("/usuarios/abandonarComunidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::abandonarComunidad);
       get("/comunidades/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::show);
       get("/usuarios",((UsuariosController) FactoryController.controller("usuarios"))::index, TipoRol.ADMINISTRADOR);
-      post("/usuarios/eliminar/{id}",((UsuariosController) FactoryController.controller("usuarios"))::delete, TipoRol.ADMINISTRADOR);
-      post("usuarios/interes/entidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::update,TipoRol.USUARIO_BASICO);
+      post("/usuarios/{id}/eliminar",((UsuariosController) FactoryController.controller("usuarios"))::delete, TipoRol.ADMINISTRADOR);
+      post("/usuarios/{id}/interes/entidad",((UsuariosController) FactoryController.controller("usuarios"))::update,TipoRol.USUARIO_BASICO); //chequear
       get("/organismosDeControl",((OrganismosDeControlController) FactoryController.controller("organismos"))::index);
       get("/organismosDeControl/{id}/entidadesPrestadoras",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::index);
       get("/organismosDeControl/{idO}/entidadesPrestadoras/{idEP}/entidades", ((EntidadesController) FactoryController.controller("entidades"))::index);
@@ -49,11 +49,11 @@ public class Router {
       get("/intereses/servicios",((InteresController) FactoryController.controller("interes"))::indexServicios,TipoRol.USUARIO_BASICO);
       get("/intereses/entidad/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresEntidad,TipoRol.USUARIO_BASICO);
       get("/intereses/servicio/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresServicio,TipoRol.USUARIO_BASICO);
-      post("/intereses/entidad/agregar/{id}",((InteresController) FactoryController.controller("interes"))::agregarEntidad,TipoRol.USUARIO_BASICO);
-      post("/intereses/entidad/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarEntidad,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/agregar/{id}/{rol}",((InteresController) FactoryController.controller("interes"))::agregarServicio,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/eliminar/{id}",((InteresController) FactoryController.controller("interes"))::eliminarServicio,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/cambiarRol/{id}",((InteresController) FactoryController.controller("interes"))::cambiarRol,TipoRol.USUARIO_BASICO);
+      post("/intereses/entidad/{id}/agregar",((InteresController) FactoryController.controller("interes"))::agregarEntidad,TipoRol.USUARIO_BASICO);
+      post("/intereses/entidad/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarEntidad,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/agregar/{rol}",((InteresController) FactoryController.controller("interes"))::agregarServicio,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarServicio,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRol,TipoRol.USUARIO_BASICO);
       get("/sugerenciasDeRevision/{lat}/{long}",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::index,TipoRol.USUARIO_BASICO);
       get("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::registrarUsuario);
       get("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::registrarUsuario);

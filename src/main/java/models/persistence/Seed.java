@@ -66,9 +66,9 @@ public class Seed implements WithSimplePersistenceUnit {
             u1.setUsername("messi10");
             u2.setUsername("kuni9");
             u3.setUsername("dibu23");
-            u1.setContrasenia("LaCasaEnElLag@");
-            u2.setContrasenia("LaCasaEnElLag@");
-            u3.setContrasenia("LaCasaEnElLag@");
+            u1.setContrasenia("Grupodisenio@");
+            u2.setContrasenia("Grupodisenio@");
+            u3.setContrasenia("Grupodisenio@");
 
             Rol admin = new Rol();
             admin.setNombre("administrador");

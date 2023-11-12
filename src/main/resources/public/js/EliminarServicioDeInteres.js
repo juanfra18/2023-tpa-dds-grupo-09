@@ -2,7 +2,7 @@ document.querySelectorAll('.btn-eliminar-servicioInteres').forEach(button => {
     button.addEventListener('click', function() {
         var servicioId = this.getAttribute('data-servicio-id');
 
-                    fetch('/intereses/servicio/eliminar/' + servicioId, {
+                    fetch('/intereses/servicio/'+ servicioId +'/eliminar', {
                         method: 'POST'
                     })
                     .then(response => {
