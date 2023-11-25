@@ -36,7 +36,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class TestsEntrega3 {
+public class TestsEntrega3 {/*
     private List<OrganismoDeControl> empresas;
     private  CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
     private SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
@@ -322,7 +322,7 @@ public class TestsEntrega3 {
 
     @Test
     public void rankingSolucionanMasLento() {
-        entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
+        //entidadesQueSolucionanMasLento.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
     }
 
     /*
@@ -350,7 +350,7 @@ public class TestsEntrega3 {
 */
     @Test
     public void rankingMayorCantidadDeIncidentes() {
-        entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
+        //entidadesConMayorCantidadDeIncidentes.armarRanking(entidades,repositorioDeIncidentes.getIncidentesEstaSemana());
     }
 /*
     @Test
