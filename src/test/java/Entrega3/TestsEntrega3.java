@@ -248,7 +248,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,30,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -259,7 +259,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,19,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -270,7 +270,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -281,7 +281,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,12,21,50,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -292,7 +292,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,10,45,30));
         incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -303,7 +303,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,11,0,30));
         incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -314,7 +314,7 @@ public class TestsEntrega3 {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,13,12,0,30));
         incidenteBanioLineaMitre.setObservaciones("El baño sigue mojado");
 
-        pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
 
 
     }

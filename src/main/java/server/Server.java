@@ -22,8 +22,12 @@ public class Server {
   }
 
   public static void init() {
+    String strport = System.getenv("PORT");
+    if (strport == null){
+      strport = "8008";
+    }
     if(app == null) {
-      Integer port = Integer.parseInt(System.getProperty("port", "8008"));
+      Integer port = Integer.parseInt(System.getProperty("port", strport));
       app = Javalin.create(config()).start(port);
       initTemplateEngine();
       AppHandlers.applyHandlers(app);
