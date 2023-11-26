@@ -61,6 +61,5 @@ public class App {
         em.close();
       }
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
-
   }
 }

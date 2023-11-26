@@ -31,23 +31,15 @@ public class EntityManagerSingleton {
 
         try{
           if (key.equals("DATABASE_URL")) {
-
-            // https://devcenter.heroku.com/articles/connecting-heroku-postgres#connecting-in-java
             String value = env.get(key);
             URI dbUri = new URI(value);
             String username = dbUri.getUserInfo().split(":")[0];
             String password = dbUri.getUserInfo().split(":")[1];
-            //javax.persistence.jdbc.url=jdbc:postgresql://localhost/dblibros
-            //value = "jdbc:mysql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();// + "?sslmode=require";
-            value = "mysql://mariadb:4598d3715a0ba267@dokku-mariadb-ddstest2db:3306/ddstest2db";
             configOverrides.put("javax.persistence.jdbc.url", value);
             configOverrides.put("javax.persistence.jdbc.user", username);
             configOverrides.put("javax.persistence.jdbc.password", password);
             configOverrides.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-
-            //  configOverrides.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
           }
-          // no se pueden poner variables de entorno con "." en la key
           String key2 = key.replace("__",".");
           if (env.containsKey(key)) {
             String value = env.get(key);
