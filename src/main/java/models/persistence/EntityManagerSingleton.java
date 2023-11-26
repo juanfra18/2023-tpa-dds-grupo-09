@@ -19,7 +19,6 @@ public class EntityManagerSingleton {
 
       String[] keys = new String[] {
               "DATABASE_URL",
-              "SPRING_DATASOURCE_URL",
               "javax__persistence__jdbc__driver",
               "javax__persistence__jdbc__password",
               "javax__persistence__jdbc__url",
@@ -48,9 +47,6 @@ public class EntityManagerSingleton {
 
             //  configOverrides.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
           }
-          if (key.equals("SPRING_DATASOURCE_URL")) {
-            String value = "jdbc:mysql://dokku-mariadb-ddstest2db:3306/ddstest2db?password=4598d3715a0ba267&user=mariadb";
-          }
           // no se pueden poner variables de entorno con "." en la key
           String key2 = key.replace("__",".");
           if (env.containsKey(key)) {
@@ -65,9 +61,13 @@ public class EntityManagerSingleton {
       for (String key : configOverrides.keySet()) {
         System.out.println(key + ": " + configOverrides.get(key));
       }
-      instancia = Persistence.createEntityManagerFactory("db", configOverrides).createEntityManager();
 
-     // instancia = Persistence.createEntityManagerFactory("simple-persistence-unit").createEntityManager();
+      String persistenceUnit = "db";
+      if (env.containsKey("PersistenceUnit")) {
+        persistenceUnit = env.get("PersistenceUnit");
+      }
+
+      instancia = Persistence.createEntityManagerFactory(persistenceUnit, configOverrides).createEntityManager();
     }
     return instancia;
   }
