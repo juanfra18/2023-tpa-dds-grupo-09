@@ -54,10 +54,11 @@ public class EntityManagerSingleton {
         System.out.println(key + ": " + configOverrides.get(key));
       }
 
-      String persistenceUnit = "db";
+      String persistenceUnit = "simple-persistence-unit";
+      /*
       if (env.containsKey("PersistenceUnit")) {
         persistenceUnit = env.get("PersistenceUnit");
-      }
+      }*/
 
       instancia = Persistence.createEntityManagerFactory(persistenceUnit, configOverrides).createEntityManager();
     }
