@@ -17,7 +17,7 @@
                 <p>Apellido: {{miembroDeComunidad.apellido}}</p>
                 <p>Mail: {{miembroDeComunidad.receptorDeNotificaciones.mail}}</p>
                 <p>Telefono: {{miembroDeComunidad.receptorDeNotificaciones.telefono}}</p>
-                {{#unless administrador}}
+                {{#unless perfilAdministrador}}
                 <p>Cantidad de incidentes reportados: {{incidentesAbiertos}}</p>
                 <p>Cantidad de incidentes cerrados: {{incidentesCerrados}}</p>
                 <p>Mis comunidades:
