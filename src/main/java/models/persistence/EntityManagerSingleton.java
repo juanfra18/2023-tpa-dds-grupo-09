@@ -4,6 +4,7 @@ package models.persistence;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +20,10 @@ public class EntityManagerSingleton {
 
       String[] keys = new String[] {
               "DATABASE_URL",
-              "javax__persistence__jdbc__driver",
-              "javax__persistence__jdbc__password",
-              "javax__persistence__jdbc__url",
-              "javax__persistence__jdbc__user",
+              //"javax__persistence__jdbc__driver",
+              //"javax__persistence__jdbc__password",
+              //"javax__persistence__jdbc__url",
+              //"javax__persistence__jdbc__user",
               "hibernate__hbm2ddl__auto",
               "hibernate__connection__pool_size",
               "hibernate__show_sql" };
@@ -32,10 +33,21 @@ public class EntityManagerSingleton {
         try{
           if (key.equals("DATABASE_URL")) {
             String value = env.get(key);
+            /*
             URI dbUri = new URI(value);
             String username = dbUri.getUserInfo().split(":")[0];
-            String password = dbUri.getUserInfo().split(":")[1];
-            configOverrides.put("javax.persistence.jdbc.url", value);
+            String password = dbUri.getUserInfo().split(":")[1];*/
+            URI uri = new URI(value.substring(6)); // Removing the "mysql:" prefix
+
+            String userInfo = uri.getUserInfo();
+            String[] userPass = userInfo.split(":");
+            String username = userPass[0];
+            String password = userPass.length > 1 ? userPass[1] : null;
+
+            String host = uri.getHost();
+            int port = uri.getPort();
+            String path = uri.getPath().substring(1);
+            configOverrides.put("javax.persistence.jdbc.url", "jdbc:mysql://"+host+":"+port+"/"+path);
             configOverrides.put("javax.persistence.jdbc.user", username);
             configOverrides.put("javax.persistence.jdbc.password", password);
             configOverrides.put("javax.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
@@ -63,5 +75,30 @@ public class EntityManagerSingleton {
       instancia = Persistence.createEntityManagerFactory(persistenceUnit, configOverrides).createEntityManager();
     }
     return instancia;
+  }
+
+  public static void main(String[] args) {
+    String databaseUrl = "mysql://root:123456@localhost:3306/tpa-grupo9";
+
+    try {
+      URI uri = new URI(databaseUrl.substring(6)); // Removing the "mysql:" prefix
+
+      String userInfo = uri.getUserInfo();
+      String[] userPass = userInfo.split(":");
+      String user = userPass[0];
+      String password = userPass.length > 1 ? userPass[1] : null;
+
+      String host = uri.getHost();
+      int port = uri.getPort();
+      String path = uri.getPath().substring(1); // Removing the leading slash
+
+      System.out.println("User: " + user);
+      System.out.println("Password: " + password);
+      System.out.println("Host: " + host);
+      System.out.println("Port: " + port);
+      System.out.println("Database: " + path);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
   }
 }
