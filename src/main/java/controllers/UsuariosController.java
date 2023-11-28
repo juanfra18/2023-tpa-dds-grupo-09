@@ -10,6 +10,7 @@ import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
 import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
+import org.jetbrains.annotations.NotNull;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
@@ -49,6 +50,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
+    boolean perfilAdministrador = false;
     String id = context.pathParam("id");
     boolean miPerfil = false;
     RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
@@ -72,23 +74,36 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
       administrador = true;
     }
 
-    if(miembroDeComunidad.getId().equals(this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId())) { // Si mi ID es del usuario loguado
-     // miPerfil = true; //Muestrame mi perfil
+
+    Usuario perfilUsuario = miembroDeComunidad.getUsuario();
+    if(perfilUsuario.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      perfilAdministrador = false;
+      incidentesAbiertos = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueAbiertoPor(miembroDeComunidad)).toList().size();
+      incidentesCerrados = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueCerradoPor(miembroDeComunidad)).toList().size();
     }
-    else if (miembroDeComunidad.getId() != this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId() && !administrador) { // Si no soy admin y no es mi perfil
+    else if(perfilUsuario.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      perfilAdministrador = false;
+    }
+    else if(perfilUsuario.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      perfilAdministrador = true;
+    }
+
+
+    if (miembroDeComunidad.getId() != this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId() && !administrador) { // Si no soy admin y no es mi perfil
       throw new AccesoDenegadoExcepcion();
     }
 
 
-    //Como se compara directamente en handlebars dentro de un if?
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
+    model.put("perfilAdministrador",perfilAdministrador);
     model.put("miembroDeComunidad",miembroDeComunidad);
     model.put("incidentesAbiertos", incidentesAbiertos);
     model.put("incidentesCerrados", incidentesCerrados);
-    model.put("miembro_id",this.miembroDelUsuario(usuarioLogueado.getId().toString()).getId());
-    //model.put("miPerfil", miPerfil);
     context.render("PerfilUsuario.hbs", model);
     em.close();
   }
@@ -181,4 +196,45 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     }
   }
 
+  public void perfilPersonal(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+    boolean perfilAdministrador = false;
+
+    RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+
+    MiembroDeComunidad miembroDeComunidad = miembroDelUsuario(usuarioLogueado.getId().toString());
+    Integer incidentesAbiertos = 0;
+    Integer incidentesCerrados = 0;
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+      incidentesAbiertos = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueAbiertoPor(miembroDeComunidad)).toList().size();
+      incidentesCerrados = repositorioDeIncidentes.buscarTodos().stream().filter(incidente -> incidente.fueCerradoPor(miembroDeComunidad)).toList().size();
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+      perfilAdministrador = true;
+    }
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("perfilAdministrador",perfilAdministrador);
+    model.put("miembroDeComunidad",miembroDeComunidad);
+    model.put("incidentesAbiertos", incidentesAbiertos);
+    model.put("incidentesCerrados", incidentesCerrados);
+    context.render("PerfilUsuario.hbs", model);
+    em.close();
+  }
 }

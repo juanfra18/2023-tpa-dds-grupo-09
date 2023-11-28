@@ -46,10 +46,6 @@ public class Seed implements WithSimplePersistenceUnit {
                 provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
                     getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
 
-            //Se cargan las empresas
-            //empresas = cargadorDeDatos.cargaDeDatosMASIVA(sistemaDeArchivos.csvALista(Config.ARCHIVO_CSV), servicioGeoref);
-            //empresas.forEach(e -> repositorioDeOrganismosDeControl.agregar(e));
-
             Posicion posicion = new Posicion();
             posicion.setPosicion("-34.6078602,-58.383111");
 
@@ -57,7 +53,6 @@ public class Seed implements WithSimplePersistenceUnit {
 
 
             //PARA PROBAR LA PAGINA WEB
-
             RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
             RepositorioRoles repositorioRoles = RepositorioRoles.getInstancia();
             Usuario u1 = new Usuario();
