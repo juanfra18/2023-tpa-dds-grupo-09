@@ -9,7 +9,9 @@ import server.exceptions.SesionNoIniciadaExcepcion;
 import server.handlers.SessionHandler;
 
 import javax.persistence.EntityManager;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InicioDeSesionController {
 
@@ -38,6 +40,14 @@ public class InicioDeSesionController {
     else{
       context.render("InicioDeSesion.hbs");
     }
+  }
+
+  public void error(Context context, String mensajeDeError) {
+    Map<String, Object> model = new HashMap<>();
+
+    model.put("hayError", true);
+    model.put("mensajeDeError", mensajeDeError);
+    context.render("InicioDeSesion.hbs", model);
   }
 }
 
