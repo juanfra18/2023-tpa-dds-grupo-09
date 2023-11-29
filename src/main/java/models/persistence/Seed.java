@@ -143,6 +143,7 @@ public class Seed implements WithSimplePersistenceUnit {
             repositorioComunidad.agregar(c2);
 
             em.getTransaction().commit();
+            System.exit(0);
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
