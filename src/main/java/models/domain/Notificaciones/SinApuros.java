@@ -7,8 +7,6 @@ import java.util.List;
 
 public class SinApuros extends FormaDeNotificar{
   private List<ReporteDeIncidente> resumenDeIncidentes;
-  private String destinatario;
-  private MedioDeComunicacion medioDeComunicacion;
 
   public SinApuros() {
     this.resumenDeIncidentes = new ArrayList<>();
@@ -22,10 +20,10 @@ public class SinApuros extends FormaDeNotificar{
     else {
       this.resumenDeIncidentes.removeIf(reporte -> reporte.igualito(reporteDeIncidente));
     }
-    this.destinatario = destinatario;
   }
-  public void envioProgramado() {
-    this.resumenDeIncidentes.forEach(reporte -> super.recibirNotificacion(this.medioDeComunicacion,reporte,this.destinatario));
+  @Override
+  public void envioProgramado(MedioDeComunicacion medioDeComunicacion, String destinatario) {
+    this.resumenDeIncidentes.forEach(reporte -> super.recibirNotificacion(medioDeComunicacion,reporte,destinatario));
     this.resumenDeIncidentes.clear(); //Así se borran antes que cumplan 24hs
   }
 }

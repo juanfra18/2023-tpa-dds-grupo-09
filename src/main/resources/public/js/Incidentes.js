@@ -70,7 +70,7 @@ document.querySelector('.btn-cerrar-incidente').addEventListener('click', functi
     })
     .then(response => {
             if (response.ok) {
-                window.location.href='/incidentes/comunidad/' + comunidadId;
+                window.location.href='/incidentes/ABIERTO/comunidad/' + comunidadId;
             } else {
                 window.alert('Error al cerrar incidente');
             }

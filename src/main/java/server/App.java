@@ -1,17 +1,21 @@
 package server;
 
+import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import models.domain.Rankings.EntidadesQueSolucionanMasLento;
 import models.domain.Rankings.Tierlist;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
+import models.persistence.Repositorios.RepositorioDeReceptoresDeNotificaciones;
 import models.persistence.Repositorios.RepositorioEntidad;
 
 import javax.persistence.EntityManager;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -61,5 +65,20 @@ public class App {
         em.close();
       }
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
+
+    RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
+    List<ReceptorDeNotificaciones> receptoresDeNotificacionesSinApuro =
+        repositorioDeReceptoresDeNotificaciones.buscarTodos().stream().
+            filter(receptorDeNotificaciones -> receptorDeNotificaciones.getFormaDeNotificar().getClass().getSimpleName().equals("SinApuros")).toList();
+
+
+    //Tiempo hasta el proximo dia
+    LocalDateTime finDelDia = fechaActual.toLocalDate().atTime(LocalTime.MIDNIGHT);
+    Long tiempoHastaProximoDia = fechaActual.until(finDelDia, ChronoUnit.SECONDS);
+
+    scheduler.scheduleAtFixedRate(() -> {
+      receptoresDeNotificacionesSinApuro.forEach(receptorDeNotificaciones -> receptorDeNotificaciones.envioProgramado());
+    }, tiempoHastaProximoDia, 24 * 60 * 60,TimeUnit.SECONDS);
   }
 }
+

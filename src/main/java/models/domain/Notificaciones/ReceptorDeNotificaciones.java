@@ -44,9 +44,15 @@ public class ReceptorDeNotificaciones extends Persistente {
     this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Solicitud de Revisión de Incidente", this.getDestinatario());
   }
   public void cambiarFormaDeNotificar(FormaDeNotificar forma) {
+    if(this.formaDeNotificar.getClass().getSimpleName().equals("SinApuros"))
+        this.formaDeNotificar.envioProgramado(this.medioDeComunicacion, this.getDestinatario()); //Se envian los mensajes que estaban programados
     this.formaDeNotificar = forma;
   }
   public void cambiarMedioDeComunicacion(MedioDeComunicacion medio) {
     this.medioDeComunicacion = medio;
+  }
+
+  public void envioProgramado(){
+    this.formaDeNotificar.envioProgramado(this.medioDeComunicacion, this.getDestinatario());
   }
 }
