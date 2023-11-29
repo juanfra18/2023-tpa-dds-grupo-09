@@ -25,14 +25,10 @@ import java.util.List;
 public class Seed implements WithSimplePersistenceUnit {
     public static void main(String[] args) {
         EntityManager em = EntityManagerSingleton.getInstance();
-        CargadorDeDatos cargadorDeDatos = new CargadorDeDatos();
-        SistemaDeArchivos sistemaDeArchivos = new SistemaDeArchivos();
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
         RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
         RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
-        RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
-        List<OrganismoDeControl> empresas;
-        ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
+            ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
 
         try {
