@@ -1,17 +1,18 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Notificaciones.*;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
+import models.domain.Seguridad.ValidadorDeContrasenias;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
-import models.persistence.Repositorios.RepositorioComunidad;
-import models.persistence.Repositorios.RepositorioDeIncidentes;
-import models.persistence.Repositorios.RepositorioEntidad;
-import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
+import models.persistence.Repositorios.*;
 import org.jetbrains.annotations.NotNull;
 import server.exceptions.AccesoDenegadoExcepcion;
+import server.exceptions.ContraseniaInvalida;
+import server.exceptions.UsuarioRepetidoExcepcion;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -115,11 +116,109 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
 
   @Override
   public void save(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = miembroDelUsuario(usuarioLogueado.getId().toString());
+    ValidadorDeContrasenias validadorDeContrasenias = new ValidadorDeContrasenias();
 
+
+    String usuario = context.formParam("usuario");
+    String contrasenia = context.formParam("contrasenia");
+    String nombre = context.formParam("nombre");
+    String apellido = context.formParam("apellido");
+    String mail = context.formParam("mail");
+    String telefono = context.formParam("telefono");
+    String medioDeComunicacion = context.formParam("medioDeComunicacion");
+    String formaDeNotificar = context.formParam("formaDeNotificar");
+
+    if(!usuarioLogueado.getUsername().equals(usuario))
+    {
+      List<String> usuariosRegistrados = repositorioDeUsuarios.buscarTodos().stream().map(usuario1 -> usuario1.getUsername()).toList();
+
+      if(usuariosRegistrados.contains(usuario))
+      {
+        throw new UsuarioRepetidoExcepcion();
+      }
+    }
+
+    if(!usuarioLogueado.getContrasenia().equals(contrasenia))
+    {
+      if(!validadorDeContrasenias.verificaReglas(contrasenia))
+      {
+        throw new ContraseniaInvalida();
+      }
+    }
+
+    miembroDeComunidad.setNombre(nombre);
+    miembroDeComunidad.setApellido(apellido);
+    usuarioLogueado.setUsername(usuario);
+    usuarioLogueado.setContrasenia(contrasenia);
+    miembroDeComunidad.getReceptorDeNotificaciones().setMail(mail);
+    miembroDeComunidad.getReceptorDeNotificaciones().setTelefono(telefono);
+    try {
+      em.getTransaction().begin();
+      if (!(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)) {
+        if (!miembroDeComunidad.getReceptorDeNotificaciones().getFormaDeNotificar().getClass().getSimpleName().equals(formaDeNotificar)) {
+          switch (formaDeNotificar) {
+            case "Cuando Suceden":
+              miembroDeComunidad.getReceptorDeNotificaciones().cambiarFormaDeNotificar(new CuandoSuceden());
+              break;
+            case "Sin Apuros":
+              miembroDeComunidad.getReceptorDeNotificaciones().cambiarFormaDeNotificar(new SinApuros());
+              break;
+          }
+        }
+
+        if (!miembroDeComunidad.getReceptorDeNotificaciones().getMedioDeComunicacion().getClass().getSimpleName().equals(medioDeComunicacion)) {
+          switch (medioDeComunicacion) {
+            case "Mail":
+              miembroDeComunidad.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(new ViaMail());
+              break;
+            case "Whatsapp":
+              miembroDeComunidad.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(new ViaWPP());
+              break;
+          }
+        }
+      }
+      context.redirect("/perfil");
+      em.getTransaction().commit();
+    }catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
   }
 
   @Override
   public void edit(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("miembroDeComunidad",miembroDelUsuario(usuarioLogueado.getId().toString()));
+    context.render("EditarPerfil.hbs", model);
+    em.close();
 
   }
   @Override
@@ -235,6 +334,39 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("incidentesAbiertos", incidentesAbiertos);
     model.put("incidentesCerrados", incidentesCerrados);
     context.render("PerfilUsuario.hbs", model);
+    em.close();
+  }
+
+  public void error(Context context, String mensajeDeError) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    model.put("miembroDeComunidad",miembroDelUsuario(usuarioLogueado.getId().toString()));
+    model.put("hayError", true);
+    model.put("mensajeDeError", mensajeDeError);
+    context.render("EditarPerfil.hbs", model);
     em.close();
   }
 }

@@ -45,7 +45,7 @@ public class ReceptorDeNotificaciones extends Persistente {
   }
   public void cambiarFormaDeNotificar(FormaDeNotificar forma) {
     if(this.formaDeNotificar.getClass().getSimpleName().equals("SinApuros"))
-        this.formaDeNotificar.envioProgramado(this.medioDeComunicacion, this.getDestinatario()); //Se envian los mensajes que estaban programados
+        this.envioProgramado(); //Se envian los mensajes que estaban programados
     this.formaDeNotificar = forma;
   }
   public void cambiarMedioDeComunicacion(MedioDeComunicacion medio) {

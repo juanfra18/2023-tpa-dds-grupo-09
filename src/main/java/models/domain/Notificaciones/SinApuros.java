@@ -26,4 +26,9 @@ public class SinApuros extends FormaDeNotificar{
     this.resumenDeIncidentes.forEach(reporte -> super.recibirNotificacion(medioDeComunicacion,reporte,destinatario));
     this.resumenDeIncidentes.clear(); //Así se borran antes que cumplan 24hs
   }
+
+  @Override
+  public String nombre(){
+    return "Sin Apuros";
+  }
 }

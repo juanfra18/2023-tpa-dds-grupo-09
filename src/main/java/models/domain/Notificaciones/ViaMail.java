@@ -12,5 +12,9 @@ public class ViaMail implements MedioDeComunicacion{
   public void recibirArchivos(String ruta, String asunto, String destinatario){
     this.servicioMail.enviarArchivo(ruta,destinatario,asunto);
   }
+
+  public String nombre(){
+    return "Mail";
+  }
   
 }

@@ -9,4 +9,8 @@ public class ViaWPP implements MedioDeComunicacion{
   public void recibirNotificacion(String mensaje, String asunto, String destinatario) {
     this.servicioWPP.recibirNotificacion(mensaje, destinatario, asunto);
   }
+
+  public String nombre(){
+    return "Whatsapp";
+  }
 }

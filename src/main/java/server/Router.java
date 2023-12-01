@@ -18,6 +18,8 @@ public class Router {
       post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
       get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);
       get("/perfil",((UsuariosController) FactoryController.controller("usuarios"))::perfilPersonal);
+      get("/editar/perfil", ((UsuariosController) FactoryController.controller("usuarios"))::edit);
+      post("/editar/perfil", ((UsuariosController) FactoryController.controller("usuarios"))::save);
       get("/incidentes",((IncidentesController) FactoryController.controller("incidentes"))::index);
       get("/incidentes/{estado}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstado,TipoRol.USUARIO_BASICO,TipoRol.USUARIO_EMPRESA);
       get("/incidentes/{estado}/comunidad/{id}",((IncidentesController) FactoryController.controller("incidentes"))::indexEstadoComunidad,TipoRol.USUARIO_BASICO);

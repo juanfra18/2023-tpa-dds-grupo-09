@@ -8,6 +8,7 @@
  {{#partial "contenido"}}
         <div id="base">
         <a href="/incidentes" class="volver-button">Volver</a>
+        <button onclick="window.location.href='/editar/perfil'">Editar Perfil</button>
             <div class="imagen">
                 <img alt="fotoDePerfil" src="/images/userLogo.png" id="fotoDePerfil">
             </div>
@@ -18,6 +19,8 @@
                 <p>Mail: {{miembroDeComunidad.receptorDeNotificaciones.mail}}</p>
                 <p>Telefono: {{miembroDeComunidad.receptorDeNotificaciones.telefono}}</p>
                 {{#unless perfilAdministrador}}
+                <p>Medio de Comunicacion: {{miembroDeComunidad.receptorDeNotificaciones.medioDeComunicacion.nombre}}</p>
+                <p>Forma de Notificacion: {{miembroDeComunidad.receptorDeNotificaciones.formaDeNotificar.nombre}}</p>
                 <p>Cantidad de incidentes reportados: {{incidentesAbiertos}}</p>
                 <p>Cantidad de incidentes cerrados: {{incidentesCerrados}}</p>
                 <p>Mis comunidades:

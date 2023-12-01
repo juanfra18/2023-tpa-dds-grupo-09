@@ -10,4 +10,6 @@ public abstract class FormaDeNotificar {
   public void envioProgramado(MedioDeComunicacion medioDeComunicacion, String destinatario){
 
   }
+
+  public abstract String nombre();
 }
