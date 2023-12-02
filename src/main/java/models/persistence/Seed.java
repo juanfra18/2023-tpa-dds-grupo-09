@@ -58,9 +58,11 @@ public class Seed implements WithSimplePersistenceUnit {
             em.createNativeQuery("DROP TABLE IF EXISTS receptorDeNotificaciones").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS hibernate_sequence").executeUpdate();
 
+            em.getTransaction().commit();
             em.close();
 
             em = EntityManagerSingleton.getInstance();
+            em.getTransaction().begin();
 
             //Se cargan las provincias
             listadoDeProvinciasArgentinas.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
@@ -167,11 +169,10 @@ public class Seed implements WithSimplePersistenceUnit {
             repositorioComunidad.agregar(c2);
 
             em.getTransaction().commit();
+            em.close();
             System.exit(0);
         } catch (Exception e) {
             em.getTransaction().rollback();
-        } finally {
-            em.close();
         }
     }
 }
