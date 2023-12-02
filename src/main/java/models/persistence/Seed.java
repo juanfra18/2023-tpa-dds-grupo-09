@@ -34,6 +34,34 @@ public class Seed implements WithSimplePersistenceUnit {
         try {
             em.getTransaction().begin();
 
+            em.createNativeQuery("DROP TABLE IF EXISTS rol_permiso").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_comunidad").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_entidad").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_municipio").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_provincia").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS reporteDeIncidente").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS parServicioRol").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS usuario").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS rol").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS comunidad").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS incidente").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS servicio").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS establecimiento").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS entidad").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS entidadPrestadora").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS organismoDeControl").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS municipio").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS permiso").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS posicion").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS provincia").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS receptorDeNotificaciones").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS hibernate_sequence").executeUpdate();
+
+            em.close();
+
+            em = EntityManagerSingleton.getInstance();
+
             //Se cargan las provincias
             listadoDeProvinciasArgentinas.getProvincias().forEach(provincia -> repositorioProvincias.agregar(provincia));
 
