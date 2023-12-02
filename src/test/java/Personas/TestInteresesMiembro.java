@@ -43,6 +43,7 @@ public class TestInteresesMiembro {
   private Entidad lineaRoca;
   private FormaDeNotificar cuandoSuceden = new CuandoSuceden();
   private MedioDeComunicacion mail = new ViaMail();
+  
   @BeforeEach
   public void init(){
     miembro = new MiembroDeComunidad();
