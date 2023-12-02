@@ -76,4 +76,15 @@ public class Comunidad extends Persistente {
             }
         }
     }
+
+    public MiembroDeComunidad administrador(){
+        if(!miembros.isEmpty())
+            return miembros.get(0);
+        else
+            return null;
+    }
+
+    public List<MiembroDeComunidad> miembrosNoAdministradores(){
+        return miembros.subList(1,miembros.size());
+    }
 }

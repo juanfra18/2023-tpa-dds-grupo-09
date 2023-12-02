@@ -100,6 +100,52 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
 
   @Override
   public void create(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String nombre = context.pathParam("nombre");
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
+    List<String> nombresUtilizados = repositorioComunidad.buscarTodos().stream().map(comunidad -> comunidad.getNombre()).toList();
+    if(nombresUtilizados.contains(nombre)){
+      context.status(409);
+    }
+    else {
+      try {
+        em.getTransaction().begin();
+        Comunidad nuevaComunidad = new Comunidad();
+        nuevaComunidad.setNombre(nombre);
+        nuevaComunidad.agregarMiembro(miembroDeComunidad); //el primer miembro es el administrador
+        miembroDeComunidad.agregarComunidad(nuevaComunidad);
+        repositorioComunidad.agregar(nuevaComunidad);
+        em.getTransaction().commit();
+      } catch (Exception e) {
+        em.getTransaction().rollback();
+      } finally {
+        em.close();
+      }
+    }
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
+    context.render("UnirseComunidad.hbs", model);
 
   }
 

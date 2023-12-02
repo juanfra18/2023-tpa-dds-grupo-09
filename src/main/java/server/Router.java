@@ -34,6 +34,7 @@ public class Router {
       get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO);
       get("/comunidades/incidentes/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::incidentesDeComunidad, TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
       post("/comunidades/{id}/eliminar",((ComunidadesController) FactoryController.controller("comunidades"))::delete,TipoRol.ADMINISTRADOR);
+      post("/comunidades/nueva/{nombre}",((ComunidadesController) FactoryController.controller("comunidades"))::create);
       post("/usuarios/unirseAComunidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::unirseAComunidad); /*todo usuariosController*/
       post("/usuarios/abandonarComunidad/{id}",((UsuariosController) FactoryController.controller("usuarios"))::abandonarComunidad);
       get("/comunidades/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::show);

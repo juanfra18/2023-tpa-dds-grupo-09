@@ -12,9 +12,10 @@
                 {{#if miComunidad}}
                 <button type="button" class="btn btn-secondary" id="abandonarComunidad" data-comunidad-id="{{comunidad.id}}">Abandonar Comunidad</button>
                 {{/if}}
+                <p>Administrador: <a href="/perfil/{{comunidad.administrador.id}}">{{comunidad.administrador.usuario.username}}</a><p>
                 <p>Miembros:
                 <ul>
-                  {{#each comunidad.miembros}}
+                  {{#each comunidad.miembrosNoAdministradores}}
                   {{#if usuarioAdministrador}}
                     <li><a href="/perfil/{{this.id}}">{{this.usuario.username}}</a></li>
                    {{else}}

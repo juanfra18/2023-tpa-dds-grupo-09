@@ -30,6 +30,9 @@
                 </div>
         </div>
         {{#if usuarioBasico}}
+        <button type="button" class="btn btn-secondary" id="btn-crear-comunidad">Crear Comunidad</button>
+        {{/if}}
+        {{#if usuarioBasico}}
          <div id="base2">
                     <h1>MIS COMUNIDADES</h1>
                         <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -51,5 +54,6 @@
  </div>
         <script src="js/EliminarComunidad.js"></script>
         <script src="js/UnirseAComunidad.js"></script>
+        <script src="js/CrearComunidad.js"></script>
 {{/partial}}
 {{> templates/base }}
