@@ -46,8 +46,9 @@
                                     <span class="badge text-bg-success">ABIERTO</span>
                                 {{/if}}
                             </li>
+                            <li class="list-group-item">Tiempo abierto: {{this.tiempoAbierto}}</li>
+                            <li class="list-group-item">Cantidad de veces reportado: {{this.getReportesDeApertura.size}}</li>
                             {{#unless this.cerrado}}
-                            <li class="list-group-item">{{this.tiempoAbierto}}</li>
                                 {{#if seleccionComunidad}}
                                     <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                                 {{/if}}

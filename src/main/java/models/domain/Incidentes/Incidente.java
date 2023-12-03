@@ -124,7 +124,7 @@ public class Incidente extends Persistente {
         long dias = tiempoPasado.toDays();
         long horas = tiempoPasado.toHours() % 24;
         long minutos = tiempoPasado.toMinutes() % 60;
-        return "Abierto hace: " + dias + " dias " + horas + " horas " + minutos + " minutos.";
+        return dias + " dias " + horas + " horas " + minutos + " minutos.";
     }
 
 }
