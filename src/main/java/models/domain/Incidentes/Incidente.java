@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,5 +118,13 @@ public class Incidente extends Persistente {
   public boolean fueCerradoPor(MiembroDeComunidad miembroDeComunidad) {
       return !reportes.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
   }
+
+    public String tiempoAbierto(){
+        Duration tiempoPasado = Duration.between(this.primeraApertura().getFechaYhora(), LocalDateTime.now());
+        long dias = tiempoPasado.toDays();
+        long horas = tiempoPasado.toHours() % 24;
+        long minutos = tiempoPasado.toMinutes() % 60;
+        return "Abierto hace: " + dias + " dias " + horas + " horas " + minutos + " minutos.";
+    }
 
 }
