@@ -6,6 +6,7 @@ import models.domain.Incidentes.Posicion;
 import models.domain.Servicios.Banio;
 import models.domain.Servicios.Elevacion;
 import models.domain.Servicios.Servicio;
+import models.persistence.Repositorios.RepositorioPosicion;
 import models.services.APIs.Georef.AdapterServicioGeo;
 import models.persistence.Repositorios.RepositorioDeMunicipios;
 
@@ -29,9 +30,25 @@ public class CargadorDeDatos {
       String establecimientoLatitud = elemento[9];
       String establecimientoLongitud = elemento[10];
 
-      Posicion posicion = new Posicion();
-      posicion.setPosicion(establecimientoLatitud+","+establecimientoLongitud);
 
+      RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
+      List<Posicion> posicionesRegistradas = repositorioPosicion.buscarTodos();
+
+      Posicion posiblePosicion = new Posicion();
+
+      if(!posicionesRegistradas.stream().filter(posicion ->
+            posicion.getLatitud() == Double.parseDouble(establecimientoLatitud)
+          && posicion.getLongitud() == Double.parseDouble(establecimientoLongitud)).toList().isEmpty())
+      {
+        Posicion posicionRepetida = posicionesRegistradas.stream().filter(posicion ->
+            posicion.getLatitud() == Double.parseDouble(establecimientoLatitud)
+                && posicion.getLongitud() == Double.parseDouble(establecimientoLongitud)).toList().get(0);
+
+        posiblePosicion = repositorioPosicion.buscar(posicionRepetida.getId());
+      }else{
+        posiblePosicion.setPosicion(establecimientoLatitud + "," + establecimientoLongitud);
+      }
+      
       EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
       posiblePrestadora.setNombre(prestadoraNombre);
 
@@ -43,7 +60,7 @@ public class CargadorDeDatos {
       posibleEstablecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf(establecimientoTipo));
       posibleEstablecimiento.setLocalizacion(repositorioDeMunicipios.buscar(servicioGeo.obtenerMunicipio(establecimientoLocalizacion).getId()));
       posibleEstablecimiento.setNombre(establecimientoNombre);
-      posibleEstablecimiento.setPosicion(posicion);
+      posibleEstablecimiento.setPosicion(posiblePosicion);
 
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl());
       organismo.setNombre(organismoNombre);
