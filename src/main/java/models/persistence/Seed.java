@@ -14,12 +14,10 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.Repositorios.*;
 import models.services.APIs.Georef.ServicioGeoref;
-import models.services.Archivos.CargadorDeDatos;
-import models.services.Archivos.SistemaDeArchivos;
 import models.services.Localizacion.ListadoDeProvincias;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 
 public class Seed implements WithSimplePersistenceUnit {
@@ -28,7 +26,7 @@ public class Seed implements WithSimplePersistenceUnit {
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
         RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
         RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
-            ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
+        ListadoDeProvincias listadoDeProvinciasArgentinas = servicioGeoref.listadoDeProvincias();
 
 
         try {
@@ -69,8 +67,8 @@ public class Seed implements WithSimplePersistenceUnit {
 
             //Se cargan los municipios
             repositorioProvincias.buscarTodos().forEach(
-                provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
-                    getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
+                    provincia -> servicioGeoref.listadoDeMunicipiosDeProvincia(provincia).
+                            getMunicipios().forEach(municipio -> repositorioDeMunicipios.agregar(municipio)));
 
             Posicion posicion = new Posicion();
             posicion.setPosicion("-34.6078602,-58.383111");
@@ -172,7 +170,14 @@ public class Seed implements WithSimplePersistenceUnit {
             em.close();
             System.exit(0);
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (em.isOpen()) {
+                em.close();
+            }
         }
     }
 }

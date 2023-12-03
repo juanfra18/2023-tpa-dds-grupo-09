@@ -1,42 +1,28 @@
 {{> templates/base }}
 {{#partial "tituloYcss"}}
-    <link rel = "stylesheet" href = "/css/ConsultaDeIncidentes.css">
+    <link rel="stylesheet" href="/css/ConsultaDeIncidentes.css">
     <title>Consulta de Incidentes</title>
 {{/partial}}
 {{> templates/base }}
 
 {{#partial "contenido"}}
     <div id="base">
-     <h1>INCIDENTES</h1>
-     {{#unless administrador}}
+        <h1>INCIDENTES</h1>
+        {{#unless administrador}}
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputEstado">Seleccione Estado de Incidentes</label>
                 <select class="form-select" id="inputEstado">
-                    <option
-                    {{#unless seleccionEstado}}
-                    selected
-                    {{/unless}}>Seleccionar...</option>
-                    <option
-                    {{#if abierto}}
-                    selected
-                    {{/if}}
-                    value="ABIERTO">Abierto</option>
-                    <option
-                    {{#if cerrado}}
-                    selected
-                    {{/if}}
-                    value="CERRADO">Cerrado</option>
+                    <option {{#unless seleccionEstado}}selected{{/unless}}>Seleccionar...</option>
+                    <option {{#if abierto}}selected{{/if}} value="ABIERTO">Abierto</option>
+                    <option {{#if cerrado}}selected{{/if}} value="CERRADO">Cerrado</option>
                 </select>
             </div>
-     {{/unless}}
-     {{#if usuarioBasico}}
+        {{/unless}}
+        {{#if usuarioBasico}}
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputComunidad">Seleccione una Comunidad</label>
                 <select class="form-select" id="inputComunidad">
-                    <option
-                    {{#unless seleccionComunidad}}
-                    selected
-                    {{/unless}}>Seleccionar...</option>
+                    <option {{#unless seleccionComunidad}}selected{{/unless}}>Seleccionar...</option>
                     {{#if seleccionComunidad}}
                         <option selected value="{{comunidadSeleccionada.id}}">{{comunidadSeleccionada.nombre}}</option>
                     {{/if}}
@@ -45,32 +31,30 @@
                     {{/each}}
                 </select>
             </div>
-     {{/if}}
+        {{/if}}
         <div class="row row-cols-1 row-cols-md-2 g-4">
-        {{#each incidentes}}
-            <div class="col">
-                <div class="tarjetaIncidente">
-                    <ul class="list-group list-group-flush">
-
-                        <li class="list-group-item">{{this.establecimiento.tipo}}: {{this.establecimiento.nombre}}</li>
-                        <li class="list-group-item">{{this.servicio.nombre}}: {{this.servicio.tipoNombre}}</li>
-                        <li class="list-group-item">
-                            {{#if this.cerrado}}
-                                <span class="badge text-bg-danger">CERRADO</span>
-                            {{else}}
-                                <span class="badge text-bg-success">ABIERTO</span>
-                            {{/if}}
-                        </li>
-
-                        {{#unless this.cerrado}}
-                            {{#if seleccionComunidad}}
-                             <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
-                            {{/if}}
-                        {{/unless}}
-                    </ul>
+            {{#each incidentes}}
+                <div class="col">
+                    <div class="tarjetaIncidente">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
+                            <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
+                            <li class="list-group-item">
+                                {{#if this.cerrado}}
+                                    <span class="badge text-bg-danger">CERRADO</span>
+                                {{else}}
+                                    <span class="badge text-bg-success">ABIERTO</span>
+                                {{/if}}
+                            </li>
+                            {{#unless this.cerrado}}
+                                {{#if seleccionComunidad}}
+                                    <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                                {{/if}}
+                            {{/unless}}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
         </div>
     </div>
     <script src="/js/Incidentes.js"></script>

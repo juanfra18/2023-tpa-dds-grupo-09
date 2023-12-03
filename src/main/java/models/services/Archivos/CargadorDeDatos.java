@@ -2,6 +2,7 @@ package models.services.Archivos;
 
 
 import models.domain.Entidades.*;
+import models.domain.Incidentes.Posicion;
 import models.domain.Servicios.Banio;
 import models.domain.Servicios.Elevacion;
 import models.domain.Servicios.Servicio;
@@ -25,6 +26,10 @@ public class CargadorDeDatos {
       String establecimientoTipo = elemento[6];
       String servicioNombre = elemento[7];
       String servicioTipo = elemento[8];
+      String establecimientoPosicion = elemento[9];
+
+      Posicion posicion = new Posicion();
+      posicion.setPosicion(establecimientoPosicion);
 
       EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
         posiblePrestadora.setNombre(prestadoraNombre);
@@ -37,6 +42,7 @@ public class CargadorDeDatos {
       posibleEstablecimiento.setTipoEstablecimiento(TipoEstablecimiento.valueOf(establecimientoTipo));
       posibleEstablecimiento.setLocalizacion(repositorioDeMunicipios.buscar(servicioGeo.obtenerMunicipio(establecimientoLocalizacion).getId()));
       posibleEstablecimiento.setNombre(establecimientoNombre);
+      posibleEstablecimiento.setPosicion(posicion);
 
       OrganismoDeControl organismo = organismosMap.getOrDefault(organismoNombre, new OrganismoDeControl());
       organismo.setNombre(organismoNombre);

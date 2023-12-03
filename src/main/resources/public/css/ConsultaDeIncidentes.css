@@ -101,3 +101,9 @@ nav ul li a {
 nav ul li a:hover {
 	background: #73caf2cc;
 }
+
+.highlight {
+    font-weight: bold;
+    color: #F59B2E !important;
+}
+

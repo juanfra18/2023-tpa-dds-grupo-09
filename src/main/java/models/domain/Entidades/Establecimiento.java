@@ -31,6 +31,7 @@ public class Establecimiento extends Persistente {
   private Municipio localizacion;
   @ManyToOne
   @JoinColumn(name = "posicion_id", referencedColumnName = "id")
+  @Setter
   private Posicion posicion;
 
   public Establecimiento() {

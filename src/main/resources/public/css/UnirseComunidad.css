@@ -1,8 +1,8 @@
-#body{
+#body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 700px;
@@ -15,24 +15,40 @@
     width: 90%;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
-    margin: 100px auto; /* Ajusta el valor de '100px' para la separación deseada */
+    margin: 100px auto;
 }
 
-
-#inputGroupSelect01{
-    max-width: 200px;
-}
-
-.tarjetaComunidad{
+.tarjetaComunidad {
     margin: 40px;
-    min-height: 150px;
+    min-height: 180px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 1);
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.45);
     text-align: left;
+}
+
+.button-group {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-group .btn-eliminar {
+    background-color: #DE2F24;
+    color: white !important;
+}
+
+.button-group .btn-incidentes {
+    background-color: #E7A350;
+    color: white !important;
+}
+
+.button-group .btn-informacion {
+    background-color: #308534;
+    color: white !important;
 }
 
 #main-header {

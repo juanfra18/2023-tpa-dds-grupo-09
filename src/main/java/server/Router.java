@@ -31,7 +31,7 @@ public class Router {
       post("/reportarIncidente/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente); /*Se usa??*/
       get("/sugerenciasDeRevision", ((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::solicitarIncidentes);
       get("/comunidades", ((ComunidadesController) FactoryController.controller("comunidades"))::index,TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
-      get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO);
+      get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO, TipoRol.ADMINISTRADOR);
       get("/comunidades/incidentes/{id}",((ComunidadesController) FactoryController.controller("comunidades"))::incidentesDeComunidad, TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
       post("/comunidades/{id}/eliminar",((ComunidadesController) FactoryController.controller("comunidades"))::delete,TipoRol.ADMINISTRADOR);
       post("/comunidades/nueva/{nombre}",((ComunidadesController) FactoryController.controller("comunidades"))::create);
