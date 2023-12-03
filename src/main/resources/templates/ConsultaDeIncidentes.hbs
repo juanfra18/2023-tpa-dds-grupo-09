@@ -39,6 +39,8 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
                             <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
+                            <li class="list-group-item"><span class="highlight">Tiempo abierto: </span>{{this.tiempoAbierto}}</li>
+                            <li class="list-group-item"><span class="highlight">Cantidad de veces reportado: </span>{{this.getReportesDeApertura.size}}</li>
                             <li class="list-group-item">
                                 {{#if this.cerrado}}
                                     <span class="badge text-bg-danger">CERRADO</span>
@@ -46,8 +48,6 @@
                                     <span class="badge text-bg-success">ABIERTO</span>
                                 {{/if}}
                             </li>
-                            <li class="list-group-item">Tiempo abierto: {{this.tiempoAbierto}}</li>
-                            <li class="list-group-item">Cantidad de veces reportado: {{this.getReportesDeApertura.size}}</li>
                             {{#unless this.cerrado}}
                                 {{#if seleccionComunidad}}
                                     <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
