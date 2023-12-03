@@ -20,6 +20,22 @@
     text-align: center;
 }
 
+.contenedorCirculo{
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+}
+.circulo {
+    width: 100%; /* ajusta el tamaño del círculo */
+    height: 40%; /* ajusta el tamaño del círculo */
+    background-position-x: 90%;
+    box-shadow: 10px 5px 4px rgba(0, 0, 0, 0.7);
+    border-radius: 50%; /* convierte el círculo en un círculo perfecto */
+    overflow: hidden; /* oculta el contenido fuera del círculo */
+    text-align: center; /* centra el contenido horizontalmente */
+    transform: translate(0%, -7%);
+}
+
 #inputGroupSelect01{
     max-width: 200px;
 }
@@ -29,6 +45,10 @@
 }
 
 .tarjetaIncidente{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 90%;
     margin: 40px;
     min-height: 150px;

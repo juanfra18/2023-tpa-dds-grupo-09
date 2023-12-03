@@ -45,5 +45,9 @@ public abstract class Servicio extends Persistente {
     return Objects.equals(getTipo(),otro.getTipo())
         && Objects.equals(getClass(),otro.getClass());
   }
+
+  public boolean esBanio(){
+    return this.getClass().getSimpleName().equals("Banio");
+  }
 }
 
