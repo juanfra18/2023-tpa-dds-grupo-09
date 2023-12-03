@@ -51,6 +51,11 @@
     color: white !important;
 }
 
+.button-group .btn-unirse {
+    background-color: #308534;
+    color: white !important;
+}
+
 #main-header {
 	background: #130101;
 	height: 80px;

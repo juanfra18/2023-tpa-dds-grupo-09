@@ -26,13 +26,14 @@ public class CargadorDeDatos {
       String establecimientoTipo = elemento[6];
       String servicioNombre = elemento[7];
       String servicioTipo = elemento[8];
-      String establecimientoPosicion = elemento[9];
+      String establecimientoLatitud = elemento[9];
+      String establecimientoLongitud = elemento[10];
 
       Posicion posicion = new Posicion();
-      posicion.setPosicion(establecimientoPosicion);
+      posicion.setPosicion(establecimientoLatitud+","+establecimientoLongitud);
 
       EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
-        posiblePrestadora.setNombre(prestadoraNombre);
+      posiblePrestadora.setNombre(prestadoraNombre);
 
       Entidad posibleEntidad = new Entidad();
       posibleEntidad.setNombre(entidadNombre);

@@ -7,6 +7,7 @@ import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
+import models.domain.Notificaciones.MedioDeComunicacion;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.persistence.Persistente;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
@@ -161,6 +162,7 @@ public class MiembroDeComunidad extends Persistente {
   public void eliminarServicioDeInteres(ParServicioRol parServicioRol) {
       this.serviciosDeInteres.remove(parServicioRol);
     }
+
 }
 
 

@@ -1,4 +1,4 @@
 organismoDeControl,mailDeContacto,entidadPrestadora,mailDeContacto,entidad,tipoEntidad,establecimiento,nombreLocalizacionEstablecimiento,tipoEstablecimiento,tipoServicio,tipoTipoServicio
-CNRT,Trenes Argentinos,Linea Mitre,FERROCARRIL,Retiro,Yavi,ESTACION,Banio,UNISEX
-CNRT,Trenes Argentinos,Linea Roca,FERROCARRIL,Vicente López,Yavi,ESTACION,Elevacion,ESCALERAS_MECANICAS
-CNRT,Trenes Argentinos,Linea Urquiza,FERROCARRIL,Medrano,Yavi,ESTACION,Banio,CABALLEROS
+CNRT,Trenes Argentinos,Linea Mitre,FERROCARRIL,Retiro,Yavi,ESTACION,Banio,UNISEX,-34.6078602,-58.383111
+CNRT,Trenes Argentinos,Linea Roca,FERROCARRIL,Vicente López,Yavi,ESTACION,Elevacion,ESCALERAS_MECANICAS,-34.6078602,-58.383111
+CNRT,Trenes Argentinos,Linea Urquiza,FERROCARRIL,Medrano,Yavi,ESTACION,Banio,CABALLEROS,-34.6078602,-58.383111
