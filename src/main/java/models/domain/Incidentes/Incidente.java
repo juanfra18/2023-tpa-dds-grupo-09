@@ -21,31 +21,36 @@ import java.util.Objects;
 @Table(name="incidente")
 public class Incidente extends Persistente {
     @ManyToOne
-    @JoinColumn(name="establecimiento_id",referencedColumnName = "id")
+    @JoinColumn(name = "establecimiento_id", referencedColumnName = "id")
     private Establecimiento establecimiento;
     @ManyToOne
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     private Servicio servicio;
     @OneToMany(cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "incidente_id",referencedColumnName = "id")
+    @JoinColumn(name = "incidente_id", referencedColumnName = "id")
     private List<ReporteDeIncidente> reportes;
 
     public Incidente() {
         this.reportes = new ArrayList<>();
     }
-    public List<ReporteDeIncidente> getReportesDeApertura(){
+
+    public List<ReporteDeIncidente> getReportesDeApertura() {
         return this.reportes.stream().filter(r -> !r.esDeCierre()).toList();
     }
-    public List<ReporteDeIncidente> getReportesDeCierre(){
+
+    public List<ReporteDeIncidente> getReportesDeCierre() {
         return this.reportes.stream().filter(r -> r.esDeCierre()).toList();
     }
-    public ReporteDeIncidente primeraApertura(){
+
+    public ReporteDeIncidente primeraApertura() {
         return this.getReportesDeApertura().get(0);
     }
-    public ReporteDeIncidente primerCierre(){
-             return this.getReportesDeCierre().get(0);
+
+    public ReporteDeIncidente primerCierre() {
+        return this.getReportesDeCierre().get(0);
     }
-    public void agregarReporteDeApertura(ReporteDeIncidente reporteDeIncidente){
+
+    public void agregarReporteDeApertura(ReporteDeIncidente reporteDeIncidente) {
         // Se asume que los reportes están en orden cronológico
         if (this.getReportesDeApertura().isEmpty()) {
             this.establecimiento = reporteDeIncidente.getEstablecimiento();
@@ -53,18 +58,21 @@ public class Incidente extends Persistente {
         }
         this.reportes.add(reporteDeIncidente);
     }
-    public void agregarReporteDeCierre(ReporteDeIncidente reporteDeIncidente){
+
+    public void agregarReporteDeCierre(ReporteDeIncidente reporteDeIncidente) {
         this.reportes.add(reporteDeIncidente);
     }
 
-    public boolean cerrado(){
+    public boolean cerrado() {
         return !(this.getReportesDeCierre().isEmpty());
     }
-    public boolean tieneEstado(EstadoIncidente estadoIncidente){
+
+    public boolean tieneEstado(EstadoIncidente estadoIncidente) {
         return (this.cerrado() && estadoIncidente == EstadoIncidente.CERRADO) || (!this.cerrado() && estadoIncidente == EstadoIncidente.ABIERTO);
     }
-    public Long tiempoDeCierre(){
-        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(),this.getReportesDeCierre().get(0).getFechaYhora());
+
+    public Long tiempoDeCierre() {
+        return ChronoUnit.MINUTES.between(this.primeraApertura().getFechaYhora(), this.getReportesDeCierre().get(0).getFechaYhora());
     } //lo hacemos en minutos y dsp se pasa a horas y minutos en el ranking
 
     public boolean igualito(Incidente incidente) {
@@ -76,55 +84,57 @@ public class Incidente extends Persistente {
         }
         Incidente otro = incidente;
         return Objects.equals(establecimiento, otro.getEstablecimiento())
-            && Objects.equals(servicio,otro.getServicio());
+                && Objects.equals(servicio, otro.getServicio());
     }
 
-    public Integer diasAbierto(){
+    public Integer diasAbierto() {
         int dias = 1; //de base ya estuvo abierto ese mismo dia
         List<ReporteDeIncidente> reportesDeApertura = this.getReportesDeApertura();
-        for(ReporteDeIncidente reporteDeIncidente: reportesDeApertura)
-        {   //se fija si hay reportes que ocurrieron luego de 24 horas y que hayan sido anteriores al primer cierre
+        for (ReporteDeIncidente reporteDeIncidente : reportesDeApertura) {   //se fija si hay reportes que ocurrieron luego de 24 horas y que hayan sido anteriores al primer cierre
             //si no fue cerrado no se valida contra el de cierre
 
-            if(this.cerrado()) reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
-            else reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r,reporteDeIncidente)).toList();
+            if (this.cerrado())
+                reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r, reporteDeIncidente) && r.getFechaYhora().isBefore(this.primerCierre().getFechaYhora())).toList();
+            else
+                reportesDeApertura = reportesDeApertura.stream().filter(r -> !this.diferenciaMenor24Horas(r, reporteDeIncidente)).toList();
 
-            if(!reportesDeApertura.isEmpty()) dias++;
+            if (!reportesDeApertura.isEmpty()) dias++;
 
         }
         return dias;
     }
 
-    private boolean diferenciaMenor24Horas(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2){
-        return Math.abs(ChronoUnit.HOURS.between(reporteDeIncidente1.getFechaYhora(), reporteDeIncidente2.getFechaYhora()))<24;
+    private boolean diferenciaMenor24Horas(ReporteDeIncidente reporteDeIncidente1, ReporteDeIncidente reporteDeIncidente2) {
+        return Math.abs(ChronoUnit.HOURS.between(reporteDeIncidente1.getFechaYhora(), reporteDeIncidente2.getFechaYhora())) < 24;
     }
 
-    public String mensaje(){
+    public String mensaje() {
         return primeraApertura().mensaje();
     }
 
     public void eliminarEstablecimiento(Establecimiento establecimientoAEliminar) {
-        if(this.establecimiento == establecimientoAEliminar)
-        {
+        if (this.establecimiento == establecimientoAEliminar) {
             this.establecimiento = null;
             this.servicio = null;
         }
     }
 
-  public boolean fueAbiertoPor(MiembroDeComunidad miembroDeComunidad) {
+    public boolean fueAbiertoPor(MiembroDeComunidad miembroDeComunidad) {
         return !reportes.stream().filter(reporteDeIncidente -> !reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
-  }
+    }
 
-  public boolean fueCerradoPor(MiembroDeComunidad miembroDeComunidad) {
-      return !reportes.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
-  }
+    public boolean fueCerradoPor(MiembroDeComunidad miembroDeComunidad) {
+        return !reportes.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
+    }
 
-    public String tiempoAbierto(){
+    public String tiempoAbierto() {
         Duration tiempoPasado = Duration.between(this.primeraApertura().getFechaYhora(), LocalDateTime.now());
         long dias = tiempoPasado.toDays();
         long horas = tiempoPasado.toHours() % 24;
         long minutos = tiempoPasado.toMinutes() % 60;
-        return dias + " dias " + horas + " horas " + minutos + " minutos.";
+        if (dias != 1) {
+            return dias + " dias " + horas + " horas " + minutos + " minutos";
+        } else
+            return dias + " dia " + horas + " horas " + minutos + " minutos";
     }
-
 }

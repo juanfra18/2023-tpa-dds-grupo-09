@@ -107,3 +107,15 @@ nav ul li a:hover {
     color: #F59B2E !important;
 }
 
+.highlight2 {
+    font-weight: bold;
+    color: #D2691E;
+    font-size: 20px;
+}
+
+.highlight3 {
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+}
+

@@ -39,8 +39,8 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
                             <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
-                            <li class="list-group-item"><span class="highlight">Tiempo abierto: </span>{{this.tiempoAbierto}}</li>
-                            <li class="list-group-item"><span class="highlight">Cantidad de veces reportado: </span>{{this.getReportesDeApertura.size}}</li>
+                            <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
+                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
                             <li class="list-group-item">
                                 {{#if this.cerrado}}
                                     <span class="badge text-bg-danger">CERRADO</span>
