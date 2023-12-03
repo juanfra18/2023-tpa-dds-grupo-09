@@ -50,13 +50,23 @@
                             <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
                             <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
                             <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
-                            <li class="list-group-item">
-                                {{#if abierto}}
-                                    <span class="badge text-bg-success">ABIERTO</span>
-                                {{else}}
-                                    <span class="badge text-bg-danger">CERRADO</span>
-                                {{/if}}
-                            </li>
+                            {{#if usuarioBasico}}
+                                <li class="list-group-item">
+                                    {{#if abierto}}
+                                        <span class="badge text-bg-success">ABIERTO</span>
+                                    {{else}}
+                                        <span class="badge text-bg-danger">CERRADO</span>
+                                    {{/if}}
+                                </li>
+                            {{else}}
+                                <li class="list-group-item">
+                                    {{#if this.cerrado}}
+                                        <span class="badge text-bg-danger">CERRADO</span>
+                                    {{else}}
+                                        <span class="badge text-bg-success">ABIERTO</span>
+                                    {{/if}}
+                                </li>
+                            {{/if}}
                             {{#if abierto}}
                                 {{#if seleccionComunidad}}
                                     <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
