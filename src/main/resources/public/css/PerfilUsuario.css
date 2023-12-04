@@ -109,5 +109,14 @@ nav ul li a:hover {
     height: 100px;
 }
 
+.contenedor-botones{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-editar{
+    width: 150px;
+}
 
 

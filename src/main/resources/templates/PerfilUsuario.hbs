@@ -7,8 +7,10 @@
 
  {{#partial "contenido"}}
         <div id="base">
-        <a href="/incidentes" class="volver-button">Volver</a>
-        <button onclick="window.location.href='/editar/perfil'">Editar Perfil</button>
+        <div class="contenedor-botones">
+            <a href="/incidentes" class="volver-button">Volver</a>
+            <button class="btn btn-secondary btn-editar" onclick="window.location.href='/editar/perfil'">Editar Perfil</button>
+        </div>
             <div class="imagen">
                 <img alt="fotoDePerfil" src="/images/userLogo.png" id="fotoDePerfil">
             </div>
