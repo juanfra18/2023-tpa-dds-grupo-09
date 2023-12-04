@@ -25,14 +25,34 @@
 	font-weight: bold;
 }
 
+.contenedorCirculo{
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+}
+.circulo {
+    width: 100%; /* ajusta el tamaño del círculo */
+    height: 40%; /* ajusta el tamaño del círculo */
+    background-position-x: 90%;
+    box-shadow: 10px 5px 4px rgba(0, 0, 0, 0.7);
+    border-radius: 50%; /* convierte el círculo en un círculo perfecto */
+    overflow: hidden; /* oculta el contenido fuera del círculo */
+    text-align: center; /* centra el contenido horizontalmente */
+    transform: translate(0%, -7%);
+}
+
 .tarjetaRevision{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
     margin: 40px;
-    width: 100%;
     min-height: 150px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5px;
-    box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.45);
     text-align: center;
 }
 
@@ -100,4 +120,20 @@ nav ul li a {
 nav ul li a:hover {
 	background: #73caf2cc;
 }
-	
+
+.highlight {
+    font-weight: bold;
+    color: #F59B2E !important;
+}
+
+.highlight2 {
+    font-weight: bold;
+    color: #D2691E;
+    font-size: 20px;
+}
+
+.highlight3 {
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+}

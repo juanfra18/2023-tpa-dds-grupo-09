@@ -11,12 +11,12 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
                     if (response.ok) {
                        window.location.href = '/comunidades'
                     } else {
-                        window.alert('Error al eliminar usuario');
+                        window.alert('Error al eliminar la comunidad');
                     }
                 });
         }
         else {
-         window.alert('Pensá antes de actuar');
+         window.alert('Acción cancelada');
         }
     });
 });

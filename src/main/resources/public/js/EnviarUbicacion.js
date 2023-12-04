@@ -13,14 +13,19 @@ function posicionObtenida (pos){
          .then(response => response.text())
                 .then(data => {
                     if (data === 'POSITIVO') {
-                        alert('¡Tienes una solicitud de revisión de incidente!');
+                    var resultado = window.confirm('¡Tienes una solicitud de revisión de incidente!');
+                    if (resultado === true) {
+                           window.location.href = '/sugerenciasDeRevision'
+                    }
+                    else{
+                     window.alert('Has rechazado la solicitud de revisión');
+                    }
                     }
                     }
                 )
       .catch(error => {
-        console.error('Error en la solicitud fetch:', error);
+        console.error('Error en el envío de la ubicación:', error);
       });
-
 }
 
 

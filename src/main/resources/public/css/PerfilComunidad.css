@@ -114,6 +114,13 @@ nav ul li a:hover {
     color: #D2691E;
 }
 
+.button-group .btn-secondary {
+    background-color: #DE2F24;
+    color: white !important;
+    margin: 15px;
+}
+
+
 .miembros{
     font-size: 20px;
     font-weight: bold;

@@ -42,7 +42,7 @@ public class ReceptorDeNotificaciones extends Persistente {
     this.formaDeNotificar.recibirNotificacion(this.medioDeComunicacion, reporteDeIncidente, this.getDestinatario());
   }
   public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
-    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Solicitud de Revisión de Incidente", this.getDestinatario());
+    this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensajeRevision(), "Solicitud de Revisión de Incidente", this.getDestinatario());
   }
 
   public void cambiarFormaDeNotificar(FormaDeNotificar forma) {

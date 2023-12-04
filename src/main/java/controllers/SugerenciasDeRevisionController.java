@@ -1,14 +1,11 @@
 package controllers;
 
-import com.google.gson.Gson;
+
 import io.javalin.http.Context;
 import models.Config.Config;
-import models.domain.Entidades.Entidad;
-import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.Posicion;
-import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
@@ -148,6 +145,7 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
 
         boolean noHayIncidentes = incidentesCercanos.isEmpty();
         //Se puede pasarle la url para la referencia del js y el css poniendo la url en el config
+
         model.put("noHayIncidentes",noHayIncidentes);
         model.put("incidentesCercanos",incidentesCercanos);
         model.put("miembro_id",miembroDeComunidad.getId());

@@ -89,4 +89,5 @@ public class Comunidad extends Persistente {
     public int cantIncidentesCerrados(){
         return this.reportesDeLaComunidad.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre()).toList().size();
     }
+
 }

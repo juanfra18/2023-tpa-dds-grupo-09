@@ -128,7 +128,13 @@ public class Incidente extends Persistente {
     }
 
     public String tiempoAbierto() {
-        Duration tiempoPasado = Duration.between(this.primeraApertura().getFechaYhora(), LocalDateTime.now());
+        Duration tiempoPasado;
+        if(this.cerrado())
+        {
+            tiempoPasado = Duration.between(this.primeraApertura().getFechaYhora(), this.primerCierre().getFechaYhora());
+        }else{
+            tiempoPasado = Duration.between(this.primeraApertura().getFechaYhora(), LocalDateTime.now());
+        }
         long dias = tiempoPasado.toDays();
         long horas = tiempoPasado.toHours() % 24;
         long minutos = tiempoPasado.toMinutes() % 60;
@@ -138,5 +144,8 @@ public class Incidente extends Persistente {
             return dias + " dia " + horas + " horas " + minutos + " minutos";
     }
 
+    public int cantVecesReportado(){
+        return this.getReportesDeApertura().size();
+    }
 
 }

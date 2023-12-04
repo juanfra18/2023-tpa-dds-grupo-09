@@ -74,7 +74,7 @@
 	display: block;
 	font-weight: 300;
 	font-size: 0.8em;
-	color: #0d6efd;
+	color: #999;
 }
 
 
@@ -101,7 +101,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-	background: #0d6efd;
+	background: #073caf2cc;
 }
 
 #fotoDePerfil{
