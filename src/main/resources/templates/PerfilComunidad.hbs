@@ -12,9 +12,15 @@
                 {{#if miComunidad}}
                 <button type="button" class="btn btn-secondary" id="abandonarComunidad" data-comunidad-id="{{comunidad.id}}">Abandonar Comunidad</button>
                 {{/if}}
-                <p>Administrador: <a href="/perfil/{{comunidad.administrador.id}}">{{comunidad.administrador.usuario.username}}</a><p>
-                <p>Miembros:
-                <ul>
+                <p class="admin"><span class="highlight">Administrador:</span>
+                   {{#if usuarioAdministrador}}
+                        <a href="/perfil/{{comunidad.administrador.id}}">
+                   {{/if}}
+                        {{comunidad.administrador.usuario.username}}</a><p>
+                <p class="reportes"><span class="highlight">Cantidad de incidentes reportados: </span>{{comunidad.cantIncidentesReportados}}</p>
+                <p class="reportes"><span class="highlight">Cantidad de incidentes cerrados: </span>{{comunidad.cantIncidentesCerrados}}</p>
+                <p class="miembros"><span class="highlight">Miembros:</span>
+                <ul class="miembro">
                   {{#each comunidad.miembrosNoAdministradores}}
                   {{#if usuarioAdministrador}}
                     <li><a href="/perfil/{{this.id}}">{{this.usuario.username}}</a></li>

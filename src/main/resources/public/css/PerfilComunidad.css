@@ -101,5 +101,25 @@ nav ul li a:hover {
     height: 100px;
 }
 
+.admin{
+     font-size: 20px;
+}
 
+.reportes{
+     font-size: 20px;
+}
 
+.highlight{
+    font-weight: bold;
+    color: #D2691E;
+}
+
+.miembros{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.miembro{
+    font-size: 18px;
+    margin-left: 110px;
+}

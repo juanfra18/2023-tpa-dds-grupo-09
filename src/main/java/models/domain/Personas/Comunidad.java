@@ -29,16 +29,10 @@ public class Comunidad extends Persistente {
     private List<ReporteDeIncidente> reportesDeLaComunidad;
     @Transient
     private EmisorDeNotificaciones emisorDeNotificaciones;
-    @Transient
-    private RepositorioComunidad repositorioComunidad;
-    @Transient
-    private RepositorioDeIncidentes repositorioDeIncidentes;
 
     public Comunidad() {
         this.miembros = new ArrayList<>();
         this.reportesDeLaComunidad = new ArrayList<>();
-        //this.repositorioComunidad = RepositorioComunidad.getInstancia();
-        //this.repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     }
     public void agregarMiembro(MiembroDeComunidad unMiembro) {
         this.miembros.add(unMiembro);
@@ -86,5 +80,13 @@ public class Comunidad extends Persistente {
 
     public List<MiembroDeComunidad> miembrosNoAdministradores(){
         return miembros.subList(1,miembros.size());
+    }
+
+    public int cantIncidentesReportados(){
+        return this.reportesDeLaComunidad.stream().filter(reporteDeIncidente -> !reporteDeIncidente.esDeCierre()).toList().size();
+    }
+
+    public int cantIncidentesCerrados(){
+        return this.reportesDeLaComunidad.stream().filter(reporteDeIncidente -> reporteDeIncidente.esDeCierre()).toList().size();
     }
 }
