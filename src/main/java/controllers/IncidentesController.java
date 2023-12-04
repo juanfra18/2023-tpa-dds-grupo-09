@@ -162,6 +162,9 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
 
     List<Incidente> incidentesDeComunidad = comunidad.getIncidentesDeComunidad(repositorioDeIncidentes.buscarTodos());
 
+    List<Incidente> incidentesAbiertos = incidentesDeComunidad.stream().filter(i -> !comunidad.cerroIncidente(i)).toList();
+    List<Incidente> incidentesCerrados = incidentesDeComunidad.stream().filter(i -> comunidad.cerroIncidente(i)).toList();
+
     boolean abierto = false;
     boolean cerrado = false;
 
@@ -184,7 +187,8 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("incidentes",incidentesDeComunidad);
+    model.put("incidentesAbiertos",incidentesAbiertos);
+    model.put("incidentesCerrados",incidentesCerrados);
     model.put("comunidadSeleccionada", comunidad);
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("abierto",abierto);
