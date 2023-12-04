@@ -147,7 +147,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     em.close();
   }
 
-  public void indexComunidad(@NotNull Context context) {
+  public void indexComunidad(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
@@ -155,16 +155,34 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     String comunidadId = context.pathParam("id");
     Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
     List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
+    boolean usuarioBasico = false;
+    boolean usuarioEmpresa = false;
+    boolean administrador = false;
 
     List<Incidente> incidentesDeComunidad = comunidad.getIncidentesDeComunidad(repositorioDeIncidentes.buscarTodos());
 
     boolean abierto = false;
     boolean cerrado = false;
 
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
+    {
+      usuarioEmpresa = true;
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+    }
+
 
     comunidades.remove(comunidad); //para que no aparezca la opcion seleccionada 2 veces
 
-    model.put("usuarioBasico",true);
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("usuarioEmpresa",usuarioEmpresa);
+    model.put("administrador",administrador);
     model.put("incidentes",incidentesDeComunidad);
     model.put("comunidadSeleccionada", comunidad);
     model.put("miembro_id",miembroDeComunidad.getId());
