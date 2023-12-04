@@ -53,7 +53,6 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     boolean administrador = false;
     boolean perfilAdministrador = false;
     String id = context.pathParam("id");
-    boolean miPerfil = false;
     RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
 
     MiembroDeComunidad miembroDeComunidad = repositorioMiembroDeComunidad.buscar(Long.parseLong(id));
@@ -105,6 +104,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("miembroDeComunidad",miembroDeComunidad);
     model.put("incidentesAbiertos", incidentesAbiertos);
     model.put("incidentesCerrados", incidentesCerrados);
+    model.put("miPerfil", false);
     context.render("PerfilUsuario.hbs", model);
     em.close();
   }
@@ -333,6 +333,7 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     model.put("miembroDeComunidad",miembroDeComunidad);
     model.put("incidentesAbiertos", incidentesAbiertos);
     model.put("incidentesCerrados", incidentesCerrados);
+    model.put("miPerfil", true);
     context.render("PerfilUsuario.hbs", model);
     em.close();
   }

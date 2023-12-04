@@ -13,7 +13,7 @@
                 <button type="button" class="btn btn-secondary" id="abandonarComunidad" data-comunidad-id="{{comunidad.id}}">Abandonar Comunidad</button>
                 {{/if}}
                 <p class="admin"><span class="highlight">Administrador:</span>
-                   {{#if usuarioAdministrador}}
+                   {{#if administrador}}
                         <a href="/perfil/{{comunidad.administrador.id}}">
                    {{/if}}
                         {{comunidad.administrador.usuario.username}}</a><p>
@@ -21,8 +21,8 @@
                 <p class="reportes"><span class="highlight">Cantidad de incidentes cerrados: </span>{{comunidad.cantIncidentesCerrados}}</p>
                 <p class="miembros"><span class="highlight">Miembros:</span>
                 <ul class="miembro">
-                  {{#each comunidad.miembrosNoAdministradores}}
-                  {{#if usuarioAdministrador}}
+                  {{#each comunidad.miembros}}
+                  {{#if administrador}}
                     <li><a href="/perfil/{{this.id}}">{{this.usuario.username}}</a></li>
                    {{else}}
                    <li>{{this.usuario.username}}</li>

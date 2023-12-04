@@ -9,7 +9,9 @@
         <div id="base">
         <div class="contenedor-botones">
             <a href="/incidentes" class="volver-button">Volver</a>
-            <button class="btn btn-secondary btn-editar" onclick="window.location.href='/editar/perfil'">Editar Perfil</button>
+            {{#if miPerfil}}
+                <button class="btn btn-secondary btn-editar" onclick="window.location.href='/editar/perfil'">Editar Perfil</button>
+            {{/if}}
         </div>
             <div class="imagen">
                 <img alt="fotoDePerfil" src="/images/userLogo.png" id="fotoDePerfil">
@@ -25,7 +27,12 @@
                 <p>Forma de Notificacion: {{miembroDeComunidad.receptorDeNotificaciones.formaDeNotificar.nombre}}</p>
                 <p>Cantidad de incidentes reportados: {{incidentesAbiertos}}</p>
                 <p>Cantidad de incidentes cerrados: {{incidentesCerrados}}</p>
-                <p>Mis comunidades:
+                <p>
+                    {{#if miPerfil}}
+                    Mis comunidades:
+                    {{else}}
+                    Comunidades:
+                    {{/if}}
                   {{#each miembroDeComunidad.comunidades}}
                     <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
                   {{/each}}

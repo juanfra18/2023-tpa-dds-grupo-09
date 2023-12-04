@@ -16,7 +16,7 @@ public class Router {
       post("/", ((RegistrarController) FactoryController.controller("registrar"))::registrarUsuario);
       get("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::verificarSesion);
       post("/inicioDeSesion", ((InicioDeSesionController) FactoryController.controller("inicioDeSesion"))::validarCredenciales);
-      get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show);
+      get("/perfil/{id}",((UsuariosController) FactoryController.controller("usuarios"))::show, TipoRol.ADMINISTRADOR);
       get("/perfil",((UsuariosController) FactoryController.controller("usuarios"))::perfilPersonal);
       get("/editar/perfil", ((UsuariosController) FactoryController.controller("usuarios"))::edit);
       post("/editar/perfil", ((UsuariosController) FactoryController.controller("usuarios"))::save);
