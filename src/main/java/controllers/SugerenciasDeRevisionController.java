@@ -3,15 +3,21 @@ package controllers;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
 import models.Config.Config;
+import models.domain.Entidades.Entidad;
+import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
+import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
+import models.persistence.Repositorios.RepositorioDeReceptoresDeNotificaciones;
+import org.jetbrains.annotations.NotNull;
+import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -21,6 +27,60 @@ import java.util.List;
 import java.util.Map;
 
 public class SugerenciasDeRevisionController extends ControllerGenerico implements ICrudViewsHandler {
+
+    public void notificacion(Context context) {
+
+        EntityManager em = EntityManagerSingleton.getInstance();
+        Map<String, Object> model = new HashMap<>();
+        Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+        String latitud = context.pathParam("lat");
+        String longitud = context.pathParam("long");
+        if(!SessionHandler.checkLocationCookie(context)){
+
+            SessionHandler.createLocationCookie(context);
+
+            Posicion posicionUsuario = new Posicion();
+            posicionUsuario.setPosicion(latitud+","+longitud);
+            RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+            RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
+            boolean usuarioBasico = false;
+
+            if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+            {
+                usuarioBasico = true;
+            }
+
+            if (usuarioBasico){
+                MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+
+                List<Incidente> incidentesCercanos= new ArrayList<>();
+                List<Incidente> incidentes= miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf("ABIERTO"),
+                        repositorioDeIncidentes.getIncidentesEstaSemana());
+
+                incidentesCercanos = incidentes.stream().filter(i->i.getEstablecimiento().getPosicion()!=null&&
+                        posicionUsuario.calcularDistancia(i.getEstablecimiento().getPosicion())<=Config.DISTANCIA_MINIMA).toList();
+
+                boolean hayIncidentesCercanos = !incidentesCercanos.isEmpty();
+
+                if(hayIncidentesCercanos) {
+                    for (Incidente incidente: incidentesCercanos) {
+                        ReceptorDeNotificaciones receptorDeNotificacionesUsuario=miembroDeComunidad.getReceptorDeNotificaciones();
+                        receptorDeNotificacionesUsuario.recibirSolicitudDeRevision(incidente.primeraApertura());
+                    }
+                    context.result("POSITIVO").status(200);
+                }
+                else{
+                    context.result("NEGATIVO").status(200);
+                }
+            }
+            //context.status(200);
+        }else {
+            System.out.println("Respuesta del servidor: " + context.cookie("ubicacion"));
+            context.status(200);
+        }
+
+        em.close();
+    }
 
     public void solicitarIncidentes(Context context){
         EntityManager em = EntityManagerSingleton.getInstance();
@@ -128,4 +188,5 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
     public void delete(Context context) {
 
     }
+
 }

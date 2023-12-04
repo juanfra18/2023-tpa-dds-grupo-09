@@ -28,5 +28,8 @@
         </div>
         <script src="/js/EliminarServicioDeInteres.js"></script>
         <script src="/js/CambiarRol.js"></script>
+        {{#if usuarioBasico}}
+            <script src="/js/EnviarUbicacion.js"></script>
+        {{/if}}
 {{/partial}}
 {{> templates/base }}

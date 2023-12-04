@@ -1,20 +1,30 @@
-window.addEventListener('load', function(){
+window.addEventListener('DOMContentLoaded', function(){
     if('geolocation' in navigator)
-    navigator.geolocation.getCurrentPosition(geoposOK, geoposKO);
+    navigator.geolocation.getCurrentPosition(posicionObtenida, posicionNoObtenida);
     else
     console.log('No tienes geolocalizador')
 });
 
-function geoposOK (pos){
+function posicionObtenida (pos){
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
-    console.log('Estás en la posición' + lat + ',' + long);
-    console.log('https://maps.google.com/?q=' + lat + ',' + long);
-    window.location.href = '/sugerenciasDeRevision/' + lat + '/' + long;
-    }
+
+      fetch('/sugerenciasDeRevision/' + lat + '/' + long + '/notificacion')
+         .then(response => response.text())
+                .then(data => {
+                    if (data === 'POSITIVO') {
+                        alert('¡Tienes una solicitud de revisión de incidente!');
+                    }
+                    }
+                )
+      .catch(error => {
+        console.error('Error en la solicitud fetch:', error);
+      });
+
+}
 
 
-function geoposKO(err){
+function posicionNoObtenida(err){
     const mensaje = document.getElementById('mensaje');
 
     console.warn(err.message);

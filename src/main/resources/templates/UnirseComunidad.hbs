@@ -66,5 +66,8 @@
     <script src="js/EliminarComunidad.js"></script>
     <script src="js/UnirseAComunidad.js"></script>
     <script src="js/CrearComunidad.js"></script>
+    {{#if usuarioBasico}}
+        <script src="/js/EnviarUbicacion.js"></script>
+    {{/if}}
 {{/partial}}
 {{> templates/base }}

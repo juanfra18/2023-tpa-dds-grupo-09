@@ -1,5 +1,6 @@
 package models.domain.Notificaciones;
 
+import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.persistence.Persistente;
 import models.persistence.Converters.FormaDeNotificarAttributeConverter;
@@ -43,6 +44,7 @@ public class ReceptorDeNotificaciones extends Persistente {
   public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
     this.medioDeComunicacion.recibirNotificacion(reporteDeIncidente.mensaje(), "Solicitud de Revisión de Incidente", this.getDestinatario());
   }
+
   public void cambiarFormaDeNotificar(FormaDeNotificar forma) {
     if((this.formaDeNotificar != null) && (this.formaDeNotificar.getClass().getSimpleName().equals("SinApuros")))
         this.envioProgramado(); //Se envian los mensajes que estaban programados

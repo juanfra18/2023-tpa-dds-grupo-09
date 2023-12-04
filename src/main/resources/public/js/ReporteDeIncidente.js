@@ -78,7 +78,6 @@ const SelectHandler = {
     function checkCampos() {
       let todosLosCamposLlenos = true;
       camposInput.forEach(function (campo) {
-        console.log('value: ' + campo.value);
         if (!campo.value || campo.value == "Seleccionar..." || campo.value == "-1") {
           todosLosCamposLlenos = false;
         }

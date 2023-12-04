@@ -82,7 +82,10 @@
                 </form>
              </div>
          </div>
-
+        </div>
          <script src="/js/EditarPerfil.js"></script>
+        {{#if usuarioBasico}}
+                <script src="/js/EnviarUbicacion.js"></script>
+        {{/if}}
  {{/partial}}
  {{> templates/base }}

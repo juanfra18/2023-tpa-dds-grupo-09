@@ -2,14 +2,11 @@ package server.handlers;
 
 import io.javalin.http.Context;
 import models.Config.Config;
-import models.domain.Usuario.Usuario;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class SessionHandler {
   private static Long tiempoVencimientoSegundos = Config.TIMEOUT;
+  private static Long tiempoUbicacionSegundos = Config.TIMELOCATION;
 
   public static void createSession(Context context, long id, String tipoRol ){
     Long fechaDeVencimiento = System.currentTimeMillis() + (tiempoVencimientoSegundos * 1000);
@@ -31,6 +28,26 @@ public class SessionHandler {
             !(Long.parseLong(fechaDeVencimiento) < System.currentTimeMillis());
   }
 
+  public static void createLocationCookie(Context context){
+    Long fechaDeVencimiento = System.currentTimeMillis() + (tiempoUbicacionSegundos * 1000);
+    context.cookie("vencimiento_ubicacion",String.valueOf(fechaDeVencimiento),tiempoUbicacionSegundos.intValue());
+  }
+  public static boolean checkLocationCookie(Context ctx) {
+    String fechaDeVencimiento = ctx.cookie("vencimiento_ubicacion");
+
+    if (ctx.cookie("vencimiento_ubicacion") != null) {
+      long vencimiento = Long.parseLong(fechaDeVencimiento);
+      if (vencimiento < System.currentTimeMillis()){
+        ctx.removeCookie("vencimiento_ubicacion");
+        return false;
+      } else {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   public static String getUserID(Context ctx) {
     return ctx.cookie("usuario_id");
   }
@@ -42,6 +59,7 @@ public class SessionHandler {
     ctx.removeCookie("usuario_id");
     ctx.removeCookie("tipo_rol");
     ctx.removeCookie("vencimiento");
+    ctx.removeCookie("vencimiento_ubicacion");
     ctx.redirect("/");
   }
 }

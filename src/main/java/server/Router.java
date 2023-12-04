@@ -63,6 +63,7 @@ public class Router {
       get("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::registrarUsuario);
       post("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::usuarioOrganismoDeControl);
       post("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::usuarioEntidadPrestadora);
+      get("/sugerenciasDeRevision/{lat}/{long}/notificacion",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::notificacion,TipoRol.USUARIO_BASICO);
     });
   }
 }

@@ -146,6 +146,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
+
   public void indexComunidad(@NotNull Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
