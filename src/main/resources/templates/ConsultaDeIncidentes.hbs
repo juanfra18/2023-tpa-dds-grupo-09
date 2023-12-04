@@ -72,12 +72,12 @@
                                 </li>
                 {{/if}}
                             {{#if seleccionComunidad}}
-                                 <button type="button" class="btn btn-secondary btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Observaciones</button>
+                                 <button type="button" class="btn btn-secondary btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
                                  {{#if abierto}}
                                      <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                                  {{/if}}
                             {{else}}
-                                 <button type="button" class="btn btn-secondary" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Observaciones</button>
+                                 <button type="button" class="btn btn-secondary" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
                             {{/if}}
                         </ul>
                     </div>
