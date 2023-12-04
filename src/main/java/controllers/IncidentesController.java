@@ -3,6 +3,7 @@ package controllers;
 import io.javalin.http.Context;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
+import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
@@ -228,6 +229,74 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     em.close();
   }
 
+  public void observacionesComunidad(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String incidenteID = context.pathParam("idI");
+    String comunidadID = context.pathParam("idC");
+    Incidente incidente = repositorioDeIncidentes.buscar(Long.parseLong(incidenteID));
+    Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadID));
+    List<ReporteDeIncidente> reportes;
+
+    if(comunidad.cerroIncidente(incidente))
+    {
+      reportes = incidente.getReportesDeCierre().stream()
+          .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
+    }else{
+      reportes = incidente.getReportesDeApertura().stream()
+          .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
+    }
+
+    model.put("usuarioBasico",true);
+    model.put("reportes", reportes);
+    context.render("Observaciones.hbs",model);
+    em.close();
+  }
+
+  public void observacionesIncidente(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Map<String, Object> model = new HashMap<>();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    String incidenteID = context.pathParam("idI");
+    MiembroDeComunidad miembroDeComunidad = miembroDelUsuario(usuarioLogueado.getId().toString());
+    Incidente incidente = repositorioDeIncidentes.buscar(Long.parseLong(incidenteID));
+    List<ReporteDeIncidente> reportes = new ArrayList<>();
+    boolean usuarioBasico = false;
+    boolean administrador = false;
+
+    if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
+    {
+      usuarioBasico = true;
+      List<ReporteDeIncidente> reportesDeComunidadesDelUsuario = miembroDeComunidad.getComunidades().stream().flatMap(comunidad -> comunidad.getReportesDeLaComunidad().stream()).toList();
+
+      if(incidente.cerrado())
+      {
+        reportes = incidente.getReportesDeCierre().stream()
+            .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
+      }else{
+        reportes = incidente.getReportesDeApertura().stream()
+            .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
+      }
+    }
+    else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
+    {
+      administrador = true;
+
+      if(incidente.cerrado()){
+        reportes = incidente.getReportesDeCierre();
+      }else{
+        reportes = incidente.getReportesDeApertura();
+      }
+    }
+
+    model.put("usuarioBasico",usuarioBasico);
+    model.put("administrador",administrador);
+    model.put("reportes", reportes);
+    context.render("Observaciones.hbs",model);
+    em.close();
+  }
+
   @Override
   public void create(Context context) {
 
@@ -252,6 +321,4 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
   public void delete(Context context) {
 
   }
-
-
 }

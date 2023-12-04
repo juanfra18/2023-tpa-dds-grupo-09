@@ -60,9 +60,9 @@
                                     <span class="badge text-bg-success">ABIERTO</span>
                                 {{else}}
                                     <span class="badge text-bg-danger">CERRADO</span>
-                            {{/if}}
+                                {{/if}}
                             </li>
-                            {{else}}
+                {{else}}
                                 <li class="list-group-item">
                                     {{#if this.cerrado}}
                                         <span class="badge text-bg-danger">CERRADO</span>
@@ -70,11 +70,14 @@
                                         <span class="badge text-bg-success">ABIERTO</span>
                                     {{/if}}
                                 </li>
-                            {{/if}}
-                            {{#if abierto}}
-                                {{#if seleccionComunidad}}
-                                    <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
-                                {{/if}}
+                {{/if}}
+                            {{#if seleccionComunidad}}
+                                 <button type="button" class="btn btn-secondary btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Observaciones</button>
+                                 {{#if abierto}}
+                                     <button type="button" class="btn btn-secondary btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                                 {{/if}}
+                            {{else}}
+                                 <button type="button" class="btn btn-secondary" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Observaciones</button>
                             {{/if}}
                         </ul>
                     </div>

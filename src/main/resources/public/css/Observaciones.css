@@ -1,63 +1,46 @@
 #body{
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
     padding: 0;
     display:flex;
     justify-content: center;
-    align-items: center;
-    min-height: 700px;
+    height: auto;
     background-color: #ffd59e;
     background-size: cover;
     background-attachment: fixed;
+	color: #130101;
 }
 
 #base{
-    width: 90%;
-    margin-top:100px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
-    text-align: center;
-}
-
-.contenedorCirculo{
-    display: flex;
+    display:flex;
+    height: 70%;
+    width: 60%;
+    border-style:none;
+    margin-top: 120px;
+    flex-direction: column; /*para que el texto quede centrado y en distintos renglones*/
     justify-content: center;
-    margin-top: -30px;
-}
-.circulo {
-    width: 100%; /* ajusta el tamaño del círculo */
-    height: 40%; /* ajusta el tamaño del círculo */
-    background-position-x: 90%;
-    box-shadow: 10px 5px 4px rgba(0, 0, 0, 0.7);
-    border-radius: 50%; /* convierte el círculo en un círculo perfecto */
-    overflow: hidden; /* oculta el contenido fuera del círculo */
-    text-align: center; /* centra el contenido horizontalmente */
-    transform: translate(0%, -7%);
+    align-items: center;
 }
 
-#inputGroupSelect01{
-    max-width: 200px;
+#base h1 {
+	font-weight: bold;
 }
 
-#inputGroupSelect02{
-    max-width: 200px;
-}
-
-.tarjetaIncidente{
+.tarjetaObservacion{
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 90%;
     margin: 40px;
-    min-height: 150px;
+    min-height: 50px;
     padding: 20px;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5px;
     box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.45);
     text-align: center;
 }
+
 
 #main-header {
 	background: #130101;
@@ -125,20 +108,4 @@ nav ul li a:hover {
 .highlight {
     font-weight: bold;
     color: #F59B2E !important;
-}
-
-.highlight2 {
-    font-weight: bold;
-    color: #D2691E;
-    font-size: 20px;
-}
-
-.highlight3 {
-    font-weight: bold;
-    color: black;
-    font-size: 20px;
-}
-
-.btn-obs{
-    margin-bottom: 10px;
 }
