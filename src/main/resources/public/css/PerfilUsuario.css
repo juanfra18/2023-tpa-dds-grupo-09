@@ -20,13 +20,14 @@
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
     box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.7);
+    font-size:20px;
 }
 
 #base img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 2.5%;
+	margin-top: 0;
 	margin-bottom: 2%;
 }
 
@@ -110,6 +111,7 @@ nav ul li a:hover {
 }
 
 .contenedor-botones{
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -117,6 +119,11 @@ nav ul li a:hover {
 
 .btn-editar{
     width: 150px;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #F59B2E !important;
 }
 
 
