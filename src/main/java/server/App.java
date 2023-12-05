@@ -61,7 +61,7 @@ public class App {
       } finally {
         em.close();
       }
-    }, 0, 30, TimeUnit.SECONDS); //Se ejecutara cada domingo
+    }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
     scheduler.scheduleAtFixedRate(() -> {
       EntityManager em = EntityManagerSingleton.getInstance(); //esta bien asi?
