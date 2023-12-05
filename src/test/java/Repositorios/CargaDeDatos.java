@@ -5,7 +5,6 @@ import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
-import models.domain.Notificaciones.EmisorDeNotificaciones;
 import models.domain.Notificaciones.FormaDeNotificar;
 import models.domain.Notificaciones.MedioDeComunicacion;
 import models.domain.Personas.Comunidad;
@@ -65,7 +64,6 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     private MiembroDeComunidad pablo;
     private Comunidad comunidad;
     private Comunidad comunidad2;
-    private EmisorDeNotificaciones emisorDeNotificaciones;
     private Posicion posicion1;
     private Posicion posicion2;
     private MedioDeComunicacion mail; //Ver si que hay que mockear
@@ -150,12 +148,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         repositorioDeOrganismosDeControl.agregar(CNRT);
 
         //Cargo Comunidades
-        emisorDeNotificaciones = EmisorDeNotificaciones.getInstancia();
-
         comunidad.setNombre("Los+Capos");
-        comunidad.setEmisorDeNotificaciones(emisorDeNotificaciones);
         comunidad2.setNombre("Los+Piolas");
-        comunidad2.setEmisorDeNotificaciones(emisorDeNotificaciones);
 
         repositorioComunidad.agregar(comunidad);
         repositorioComunidad.agregar(comunidad2);
@@ -316,10 +310,6 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
             //Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
         }
 
-    @Test
-    public void recibirInformacion() {
-        emisorDeNotificaciones.generarRankings();
-    }
     @Test
     public void IncidentesDeLaSemana(){
         Assertions.assertEquals(2,repositorioDeIncidentes.getIncidentesEstaSemana().size());

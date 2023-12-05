@@ -10,8 +10,6 @@ import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Notificaciones.MedioDeComunicacion;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.persistence.Persistente;
-import models.persistence.Repositorios.RepositorioDeIncidentes;
-import models.persistence.Repositorios.RepositorioDeReportesDeIncidentes;
 import models.domain.Servicios.Servicio;
 import models.domain.Usuario.Usuario;
 import lombok.Getter;
@@ -49,8 +47,6 @@ public class MiembroDeComunidad extends Persistente {
     private List<Comunidad> comunidades;
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private ReceptorDeNotificaciones receptorDeNotificaciones;
-    @Transient
-    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes;
 
     public MiembroDeComunidad() {
         this.provincias = new ArrayList<>();
@@ -59,7 +55,6 @@ public class MiembroDeComunidad extends Persistente {
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(); //para que se persiste automaticamente
-       //this.repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
     }
 
     public void agregarProvincia(Provincia provincia) {

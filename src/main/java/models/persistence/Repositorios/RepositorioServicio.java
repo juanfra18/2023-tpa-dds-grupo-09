@@ -2,7 +2,6 @@ package models.persistence.Repositorios;
 
 import models.domain.Servicios.Servicio;
 import models.persistence.EntityManagerSingleton;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigInteger;
