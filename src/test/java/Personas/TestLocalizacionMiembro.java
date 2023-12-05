@@ -49,7 +49,6 @@ public class TestLocalizacionMiembro {
 
     when(servicioGeo.obtenerProvincia(provincia)).thenReturn(provinciaMockeada);
 
-    miembro.agregarProvincia(servicioGeo.obtenerProvincia(provincia));
     Assertions.assertEquals(6, miembro.getProvincias().get(0).getId());
   }
   @Test
@@ -60,7 +59,6 @@ public class TestLocalizacionMiembro {
 
     when(servicioGeo.obtenerMunicipio(municipio)).thenReturn(municipioMockeado);
 
-    miembro.agregarMunicipio(servicioGeo.obtenerMunicipio(municipio));
     Assertions.assertEquals(60280, miembro.getMunicipios().get(0).getId());
   }
 }

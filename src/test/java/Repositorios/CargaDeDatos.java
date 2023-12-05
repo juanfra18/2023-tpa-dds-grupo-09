@@ -3,7 +3,7 @@ package Repositorios;
 import models.domain.Entidades.*;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
-import models.domain.Incidentes.Posicion;
+import models.domain.Entidades.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Notificaciones.FormaDeNotificar;
 import models.domain.Notificaciones.MedioDeComunicacion;
@@ -162,7 +162,6 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         pablo.getReceptorDeNotificaciones().setMail("hola@mail.net");
         pablo.getReceptorDeNotificaciones().setTelefono("+1333333453");
 
-        pablo.agregarMunicipio(yavi);
         pablo.agregarServicioDeInteres(banioUnisex, Rol.valueOf("AFECTADO"));
 
         pablo.unirseAComunidad(comunidad);

@@ -1,22 +1,16 @@
 package models.domain.Personas;
 
-import models.Config.Config;
 import models.domain.Entidades.Entidad;
 import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
-import models.domain.Incidentes.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
-import models.domain.Notificaciones.MedioDeComunicacion;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.persistence.Persistente;
 import models.domain.Servicios.Servicio;
 import models.domain.Usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
-import models.services.Localizacion.Municipio;
-import models.services.Localizacion.Provincia;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -36,10 +30,6 @@ public class MiembroDeComunidad extends Persistente {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "miembro_id", referencedColumnName = "id")
     private List<ParServicioRol> serviciosDeInteres;
-    @ManyToMany
-    private List<Provincia> provincias;
-    @ManyToMany
-    private List<Municipio> municipios;
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "usuario_id", referencedColumnName = "id") // Asegura que la columna sea única
     private Usuario usuario;
@@ -49,21 +39,12 @@ public class MiembroDeComunidad extends Persistente {
     private ReceptorDeNotificaciones receptorDeNotificaciones;
 
     public MiembroDeComunidad() {
-        this.provincias = new ArrayList<>();
-        this.municipios = new ArrayList<>();
         this.entidadesDeInteres = new ArrayList<>();
         this.serviciosDeInteres = new ArrayList<>();
         this.comunidades = new ArrayList<>();
         this.receptorDeNotificaciones = new ReceptorDeNotificaciones(); //para que se persiste automaticamente
     }
 
-    public void agregarProvincia(Provincia provincia) {
-        provincias.add(provincia);
-    }
-
-    public void agregarMunicipio(Municipio municipio) {
-        municipios.add(municipio);
-    }
     public void agregarEntidadDeInteres(Entidad entidad) {
         entidadesDeInteres.add(entidad);
     }
@@ -87,7 +68,7 @@ public class MiembroDeComunidad extends Persistente {
 
     public boolean tieneInteres(Servicio servicio, Establecimiento establecimiento) {
         boolean coincideEstablecimiento = this.entidadesDeInteres.stream().anyMatch(entidad -> entidad.getEstablecimientos().contains(establecimiento));
-        boolean coincideLocalizacion = true;//this.municipios.stream().anyMatch(municipio -> establecimiento.getLocalizacion() == municipio);
+        boolean coincideLocalizacion = true;
         boolean coincideServicio = this.serviciosDeInteres.stream().anyMatch(servicioRol -> servicioRol.getServicio().equals(servicio));
         return coincideServicio && coincideEstablecimiento && coincideLocalizacion;
     }
@@ -95,20 +76,6 @@ public class MiembroDeComunidad extends Persistente {
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
         if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
             this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);
-        }
-    }
-
-    public Posicion setPosicion(){
-        //TOMOCK
-        return null;
-    }
-    public boolean validarSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente){
-        return reporteDeIncidente.getEstablecimiento().getPosicion().distancia(this.setPosicion()) <= Config.DISTANCIA_MINIMA
-            && this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento());
-    }
-    public void recibirSolicitudDeRevision(ReporteDeIncidente reporteDeIncidente) {
-        if (this.validarSolicitudDeRevision(reporteDeIncidente)){
-            this.receptorDeNotificaciones.recibirSolicitudDeRevision(reporteDeIncidente);
         }
     }
     public List<Incidente> obtenerIncidentesPorEstado(EstadoIncidente estado, List<Incidente> incidentes) {

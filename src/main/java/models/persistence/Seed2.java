@@ -1,7 +1,7 @@
 package models.persistence;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-import models.domain.Incidentes.Posicion;
+import models.domain.Entidades.Posicion;
 import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import models.domain.Rankings.EntidadesConMayorImpacto;
 import models.domain.Rankings.EntidadesQueSolucionanMasLento;

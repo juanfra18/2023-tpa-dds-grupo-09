@@ -1,4 +1,4 @@
-package models.domain.Incidentes;
+package models.domain.Entidades;
 
 import models.persistence.Persistente;
 import lombok.Getter;

@@ -56,16 +56,6 @@ public class Comunidad extends Persistente {
         return  this.miembros.size();
     }
 
-    public void eliminarReportesAEliminar(List<ReporteDeIncidente> reportesAEliminar) {
-        for (ReporteDeIncidente reporteDeIncidente:reportesAEliminar)
-        {
-            if(this.reportesDeLaComunidad.contains(reporteDeIncidente))
-            {
-                reportesDeLaComunidad.remove(reportesAEliminar);
-            }
-        }
-    }
-
     public MiembroDeComunidad administrador(){
         if(!miembros.isEmpty())
             return miembros.get(0);

@@ -76,6 +76,7 @@ public class EmpresasController extends ControllerGenerico implements ICrudViews
       em.getTransaction().commit();
     } catch (Exception e) {
       em.getTransaction().rollback();
+      e.printStackTrace();
       ctx.status(500).result("Error al cargar el archivo");
     } finally {
       em.close();

@@ -23,6 +23,7 @@ public class RepositorioProvincias extends RepositorioGenerico<Provincia>{
 
   @Override
   public Provincia buscar(long id) {
+    entityManager = EntityManagerSingleton.getInstance();
     return entityManager.find(Provincia.class, (int)id);
   }
 }

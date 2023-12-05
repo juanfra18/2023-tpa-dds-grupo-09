@@ -22,6 +22,7 @@ public class RepositorioDeMunicipios extends RepositorioGenerico<Municipio> {
 
   @Override
   public Municipio buscar(long id) {
+    entityManager = EntityManagerSingleton.getInstance();
     return entityManager.find(Municipio.class, (int)id);
   }
 }

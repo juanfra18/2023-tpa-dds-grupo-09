@@ -1,9 +1,8 @@
 package models.persistence;
 
-import models.domain.Entidades.OrganismoDeControl;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-import models.domain.Incidentes.Posicion;
+import models.domain.Entidades.Posicion;
 import models.domain.Notificaciones.CuandoSuceden;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Notificaciones.ViaMail;

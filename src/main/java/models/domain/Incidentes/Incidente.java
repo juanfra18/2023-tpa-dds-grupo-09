@@ -112,13 +112,6 @@ public class Incidente extends Persistente {
         return primeraApertura().mensaje();
     }
 
-    public void eliminarEstablecimiento(Establecimiento establecimientoAEliminar) {
-        if (this.establecimiento == establecimientoAEliminar) {
-            this.establecimiento = null;
-            this.servicio = null;
-        }
-    }
-
     public boolean fueAbiertoPor(MiembroDeComunidad miembroDeComunidad) {
         return !reportes.stream().filter(reporteDeIncidente -> !reporteDeIncidente.esDeCierre() && reporteDeIncidente.getDenunciante().equals(miembroDeComunidad)).toList().isEmpty();
     }

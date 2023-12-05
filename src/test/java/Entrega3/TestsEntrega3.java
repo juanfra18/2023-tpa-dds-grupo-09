@@ -1,40 +1,6 @@
 package Entrega3;
 
-import models.domain.Entidades.*;
-import models.domain.Incidentes.EstadoIncidente;
-import models.domain.Incidentes.Incidente;
-import models.domain.Incidentes.Posicion;
-import models.domain.Incidentes.ReporteDeIncidente;
-import models.domain.Notificaciones.*;
-import models.domain.Personas.Comunidad;
-import models.domain.Personas.MiembroDeComunidad;
-import models.domain.Personas.Rol;
-import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
-import models.domain.Rankings.EntidadesQueSolucionanMasLento;
-import models.domain.Servicios.Banio;
-import models.domain.Servicios.Servicio;
-import models.persistence.Repositorios.RepositorioComunidad;
-import models.persistence.Repositorios.RepositorioDeEmpresas;
-import models.persistence.Repositorios.RepositorioDeIncidentes;
-import models.persistence.Repositorios.RepositorioDeReportesDeIncidentes;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import models.services.APIs.Georef.AdapterServicioGeo;
-import models.services.APIs.Georef.ServicioGeoref;
-import models.services.Archivos.CargadorDeDatos;
-import models.services.Archivos.SistemaDeArchivos;
-import models.services.Localizacion.Municipio;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
 
 public class TestsEntrega3 {/*
     private List<OrganismoDeControl> empresas;

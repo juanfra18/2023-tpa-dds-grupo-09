@@ -1,6 +1,6 @@
 package models.persistence.Repositorios;
 
-import models.domain.Incidentes.Posicion;
+import models.domain.Entidades.Posicion;
 
 
 public class RepositorioPosicion extends RepositorioGenerico<Posicion> {

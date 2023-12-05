@@ -87,12 +87,4 @@ public class ReporteDeIncidente extends Persistente {
             "en el servicio "+ this.getServicio().getTipo()+"?" +
             "\nObservaciones: "+this.getObservaciones();
   }
-
-  public void eliminarEstablecimiento(Establecimiento establecimientoAEliminar) {
-    if(this.establecimiento == establecimientoAEliminar)
-    {
-      this.establecimiento = null;
-      this.servicio = null;
-    }
-  }
 }

@@ -47,7 +47,8 @@ public class EntidadPrestadora extends Persistente {
   }
 
   public void recibirInforme(String ruta,String asunto){
-    this.viaMail.recibirArchivos(ruta,asunto,this.personaMail);
+    if (this.personaMail != null)
+      this.viaMail.recibirArchivos(ruta,asunto,this.personaMail);
   }
 
   public int cantidadEntidades(){

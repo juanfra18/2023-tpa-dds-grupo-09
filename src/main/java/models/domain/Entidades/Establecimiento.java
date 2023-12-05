@@ -1,6 +1,5 @@
 package models.domain.Entidades;
 
-import models.domain.Incidentes.Posicion;
 import models.persistence.Persistente;
 import models.domain.Servicios.Servicio;
 import lombok.Getter;

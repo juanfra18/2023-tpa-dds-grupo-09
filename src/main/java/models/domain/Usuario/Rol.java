@@ -29,17 +29,4 @@ public class Rol extends Persistente {
     this.permisos = new HashSet<>();
   }
 
-  public void agregarPermisos(Permiso ... permisos) {
-    Collections.addAll(this.permisos, permisos);
-  }
-
-  public boolean tenesPermiso(Permiso permiso) {
-    return this.permisos.contains(permiso);
-  }
-
-  public boolean tenesPermiso(String nombreInterno) {
-    return this.permisos.stream().anyMatch(p -> p.coincideConNombreInterno(nombreInterno));
-  }
-
-
 }

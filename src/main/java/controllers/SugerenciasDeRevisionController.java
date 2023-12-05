@@ -5,7 +5,7 @@ import io.javalin.http.Context;
 import models.Config.Config;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
-import models.domain.Incidentes.Posicion;
+import models.domain.Entidades.Posicion;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
@@ -13,7 +13,6 @@ import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
 import models.persistence.Repositorios.RepositorioDeReceptoresDeNotificaciones;
-import org.jetbrains.annotations.NotNull;
 import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
 

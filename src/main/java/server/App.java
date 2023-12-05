@@ -1,13 +1,12 @@
 package server;
 
+import models.Config.Config;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Rankings.EntidadesConMayorCantidadDeIncidentes;
 import models.domain.Rankings.EntidadesQueSolucionanMasLento;
 import models.domain.Rankings.Tierlist;
 import models.persistence.EntityManagerSingleton;
-import models.persistence.Repositorios.RepositorioDeIncidentes;
-import models.persistence.Repositorios.RepositorioDeReceptoresDeNotificaciones;
-import models.persistence.Repositorios.RepositorioEntidad;
+import models.persistence.Repositorios.*;
 import models.persistence.Seed;
 
 import javax.persistence.EntityManager;
@@ -39,7 +38,8 @@ public class App {
     Tierlist t2 = new EntidadesQueSolucionanMasLento();
     RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
-
+    RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+    RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
 
     //Fecha actual
     LocalDateTime fechaActual = LocalDateTime.now();
@@ -53,19 +53,23 @@ public class App {
       try {
         em.getTransaction().begin();
         t1.armarRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana());
+        repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_1,"Ranking semanal - Tiempo promedio de resolución de incidentes"));
+        repositorioDeEntidadPrestadora.buscarTodos().forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_1,"Ranking semanal - Tiempo promedio de resolución de incidentes"));
         em.getTransaction().commit();
       } catch (Exception e) {
         em.getTransaction().rollback();
       } finally {
         em.close();
       }
-    }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
+    }, 0, 30, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
     scheduler.scheduleAtFixedRate(() -> {
       EntityManager em = EntityManagerSingleton.getInstance(); //esta bien asi?
       try {
         em.getTransaction().begin();
-          t2.armarRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana());
+        t2.armarRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana());
+        repositorioDeOrganismosDeControl.buscarTodos().forEach(organismoDeControl -> organismoDeControl.recibirInforme(Config.RANKING_2,"Ranking semanal - Cantidad de incidentes reportados en la semana"));
+        repositorioDeEntidadPrestadora.buscarTodos().forEach(entidadPrestadora -> entidadPrestadora.recibirInforme(Config.RANKING_2,"Ranking semanal - Cantidad de incidentes reportados en la semana"));
         em.getTransaction().commit();
       } catch (Exception e) {
         em.getTransaction().rollback();

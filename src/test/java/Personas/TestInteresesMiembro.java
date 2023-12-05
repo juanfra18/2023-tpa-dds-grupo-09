@@ -64,7 +64,6 @@ public class TestInteresesMiembro {
     banioMujeres = new Banio();
     banioMujeres.setTipo("DAMAS");
 
-    miembro.agregarMunicipio(pinamar);
     miembro.agregarServicioDeInteres(banioHombres, Rol.valueOf("AFECTADO"));
 
     lineaMitre = new Entidad();
