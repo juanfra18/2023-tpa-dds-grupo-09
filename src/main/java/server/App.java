@@ -8,6 +8,7 @@ import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
 import models.persistence.Repositorios.RepositorioDeReceptoresDeNotificaciones;
 import models.persistence.Repositorios.RepositorioEntidad;
+import models.persistence.Seed;
 
 import javax.persistence.EntityManager;
 import java.time.DayOfWeek;
@@ -16,12 +17,19 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class App {
   public static void main(String[] args) {
+
+    Map<String, String> env = System.getenv();
+    if (!env.get("SEED_DONE").equals("true")) {
+      Seed.seed();
+    }
+
     Server.init();
 
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

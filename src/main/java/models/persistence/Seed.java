@@ -22,6 +22,9 @@ import javax.persistence.*;
 
 public class Seed implements WithSimplePersistenceUnit {
     public static void main(String[] args) {
+        seed();
+    }
+    public static void seed() {
         EntityManager em = EntityManagerSingleton.getInstance();
         ServicioGeoref servicioGeoref = ServicioGeoref.instancia();
         RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
@@ -168,7 +171,7 @@ public class Seed implements WithSimplePersistenceUnit {
 
             em.getTransaction().commit();
             em.close();
-            System.exit(0);
+
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
