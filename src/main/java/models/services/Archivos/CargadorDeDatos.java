@@ -45,10 +45,11 @@ public class CargadorDeDatos {
                 && posicion.getLongitud() == Double.parseDouble(establecimientoLongitud)).toList().get(0);
 
         posiblePosicion = repositorioPosicion.buscar(posicionRepetida.getId());
-      }else{
+      } else {
         posiblePosicion.setPosicion(establecimientoLatitud + "," + establecimientoLongitud);
+        repositorioPosicion.agregar(posiblePosicion);
       }
-      
+
       EntidadPrestadora posiblePrestadora = new EntidadPrestadora();
       posiblePrestadora.setNombre(prestadoraNombre);
 

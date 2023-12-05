@@ -5,6 +5,7 @@ import models.domain.Servicios.Servicio;
 import lombok.Getter;
 import lombok.Setter;
 import models.services.Localizacion.Municipio;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
