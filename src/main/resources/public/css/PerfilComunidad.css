@@ -130,3 +130,15 @@ nav ul li a:hover {
     font-size: 18px;
     margin-left: 110px;
 }
+
+.dropdown-element{
+    width:100%;
+}
+
+.dropdown-element a:hover{
+    background: #73caf2cc;
+}
+
+.dropdown-element form:hover{
+    background: #73caf2cc;
+}

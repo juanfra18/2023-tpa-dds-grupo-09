@@ -31,8 +31,8 @@
                     Intereses
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a href="/intereses/entidades">Entidades</a></li>
-                        <li><a href="/intereses/servicios">Servicios</a></li>
+                        <li class="dropdown-element"><a href="/intereses/entidades">Entidades</a></li>
+                        <li class="dropdown-element"><a href="/intereses/servicios">Servicios</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="/sugerenciasDeRevision">Sugerencias de Revisión</a></li>
@@ -42,8 +42,8 @@
                     Incidentes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" style="min-width:200;">
-                        <li><a href="/reportarIncidente/NUEVO">Reportar Incidente</a></li>
-                        <li><a href="/incidentes">Mis Incidentes</a></li>
+                        <li class="dropdown-element"><a href="/reportarIncidente/NUEVO">Reportar Incidente</a></li>
+                        <li class="dropdown-element"><a href="/incidentes">Mis Incidentes</a></li>
                    </ul>
                 </li>
 
@@ -61,8 +61,8 @@
                     Empresas
                    </a>
                    <ul class="dropdown-menu dropdown-menu-dark" style="min-width:20px;">
-                    <li><a href="/organismosDeControl">Ver</a></li>
-                    <li><a href="/empresas/cargar">Cargar</a></li>
+                    <li class="dropdown-element"><a href="/organismosDeControl">Ver</a></li>
+                    <li class="dropdown-element"><a href="/empresas/cargar">Cargar</a></li>
                    </ul>
                 </li>
             {{/if}}
@@ -70,9 +70,9 @@
                   <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/./images/userLogo2.png" alt="userImage" id="userImage" width="30" height="30">
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-dark" style="min-width:80px;">
-                    <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
-                    <li>
+                  <ul class="dropdown-menu dropdown-menu-dark"> <!--style="min-width:80px;"-->
+                    <li class="dropdown-element"><a class="dropdown-item" href="/perfil">Perfil</a></li>
+                    <li class="dropdown-element">
                         <form method="post" action="/cerrarSesion">
                             <input type="submit" class="dropdown-item" value="Cerrar Sesion">
                         </form>

@@ -24,11 +24,11 @@ import java.util.concurrent.TimeUnit;
 public class App {
   public static void main(String[] args) {
 
-    Map<String, String> env = System.getenv();
+    /*Map<String, String> env = System.getenv();
     if (!env.get("SEED_DONE").equals("true")) {
       Seed.seed();
     }
-
+*/
     Server.init();
 
     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

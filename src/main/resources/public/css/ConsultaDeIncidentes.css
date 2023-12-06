@@ -142,3 +142,15 @@ nav ul li a:hover {
 .btn-obs{
     margin-bottom: 10px;
 }
+
+.dropdown-element{
+    width:100%;
+}
+
+.dropdown-element a:hover{
+    background: #73caf2cc;
+}
+
+.dropdown-element form:hover{
+    background: #73caf2cc;
+}

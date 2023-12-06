@@ -123,7 +123,19 @@ button{
     cursor: not-allowed;
 }
 
-form{
+#incidente{
     margin-top: 50px;
+}
+
+.dropdown-element{
+    width:100%;
+}
+
+.dropdown-element a:hover{
+    background: #73caf2cc;
+}
+
+.dropdown-element form:hover{
+    background: #73caf2cc;
 }
 

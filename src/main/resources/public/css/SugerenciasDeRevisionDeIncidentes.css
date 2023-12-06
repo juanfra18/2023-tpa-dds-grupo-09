@@ -137,3 +137,15 @@ nav ul li a:hover {
     color: black;
     font-size: 20px;
 }
+
+.dropdown-element{
+    width:100%;
+}
+
+.dropdown-element a:hover{
+    background: #73caf2cc;
+}
+
+.dropdown-element form:hover{
+    background: #73caf2cc;
+}

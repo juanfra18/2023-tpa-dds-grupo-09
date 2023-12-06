@@ -60,7 +60,7 @@ button{
     box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.4);
 }
 
-form{
+#casilla{
     margin-top: 30px;
 }
 
@@ -125,4 +125,16 @@ nav ul li a {
 
 nav ul li a:hover {
 	background: #73caf2cc;
+}
+
+.dropdown-element{
+    width:100%;
+}
+
+.dropdown-element a:hover{
+    background: #73caf2cc;
+}
+
+.dropdown-element form:hover{
+    background: #73caf2cc;
 }
