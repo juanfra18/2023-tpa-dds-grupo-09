@@ -26,4 +26,19 @@ public class ParServicioRol extends Persistente {
         else
             this.rol = Rol.OBSERVADOR;
     }
+    public String nombreRol(){
+        switch (rol){
+            case OBSERVADOR: return "Observador";
+            case AFECTADO: return "Afectado";
+            default: return "Rol no reconocido";
+        }
+    }
+
+    public String otroRol(){
+        switch (rol){
+            case OBSERVADOR: return "Afectado";
+            case AFECTADO: return "Observador";
+            default: return "Rol actual no reconocido";
+        }
+    }
 }
