@@ -56,7 +56,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("administrador",administrador);
     model.put("incidentes",incidentes);
     model.put("miembro_id",miembroDeComunidad.getId());
-    model.put("seleccion",false);
+    model.put("seleccionEstado",true);
     model.put("abierto",false);
     model.put("cerrado",false);
     context.render("ConsultaDeIncidentes.hbs", model);
