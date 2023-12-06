@@ -131,3 +131,18 @@ nav ul li a:hover {
 .dropdown-element form:hover{
     background: #73caf2cc;
 }
+
+#crearComunidad{
+    margin-top: 100px;
+    margin-left: 10px;
+}
+
+#nombre{
+    width: 400px;
+    margin-right: 10px;
+}
+
+#formCrearComunidad{
+    display: flex;
+    align-items: center;
+}

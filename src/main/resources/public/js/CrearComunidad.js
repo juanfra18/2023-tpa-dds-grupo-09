@@ -1,9 +1,11 @@
-const boton = document.getElementById("btn-crear-comunidad");
-boton.addEventListener('click', crearComunidad);
+const form = document.getElementById("formCrearComunidad");
+form.addEventListener('submit',crearComunidad);
 
+function crearComunidad(event){
+    event.preventDefault();
 
-function crearComunidad(){
-    var nombre = prompt("Ingrese el nombre de la comunidad: ");
+    const nombreInput= document.getElementById("nombre");
+    const nombre = nombreInput.value;
 
     if(nombre !== null && nombre !== ""){
         fetch("/comunidades/nueva/" + nombre,{
