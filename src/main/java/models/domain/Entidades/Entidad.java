@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Setter
 @Getter
 @Entity
@@ -46,6 +48,18 @@ public class Entidad extends Persistente {
     }
     public String tipo(){
         return this.tipoEntidad.toString();
+    }
+
+    public String nombreDeEstablecimientos(){ //Devuelve el nombre de los primeros 3 establecimientos, si es que tiene la menos 3, sino de los que haya
+        String nombres = this.establecimientos.stream()
+                                                .limit(3)
+                                                .map(establecimiento -> establecimiento.getNombre())
+                                                .collect(Collectors.joining(","));
+
+        if(establecimientos.size() > 3)
+            nombres = nombre + ", ...";
+
+        return  nombres;
     }
 
 }
