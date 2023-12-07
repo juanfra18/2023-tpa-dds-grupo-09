@@ -114,6 +114,11 @@ nav ul li a:hover {
     color: #D2691E;
 }
 
+.button-group{
+    display: flex;
+    justify-content: flex-end;
+}
+
 .button-group .btn-secondary {
     background-color: #DE2F24;
     color: white !important;
