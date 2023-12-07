@@ -87,4 +87,15 @@ public class ReporteDeIncidente extends Persistente {
             "en el servicio "+ this.getServicio().getTipo()+"?" +
             "\nObservaciones: "+this.getObservaciones();
   }
+
+  public String getMinutosDelHorario(){
+    int minutos = this.fechaYhora.getMinute();
+
+    if(minutos < 10)
+    {
+      return '0' + String.valueOf(minutos);
+    }
+
+    return String.valueOf(minutos);
+  }
 }
