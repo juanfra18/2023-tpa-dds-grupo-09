@@ -13,7 +13,11 @@
                 <button class="btn btn-secondary btn-editar" onclick="window.location.href='/editar/perfil'">Editar</button>
             {{/if}}
         </div>
-            <h2>Mi Perfil</h2>
+            {{#if miPerfil}}
+                <h2>Mi Perfil</h2>
+            {{else}}
+                <h2>Perfil</h2>
+            {{/if}}
             <div class="imagen">
                 <img alt="fotoDePerfil" src="/images/userLogo.png" id="fotoDePerfil">
             </div>

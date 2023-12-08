@@ -42,9 +42,17 @@
             </div>
         {{/if}}
         <div id="base">
-            <h1>Tambien podes unirte a:</h1>
+            {{#if usuarioBasico}}
+                <h1>Tambien podes unirte a:</h1>
+            {{else}}
+                <h1>Comunidades:</h1>
+            {{/if}}
             {{#if comunidades.empty}}
-                <h4>No hay comunidades disponibles para que te unas</h4>
+                {{#if usuarioBasico}}
+                    <h4>No hay comunidades disponibles para que te unas</h4>
+                {{else}}
+                    <h4>No hay comunidades credas</h4>
+                {{/if}}
             {{else}}
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {{#each comunidades}}
