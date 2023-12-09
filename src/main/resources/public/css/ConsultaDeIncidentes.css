@@ -154,3 +154,11 @@ nav ul li a:hover {
 .dropdown-element form:hover{
     background: #73caf2cc;
 }
+
+.badge.text-bg-success {
+    font-size: 18px;
+}
+
+.badge.text-bg-danger {
+    font-size: 18px;
+}

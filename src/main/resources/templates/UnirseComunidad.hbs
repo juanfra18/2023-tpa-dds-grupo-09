@@ -12,7 +12,7 @@
                 <h2>Crea tu propia comunidad</h2>
                 <form id="formCrearComunidad">
                     <input class="form-control input-field" type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre de la comunidad">
-                    <button type="submit" class="btn btn-secondary" id="btn-crear-comunidad">Crear Comunidad</button>
+                    <button type="submit" class="btn btn-success" id="btn-crear-comunidad">Crear Comunidad</button>
                 </form>
             </div>
             <div id="base2">
@@ -29,10 +29,10 @@
                                         <h4>Miembros: {{this.cantidadMiembros}}</h4>
                                     </div>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-secondary btn-incidentes" onclick="window.location.href='/incidentes/comunidad/' + {{this.id}} ">Incidentes</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/incidentes/comunidad/' + {{this.id}} ">Incidentes</button>
                                     </div>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-secondary btn-informacion" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
                                     </div>
                                 </div>
                             </div>
@@ -64,17 +64,17 @@
                                 </div>
                                 {{#if usuarioBasico}}
                                 <div class="button-group">
-                                    <button type="button" class="btn btn-secondary btn-unirse" data-comunidad-id="{{this.id}}">Unirme</button>
+                                    <button type="button" class="btn btn-primary btn-unirse" data-comunidad-id="{{this.id}}">Unirme</button>
                                 </div>
                                 {{else}}
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-secondary btn-incidentes" onclick="window.location.href='/incidentes/comunidad/' + {{this.id}} ">Incidentes</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/incidentes/comunidad/' + {{this.id}} ">Incidentes</button>
                                     </div>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-secondary btn-eliminar" data-comunidad-id="{{this.id}}">Eliminar</button>
+                                        <button type="button" class="btn btn-danger" data-comunidad-id="{{this.id}}">Eliminar</button>
                                     </div>
                                     <div class="button-group">
-                                        <button type="button" class="btn btn-secondary btn-informacion" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
+                                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/comunidades/{{this.id}}'">Informacion</button>
                                     </div>
                                 {{/if}}
                             </div>

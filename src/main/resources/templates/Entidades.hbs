@@ -18,9 +18,9 @@
                                 <h4>Establecimientos: {{this.cantidadEstablecimientos}}</h4>
                             </div>
                             {{#if usuarioBasico}}
-                            <button type="button" class="btn btn-secondary btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{this.id}}">De mi Interes</button>
+                            <button type="button" class="btn btn-success btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{this.id}}">De mi Interes</button>
                             {{/if}}
-                            <button type="button" class="btn btn-secondary" onclick="window.location.href='/organismosDeControl/{{organismo_id}}/entidadesPrestadoras/{{entidadPrestadora_id}}/entidades/{{this.id}}/establecimientos'">Establecimientos</button>
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='/organismosDeControl/{{organismo_id}}/entidadesPrestadoras/{{entidadPrestadora_id}}/entidades/{{this.id}}/establecimientos'">Establecimientos</button>
                         </div>
                     </div>
                 {{/each}}
