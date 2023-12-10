@@ -59,7 +59,7 @@ public class Entidad extends Persistente {
         if(establecimientos.size() > 3)
             nombres = nombre + ", ...";
 
-        return  nombres;
+        return nombres;
     }
 
 }

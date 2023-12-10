@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -45,5 +46,17 @@ public class OrganismoDeControl extends Persistente {
 
   public boolean tieneContacto(){
     return personaMail != null;
+  }
+
+  public String nombreDeEntidadesPrestadoras(){ //Devuelve el nombre de las primeras 3 entidades prestadoras, si es que tiene la menos 3, sino de los que haya
+    String nombres = this.entidadesPrestadoras.stream()
+        .limit(3)
+        .map(entidadPrestadora -> entidadPrestadora.getNombre())
+        .collect(Collectors.joining(","));
+
+    if(entidadesPrestadoras.size() > 3)
+      nombres = nombre + ", ...";
+
+    return nombres;
   }
 }

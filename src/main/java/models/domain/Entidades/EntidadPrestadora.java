@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -57,5 +58,16 @@ public class EntidadPrestadora extends Persistente {
 
   public boolean tieneContacto(){
     return personaMail != null;
+  }
+  public String nombreDeEntidades(){ //Devuelve el nombre de las primeras 3 entidades, si es que tiene la menos 3, sino de los que haya
+    String nombres = this.entidades.stream()
+        .limit(3)
+        .map(entidad -> entidad.getNombre())
+        .collect(Collectors.joining(","));
+
+    if(entidades.size() > 3)
+      nombres = nombre + ", ...";
+
+    return nombres;
   }
 }
