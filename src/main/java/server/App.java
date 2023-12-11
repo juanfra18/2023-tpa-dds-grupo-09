@@ -25,7 +25,7 @@ public class App {
   public static void main(String[] args) {
 
     Map<String, String> env = System.getenv();
-    if (!env.get("SEED_DONE").equals("true")) {
+    if (env.get("SEED_DONE").equals("false")) {
       Seed.seed();
     }
 
