@@ -65,7 +65,7 @@ const incidentHandler = new IncidentHandler();
 document.querySelector('.btn-cerrar-incidente').addEventListener('click', function() {
     var incidenteId = this.getAttribute('data-incidente-id');
     var comunidadId = this.getAttribute('data-comunidad-id');
-    fetch('/reportarIncidente/CERRADO/' + incidenteId + '/' + comunidadId, {
+    fetch('/reporteDeIncidentes/CERRADO/' + incidenteId + '/' + comunidadId, {
         method: 'POST'
     })
     .then(response => {

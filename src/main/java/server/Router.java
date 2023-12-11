@@ -28,9 +28,9 @@ public class Router {
       get("/incidentes/{idI}/observaciones",((IncidentesController) FactoryController.controller("incidentes"))::observacionesIncidente);
       get("/empresas/cargar", ((EmpresasController) FactoryController.controller("empresas"))::update,TipoRol.ADMINISTRADOR);
       post("/empresas/cargar",((EmpresasController) FactoryController.controller("empresas"))::save,TipoRol.ADMINISTRADOR);
-      get("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::create);
-      post("/reportarIncidente/{estado}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::save);
-      post("/reportarIncidente/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente); /*Se usa??*/
+      get("/reporteDeIncidentes/ABIERTO", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::create);
+      post("/reporteDeIncidentes/ABIERTO", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::save);
+      post("/reporteDeIncidentes/CERRADO/{idI}/{idC}", ((ReporteDeIncidenteController) FactoryController.controller("reporteDeIncidente"))::cerrarIncidente); /*Se usa??*/
       get("/sugerenciasDeRevision", ((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::solicitarIncidentes);
       get("/comunidades", ((ComunidadesController) FactoryController.controller("comunidades"))::index,TipoRol.USUARIO_BASICO,TipoRol.ADMINISTRADOR);
       get("/comunidades/incidentes",((ComunidadesController) FactoryController.controller("comunidades"))::incidentes, TipoRol.USUARIO_BASICO, TipoRol.ADMINISTRADOR);

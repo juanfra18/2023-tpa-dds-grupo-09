@@ -101,8 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.querySelector('.btn-cargarReporte').addEventListener('submit', function() {
-    var estado = this.getAttribute('data-estado');
-    fetch('/reportarIncidente/' + estado, {
+    fetch('/reporteDeIncidentes/ABIERTO', {
         method: 'POST'
     })
     .then(response => {

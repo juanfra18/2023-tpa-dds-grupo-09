@@ -37,15 +37,12 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
 
-    String estado = context.pathParam("estado");
-
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
     RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
 
 
     model.put("usuarioBasico",true);
-    model.put("estado",estado);
     model.put("comunidades", miembroDeComunidad.getComunidades());
     model.put("entidades", repositorioEntidad.buscarTodos());
     model.put("establecimientos", repositorioDeEstablecimientos.buscarTodos());
@@ -57,7 +54,6 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
 
   @Override
   public void save(Context context) {
-    String estado = context.pathParam("estado");
     String entidad = context.formParam("entidad");
     String comunidad = context.formParam("comunidad");
     String observaciones = context.formParam("observaciones");
@@ -75,7 +71,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     RepositorioComunidad repositorioComunidad=RepositorioComunidad.getInstancia();
 
     ReporteDeIncidente reporteDeIncidente = new ReporteDeIncidente();
-    reporteDeIncidente.setClasificacion(EstadoIncidente.valueOf(estado));
+    reporteDeIncidente.setClasificacion(EstadoIncidente.ABIERTO);
     reporteDeIncidente.setDenunciante(miembroDeComunidad);
     reporteDeIncidente.setEntidad(repositorioEntidad.buscar(Long.parseLong(entidad)));
     reporteDeIncidente.setObservaciones(observaciones);
@@ -96,7 +92,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     } finally {
       entityManager.close();
     }
-    context.redirect("/reportarIncidente/"+estado);
+    context.redirect("/reporteDeIncidentes/ABIERTO");
   }
 
   @Override
