@@ -17,10 +17,12 @@
                                 <h4>Tipo: {{this.tipoNombre}}</h4>
                                 <h4>Estado: {{this.estado}}</h4>
                             </div>
-                            {{#if usuarioBasico}}
-                                <button type="button" class="btn btn-success btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{entidad_id}}" data-establecimiento-id="{{establecimiento_id}}" data-servicio-id="{{this.id}}" data-rol="OBSERVADOR">Interes como observador</button>
-                                <button type="button" class="btn btn-success btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{entidad_id}}" data-establecimiento-id="{{establecimiento_id}}" data-servicio-id="{{this.id}}" data-rol="AFECTADO">Interes como afectado</button>
-                            {{/if}}
+                            <div class="contenedorBotones">
+                                {{#if usuarioBasico}}
+                                    <button type="button" class="btn btn-lg btn-success btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{entidad_id}}" data-establecimiento-id="{{establecimiento_id}}" data-servicio-id="{{this.id}}" data-rol="OBSERVADOR">Interes como observador</button>
+                                    <button type="button" class="btn btn-lg btn-success btn-nuevo-interes" data-organismo-id="{{organismo_id}}" data-entidadPrestadora-id="{{entidadPrestadora_id}}" data-entidad-id="{{entidad_id}}" data-establecimiento-id="{{establecimiento_id}}" data-servicio-id="{{this.id}}" data-rol="AFECTADO">Interes como afectado</button>
+                                {{/if}}
+                            </div>
                         </div>
                     </div>
                 {{/each}}
