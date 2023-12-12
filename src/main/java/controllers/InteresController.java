@@ -14,6 +14,7 @@ import models.persistence.Repositorios.RepositorioDeEstablecimientos;
 import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioParServicioRol;
 import models.persistence.Repositorios.RepositorioServicio;
+import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
@@ -168,6 +169,51 @@ public class InteresController extends ControllerGenerico{
       ParServicioRol parServicioRolAModificar = repositorioParServicioRol.buscar(Long.parseLong(servicioId));
       parServicioRolAModificar.cambiarRol();
       //En una relacion OneToMany no elimina la fila hibernate con tan solo quitarlo de la lista del miebro de comunidad
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+  }
+
+  public void cambiarRolDelServicio(Context context){
+    EntityManager em = EntityManagerSingleton.getInstance();
+    String servicioId = context.pathParam("id");
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = miembroDelUsuario(usuarioLogueado.getId().toString());
+
+    Servicio servicioSeleccionado = repositorioServicio.buscar(Long.parseLong(servicioId));
+    List<ParServicioRol> pares = miembroDeComunidad.getServiciosDeInteres();
+
+    try {
+      em.getTransaction().begin();
+      ParServicioRol parServicioRolAModificar = pares.stream().filter(parServicioRol -> parServicioRol.getServicio().equals(servicioSeleccionado)).toList().get(0);
+      parServicioRolAModificar.cambiarRol();
+      //En una relacion OneToMany no elimina la fila hibernate con tan solo quitarlo de la lista del miebro de comunidad
+      em.getTransaction().commit();
+    } catch (Exception e) {
+      em.getTransaction().rollback();
+    } finally {
+      em.close();
+    }
+  }
+
+  public void eliminarServicioInteres(Context context) {
+    EntityManager em = EntityManagerSingleton.getInstance();
+    Usuario usuarioLogueado = super.usuarioLogueado(context,em);
+    MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
+    String servicioId = context.pathParam("id");
+
+    Servicio servicioSeleccionado = repositorioServicio.buscar(Long.parseLong(servicioId));
+    List<ParServicioRol> pares = miembroDeComunidad.getServiciosDeInteres();
+
+    try {
+      em.getTransaction().begin();
+      ParServicioRol parServicioRolAEliminar = pares.stream().filter(parServicioRol -> parServicioRol.getServicio().equals(servicioSeleccionado)).toList().get(0);
+      miembroDeComunidad.eliminarServicioDeInteres(parServicioRolAEliminar);
+      //En una relacion OneToMany no elimina la fila hibernate con tan solo quitarlo de la lista del miebro de comunidad
+      repositorioParServicioRol.eliminar(parServicioRolAEliminar);
       em.getTransaction().commit();
     } catch (Exception e) {
       em.getTransaction().rollback();

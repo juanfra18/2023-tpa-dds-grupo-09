@@ -14,6 +14,7 @@ import models.persistence.Repositorios.RepositorioEntidad;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,18 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
 
     Establecimiento establecimiento = repositorioDeEstablecimientos.buscar(Long.parseLong(establecimientoId));
     List<Servicio> servicios = establecimiento.getServicios();
+    List<Servicio> serviciosInteresAfectado = new ArrayList<>();
+    List<Servicio> serviciosInteresObservador = new ArrayList<>();
+    List<Servicio> serviciosSinInteres = new ArrayList<>();
+
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
+      serviciosInteresObservador = servicios.stream().filter(servicio -> miembroDeComunidad.esObservador(servicio)).toList();
+      serviciosInteresAfectado = servicios.stream().filter(servicio -> miembroDeComunidad.esAfectado(servicio)).toList();
+      serviciosSinInteres = servicios.stream().filter(servicio -> !miembroDeComunidad.esServicioDeInteres(servicio)).toList();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
@@ -54,6 +62,9 @@ public class ServiciosController extends ControllerGenerico implements ICrudView
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
+    model.put("serviciosInteresObservador",serviciosInteresObservador);
+    model.put("serviciosInteresAfectado",serviciosInteresAfectado);
+    model.put("serviciosSinInteres",serviciosSinInteres);
     model.put("servicios",servicios);
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("organismo_id",organismoId);

@@ -125,6 +125,18 @@ public class MiembroDeComunidad extends Persistente {
       this.serviciosDeInteres.remove(parServicioRol);
     }
 
+  public boolean esObservador(Servicio servicio){
+        return !this.serviciosDeInteres.stream().filter(parServicioRol ->
+                parServicioRol.getServicio().equals(servicio) &&
+                parServicioRol.getRol().equals(Rol.OBSERVADOR)).toList().isEmpty();
+  }
+
+    public boolean esAfectado(Servicio servicio){
+        return !this.serviciosDeInteres.stream().filter(parServicioRol ->
+                parServicioRol.getServicio().equals(servicio) &&
+                parServicioRol.getRol().equals(Rol.AFECTADO)).toList().isEmpty();
+    }
+
 }
 
 

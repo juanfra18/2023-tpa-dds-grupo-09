@@ -37,12 +37,16 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
     String entidadPrestadora_id = context.pathParam("idEP");
     EntidadPrestadora entidadPrestadora = repositorioDeEntidadPrestadora.buscar(Long.parseLong(entidadPrestadora_id));
     List<Entidad> entidades = entidadPrestadora.getEntidades();
+    List<Entidad> entidadesInteres = new ArrayList<>();
+    List<Entidad> entidadesSinInteres = new ArrayList<>();
 
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
+      entidadesInteres = entidades.stream().filter(entidad ->  miembroDeComunidad.esEntidadDeInteres(entidad)).toList();
+      entidadesSinInteres = entidades.stream().filter(entidad ->  !miembroDeComunidad.esEntidadDeInteres(entidad)).toList();
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
@@ -57,6 +61,8 @@ public class EntidadesController extends ControllerGenerico implements ICrudView
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
     model.put("entidades",entidades);
+    model.put("entidadesInteres",entidadesInteres);
+    model.put("entidadesSinInteres",entidadesSinInteres);
     model.put("miembro_id",miembroDeComunidad.getId());
     model.put("organismo_id",Long.parseLong(organismo_id));
     model.put("entidadPrestadora_id",Long.parseLong(entidadPrestadora_id));
