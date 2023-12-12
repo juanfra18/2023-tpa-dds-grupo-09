@@ -62,12 +62,12 @@ public class Router {
       post("/intereses/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRol,TipoRol.USUARIO_BASICO);
       post("/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRolDelServicio,TipoRol.USUARIO_BASICO);
       post("/servicio/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarServicioInteres,TipoRol.USUARIO_BASICO);
-      get("/sugerenciasDeRevision/{lat}/{long}",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::index,TipoRol.USUARIO_BASICO);
+      get("/sugerenciasDeRevision/{ubicacion}",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::index,TipoRol.USUARIO_BASICO);
       get("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::registrarUsuario);
       get("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::registrarUsuario);
       post("/organismoDeControl/representante",((OrganismosDeControlController) FactoryController.controller("organismos"))::usuarioOrganismoDeControl);
       post("/entidadPrestadora/representante",((EntidadesPrestadorasController) FactoryController.controller("entidadesPrestadoras"))::usuarioEntidadPrestadora);
-      get("/sugerenciasDeRevision/{lat}/{long}/notificacion",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::notificacion,TipoRol.USUARIO_BASICO);
+      get("/sugerenciasDeRevision/{ubicacion}/notificacion",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::notificacion,TipoRol.USUARIO_BASICO);
     });
   }
 }

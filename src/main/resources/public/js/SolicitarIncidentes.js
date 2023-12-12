@@ -10,7 +10,7 @@ function geoposOK (pos){
     var long = pos.coords.longitude;
     console.log('Estás en la posición' + lat + ',' + long);
     console.log('https://maps.google.com/?q=' + lat + ',' + long);
-    window.location.href = '/sugerenciasDeRevision/' + lat + '/' + long;
+    window.location.href = '/sugerenciasDeRevision/' + lat + ',' + long;
     }
 
 

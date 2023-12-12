@@ -29,8 +29,9 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
         EntityManager em = EntityManagerSingleton.getInstance();
         Map<String, Object> model = new HashMap<>();
         Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-        String latitud = context.pathParam("lat");
-        String longitud = context.pathParam("long");
+        String ubicacion = context.pathParam("ubicacion");
+        String latitud = ubicacion.split(",")[0];
+        String longitud = ubicacion.split(",")[1];
         if(!SessionHandler.checkLocationCookie(context)){
 
             SessionHandler.createLocationCookie(context);
@@ -112,8 +113,9 @@ public class SugerenciasDeRevisionController extends ControllerGenerico implemen
         EntityManager em = EntityManagerSingleton.getInstance();
         Map<String, Object> model = new HashMap<>();
         Usuario usuarioLogueado = super.usuarioLogueado(context,em);
-        String latitud = context.pathParam("lat");
-        String longitud = context.pathParam("long");
+        String ubicacion = context.pathParam("ubicacion");
+        String latitud = ubicacion.split(",")[0];
+        String longitud = ubicacion.split(",")[1];
         Posicion posicionUsuario = new Posicion();
         posicionUsuario.setPosicion(latitud+","+longitud);
         RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
