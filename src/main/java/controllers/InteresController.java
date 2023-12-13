@@ -7,18 +7,14 @@ import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Personas.ParServicioRol;
 import models.domain.Personas.Rol;
 import models.domain.Servicios.Servicio;
-import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeEstablecimientos;
 import models.persistence.Repositorios.RepositorioEntidad;
 import models.persistence.Repositorios.RepositorioParServicioRol;
 import models.persistence.Repositorios.RepositorioServicio;
-import org.jetbrains.annotations.NotNull;
-import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +120,7 @@ public class InteresController extends ControllerGenerico{
     }
   }
 
-  public void agregarServicio(Context context) {
+  public void agregarParServicioRolInteres(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
@@ -141,7 +137,7 @@ public class InteresController extends ControllerGenerico{
       em.close();
     }
   }
-  public void eliminarServicio(Context context) {
+  public void eliminarParServicioRolInteres(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
@@ -160,7 +156,7 @@ public class InteresController extends ControllerGenerico{
     }
   }
 
-  public void cambiarRol(Context context){
+  public void cambiarRolDelParServicioRol(Context context){
     EntityManager em = EntityManagerSingleton.getInstance();
     String servicioId = context.pathParam("id");
 

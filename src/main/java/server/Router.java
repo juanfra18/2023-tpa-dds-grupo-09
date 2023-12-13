@@ -57,9 +57,9 @@ public class Router {
       get("/intereses/servicio/{id}",((InteresController) FactoryController.controller("interes"))::verificarInteresServicio,TipoRol.USUARIO_BASICO);
       post("/intereses/entidad/{id}/agregar",((InteresController) FactoryController.controller("interes"))::agregarEntidad,TipoRol.USUARIO_BASICO);
       post("/intereses/entidad/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarEntidad,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/{id}/agregar/{rol}",((InteresController) FactoryController.controller("interes"))::agregarServicio,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarServicio,TipoRol.USUARIO_BASICO);
-      post("/intereses/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRol,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/agregar/{rol}",((InteresController) FactoryController.controller("interes"))::agregarParServicioRolInteres,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarParServicioRolInteres,TipoRol.USUARIO_BASICO);
+      post("/intereses/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRolDelParServicioRol,TipoRol.USUARIO_BASICO);
       post("/servicio/{id}/cambiarRol",((InteresController) FactoryController.controller("interes"))::cambiarRolDelServicio,TipoRol.USUARIO_BASICO);
       post("/servicio/{id}/eliminar",((InteresController) FactoryController.controller("interes"))::eliminarServicioInteres,TipoRol.USUARIO_BASICO);
       get("/sugerenciasDeRevision/{ubicacion}",((SugerenciasDeRevisionController) FactoryController.controller("sugerenciaDeRevision"))::index,TipoRol.USUARIO_BASICO);

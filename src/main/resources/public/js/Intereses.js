@@ -72,7 +72,7 @@ document.querySelectorAll('.btn-eliminar-entidadInteres').forEach(button => {
     });
 });
 
-document.querySelectorAll('.btn-eliminar-servicioInteres').forEach(button => {
+document.querySelectorAll('.btn-eliminar-parInteres').forEach(button => {
     button.addEventListener('click', function() {
         var servicioId = this.getAttribute('data-servicio-id');
 
@@ -89,7 +89,7 @@ document.querySelectorAll('.btn-eliminar-servicioInteres').forEach(button => {
     });
 });
 
-document.querySelectorAll('.btn-eliminar-interes-servicio').forEach(button => {
+document.querySelectorAll('.btn-eliminar-servicioInteres').forEach(button => {
     button.addEventListener('click', function() {
         var servicioId = this.getAttribute('data-servicio-id');
 
@@ -106,7 +106,7 @@ document.querySelectorAll('.btn-eliminar-interes-servicio').forEach(button => {
     });
 });
 
-document.querySelectorAll('.btn-cambiar-rol').forEach(button => {
+document.querySelectorAll('.btn-cambiar-rol-interes').forEach(button => {
     button.addEventListener('click', function() {
         var servicioId = this.getAttribute('data-servicio-id');
                         fetch('/intereses/servicio/'+ servicioId +'/cambiarRol', {
