@@ -14,48 +14,49 @@
                 </div>
 
                 <div id="medio-arriba">
-                    <form action="/" method="post">
-                        <h3>¿No tienes una cuenta?</h3>
-                        {{#if hayError}}
-                        <div class="error-box">{{mensajeDeError}}</div>
-                        {{/if}}
-                        <div class="form-group">
-                             <div class="input-group mb-3">
-                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
-                             </div>
-                        </div>
-                        <div class="form-group">
-                             <div class="input-group mb-3">
-                                 <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido">
-                             </div>
-                        </div>
-                        <div class="form-group">
-                             <div class="input-group mb-3">
-                                 <span class="input-group-text">@</span>
-                                 <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                             </div>
-                        </div>
-                        <div class="form-group">
-                             <div class="input-group mb-3">
-                                 <span class="input-group-text">📞</span>
-                                 <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
-                             </div>
-                        </div>
-                        <div class="form-group">
-                             <div class="input-group mb-3">
-                                 <span class="input-group-text">👤</span>
-                                 <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario">
-                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">🔒</span>
-                                <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
+                    <div id="base">
+                        <form action="/" method="post">
+                            <h3 class="texto">¿No tienes una cuenta?</h3>
+                            {{#if hayError}}
+                            <div class="error-box">{{mensajeDeError}}</div>
+                            {{/if}}
+                            <div class="form-group">
+                                 <div class="input-group mb-3">
+                                     <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
+                                 </div>
                             </div>
-                        </div>
-                        <button type="submit" class="button_slide slide_left">Registrarse </button>
-                    </form>
-
+                            <div class="form-group">
+                                 <div class="input-group mb-3">
+                                     <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido">
+                                 </div>
+                            </div>
+                            <div class="form-group">
+                                 <div class="input-group mb-3">
+                                     <span class="input-group-text">@</span>
+                                     <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                 </div>
+                            </div>
+                            <div class="form-group">
+                                 <div class="input-group mb-3">
+                                     <span class="input-group-text">📞</span>
+                                     <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
+                                 </div>
+                            </div>
+                            <div class="form-group">
+                                 <div class="input-group mb-3">
+                                     <span class="input-group-text">👤</span>
+                                     <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario">
+                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">🔒</span>
+                                    <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
+                                </div>
+                            </div>
+                            <button type="submit" class="button_slide slide_left btn-registrar">Registrarse </button>
+                        </form>
+                    </div>
                     <img src="./images/comunicacion.jpeg" alt="imagen de comunicacion" id="comunicacionImg">
                 </div>
 

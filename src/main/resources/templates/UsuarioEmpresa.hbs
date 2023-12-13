@@ -12,47 +12,49 @@
                     </div>
 
                     <div id="medio-arriba">
-                        <form
-                        {{#if organismoDeControl}}
-                            action="/organismoDeControl/representante"
-                        {{else}}
-                            action="/entidadPrestadora/representante"
-                        {{/if}}
-                        method="post">
-                            <h3>Vinculate con tu empresa</h3>
-                            {{#if hayError}}
-                            <div class="error-box">{{mensajeDeError}}</div>
+                        <div id="base">
+                            <form
+                            {{#if organismoDeControl}}
+                                action="/organismoDeControl/representante"
+                            {{else}}
+                                action="/entidadPrestadora/representante"
                             {{/if}}
-                            <div class="form-group">
-                                 <div class="input-group mb-3">
-                                     <span class="input-group-text">@</span>
-                                     <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                                 </div>
-                            </div>
-                            <div class="form-group">
-                                 <div class="input-group mb-3">
-                                     <span class="input-group-text">👤</span>
-                                     <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario">
-                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">🔒</span>
-                                    <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
+                            method="post">
+                                <h3 class="texto">Vinculate con tu empresa</h3>
+                                {{#if hayError}}
+                                <div class="error-box">{{mensajeDeError}}</div>
+                                {{/if}}
+                                <div class="form-group">
+                                     <div class="input-group mb-3">
+                                         <span class="input-group-text">@</span>
+                                         <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <select class="form-select input-field" name="empresaId" id="inputGroupSelect02">
-                                            <option selected>Seleccione su empresa...</option>
-                                        {{#each empresas}}
-                                            <option value="{{this.id}}">{{this.nombre}}</option>
-                                        {{/each}}
-                                    </select>
+                                <div class="form-group">
+                                     <div class="input-group mb-3">
+                                         <span class="input-group-text">👤</span>
+                                         <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Usuario">
+                                     </div>
                                 </div>
-                            </div>
-                            <button type="submit" class="button_slide slide_left">Registrarse </button>
-                        </form>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">🔒</span>
+                                        <input type="password" class="form-control" name="contrasenia" id="contrasenia" placeholder="Contraseña">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <select class="form-select input-field" name="empresaId" id="inputGroupSelect02">
+                                                <option selected>Seleccione su empresa...</option>
+                                            {{#each empresas}}
+                                                <option value="{{this.id}}">{{this.nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="button_slide slide_left btn-registrar">Registrarse </button>
+                            </form>
+                        </div>
                     <img src="/./images/comunicacion.jpeg" alt="imagen de comunicacion" id="comunicacionImg">
                 </div>
 
