@@ -73,12 +73,12 @@
                             </li>
                             {{/if}}
                             {{#if seleccionComunidad}}
-                            <button type="button" class="btn btn-primary btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                            <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
                             {{#if abierto}}
                             <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                             {{/if}}
                             {{else}}
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
+                            <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
                             {{/if}}
                         </ul>
                     </div>
@@ -109,7 +109,7 @@
                             <li class="list-group-item">
                                 <span class="badge text-bg-success">ABIERTO</span>
                             </li>
-                            <button type="button" class="btn btn-primary btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                            <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
                             {{#if usuarioBasico}}
                             <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
                             {{/if}}
@@ -141,7 +141,7 @@
                             <li class="list-group-item">
                                 <span class="badge text-bg-danger">CERRADO</span>
                             </li>
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                            <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
                         </ul>
                     </div>
                 </div>

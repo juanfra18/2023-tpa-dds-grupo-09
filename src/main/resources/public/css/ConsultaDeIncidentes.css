@@ -162,3 +162,8 @@ nav ul li a:hover {
 .badge.text-bg-danger {
     font-size: 18px;
 }
+
+.boton {
+    background-color: saddlebrown !important;
+    color: white !important;
+}
