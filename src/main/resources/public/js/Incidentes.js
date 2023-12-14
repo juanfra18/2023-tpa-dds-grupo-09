@@ -12,16 +12,16 @@ class IncidentHandler {
     const comunidadId = this.inputComunidad.value;
 
     if (estado !== "Seleccionar...") {
-      let url = '/incidentes/' + estado;
+      let url = '/incidentes?estado=' + estado;
       if (comunidadId !== "Seleccionar...") {
-        url = '/incidentes/' + estado + '/comunidad/' + comunidadId;
+        url += '&comunidad=' + comunidadId;
       }
       this.fetchA(url);
     }
     else{
     let url = '/incidentes';
         if (comunidadId !== "Seleccionar...") {
-            url = '/incidentes/comunidad/' + comunidadId;
+            url += '?comunidad=' + comunidadId;
         }
     this.fetchA(url);
   }
@@ -32,17 +32,17 @@ class IncidentHandler {
     const comunidadId = this.inputComunidad.value;
 
     if (comunidadId !== "Seleccionar...") {
-      let url = '/incidentes/comunidad/' + comunidadId;
+      let url = '/incidentes?comunidad=' + comunidadId;
 
       if (estado !== "Seleccionar...") {
-        url = '/incidentes/' + estado + '/comunidad/' + comunidadId;
+        url += '&estado=' + estado;
       }
       this.fetchA(url);
     }
     else{
         let url = '/incidentes';
         if (estado !== "Seleccionar...") {
-            url = '/incidentes/' + estado;
+            url += '?estado=' + estado;
         }
         this.fetchA(url);
   }}
@@ -70,7 +70,7 @@ document.querySelector('.btn-cerrar-incidente').addEventListener('click', functi
     })
     .then(response => {
             if (response.ok) {
-                window.location.href='/incidentes/ABIERTO/comunidad/' + comunidadId;
+                window.location.href='/incidentes?estado=ABIERTO&comunidad=' + comunidadId;
             } else {
                 window.alert('Error al cerrar incidente');
             }

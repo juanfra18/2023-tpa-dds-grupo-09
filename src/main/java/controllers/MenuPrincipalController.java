@@ -51,7 +51,7 @@ public class MenuPrincipalController extends ControllerGenerico implements ICrud
       System.out.println(usuarioComunidades);
       System.out.println(usuarioComunidades.isEmpty());
       if (!usuarioComunidades.isEmpty()) {
-        context.redirect("/incidentes/ABIERTO");
+        context.redirect("/incidentes?estado=ABIERTO");
       }else context.redirect("/comunidades");
     }
     //context.render("MenuPrincipal.hbs", model);

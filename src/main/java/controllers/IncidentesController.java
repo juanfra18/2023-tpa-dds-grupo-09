@@ -11,14 +11,10 @@ import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioComunidad;
 import models.persistence.Repositorios.RepositorioDeIncidentes;
-import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class IncidentesController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
@@ -63,12 +59,11 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     em.close();
   }
 
-  public void indexEstado(Context context) {
+  public void indexEstado(Context context, String estado) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
-    String estado = context.pathParam("estado");
     List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
 
     boolean usuarioBasico = false;
@@ -107,13 +102,11 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     em.close();
   }
 
-  public void indexEstadoComunidad(Context context) {
+  public void indexEstadoComunidad(Context context, String estado, String comunidadId) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
-    String estado = context.pathParam("estado");
-    String comunidadId = context.pathParam("id");
     Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
     List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
 
@@ -148,12 +141,11 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     em.close();
   }
 
-  public void indexComunidad(Context context) {
+  public void indexComunidad(Context context, String comunidadId) {
     EntityManager em = EntityManagerSingleton.getInstance();
     Map<String, Object> model = new HashMap<>();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
-    String comunidadId = context.pathParam("id");
     Comunidad comunidad = repositorioComunidad.buscar(Long.parseLong(comunidadId));
     List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
     boolean usuarioBasico = false;
@@ -324,5 +316,26 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
   @Override
   public void delete(Context context) {
 
+  }
+
+  public void indexQuery(Context context) {
+    String estado = context.queryParam("estado");
+    String comunidadId = context.queryParam("comunidad");
+    if (!Objects.isNull(estado)) {
+      if (Objects.isNull(comunidadId)) {
+        this.indexEstado(context, estado);
+      }
+      else {
+        this.indexEstadoComunidad(context, estado, comunidadId);
+      }
+    }
+    else {
+      if (Objects.isNull(comunidadId)) {
+        this.index(context);
+      }
+      else {
+        this.indexComunidad(context, comunidadId);
+      }
+    }
   }
 }
