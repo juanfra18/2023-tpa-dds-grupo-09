@@ -28,21 +28,23 @@
                 <p><span class="highlight">Mail:</span> {{miembroDeComunidad.receptorDeNotificaciones.mail}}</p>
                 <p><span class="highlight">Telefono:</span> {{miembroDeComunidad.receptorDeNotificaciones.telefono}}</p>
                 {{#unless perfilAdministrador}}
-                <p><span class="highlight">Medio de Comunicacion:</span> {{miembroDeComunidad.receptorDeNotificaciones.medioDeComunicacion.nombre}}</p>
-                <p><span class="highlight">Forma de Notificacion:</span> {{miembroDeComunidad.receptorDeNotificaciones.formaDeNotificar.nombre}}</p>
-                <p><span class="highlight">Cantidad de incidentes reportados:</span> {{incidentesAbiertos}}</p>
-                <p><span class="highlight">Cantidad de incidentes cerrados:</span> {{incidentesCerrados}}</p>
-                <p><span class="highlight">
-                    {{#if miPerfil}}
-                    Mis comunidades:
-                    {{else}}
-                    Comunidades:
-                    {{/if}}
-                    </span>
-                  {{#each miembroDeComunidad.comunidades}}
-                    <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
-                  {{/each}}
-                </p>
+                    <p><span class="highlight">Medio de Comunicacion:</span> {{miembroDeComunidad.receptorDeNotificaciones.medioDeComunicacion.nombre}}</p>
+                    <p><span class="highlight">Forma de Notificacion:</span> {{miembroDeComunidad.receptorDeNotificaciones.formaDeNotificar.nombre}}</p>
+                    <p><span class="highlight">Cantidad de incidentes reportados:</span> {{incidentesAbiertos}}</p>
+                    <p><span class="highlight">Cantidad de incidentes cerrados:</span> {{incidentesCerrados}}</p>
+                    {{#unless miembroDeComunidad.comunidades.empty}}
+                    <p><span class="highlight">
+                        {{#if miPerfil}}
+                        Mis comunidades:
+                        {{else}}
+                        Comunidades:
+                        {{/if}}
+                        </span>
+                      {{#each miembroDeComunidad.comunidades}}
+                        <a href="/comunidades/{{this.id}}">{{this.nombre}}</a>{{#unless @last}}, {{/unless}}
+                      {{/each}}
+                    </p>
+                    {{/unless}}
                 {{/unless}}
             </div>
         </div>

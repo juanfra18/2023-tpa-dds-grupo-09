@@ -31,7 +31,7 @@
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5px;
     box-shadow: 20px 20px 4px rgba(0, 0, 0, 0.45);
-    text-align: center;
+    text-align: left;
 }
 
 #main-header {
@@ -112,4 +112,14 @@ nav ul li a:hover {
 .boton {
     background-color: saddlebrown !important;
     color: white !important;
+}
+
+.contenedorBotones{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.btn{
+    margin: 10px;
 }
