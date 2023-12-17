@@ -12,7 +12,8 @@
             <div class="col">
                 <div class="tarjetaObservacion">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span class="highlight">Denunciante: </span>{{this.getDenunciante.getNombre}} {{this.getDenunciante.getApellido}}</li>
+
+                        <li class="list-group-item"><span class="highlight">Denunciante: </span> {{#if this.miembroHaSidoEliminado }} <span class= "highlightRed">MiembroEliminado </span> {{else}}{{this.getDenunciante.getNombre}} {{this.getDenunciante.getApellido}} {{/if}} </li>
                         <li class="list-group-item"><span class="highlight">Horario: </span>{{this.getFechaYhora.getDayOfMonth}}/{{this.getFechaYhora.getMonthValue}}/{{this.getFechaYhora.getYear}}  {{this.getFechaYhora.getHour}}:{{this.getMinutosDelHorario}}</li>
                         <li class="list-group-item"><span class="highlight">Observacion: </span>{{this.getObservaciones}}</li>
                     </ul>

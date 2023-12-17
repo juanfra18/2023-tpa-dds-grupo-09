@@ -1,6 +1,7 @@
 package controllers;
 
 import io.javalin.http.Context;
+import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Notificaciones.*;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
@@ -231,10 +232,13 @@ public class UsuariosController extends ControllerGenerico implements ICrudViews
     EntityManager em = EntityManagerSingleton.getInstance();
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     String miembroId = context.pathParam("id");
-
+    RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+    List<ReporteDeIncidente>  reportesDeIncidentes = repositorioDeReportesDeIncidentes.buscarTodos();
     try {
       em.getTransaction().begin();
       MiembroDeComunidad miembroDeComunidadAEliminar = repositorioMiembroDeComunidad.buscar(Long.parseLong(miembroId));
+      List<ReporteDeIncidente> reportesAEliminar = reportesDeIncidentes.stream().filter(reporte -> reporte.getDenunciante().equals(miembroDeComunidadAEliminar)).toList();
+      reportesAEliminar.forEach(reporte -> reporte.setDenunciante(null));
       repositorioMiembroDeComunidad.eliminar(miembroDeComunidadAEliminar);
       em.getTransaction().commit();
       if (usuarioLogueado.getId()==Long.parseLong(miembroId))

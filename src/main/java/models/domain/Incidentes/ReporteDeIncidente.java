@@ -88,6 +88,11 @@ public class ReporteDeIncidente extends Persistente {
             "\nObservaciones: "+this.getObservaciones();
   }
 
+  public Boolean miembroHaSidoEliminado() {
+      return this.getDenunciante() == null;
+    }
+
+
   public String getMinutosDelHorario(){
     int minutos = this.fechaYhora.getMinute();
 

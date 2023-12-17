@@ -121,3 +121,7 @@ nav ul li a:hover {
 .dropdown-element form:hover{
     background: #73caf2cc;
 }
+
+.highlightRed {
+    color: #F02E28;
+}
