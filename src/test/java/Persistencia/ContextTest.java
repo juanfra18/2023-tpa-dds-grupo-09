@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ContextTest implements SimplePersistenceTest {
-/*
   @Test
   void contextUp() {
     assertNotNull(entityManager());
@@ -18,5 +17,4 @@ public class ContextTest implements SimplePersistenceTest {
     withTransaction(() -> {
     });
   }
- */
 }
