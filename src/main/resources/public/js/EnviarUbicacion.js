@@ -9,7 +9,7 @@ function posicionObtenida (pos){
     var lat = pos.coords.latitude;
     var long = pos.coords.longitude;
 
-      fetch('/sugerenciasDeRevision/' + lat + '/' + long + '/notificacion')
+      fetch('/sugerenciasDeRevision/' + lat + ',' + long + '/notificacion')
          .then(response => response.text())
                 .then(data => {
                     if (data === 'POSITIVO') {

@@ -113,3 +113,18 @@ document.querySelector('.btn-cargarReporte').addEventListener('submit', function
     });
 });
 
+    const fechaYhoraInput = document.getElementById('fechaYhoraInput');
+    const botonEnviar = document.getElementById('btn-cargarReporte');
+
+    fechaYhoraInput.addEventListener('input', function () {
+        const fechaYhoraActual = new Date().toISOString().slice(0, 16);
+        const fechaYhoraSeleccionada = fechaYhoraInput.value;
+
+        if (fechaYhoraSeleccionada >= fechaYhoraActual) {
+            alert('Selecciona una fecha y hora pasada.');
+            fechaYhoraInput.value = '';
+        }
+
+        // Desactiva el botón si la fecha es posterior
+        botonEnviar.disabled = fechaYhoraSeleccionada >= fechaYhoraActual;
+    });

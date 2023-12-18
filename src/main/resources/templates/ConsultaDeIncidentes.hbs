@@ -27,7 +27,7 @@
                         <option selected value="{{comunidadSeleccionada.id}}">{{comunidadSeleccionada.nombre}}</option>
                     {{/if}}
                     {{#each comunidades}}
-                         <option value="{{this.id}}">{{this.nombre}}</option>
+                        <option value="{{this.id}}">{{this.nombre}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -35,119 +35,128 @@
         <div class="row row-cols-1 row-cols-md-2 g-4">
             {{#if seleccionEstado}}
                 {{#each incidentes}}
-                <div class="col">
-                    <div class="tarjetaIncidente">
-                        <div class="contenedorCirculo">
-                            <div class="circulo">
-                                {{#if this.servicio.esBanio}}
-                                <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
-                                {{else}}
-                                <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
-                                {{/if}}
+                    <div class="col">
+                        <div class="tarjetaIncidente">
+                            <div class="contenedorCirculo">
+                                <div class="circulo">
+                                    {{#if this.servicio.esBanio}}
+                                        <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
+                                    {{else}}
+                                        <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
+                                    {{/if}}
+                                </div>
                             </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
+                                <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
+                                <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
+                                {{#if seleccionComunidad}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
+                                {{else}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
+                                {{/if}}
+                                {{#if usuarioBasico}}
+                                    <li class="list-group-item">
+                                        {{#if abierto}}
+                                            <span class="badge text-bg-success estado">ABIERTO</span>
+                                        {{else}}
+                                            <span class="badge text-bg-danger estado">CERRADO</span>
+                                        {{/if}}
+                                    </li>
+                                {{else}}
+                                    <li class="list-group-item">
+                                        {{#if this.cerrado}}
+                                            <span class="badge text-bg-danger estado">CERRADO</span>
+                                        {{else}}
+                                            <span class="badge text-bg-success estado">ABIERTO</span>
+                                        {{/if}}
+                                    </li>
+                                {{/if}}
+                                {{#if seleccionComunidad}}
+                                    <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                                    {{#if abierto}}
+                                        <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                                    {{/if}}
+                                {{else}}
+                                    <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
+                                {{/if}}
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
-                            <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
-                            <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
-                            {{#if seleccionComunidad}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
-                            {{else}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
-                            {{/if}}
-                            {{#if usuarioBasico}}
-                            <li class="list-group-item">
-                                {{#if abierto}}
-                                <span class="badge text-bg-success estado">ABIERTO</span>
-                                {{else}}
-                                <span class="badge text-bg-danger estado">CERRADO</span>
-                                {{/if}}
-                            </li>
-                            {{else}}
-                            <li class="list-group-item">
-                                {{#if this.cerrado}}
-                                <span class="badge text-bg-danger estado">CERRADO</span>
-                                {{else}}
-                                <span class="badge text-bg-success estado">ABIERTO</span>
-                                {{/if}}
-                            </li>
-                            {{/if}}
-                            {{#if seleccionComunidad}}
-                            <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
-                            {{#if abierto}}
-                            <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
-                            {{/if}}
-                            {{else}}
-                            <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
-                            {{/if}}
-                        </ul>
                     </div>
-                </div>
                 {{/each}}
             {{else}}
                 {{#each incidentesAbiertos}}
-                <div class="col">
-                    <div class="tarjetaIncidente">
-                        <div class="contenedorCirculo">
-                            <div class="circulo">
-                                {{#if this.servicio.esBanio}}
-                                <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
-                                {{else}}
-                                <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
-                                {{/if}}
+                    <div class="col">
+                        <div class="tarjetaIncidente">
+                            <div class="contenedorCirculo">
+                                <div class="circulo">
+                                    {{#if this.servicio.esBanio}}
+                                        <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
+                                    {{else}}
+                                        <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
+                                    {{/if}}
+                                </div>
                             </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
+                                <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
+                                <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
+                                {{#if seleccionComunidad}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
+                                {{else}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
+                                {{/if}}
+                                <li class="list-group-item">
+                                    <span class="badge text-bg-success">ABIERTO</span>
+                                </li>
+                                {{#if seleccionComunidad}}
+                                    <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                                {{else}}
+                                        <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
+                                {{/if}}
+                                {{#if usuarioBasico}}
+                                    {{#if seleccionComunidad}}
+                                        <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
+                                    {{/if}}
+                                {{/if}}
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
-                            <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
-                            <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
-                            {{#if seleccionComunidad}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
-                            {{else}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
-                            {{/if}}
-                            <li class="list-group-item">
-                                <span class="badge text-bg-success">ABIERTO</span>
-                            </li>
-                            <button type="button" class="btn boton btn-obs" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
-                            {{#if usuarioBasico}}
-                            <button type="button" class="btn btn-danger btn-cerrar-incidente" data-incidente-id="{{this.id}}" data-comunidad-id="{{comunidadSeleccionada.id}}">Cerrar Incidente</button>
-                            {{/if}}
-                        </ul>
                     </div>
-                </div>
                 {{/each}}
                 {{#each incidentesCerrados}}
-                <div class="col">
-                    <div class="tarjetaIncidente">
-                        <div class="contenedorCirculo">
-                            <div class="circulo">
-                                {{#if this.servicio.esBanio}}
-                                <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
-                                {{else}}
-                                <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
-                                {{/if}}
+                    <div class="col">
+                        <div class="tarjetaIncidente">
+                            <div class="contenedorCirculo">
+                                <div class="circulo">
+                                    {{#if this.servicio.esBanio}}
+                                        <img src="/./images/banioLogo.jpeg" alt="banioLogo" id="banioLogo" width="100" height="100">
+                                    {{else}}
+                                        <img src="/./images/elevacionLogo.jpeg" alt="elevacionLogo" id="elevacionLogo" width="100" height="100">
+                                    {{/if}}
+                                </div>
                             </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
+                                <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
+                                <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
+                                {{#if seleccionComunidad}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
+                                {{else}}
+                                    <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
+                                {{/if}}
+                                <li class="list-group-item">
+                                    <span class="badge text-bg-danger">CERRADO</span>
+                                </li>
+                                {{#if seleccionComunidad}}
+                                    <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
+                                {{else}}
+                                        <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/observaciones'">Mas Informacion</button>
+                                {{/if}}
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><span class="highlight">{{this.establecimiento.tipo}}:</span> {{this.establecimiento.nombre}}</li>
-                            <li class="list-group-item"><span class="highlight">{{this.servicio.nombre}}:</span> {{this.servicio.tipoNombre}}</li>
-                            <li class="list-group-item"><span class="highlight2">Tiempo abierto: </span><span class="highlight3">{{this.tiempoAbierto}}</span></li>
-                            {{#if seleccionComunidad}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.getReportesDeApertura.size}}</span></li>
-                            {{else}}
-                            <li class="list-group-item"><span class="highlight2">Cantidad de veces reportado: </span> <span class="highlight3">{{this.cantVecesReportado}}</span></li>
-                            {{/if}}
-                            <li class="list-group-item">
-                                <span class="badge text-bg-danger">CERRADO</span>
-                            </li>
-                            <button type="button" class="btn boton" onclick="window.location.href='/incidentes/{{this.id}}/comunidad/{{comunidadSeleccionada.id}}/observaciones'">Mas Informacion</button>
-                        </ul>
                     </div>
-                </div>
                 {{/each}}
             {{/if}}
-
         </div>
     </div>
     <script src="/js/Incidentes.js"></script>

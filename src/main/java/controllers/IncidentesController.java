@@ -27,15 +27,18 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     Usuario usuarioLogueado = super.usuarioLogueado(context,em);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
     List<Comunidad> comunidades = miembroDeComunidad.getComunidades();
-
+    List<Incidente> incidentesAbiertos = new ArrayList<>();
+    List<Incidente> incidentesCerrados = new ArrayList<>();
+    //List<Incidente> incidentes = new ArrayList<>();
     boolean usuarioBasico = false;
     boolean usuarioEmpresa = false;
     boolean administrador = false;
-    List<Incidente> incidentes = new ArrayList<>();
 
     if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_BASICO)
     {
       usuarioBasico = true;
+      incidentesAbiertos = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf("ABIERTO"), repositorioDeIncidentes.buscarTodos());
+      incidentesCerrados = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf("CERRADO"), repositorioDeIncidentes.buscarTodos());
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.USUARIO_EMPRESA)
     {
@@ -44,15 +47,18 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
     {
       administrador = true;
-      incidentes = repositorioDeIncidentes.buscarTodos();
+      incidentesAbiertos = repositorioDeIncidentes.buscarTodos().stream().filter(i->i.getReportesDeCierre().isEmpty()).toList();
+      incidentesCerrados = repositorioDeIncidentes.buscarTodos().stream().filter(i->!i.getReportesDeCierre().isEmpty()).toList();
     }
     model.put("comunidades", comunidades);
     model.put("usuarioBasico",usuarioBasico);
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("administrador",administrador);
-    model.put("incidentes",incidentes);
+    model.put("incidentesAbiertos",incidentesAbiertos);
+    model.put("incidentesCerrados",incidentesCerrados);
     model.put("miembro_id",miembroDeComunidad.getId());
-    model.put("seleccionEstado",true);
+    model.put("seleccionEstado",false);
+    model.put("seleccionComunidad",false);
     model.put("abierto",false);
     model.put("cerrado",false);
     context.render("ConsultaDeIncidentes.hbs", model);
@@ -173,7 +179,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
       administrador = true;
     }
 
-
     comunidades.remove(comunidad); //para que no aparezca la opcion seleccionada 2 veces
 
     model.put("usuarioBasico",usuarioBasico);
@@ -238,10 +243,10 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     if(comunidad.cerroIncidente(incidente))
     {
       reportes = incidente.getReportesDeCierre().stream()
-          .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
+              .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
     }else{
       reportes = incidente.getReportesDeApertura().stream()
-          .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
+              .filter(reporteDeIncidente -> comunidad.getReportesDeLaComunidad().contains(reporteDeIncidente)).toList();
     }
 
     model.put("usuarioBasico",true);
@@ -269,10 +274,10 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
       if(incidente.cerrado())
       {
         reportes = incidente.getReportesDeCierre().stream()
-            .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
+                .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
       }else{
         reportes = incidente.getReportesDeApertura().stream()
-            .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
+                .filter(reporteDeIncidente -> reportesDeComunidadesDelUsuario.contains(reporteDeIncidente)).toList();
       }
     }
     else if(usuarioLogueado.getRol().getTipo() == TipoRol.ADMINISTRADOR)
