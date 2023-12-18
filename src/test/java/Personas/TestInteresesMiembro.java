@@ -22,8 +22,6 @@ import org.mockito.MockitoAnnotations;
 import models.services.APIs.Georef.AdapterServicioGeo;
 import models.services.Localizacion.Municipio;
 
-import java.io.IOException;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -98,21 +96,21 @@ public class TestInteresesMiembro {
   }
 
   @Test
-  public void leInteresaElServicioYElEstablecimiento() throws IOException {
+  public void leInteresaElServicioYElEstablecimiento(){
     miembro.agregarEntidadDeInteres(lineaMitre);
     Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
     Assertions.assertTrue(miembro.tieneInteres(banioHombres, estacionRetiro));
   }
 
   @Test
-  public void noLeInteresaElServicio() throws IOException {
+  public void noLeInteresaElServicio(){
     miembro.agregarEntidadDeInteres(lineaRoca);
     Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
     Assertions.assertFalse(miembro.tieneInteres(banioMujeres, estacionTolosa));
   }
 
   @Test
-  public void leInteresaElServicioPeroNoElEstablecimiento() throws IOException {
+  public void leInteresaElServicioPeroNoElEstablecimiento(){
     Mockito.when(servicioGeo.obtenerMunicipio("General Alvarado")).thenReturn(generalAlvarado);
     Assertions.assertFalse(miembro.tieneInteres(banioHombres, estacionRetiro));
   }
