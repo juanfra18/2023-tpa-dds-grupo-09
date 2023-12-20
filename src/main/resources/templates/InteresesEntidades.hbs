@@ -8,22 +8,27 @@
  {{#partial "contenido"}}
         <div id="base">
             <h1>Entidades de Interes</h1>
-                <div class="row row-cols-1 g-4">
-                {{#each entidades}}
-                    <div class="col">
-                        <div class="tarjeta d-flex justify-content-between align-items-center">
-                            <div>
-                                <h2>{{this.nombre}}</h2>
-                                <h4>Tipo: {{this.tipo}}</h4>
-                                <h4>Cantidad de Establecimientos: {{this.cantidadEstablecimientos}}</h4>
-                                <h4>Algunos Establecimientos: {{this.nombreDeEstablecimientos}}</h4>
+                {{#if hayEntidades}}
+                    <div class="row row-cols-1 g-4">
+                    {{#each entidades}}
+                        <div class="col">
+                            <div class="tarjeta d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2>{{this.nombre}}</h2>
+                                    <h4>Tipo: {{this.tipo}}</h4>
+                                    <h4>Cantidad de Establecimientos: {{this.cantidadEstablecimientos}}</h4>
+                                    <h4>Algunos Establecimientos: {{this.nombreDeEstablecimientos}}</h4>
+                                </div>
+                                <button type="button" class="btn btn-lg btn-danger btn-eliminar-entidadInteres" data-entidad-id="{{this.id}}">Eliminar</button>
                             </div>
-                            <button type="button" class="btn btn-lg btn-danger btn-eliminar-entidadInteres" data-entidad-id="{{this.id}}">Eliminar</button>
                         </div>
+                    {{/each}}
                     </div>
-                {{/each}}
-                </div>
+                {{else}}
+                    <h2>No se encontraron entidades de interés.</h2>
+                {{/if}}
         </div>
+        <h6>Para marcar una entidad de interés, vaya a la pestaña de empresas.</h6>
         <script src="/js/Intereses.js"></script>
         {{#if usuarioBasico}}
             <script src="/js/EnviarUbicacion.js"></script>
