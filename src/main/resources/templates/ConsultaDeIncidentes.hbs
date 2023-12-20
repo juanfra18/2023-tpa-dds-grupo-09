@@ -160,7 +160,11 @@
                 {{/if}}
             </div>
         {{else}}
-            <h2>No se encontraron incidentes con los filtros seleccionados.</h2>
+            {{#if usuarioBasico}}
+                <h2>No se encontraron incidentes con los filtros seleccionados.</h2>
+            {{else}}
+                <h2>No se encontraron incidentes.</h2>
+            {{/if}}
         {{/if}}
     </div>
     <script src="/js/Incidentes.js"></script>
