@@ -61,6 +61,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("seleccionComunidad",false);
     model.put("abierto",false);
     model.put("cerrado",false);
+    model.put("hayIncidentes",!(incidentesAbiertos.isEmpty() && incidentesCerrados.isEmpty()));
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
@@ -104,6 +105,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("seleccionEstado",true);
     model.put("seleccionComunidad",false);
     model.put("comunidades", comunidades);
+    model.put("hayIncidentes", !incidentes.isEmpty());
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
@@ -143,6 +145,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("seleccionEstado",true);
     model.put("seleccionComunidad",true);
     model.put("comunidades", comunidades);
+    model.put("hayIncidentes",!incidentesDeComunidad.isEmpty());
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
@@ -194,6 +197,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("seleccionEstado",false);
     model.put("seleccionComunidad",true);
     model.put("comunidades", comunidades);
+    model.put("hayIncidentes",!(incidentesAbiertos.isEmpty() && incidentesCerrados.isEmpty()));
     context.render("ConsultaDeIncidentes.hbs", model);
     em.close();
   }
@@ -225,6 +229,7 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     model.put("usuarioEmpresa",usuarioEmpresa);
     model.put("incidentes",incidentes);
     model.put("miembro_id",miembroDeComunidad.getId());
+    model.put("hayIncidentes", !incidentes.isEmpty());
     context.render("ConsultaDeIncidentes.hbs",model);
     context.status(200);
     em.close();
