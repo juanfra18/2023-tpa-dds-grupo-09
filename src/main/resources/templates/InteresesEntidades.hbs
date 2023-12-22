@@ -8,7 +8,7 @@
  {{#partial "contenido"}}
         <div id="base">
             <h1>Entidades de Interes</h1>
-                {{#if hayEntidades}}
+                {{#unless entidades.empty}}
                     <div class="row row-cols-1 g-4">
                     {{#each entidades}}
                         <div class="col">
@@ -26,7 +26,7 @@
                     </div>
                 {{else}}
                     <h2>No se encontraron entidades de interés.</h2>
-                {{/if}}
+                {{/unless}}
         </div>
         <div class="instruccion">
             <h6>Para marcar una entidad de interés, vaya a la pestaña de empresas.</h6>

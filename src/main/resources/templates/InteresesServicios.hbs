@@ -8,7 +8,7 @@
  {{#partial "contenido"}}
         <div id="base">
             <h1>Servicios de Interes</h1>
-                {{#if hayServicios}}
+                {{#unless servicios.empty}}
                     <div class="row row-cols-1 g-4">
                     {{#each servicios}}
                         <div class="col">
@@ -30,7 +30,7 @@
                     </div>
                 {{else}}
                     <h2>No se encontraron servicios de interés.</h2>
-                {{/if}}
+                {{/unless}}
         </div>
         <div class="instruccion">
             <h6>Para marcar un servicio de interés, vaya a la pestaña de empresas.</h6>

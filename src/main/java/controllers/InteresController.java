@@ -55,7 +55,6 @@ public class InteresController extends ControllerGenerico{
 
     model.put("usuarioBasico",true);
     model.put("entidades",entidades);
-    model.put("hayEntidades",!entidades.isEmpty());
     model.put("miembro_id",miembroDeComunidad.getId());
     context.render("InteresesEntidades.hbs", model);
     em.close();
@@ -84,7 +83,6 @@ public class InteresController extends ControllerGenerico{
 
     model.put("usuarioBasico",true);
     model.put("servicios",servicios);
-    model.put("hayServicios",!servicios.isEmpty());
     context.render("InteresesServicios.hbs", model);
     em.close();
   }
