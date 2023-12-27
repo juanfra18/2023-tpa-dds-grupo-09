@@ -5,8 +5,7 @@ import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Entidades.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
-import models.domain.Notificaciones.FormaDeNotificar;
-import models.domain.Notificaciones.MedioDeComunicacion;
+import models.domain.Notificaciones.*;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Personas.Rol;
@@ -17,11 +16,9 @@ import models.domain.Servicios.Elevacion;
 import models.domain.Servicios.Servicio;
 import models.domain.Usuario.Usuario;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
+import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import models.services.Localizacion.ListadoDeProvincias;
 import models.services.Localizacion.Municipio;
 import models.services.Localizacion.Provincia;
@@ -31,28 +28,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-public class CargaDeDatos implements WithSimplePersistenceUnit {
-    private List<OrganismoDeControl> empresas;
-    private List<Entidad> entidades;
+public class CargaDeDatos {
     private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
     private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
     private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
     private RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
     private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-    private RepositorioDeUsuarios repositorioDeUsuarios = RepositorioDeUsuarios.getInstancia();
     private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
     private RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
     private RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
     private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
     private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
-    private RepositorioPosicion repositorioPosicion = RepositorioPosicion.getInstancia();
-    private RepositorioServicio repositorioServicio = RepositorioServicio.getInstancia();
-    private RepositorioDeEmpresas repositorioDeEmpresas = RepositorioDeEmpresas.getInstancia();
-    private RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
-
     private Municipio yavi = new Municipio();
     private Provincia jujuy = new Provincia();
-    private ListadoDeProvincias listadoDeProvincias;
     private Servicio banioUnisex;
     private Servicio escaleraMecanica;
     private Entidad lineaMitre;
@@ -64,12 +52,6 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     private MiembroDeComunidad pablo;
     private Comunidad comunidad;
     private Comunidad comunidad2;
-    private Posicion posicion1;
-    private Posicion posicion2;
-    private MedioDeComunicacion mail; //Ver si que hay que mockear
-    private MedioDeComunicacion wpp;
-    private FormaDeNotificar cuandoSuceden;
-    private FormaDeNotificar sinApuro;
     private Usuario usuarioPablo;
     private ReporteDeIncidente incidenteBanioLineaMitre;
     private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
@@ -78,7 +60,7 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
     @BeforeEach
     public void before() {
 
-        this.tx = entityManager().getTransaction();
+        this.tx =  EntityManagerSingleton.getInstance().getTransaction();
         this.tx.begin();
 
         jujuy = new Provincia();
@@ -157,10 +139,14 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         //Cargo Miembros de Comunidad
         pablo.setNombre("pablo");
         pablo.setApellido("perez");
-        pablo.getReceptorDeNotificaciones().cambiarFormaDeNotificar(cuandoSuceden);
-        pablo.getReceptorDeNotificaciones().cambiarMedioDeComunicacion(mail);
-        pablo.getReceptorDeNotificaciones().setMail("hola@mail.net");
-        pablo.getReceptorDeNotificaciones().setTelefono("+1333333453");
+        ReceptorDeNotificaciones receptorDeNotificaciones = pablo.getReceptorDeNotificaciones();
+        receptorDeNotificaciones.cambiarFormaDeNotificar(cuandoSuceden);
+        receptorDeNotificaciones.cambiarMedioDeComunicacion(mail);
+        receptorDeNotificaciones.setMail("hola@mail.net");
+        receptorDeNotificaciones.setTelefono("+1333333453");
+        receptorDeNotificaciones.cambiarFormaDeNotificar(new CuandoSuceden());
+        receptorDeNotificaciones.cambiarMedioDeComunicacion(new ViaMail());
+        pablo.setReceptorDeNotificaciones(receptorDeNotificaciones);
 
         pablo.agregarServicioDeInteres(banioUnisex, Rol.valueOf("AFECTADO"));
 
@@ -197,7 +183,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,30,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -208,7 +195,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+        this.guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
+        repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -219,7 +207,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -230,7 +219,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,50,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
+        this.guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
+        repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
         incidenteBanioLineaMitre.setDenunciante(pablo);
@@ -241,29 +231,8 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,23,10,45,30));
         incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
-
-        incidenteBanioLineaMitre = new ReporteDeIncidente();
-        incidenteBanioLineaMitre.setDenunciante(pablo);
-        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-        incidenteBanioLineaMitre.setEntidad(lineaMitre);
-        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-        incidenteBanioLineaMitre.setServicio(banioUnisex);
-        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,23,11,0,30));
-        incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
-
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(1));
-
-        incidenteBanioLineaMitre = new ReporteDeIncidente();
-        incidenteBanioLineaMitre.setDenunciante(pablo);
-        incidenteBanioLineaMitre.setClasificacion(EstadoIncidente.ABIERTO);
-        incidenteBanioLineaMitre.setEntidad(lineaMitre);
-        incidenteBanioLineaMitre.setEstablecimiento(estacionRetiro);
-        incidenteBanioLineaMitre.setServicio(banioUnisex);
-        incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,45,30));
-        incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
-
-        //pablo.informarFuncionamiento(incidenteBanioLineaMitre,pablo.getComunidades().get(0));
+        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
     }
     @AfterEach
     public void after() {
@@ -286,6 +255,10 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
 
             Assertions.assertTrue(true);
         }
+        @Test
+        public void leerBaseDeDatos(){
+            System.out.println(repositorioMiembroDeComunidad.buscarTodos().get(0));
+        }
 
         @Test
         public void rankingSolucionanMasLento() {
@@ -299,62 +272,56 @@ public class CargaDeDatos implements WithSimplePersistenceUnit {
 
         @Test
         public void solicitarInformacionDeIncidentesAbiertos(){
-            MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscarTodos().get(0);
-            //Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO).size());
+            List<MiembroDeComunidad> miembroDeComunidads = repositorioMiembroDeComunidad.buscarTodos();
+            MiembroDeComunidad pablito = miembroDeComunidads.get(0);
+            Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.ABIERTO, repositorioDeIncidentes.buscarTodos()).size());
         }
         @Test
         public void solicitarInformacionDeIncidentesCerrados(){
             MiembroDeComunidad pablito = repositorioMiembroDeComunidad.buscarTodos().get(0);
 
-            //Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO).size());
+            Assertions.assertEquals(1,pablito.obtenerIncidentesPorEstado(EstadoIncidente.CERRADO, repositorioDeIncidentes.buscarTodos()).size());
         }
 
-    @Test
-    public void IncidentesDeLaSemana(){
-        Assertions.assertEquals(2,repositorioDeIncidentes.getIncidentesEstaSemana().size());
-        List<Incidente> incidentesEstaSemana = repositorioDeIncidentes.getIncidentesEstaSemana();
 
-        Assertions.assertEquals(2,incidentesEstaSemana.size());
+    public void guardarIncidenteComunidad(Comunidad comunidad, ReporteDeIncidente reporteDeIncidente) {
+        List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
+        List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
 
+        if (incidentesSobreLaMismaProblematica.isEmpty()) //va a ser siempre de apertura
+        {
+            Incidente incidente = new Incidente();
+            incidente.agregarReporteDeApertura(reporteDeIncidente);
+            repositorioDeIncidentes.agregar(incidente);
+        } else {
+            boolean agregado = false;
+            for (Incidente incidente : incidentesSobreLaMismaProblematica) {
+                if (comunidad.incidenteEsDeComunidad(incidente) && !agregado && !comunidad.cerroIncidente(incidente)) {
+                    if(reporteDeIncidente.esDeCierre())
+                    {
+                        incidente.agregarReporteDeCierre(reporteDeIncidente);
+                        agregado = true;
+                    }
+                    else if(!reporteDeIncidente.esDeCierre())
+                    {
+                        incidente.agregarReporteDeApertura(reporteDeIncidente); //lo agrego, va a haber mas de un reporte de apertura de esta comunidad
+                        agregado = true;
+                    }
+                }
+                else if(!comunidad.incidenteEsDeComunidad(incidente) && !agregado) //primer incidente no abierto por la comunidad
+                {
+                    incidente.agregarReporteDeApertura(reporteDeIncidente);
+                    agregado = true;
+                }
+            }
+            if (!agregado) { //en principio siempre acá es de apertura
+                Incidente incidente = new Incidente();
+                incidente.agregarReporteDeApertura(reporteDeIncidente);
+                repositorioDeIncidentes.agregar(incidente);
+            }
+        }
+        comunidad.agregarReporte(reporteDeIncidente);
+        repositorioComunidad.agregar(comunidad);
     }
 
-/*
-    @Test
-    public void ReportarUnIncidente(){
-        pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(0));
-
-        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getReportesDeApertura().get(0).getObservaciones());
-        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getServicio());
-        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(0).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
-
-        pablo.informarFuncionamiento(incidenteBanioHombre,pablo.getComunidades().get(1));
-
-        Assertions.assertEquals(incidenteBanioHombre.getObservaciones(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getReportesDeApertura().get(0).getObservaciones());
-        Assertions.assertEquals(incidenteBanioHombre.getServicio(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getServicio());
-        Assertions.assertEquals(incidenteBanioHombre.getEstablecimiento(),pablo.getComunidades().get(1).getIncidentesDeLaComunidad().get(0).getEstablecimiento());
-    }
-
-    @Test
-    public void DistanciasCercanas(){
-        posicion1 = new Posicion("100,100");
-        posicion2 = new Posicion("50,50");
-        Assertions.assertTrue(posicion1.distancia(posicion2) <= Config.DISTANCIA_MINIMA);
-    }
-
-    @Test
-    public void peticionDeRevision(){
-        List<Comunidad> comunidades = new ArrayList<>();
-        EmisorDeNotificaciones nuevoEmisor = EmisorDeNotificaciones.getInstancia();
-        pablo = mock(MiembroDeComunidad.class);
-        julieta = mock(MiembroDeComunidad.class);
-        maria = mock(MiembroDeComunidad.class);
-        Comunidad comunidadMock = new Comunidad("Los+Mockeados", nuevoEmisor);
-        when(pablo.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
-        when(julieta.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
-        when(maria.validarSolicitudDeRevision(incidenteBanioHombre)).thenReturn(true);
-        comunidadMock.agregarMiembro(pablo); comunidadMock.agregarMiembro(julieta); comunidadMock.agregarMiembro(maria);
-        comunidades.add(comunidadMock);
-        nuevoEmisor.solicitarRevisionDeIncidente(comunidades); //no se me ocurre como mockear la posicion, puse que devuelva true a la solicitud en miembro y manda el mail
-    }
-    */
 }
