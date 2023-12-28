@@ -3,7 +3,6 @@ package Repositorios;
 import models.domain.Entidades.*;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
-import models.domain.Entidades.Posicion;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Notificaciones.*;
 import models.domain.Personas.Comunidad;
@@ -15,11 +14,9 @@ import models.domain.Servicios.Banio;
 import models.domain.Servicios.Elevacion;
 import models.domain.Servicios.Servicio;
 import models.domain.Usuario.Usuario;
-import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
 import org.junit.jupiter.api.*;
-import models.services.Localizacion.ListadoDeProvincias;
 import models.services.Localizacion.Municipio;
 import models.services.Localizacion.Provincia;
 
@@ -29,39 +26,41 @@ import java.util.List;
 
 
 public class CargaDeDatos {
-    private RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
-    private RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
-    private RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-    private RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
-    private RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
-    private RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
-    private RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
-    private RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
-    private RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
-    private RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
-    private Municipio yavi = new Municipio();
-    private Provincia jujuy = new Provincia();
-    private Servicio banioUnisex;
-    private Servicio escaleraMecanica;
-    private Entidad lineaMitre;
-    private Entidad lineaRoca;
-    private EntidadPrestadora trenesArgentinos;
-    private OrganismoDeControl CNRT;
-    private Establecimiento estacionRetiro;
-    private Establecimiento estacionVicenteLopez;
-    private MiembroDeComunidad pablo;
-    private Comunidad comunidad;
-    private Comunidad comunidad2;
-    private Usuario usuarioPablo;
-    private ReporteDeIncidente incidenteBanioLineaMitre;
-    private EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
-    private EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
-    private EntityTransaction tx;
-    @BeforeEach
-    public void before() {
+    static RepositorioDeIncidentes repositorioDeIncidentes = RepositorioDeIncidentes.getInstancia();
+    static RepositorioComunidad repositorioComunidad = RepositorioComunidad.getInstancia();
+    static RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
+    static RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
+    static RepositorioDeReportesDeIncidentes repositorioDeReportesDeIncidentes = RepositorioDeReportesDeIncidentes.getInstancia();
+    static RepositorioDeOrganismosDeControl repositorioDeOrganismosDeControl = RepositorioDeOrganismosDeControl.getInstancia();
+    static RepositorioDeMunicipios repositorioDeMunicipios = RepositorioDeMunicipios.getInstancia();
+    static RepositorioProvincias repositorioProvincias = RepositorioProvincias.getInstancia();
+    static RepositorioDeEntidadPrestadora repositorioDeEntidadPrestadora = RepositorioDeEntidadPrestadora.getInstancia();
+    static RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
+    static Municipio yavi = new Municipio();
+    static Provincia jujuy = new Provincia();
+    static Servicio banioUnisex;
+    static Servicio escaleraMecanica;
+    static Entidad lineaMitre;
+    static Entidad lineaRoca;
+    static EntidadPrestadora trenesArgentinos;
+    static OrganismoDeControl CNRT;
+    static Establecimiento estacionRetiro;
+    static Establecimiento estacionVicenteLopez;
+    static MiembroDeComunidad pablo;
+    static Comunidad comunidad;
+    static Comunidad comunidad2;
+    static Usuario usuarioPablo;
+    static ReporteDeIncidente incidenteBanioLineaMitre;
+    static EntidadesQueSolucionanMasLento entidadesQueSolucionanMasLento = new EntidadesQueSolucionanMasLento();
+    static EntidadesConMayorCantidadDeIncidentes entidadesConMayorCantidadDeIncidentes = new EntidadesConMayorCantidadDeIncidentes();
+    static EntityTransaction tx;
+    static MedioDeComunicacion mail = new ViaMail();
+    static FormaDeNotificar cuandoSuceden = new CuandoSuceden();
+    @BeforeAll
+    public static void before() {
 
-        this.tx =  EntityManagerSingleton.getInstance().getTransaction();
-        this.tx.begin();
+        tx =  EntityManagerSingleton.getInstance().getTransaction();
+        tx.begin();
 
         jujuy = new Provincia();
         yavi = new Municipio();
@@ -183,7 +182,7 @@ public class CargaDeDatos {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,30,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
         repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
@@ -195,7 +194,7 @@ public class CargaDeDatos {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,19,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño inundado, todo el piso mojado");
 
-        this.guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
+        guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
         repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
@@ -207,7 +206,7 @@ public class CargaDeDatos {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,45,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
         repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
@@ -219,7 +218,7 @@ public class CargaDeDatos {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,22,21,50,30));
         incidenteBanioLineaMitre.setObservaciones("Baño ya fue limpiado");
 
-        this.guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
+        guardarIncidenteComunidad(comunidad2, incidenteBanioLineaMitre);
         repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
 
         incidenteBanioLineaMitre = new ReporteDeIncidente();
@@ -231,12 +230,12 @@ public class CargaDeDatos {
         incidenteBanioLineaMitre.setFechaYhora(LocalDateTime.of(2023,9,23,10,45,30));
         incidenteBanioLineaMitre.setObservaciones("Volvieron a mojar el baño");
 
-        this.guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
+        guardarIncidenteComunidad(comunidad, incidenteBanioLineaMitre);
         repositorioDeReportesDeIncidentes.agregar(incidenteBanioLineaMitre);
     }
-    @AfterEach
-    public void after() {
-        this.tx.rollback();
+    @AfterAll
+    public static void after() {
+        tx.rollback();
     }
 
     @Test
@@ -284,7 +283,7 @@ public class CargaDeDatos {
         }
 
 
-    public void guardarIncidenteComunidad(Comunidad comunidad, ReporteDeIncidente reporteDeIncidente) {
+    public static void guardarIncidenteComunidad(Comunidad comunidad, ReporteDeIncidente reporteDeIncidente) {
         List<Incidente> incidentes = repositorioDeIncidentes.buscarTodos();
         List<Incidente> incidentesSobreLaMismaProblematica = incidentes.stream().filter(i -> i.getEstablecimiento().igualito(reporteDeIncidente.getEstablecimiento()) && i.getServicio().igualito(reporteDeIncidente.getServicio())).toList();
 
