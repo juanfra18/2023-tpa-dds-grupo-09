@@ -13,7 +13,6 @@ public class Config {
   public static final String RANKING_3 = "resources/ranking3.csv";
   public static final double DISTANCIA_MINIMA = 100;
   public static final String URL_APIS2 = "http://localhost:8080/";
-  public static final String ARCHIVO_CSV_RECIBIDO = "resources/";
   public static final Long TIMEOUT = 200L;
   public static final Long TIMELOCATION = 600L;
 }
