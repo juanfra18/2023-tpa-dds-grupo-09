@@ -7,7 +7,6 @@ import models.domain.Notificaciones.ViaMail;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Seguridad.ValidadorDeContrasenias;
 import models.domain.Usuario.Rol;
-import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeUsuarios;

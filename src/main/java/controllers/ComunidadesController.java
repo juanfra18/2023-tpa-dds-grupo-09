@@ -150,20 +150,6 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
   }
 
   @Override
-  public void save(Context context) {
-
-  }
-
-  @Override
-  public void edit(Context context) {
-
-  }
-
-  @Override
-  public void update(Context context) {
-  }
-
-  @Override
   public void delete(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();
     String comunidadId = context.pathParam("id");
@@ -257,5 +243,19 @@ public class ComunidadesController extends ControllerGenerico implements ICrudVi
     model.put("seleccion",false);
     context.render("IncidentesPorComunidad.hbs", model);
     em.close();
+  }
+
+  @Override
+  public void save(Context context) {
+
+  }
+
+  @Override
+  public void edit(Context context) {
+
+  }
+
+  @Override
+  public void update(Context context) {
   }
 }

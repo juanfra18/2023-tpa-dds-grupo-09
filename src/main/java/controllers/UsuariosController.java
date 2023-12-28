@@ -10,7 +10,6 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
-import org.jetbrains.annotations.NotNull;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.exceptions.ContraseniaInvalida;
 import server.exceptions.UsuarioRepetidoExcepcion;
@@ -23,7 +22,6 @@ import java.util.Map;
 
 public class UsuariosController extends ControllerGenerico implements ICrudViewsHandler {
   RepositorioMiembroDeComunidad repositorioMiembroDeComunidad = RepositorioMiembroDeComunidad.getInstancia();
-  RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
   @Override
   public void index(Context context) {
     EntityManager em = EntityManagerSingleton.getInstance();

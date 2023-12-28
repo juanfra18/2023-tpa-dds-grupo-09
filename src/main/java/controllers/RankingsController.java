@@ -6,7 +6,6 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.services.Archivos.SistemaDeArchivos;
-import server.exceptions.AccesoDenegadoExcepcion;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;

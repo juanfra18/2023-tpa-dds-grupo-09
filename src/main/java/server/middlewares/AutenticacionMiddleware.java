@@ -1,7 +1,6 @@
 package server.middlewares;
 
 import io.javalin.config.JavalinConfig;
-import io.javalin.http.Context;
 import models.domain.Usuario.TipoRol;
 import server.exceptions.AccesoDenegadoExcepcion;
 import server.exceptions.SesionNoIniciadaExcepcion;

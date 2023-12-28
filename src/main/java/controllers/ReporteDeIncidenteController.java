@@ -1,17 +1,14 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.domain.Entidades.Establecimiento;
 import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
-import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
-import org.jetbrains.annotations.NotNull;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;

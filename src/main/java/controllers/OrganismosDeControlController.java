@@ -1,13 +1,10 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.domain.Entidades.Entidad;
-import models.domain.Entidades.EntidadPrestadora;
 import models.domain.Entidades.OrganismoDeControl;
 import models.domain.Notificaciones.CuandoSuceden;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Notificaciones.ViaMail;
-import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Seguridad.ValidadorDeContrasenias;
 import models.domain.Usuario.Rol;
@@ -18,14 +15,12 @@ import models.persistence.Repositorios.RepositorioDeOrganismosDeControl;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
 import models.persistence.Repositorios.RepositorioMiembroDeComunidad;
 import models.persistence.Repositorios.RepositorioRoles;
-import org.jetbrains.annotations.NotNull;
 import server.exceptions.ContraseniaInvalida;
 import server.exceptions.UsuarioRepetidoExcepcion;
 import server.handlers.SessionHandler;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

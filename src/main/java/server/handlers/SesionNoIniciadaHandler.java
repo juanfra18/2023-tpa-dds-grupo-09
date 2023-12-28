@@ -3,7 +3,6 @@ package server.handlers;
 import controllers.FactoryController;
 import controllers.InicioDeSesionController;
 import io.javalin.Javalin;
-import server.exceptions.AccesoDenegadoExcepcion;
 import server.exceptions.SesionNoIniciadaExcepcion;
 
 public class SesionNoIniciadaHandler implements IHandler {

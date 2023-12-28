@@ -1,6 +1,5 @@
 package models.Config;
 
-import java.net.URI;
 
 public class Config {
   public static final String ARCHIVO_CONTRASENIAS_COMUNES_RUTA = "resources/10k-worst-passwords.txt";
@@ -11,6 +10,7 @@ public class Config {
   public static final String URL_APIS3 = "http://localhost:8888/";
   public static final String RANKING_1 = "resources/ranking1.csv";
   public static final String RANKING_2 = "resources/ranking2.csv";
+  public static final String RANKING_3 = "resources/ranking3.csv";
   public static final double DISTANCIA_MINIMA = 100;
   public static final String URL_APIS2 = "http://localhost:8080/";
   public static final String ARCHIVO_CSV_RECIBIDO = "resources/";

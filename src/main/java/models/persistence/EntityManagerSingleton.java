@@ -14,16 +14,11 @@ public class EntityManagerSingleton {
 
   public static EntityManager getInstance(){
     if(instancia == null || !instancia.isOpen()) {
-      // https://stackoverflow.com/questions/8836834/read-environment-variables-in-persistence-xml-file
       Map<String, String> env = System.getenv();
       Map<String, Object> configOverrides = new HashMap<String, Object>();
 
       String[] keys = new String[] {
               "DATABASE_URL",
-              //"javax__persistence__jdbc__driver",
-              //"javax__persistence__jdbc__password",
-              //"javax__persistence__jdbc__url",
-              //"javax__persistence__jdbc__user",
               "hibernate__hbm2ddl__auto",
               "hibernate__connection__pool_size",
               "hibernate__show_sql" };
@@ -33,10 +28,6 @@ public class EntityManagerSingleton {
         try{
           if (key.equals("DATABASE_URL")) {
             String value = env.get(key);
-            /*
-            URI dbUri = new URI(value);
-            String username = dbUri.getUserInfo().split(":")[0];
-            String password = dbUri.getUserInfo().split(":")[1];*/
             URI uri = new URI(value.substring(6)); // Removing the "mysql:" prefix
 
             String userInfo = uri.getUserInfo();
@@ -67,10 +58,6 @@ public class EntityManagerSingleton {
       }
 
       String persistenceUnit = "simple-persistence-unit";
-      /*
-      if (env.containsKey("PersistenceUnit")) {
-        persistenceUnit = env.get("PersistenceUnit");
-      }*/
 
       instancia = Persistence.createEntityManagerFactory(persistenceUnit, configOverrides).createEntityManager();
     }

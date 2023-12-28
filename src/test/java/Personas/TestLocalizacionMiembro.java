@@ -3,7 +3,6 @@ package Personas;
 import models.domain.Notificaciones.FormaDeNotificar;
 import models.domain.Notificaciones.MedioDeComunicacion;
 import models.domain.Personas.MiembroDeComunidad;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

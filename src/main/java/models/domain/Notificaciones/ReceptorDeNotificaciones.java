@@ -1,6 +1,5 @@
 package models.domain.Notificaciones;
 
-import models.domain.Incidentes.Incidente;
 import models.domain.Incidentes.ReporteDeIncidente;
 import models.persistence.Persistente;
 import models.persistence.Converters.FormaDeNotificarAttributeConverter;

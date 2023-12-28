@@ -4,7 +4,6 @@ import io.javalin.http.Context;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeUsuarios;
-import server.exceptions.AccesoDenegadoExcepcion;
 import server.exceptions.SesionNoIniciadaExcepcion;
 import server.handlers.SessionHandler;
 

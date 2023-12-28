@@ -2,11 +2,9 @@ package models.persistence;
 
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 
-import models.domain.Entidades.Posicion;
 import models.domain.Notificaciones.CuandoSuceden;
 import models.domain.Notificaciones.ReceptorDeNotificaciones;
 import models.domain.Notificaciones.ViaMail;
-import models.domain.Personas.Comunidad;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.Rol;
 import models.domain.Usuario.TipoRol;

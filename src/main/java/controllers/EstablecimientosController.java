@@ -3,11 +3,7 @@ package controllers;
 import com.google.gson.Gson;
 import io.javalin.http.Context;
 import models.domain.Entidades.Entidad;
-import models.domain.Entidades.EntidadPrestadora;
 import models.domain.Entidades.Establecimiento;
-import models.domain.Entidades.OrganismoDeControl;
-import models.domain.Incidentes.Incidente;
-import models.domain.Incidentes.ReporteDeIncidente;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
@@ -16,14 +12,12 @@ import models.persistence.Repositorios.*;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class EstablecimientosController extends ControllerGenerico implements ICrudViewsHandler{
   RepositorioEntidad repositorioEntidad = RepositorioEntidad.getInstancia();
-  RepositorioDeEstablecimientos repositorioDeEstablecimientos = RepositorioDeEstablecimientos.getInstancia();
   @Override
   public void index(Context context) {
       EntityManager em = EntityManagerSingleton.getInstance();

@@ -2,7 +2,6 @@ package controllers;
 
 import com.google.gson.Gson;
 import io.javalin.http.Context;
-import models.domain.Entidades.Entidad;
 import models.domain.Entidades.Establecimiento;
 import models.domain.Personas.MiembroDeComunidad;
 import models.domain.Servicios.Servicio;
@@ -10,7 +9,6 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.RepositorioDeEstablecimientos;
-import models.persistence.Repositorios.RepositorioEntidad;
 import server.utils.ICrudViewsHandler;
 
 import javax.persistence.EntityManager;

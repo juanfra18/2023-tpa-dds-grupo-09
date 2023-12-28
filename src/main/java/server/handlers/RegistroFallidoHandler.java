@@ -4,7 +4,6 @@ import controllers.*;
 import io.javalin.Javalin;
 import models.Config.Config;
 import server.exceptions.ContraseniaInvalida;
-import server.exceptions.SesionNoIniciadaExcepcion;
 import server.exceptions.UsuarioRepetidoExcepcion;
 
 public class RegistroFallidoHandler implements IHandler {

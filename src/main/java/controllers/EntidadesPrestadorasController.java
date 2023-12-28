@@ -1,7 +1,6 @@
 package controllers;
 
 import io.javalin.http.Context;
-import models.domain.Entidades.Entidad;
 import models.domain.Entidades.EntidadPrestadora;
 import models.domain.Entidades.OrganismoDeControl;
 import models.domain.Notificaciones.CuandoSuceden;
@@ -14,7 +13,6 @@ import models.domain.Usuario.TipoRol;
 import models.domain.Usuario.Usuario;
 import models.persistence.EntityManagerSingleton;
 import models.persistence.Repositorios.*;
-import org.jetbrains.annotations.NotNull;
 import server.exceptions.ContraseniaInvalida;
 import server.exceptions.UsuarioRepetidoExcepcion;
 import server.handlers.SessionHandler;
