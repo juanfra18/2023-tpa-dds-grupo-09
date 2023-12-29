@@ -17,7 +17,6 @@ public abstract class ControllerGenerico implements WithSimplePersistenceUnit {
     if(!SessionHandler.checkSession(ctx)) {
       throw new SesionNoIniciadaExcepcion();
     }
-    //TODO BEFORE Y AFTER JAVLIN .app.after(handler -> {entityManager().clear()})
     SessionHandler.updateSession(ctx);
     return em
         .find(Usuario.class, Long.parseLong(SessionHandler.getUserID(ctx)));

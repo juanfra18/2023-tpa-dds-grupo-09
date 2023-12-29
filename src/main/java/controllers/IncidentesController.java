@@ -86,7 +86,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     {
       usuarioEmpresa = true;
       incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.buscarTodos());
-      //TODO revisar si el usuario empresa busca asi los incidentes
     }
     boolean abierto = false;
     boolean cerrado = false;
@@ -222,7 +221,6 @@ public class IncidentesController extends ControllerGenerico implements ICrudVie
     {
       usuarioEmpresa = true;
       incidentes = miembroDeComunidad.obtenerIncidentesPorEstado(EstadoIncidente.valueOf(estado), repositorioDeIncidentes.getIncidentesEstaSemana());
-      //TODO revisar si el usuario empresa busca asi los incidentes
     }
 
     model.put("usuarioBasico",usuarioBasico);
