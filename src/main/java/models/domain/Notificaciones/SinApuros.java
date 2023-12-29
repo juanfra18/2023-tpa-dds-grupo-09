@@ -1,30 +1,39 @@
 package models.domain.Notificaciones;
 
-import models.domain.Incidentes.EstadoIncidente;
 import models.domain.Incidentes.ReporteDeIncidente;
-import java.util.ArrayList;
+import models.persistence.EntityManagerSingleton;
+import models.persistence.Repositorios.RepositorioDeNotificaciones;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public class SinApuros extends FormaDeNotificar{
-  private List<ReporteDeIncidente> resumenDeIncidentes;
-
+  private NotificacionDeIncidente resumenDeIncidentes;
+  private RepositorioDeNotificaciones repositorioDeNotificaciones;
+  private EntityManager em;
   public SinApuros() {
-    this.resumenDeIncidentes = new ArrayList<>();
+    this.repositorioDeNotificaciones = RepositorioDeNotificaciones.getInstancia();
   }
   @Override
   public void recibirNotificacion(MedioDeComunicacion medioDeComunicacion, ReporteDeIncidente reporteDeIncidente, String destinatario) {
-    if (reporteDeIncidente.getClasificacion().equals(EstadoIncidente.ABIERTO)) {
-      this.resumenDeIncidentes.removeIf(reporte -> reporte.igualito(reporteDeIncidente));
-      this.resumenDeIncidentes.add(reporteDeIncidente);
-    }
-    else {
-      this.resumenDeIncidentes.removeIf(reporte -> reporte.igualito(reporteDeIncidente));
+    List<NotificacionDeIncidente> notificaciones = this.repositorioDeNotificaciones.buscarTodos();
+    if (!notificaciones.stream().anyMatch(n -> !n.getEnviada() && n.getReporteDeIncidente().igualito(reporteDeIncidente) && n.getReporteDeIncidente().getClasificacion().equals(reporteDeIncidente.getClasificacion()) && n.getDestinatario().equals(destinatario))) {
+      NotificacionDeIncidente notificacionDeIncidente = new NotificacionDeIncidente();
+      notificacionDeIncidente.setReporteDeIncidente(reporteDeIncidente);
+      notificacionDeIncidente.setDestinatario(destinatario);
+      this.repositorioDeNotificaciones.agregar(notificacionDeIncidente);
+
     }
   }
   @Override
   public void envioProgramado(MedioDeComunicacion medioDeComunicacion, String destinatario) {
-    this.resumenDeIncidentes.forEach(reporte -> super.recibirNotificacion(medioDeComunicacion,reporte,destinatario));
-    this.resumenDeIncidentes.clear(); //Así se borran antes que cumplan 24hs
+    this.repositorioDeNotificaciones.buscarTodos().stream().filter(n -> !n.getEnviada() && n.getDestinatario().equals(destinatario) ).toList()
+        .forEach(n -> this.notificarReporte(medioDeComunicacion, n));
+  }
+  private void notificarReporte(MedioDeComunicacion medioDeComunicacion, NotificacionDeIncidente notificacionDeIncidente) {
+    super.recibirNotificacion(medioDeComunicacion, notificacionDeIncidente.getReporteDeIncidente(), notificacionDeIncidente.getDestinatario());
+    notificacionDeIncidente.setEnviada(true);
+    this.repositorioDeNotificaciones.agregar(notificacionDeIncidente);
   }
 
   @Override

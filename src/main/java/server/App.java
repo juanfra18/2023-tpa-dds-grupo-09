@@ -49,7 +49,7 @@ public class App {
     Long tiempoFaltante = fechaActual.until(proximoDomingo, ChronoUnit.SECONDS);
 
     scheduler.scheduleAtFixedRate(() -> {
-      EntityManager em = EntityManagerSingleton.getInstance(); //esta bien asi?
+      EntityManager em = EntityManagerSingleton.getInstance();
       try {
         em.getTransaction().begin();
         t1.armarRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana());
@@ -64,7 +64,7 @@ public class App {
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
     scheduler.scheduleAtFixedRate(() -> {
-      EntityManager em = EntityManagerSingleton.getInstance(); //esta bien asi?
+      EntityManager em = EntityManagerSingleton.getInstance();
       try {
         em.getTransaction().begin();
         t2.armarRanking(repositorioEntidad.buscarTodos(), repositorioDeIncidentes.getIncidentesEstaSemana());
@@ -78,10 +78,6 @@ public class App {
       }
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
-    RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
-    List<ReceptorDeNotificaciones> receptoresDeNotificacionesSinApuro =
-        repositorioDeReceptoresDeNotificaciones.buscarTodos().stream().
-            filter(receptorDeNotificaciones -> receptorDeNotificaciones.getFormaDeNotificar().getClass().getSimpleName().equals("SinApuros")).toList();
 
 
     //Tiempo hasta el proximo dia
@@ -89,8 +85,24 @@ public class App {
     Long tiempoHastaProximoDia = fechaActual.until(finDelDia, ChronoUnit.SECONDS);
 
     scheduler.scheduleAtFixedRate(() -> {
-      receptoresDeNotificacionesSinApuro.forEach(receptorDeNotificaciones -> receptorDeNotificaciones.envioProgramado());
-    }, tiempoHastaProximoDia, 24 * 60 * 60,TimeUnit.SECONDS);
+      RepositorioDeReceptoresDeNotificaciones repositorioDeReceptoresDeNotificaciones = RepositorioDeReceptoresDeNotificaciones.getInstancia();
+      List<ReceptorDeNotificaciones> receptoresDeNotificacionesSinApuro =
+          repositorioDeReceptoresDeNotificaciones.buscarTodos().stream().
+              filter(receptorDeNotificaciones -> receptorDeNotificaciones.getFormaDeNotificar().getClass().getSimpleName().equals("SinApuros")).toList();
+      System.out.println("Scheduler ejecutado");
+      EntityManager em = EntityManagerSingleton.getInstance();
+      try {
+        em.getTransaction().begin();
+        receptoresDeNotificacionesSinApuro.forEach(receptorDeNotificaciones -> receptorDeNotificaciones.envioProgramado());
+        em.getTransaction().commit();
+      }
+      catch (Exception e) {
+        em.getTransaction().rollback();
+      }
+      finally {
+        em.close();
+      }
+    }, 0, 30,TimeUnit.SECONDS);
   }
 }
 
