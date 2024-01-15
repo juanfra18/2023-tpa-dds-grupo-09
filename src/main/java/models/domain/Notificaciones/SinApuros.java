@@ -17,13 +17,20 @@ public class SinApuros extends FormaDeNotificar{
   @Override
   public void recibirNotificacion(MedioDeComunicacion medioDeComunicacion, ReporteDeIncidente reporteDeIncidente, String destinatario) {
     List<NotificacionDeIncidente> notificaciones = this.repositorioDeNotificaciones.buscarTodos();
-    if (!notificaciones.stream().anyMatch(n -> !n.getEnviada() && n.getReporteDeIncidente().igualito(reporteDeIncidente) && n.getReporteDeIncidente().getClasificacion().equals(reporteDeIncidente.getClasificacion()) && n.getDestinatario().equals(destinatario))) {
+
+    if (this.superif(notificaciones, reporteDeIncidente, destinatario)) {
       NotificacionDeIncidente notificacionDeIncidente = new NotificacionDeIncidente();
       notificacionDeIncidente.setReporteDeIncidente(reporteDeIncidente);
       notificacionDeIncidente.setDestinatario(destinatario);
+      //EntityManager em = EntityManagerSingleton.getInstance();
+      //em.getTransaction().begin();
       this.repositorioDeNotificaciones.agregar(notificacionDeIncidente);
-
+      //em.getTransaction().commit();
     }
+  }
+
+  public boolean superif(List<NotificacionDeIncidente> notificaciones, ReporteDeIncidente reporteDeIncidente, String destinatario) {
+    return !notificaciones.stream().anyMatch(n -> !n.getEnviada() && n.getReporteDeIncidente().igualito(reporteDeIncidente) && n.getReporteDeIncidente().getClasificacion().equals(reporteDeIncidente.getClasificacion()) && n.getDestinatario().equals(destinatario));
   }
   @Override
   public void envioProgramado(MedioDeComunicacion medioDeComunicacion, String destinatario) {

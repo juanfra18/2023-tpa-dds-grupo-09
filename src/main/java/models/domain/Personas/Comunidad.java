@@ -46,7 +46,6 @@ public class Comunidad extends Persistente {
     }
     public void agregarReporte(ReporteDeIncidente reporteDeIncidente){
         this.reportesDeLaComunidad.add(reporteDeIncidente);
-        this.getMiembros().forEach(m -> m.recibirNotificacion(reporteDeIncidente));
     }
     public List<Incidente> incidentesAbiertos(List<Incidente> incidentes){
         return this.getIncidentesDeComunidad(incidentes).stream().filter(i -> !i.cerrado()).toList();

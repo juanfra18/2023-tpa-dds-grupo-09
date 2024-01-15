@@ -57,7 +57,7 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
     String servicio = context.formParam("servicio");
     String establecimiento = context.formParam("establecimiento");
     String fechaYhora = context.formParam("fechaYhora");
-    Comunidad comunidad1 = new Comunidad();
+    Comunidad comunidad1;
     EntityManager entityManager = EntityManagerSingleton.getInstance();
     Usuario usuarioLogueado = super.usuarioLogueado(context,entityManager);
     MiembroDeComunidad miembroDeComunidad = this.miembroDelUsuario(usuarioLogueado.getId().toString());
@@ -83,6 +83,9 @@ public class ReporteDeIncidenteController extends ControllerGenerico implements 
       entityManager.getTransaction().begin();
       this.guardarIncidenteComunidad(comunidad1, reporteDeIncidente, repositorioComunidad);
       repositorioDeReportesDeIncidentes.agregar(reporteDeIncidente);
+      for (MiembroDeComunidad miembroDeComunidad1 : comunidad1.getMiembros()) {
+        miembroDeComunidad1.recibirNotificacion(reporteDeIncidente);
+      }
       entityManager.getTransaction().commit();
     } catch (Exception e) {
       entityManager.getTransaction().rollback();

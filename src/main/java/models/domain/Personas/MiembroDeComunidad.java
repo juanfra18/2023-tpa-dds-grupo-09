@@ -74,7 +74,10 @@ public class MiembroDeComunidad extends Persistente {
     }
 
     public void recibirNotificacion(ReporteDeIncidente reporteDeIncidente) {
-        if (this.tieneInteres(reporteDeIncidente.getServicio(), reporteDeIncidente.getEstablecimiento())) {
+        Servicio servicio = reporteDeIncidente.getServicio();
+        Establecimiento establecimiento = reporteDeIncidente.getEstablecimiento();
+
+        if (this.tieneInteres(servicio, establecimiento)) {
             this.receptorDeNotificaciones.recibirNotificacion(reporteDeIncidente);
         }
     }
