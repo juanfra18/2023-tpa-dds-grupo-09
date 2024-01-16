@@ -37,6 +37,7 @@ public class Seed implements WithSimplePersistenceUnit {
             em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_entidad").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_municipio").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad_provincia").executeUpdate();
+            em.createNativeQuery("DROP TABLE IF EXISTS NotificacionDeIncidente").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS reporteDeIncidente").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS parServicioRol").executeUpdate();
             em.createNativeQuery("DROP TABLE IF EXISTS miembroDeComunidad").executeUpdate();
