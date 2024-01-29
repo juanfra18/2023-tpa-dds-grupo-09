@@ -58,6 +58,8 @@ public class App {
         em.getTransaction().commit();
       } catch (Exception e) {
         em.getTransaction().rollback();
+      } finally {
+        em.close();
       }
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
@@ -71,6 +73,8 @@ public class App {
         em.getTransaction().commit();
       } catch (Exception e) {
         em.getTransaction().rollback();
+      } finally {
+        em.close();
       }
     }, tiempoFaltante, 7 * 24 * 60 * 60, TimeUnit.SECONDS); //Se ejecutara cada domingo
 
@@ -95,7 +99,10 @@ public class App {
       catch (Exception e) {
         em.getTransaction().rollback();
       }
-    }, 0, 60,TimeUnit.SECONDS);
+      finally {
+        em.close();
+      }
+    }, 0, 30,TimeUnit.SECONDS);
   }
 }
 
