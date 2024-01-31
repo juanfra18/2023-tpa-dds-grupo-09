@@ -89,7 +89,6 @@ public class App {
       List<ReceptorDeNotificaciones> receptoresDeNotificacionesSinApuro =
           repositorioDeReceptoresDeNotificaciones.buscarTodos().stream().
               filter(receptorDeNotificaciones -> receptorDeNotificaciones.getFormaDeNotificar().getClass().getSimpleName().equals("SinApuros")).toList();
-      System.out.println("Scheduler ejecutado");
       EntityManager em = EntityManagerSingleton.getInstance();
       try {
         em.getTransaction().begin();
@@ -102,7 +101,7 @@ public class App {
       finally {
         em.close();
       }
-    }, 0, 30,TimeUnit.SECONDS);
+    }, tiempoHastaProximoDia, 24 * 60 * 60,TimeUnit.SECONDS);
   }
 }
 
